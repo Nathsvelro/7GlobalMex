@@ -1,0 +1,576 @@
+{
+  "bitrate": "24k",
+  "espeak_voice": "es-419",
+  "files": {
+    "audio/es/advice_acaro_rojo.mp3": {
+      "hash": "beb461904ec39a7c",
+      "spoken_text": "La arañita roja aumenta en tiempo seco y con el polvo de los caminos. Revise cada semana las matas de la orilla, junto al camino. Deje sombra y plantas que detengan el polvo. Si las hojas se ven color cobre, avise al técnico."
+    },
+    "audio/es/advice_call_officer.mp3": {
+      "hash": "c046c54ddff742e1",
+      "spoken_text": "Llame al técnico o a la cooperativa si ve polvo naranja en muchas matas, si se caen muchas hojas, o si la ap no está segura. Guarde una hoja en una bolsa cerrada para mostrarla."
+    },
+    "audio/es/advice_cercospora.mp3": {
+      "hash": "83ea8dbb6eec36a7",
+      "spoken_text": "La mancha de hierro sale en matas débiles o con mucho sol. Abone sus matas y pregunte al técnico qué abono usar. Deje sombra regulada y limpie la maleza."
+    },
+    "audio/es/advice_minador.mp3": {
+      "hash": "c9a838d3ff41edc8",
+      "spoken_text": "El minador aumenta con mucho sol y tiempo seco. Deje una sombra pareja en su cafetal. Revise unas hojas cada semana. Si muchas hojas tienen manchas cafés y secas, avise al técnico."
+    },
+    "audio/es/advice_phoma.mp3": {
+      "hash": "d8aecd0df091d411",
+      "spoken_text": "La phoma entra por heridas que deja el viento frío en las hojas. Cuide o siembre árboles que frenen el viento. Abone bien sus matas. Si se secan las puntas de las ramas, avise al técnico."
+    },
+    "audio/es/advice_roya.mp3": {
+      "hash": "edc2ac36223e5bdf",
+      "spoken_text": "Revise cada semana por debajo de las hojas, en varias matas. Pode y regule la sombra para que entren aire y luz. Limpie la maleza y abone como le diga el técnico. No lleve hojas enfermas a otras parcelas; si ve mucho polvo naranja, avise al técnico."
+    },
+    "audio/es/advice_sano.mp3": {
+      "hash": "0fc5efd7d0acfbf7",
+      "spoken_text": "Muy bien. Siga revisando sus matas cada semana, por debajo de las hojas. Mantenga la sombra regulada, la maleza limpia y buen abono."
+    },
+    "audio/es/diag_acaro_rojo.mp3": {
+      "hash": "f412ed1a32ca2837",
+      "spoken_text": "Parece arañita roja, ácaro rojo."
+    },
+    "audio/es/diag_cercospora.mp3": {
+      "hash": "0c4e0c5f4e46dc20",
+      "spoken_text": "Parece mancha de hierro, cercospora."
+    },
+    "audio/es/diag_duda.mp3": {
+      "hash": "8af81cff682277d7",
+      "spoken_text": "No estoy seguro, muestre la hoja al técnico."
+    },
+    "audio/es/diag_minador.mp3": {
+      "hash": "c50cbc5d21ad678e",
+      "spoken_text": "Parece minador de la hoja."
+    },
+    "audio/es/diag_phoma.mp3": {
+      "hash": "51c02df38661e284",
+      "spoken_text": "Parece phoma, también llamada quema o derrite."
+    },
+    "audio/es/diag_roya.mp3": {
+      "hash": "eda8b5ec301bab70",
+      "spoken_text": "Parece roya del cafeto."
+    },
+    "audio/es/diag_sano.mp3": {
+      "hash": "12052835d4e99ded",
+      "spoken_text": "La hoja se ve sana."
+    },
+    "audio/es/limits_yield.mp3": {
+      "hash": "df4da8632879bed5",
+      "spoken_text": "Esta ap solo mira las hojas. No puede ver la broca, la falta de abono, la sequía, las matas viejas ni problemas del suelo. Si su cosecha bajó, platique con el técnico."
+    },
+    "audio/es/name_acaro_rojo.mp3": {
+      "hash": "664ff1639be66879",
+      "spoken_text": "Arañita roja"
+    },
+    "audio/es/name_cercospora.mp3": {
+      "hash": "7c6892daed9e0184",
+      "spoken_text": "Mancha de hierro"
+    },
+    "audio/es/name_duda.mp3": {
+      "hash": "5f8cbe8335e0b6fd",
+      "spoken_text": "No seguro"
+    },
+    "audio/es/name_minador.mp3": {
+      "hash": "1b210b3b224653ff",
+      "spoken_text": "Minador"
+    },
+    "audio/es/name_phoma.mp3": {
+      "hash": "f701bfe9af32a46e",
+      "spoken_text": "Phoma, quema"
+    },
+    "audio/es/name_roya.mp3": {
+      "hash": "03c330c3e818973f",
+      "spoken_text": "Roya"
+    },
+    "audio/es/name_sano.mp3": {
+      "hash": "4e59f366a106ac5b",
+      "spoken_text": "Sana"
+    },
+    "audio/es/ui_analyzing.mp3": {
+      "hash": "a5e7345eceadfcf2",
+      "spoken_text": "Revisando la hoja."
+    },
+    "audio/es/ui_app_name.mp3": {
+      "hash": "c14f033b8cb83294",
+      "spoken_text": "Cafetal"
+    },
+    "audio/es/ui_back.mp3": {
+      "hash": "d4ea8c2367d94dbb",
+      "spoken_text": "Atrás"
+    },
+    "audio/es/ui_cancel.mp3": {
+      "hash": "122c03d2dc35e492",
+      "spoken_text": "Cancelar"
+    },
+    "audio/es/ui_choose_language.mp3": {
+      "hash": "a8ea6f80b1a635b1",
+      "spoken_text": "Elija su idioma"
+    },
+    "audio/es/ui_choose_photo.mp3": {
+      "hash": "7955fe9676eb25e8",
+      "spoken_text": "Elegir una foto"
+    },
+    "audio/es/ui_confidence.mp3": {
+      "hash": "a639beb86e408c7e",
+      "spoken_text": "Seguridad"
+    },
+    "audio/es/ui_consent_accept.mp3": {
+      "hash": "7c208f6d610c1fc5",
+      "spoken_text": "Sí, acepto"
+    },
+    "audio/es/ui_consent_decline.mp3": {
+      "hash": "fc01e5e2597003d0",
+      "spoken_text": "No, gracias"
+    },
+    "audio/es/ui_consent_text.mp3": {
+      "hash": "6755ceaa1cbcc0ba",
+      "spoken_text": "Cafetal guarda en este teléfono la fecha, el resultado y el lugar aproximado de cada revisión. La foto se queda en este teléfono. Todo se guarda con su número de socio, no con su nombre. No se manda nada si usted no toca Enviar. Si usted quiere, las fotos se mandan a la cooperativa, solo por el wifi de la cooperativa. Puede borrar todo cuando quiera."
+    },
+    "audio/es/ui_consent_title.mp3": {
+      "hash": "554bcb227b6b3dbf",
+      "spoken_text": "Su permiso"
+    },
+    "audio/es/ui_continue.mp3": {
+      "hash": "6d7c31df26eb1829",
+      "spoken_text": "Seguir"
+    },
+    "audio/es/ui_delete_all.mp3": {
+      "hash": "c8aef5a04a04ab4e",
+      "spoken_text": "Borrar todo"
+    },
+    "audio/es/ui_delete_confirm.mp3": {
+      "hash": "ed288ab7da16cbec",
+      "spoken_text": "¿Borrar todas las revisiones y fotos de este teléfono? No se puede deshacer."
+    },
+    "audio/es/ui_delete_yes.mp3": {
+      "hash": "88f3d1f1c82b9e84",
+      "spoken_text": "Sí, borrar todo"
+    },
+    "audio/es/ui_demo.mp3": {
+      "hash": "a512a62984f9a2cc",
+      "spoken_text": "demo: datos de ejemplo"
+    },
+    "audio/es/ui_history.mp3": {
+      "hash": "e136d9bfa7ac2690",
+      "spoken_text": "Mis revisiones"
+    },
+    "audio/es/ui_hub_offline.mp3": {
+      "hash": "cea51e562df246ef",
+      "spoken_text": "No hay conexión con la cooperativa."
+    },
+    "audio/es/ui_language.mp3": {
+      "hash": "d3f5ca646e1a2b27",
+      "spoken_text": "Idioma"
+    },
+    "audio/es/ui_limits_note.mp3": {
+      "hash": "13d3e992add8eca7",
+      "spoken_text": "Solo revisa hojas. No ve broca, abono, sequía ni suelo."
+    },
+    "audio/es/ui_lock.mp3": {
+      "hash": "1af30693005bf3e2",
+      "spoken_text": "Bloquear"
+    },
+    "audio/es/ui_member_id_invalid.mp3": {
+      "hash": "e685b79349ac950c",
+      "spoken_text": "Escriba M y 4 números, por ejemplo M0123."
+    },
+    "audio/es/ui_member_id_prompt.mp3": {
+      "hash": "69efe99726316208",
+      "spoken_text": "Su número de socio, ejemplo: M0123"
+    },
+    "audio/es/ui_new_photo.mp3": {
+      "hash": "c993349c4da59fc6",
+      "spoken_text": "Otra foto"
+    },
+    "audio/es/ui_no_records.mp3": {
+      "hash": "8f8bff8fee9cc814",
+      "spoken_text": "Todavía no hay revisiones."
+    },
+    "audio/es/ui_offline_ready.mp3": {
+      "hash": "fa727f34db38dd2d",
+      "spoken_text": "Listo para usar sin internet"
+    },
+    "audio/es/ui_pending_sms.mp3": {
+      "hash": "b4e2771f70be2c89",
+      "spoken_text": "Por enviar"
+    },
+    "audio/es/ui_photo_tip_underside.mp3": {
+      "hash": "dd8ea4a3b59bf63b",
+      "spoken_text": "Tome la foto por debajo de la hoja, con buena luz."
+    },
+    "audio/es/ui_pin_optional.mp3": {
+      "hash": "2b34843b9ea56d02",
+      "spoken_text": "pin de 4 números, si quiere"
+    },
+    "audio/es/ui_pin_prompt.mp3": {
+      "hash": "d26d68cd98397440",
+      "spoken_text": "Escriba su pin"
+    },
+    "audio/es/ui_pin_wrong.mp3": {
+      "hash": "72794b54e91e1008",
+      "spoken_text": "pin equivocado. Intente otra vez."
+    },
+    "audio/es/ui_play_es.mp3": {
+      "hash": "2ec7b29670379aaa",
+      "spoken_text": "Escuchar en español"
+    },
+    "audio/es/ui_play_tzh.mp3": {
+      "hash": "b1f6803dc061d7ce",
+      "spoken_text": "Escuchar en tseltal"
+    },
+    "audio/es/ui_reason_blurry.mp3": {
+      "hash": "6951396f2dd30511",
+      "spoken_text": "La foto salió borrosa."
+    },
+    "audio/es/ui_reason_low_conf.mp3": {
+      "hash": "487cbc5000e9666d",
+      "spoken_text": "La ap no está segura."
+    },
+    "audio/es/ui_reason_not_coffee.mp3": {
+      "hash": "66ea4c676eae276c",
+      "spoken_text": "No parece hoja de café."
+    },
+    "audio/es/ui_saved.mp3": {
+      "hash": "75ace9394e12d0fd",
+      "spoken_text": "Guardado en este teléfono"
+    },
+    "audio/es/ui_send_sms.mp3": {
+      "hash": "b64b87108a4d0144",
+      "spoken_text": "Enviar por ese eme ese"
+    },
+    "audio/es/ui_sent.mp3": {
+      "hash": "8f0eb781abbcd79b",
+      "spoken_text": "Enviado"
+    },
+    "audio/es/ui_settings.mp3": {
+      "hash": "2d6167f28cc536af",
+      "spoken_text": "Ajustes"
+    },
+    "audio/es/ui_simulate_send.mp3": {
+      "hash": "ad042514c1d496ff",
+      "spoken_text": "Enviar, simulado"
+    },
+    "audio/es/ui_simulated.mp3": {
+      "hash": "0562e124564f3960",
+      "spoken_text": "simulado: no se mandó un ese eme ese de verdad"
+    },
+    "audio/es/ui_sms_preview.mp3": {
+      "hash": "04ccfcbfb654c5af",
+      "spoken_text": "Este es el mensaje que se va a mandar:"
+    },
+    "audio/es/ui_sync_photos.mp3": {
+      "hash": "24b2aec8ccf1ab66",
+      "spoken_text": "Mandar fotos a la cooperativa, wifi"
+    },
+    "audio/es/ui_synced.mp3": {
+      "hash": "3374d65fb16308ff",
+      "spoken_text": "Fotos enviadas a la cooperativa"
+    },
+    "audio/es/ui_take_photo.mp3": {
+      "hash": "e422becd25c013be",
+      "spoken_text": "Tomar foto"
+    },
+    "audio/es/ui_tip_bring_leaf_home.mp3": {
+      "hash": "2dbc7a6309f24450",
+      "spoken_text": "¿No lleva el teléfono al cafetal? Traiga unas hojas a la casa y tome la foto aquí."
+    },
+    "audio/es/ui_unverified.mp3": {
+      "hash": "815e9e17ce8eca25",
+      "spoken_text": "sin verificar"
+    },
+    "audio/es/ui_what_to_do.mp3": {
+      "hash": "6c8d6466b039425a",
+      "spoken_text": "Qué hacer esta semana"
+    },
+    "audio/tzh/advice_acaro_rojo.mp3": {
+      "hash": "22f1f1b713d6688e",
+      "spoken_text": "Te sajal chin chan ya shbayelub ta takin kinal sok ta stanul beh. Ila jujun semana te kajpe ta stiil beh. Aka ashinal sok te yuun ma shkot te tan. Teme saj kan yilel yabenal, ika te técnico."
+    },
+    "audio/tzh/advice_call_officer.mp3": {
+      "hash": "886a828ef441bd0e",
+      "spoken_text": "Ika te técnico o te cooperativa teme ay kan tan ta bayel kajpe, teme ya shchay bayel yabenal, o teme ma sna lek te ap. Keja jun yabenal ta makal bolsa, yuun ya akbey yil."
+    },
+    "audio/tzh/advice_cercospora.mp3": {
+      "hash": "e3e218783bf341a4",
+      "spoken_text": "Te mancha de hierro ya shlok ta kajpe ti mayuk yip o ti bayel kaal ya sta. Aka abono ta akajpe sok jojkoybe te técnico bin abono. Aka lek ashinal sok akentaya te jamal."
+    },
+    "audio/tzh/advice_minador.mp3": {
+      "hash": "3f3d39b49fe6feae",
+      "spoken_text": "Te minador ya shbayelub ta bayel kaal sok ta takin kinal. Aka lek ashinal ta akajpetal. Ila jayeb yabenal jujun semana. Teme bayel yabenal ay takin smancha, ika te técnico."
+    },
+    "audio/tzh/advice_phoma.mp3": {
+      "hash": "bb96ac43c663d1ad",
+      "spoken_text": "Te phoma ya shoch ta yejchen yabenal, ja ya spas te sikil ik. Kanantaya o suna te yuun ma shoch ik. Aka lek abono ta akajpe. Teme ya shtakij sni kabte, ika te técnico."
+    },
+    "audio/tzh/advice_roya.mp3": {
+      "hash": "3f0b0e1ca973cd3d",
+      "spoken_text": "Ila jujun semana te yanil yabenal, ta bayel kajpe. Boja te kabte sok te ashinal, yuun ya shoch ik sok lus. Akentaya te jamal sok aka abono jich bitil ya yal te técnico. Ma me awich bel yabenal ta yan kajpetal; teme bayel kan tan ay, ika te técnico."
+    },
+    "audio/tzh/advice_sano.mp3": {
+      "hash": "c7822c39e42bbdfb",
+      "spoken_text": "Lek ay. Ila jujun semana akajpe, ta yanil yabenal. Aka lek ashinal, akentaya te jamal sok aka abono."
+    },
+    "audio/tzh/diag_acaro_rojo.mp3": {
+      "hash": "6a30a726f55a4a61",
+      "spoken_text": "Ja sajal chin chan yilel, arañita roja."
+    },
+    "audio/tzh/diag_cercospora.mp3": {
+      "hash": "8a3aad4f2d03c430",
+      "spoken_text": "Ja mancha de hierro yilel, cercospora."
+    },
+    "audio/tzh/diag_duda.mp3": {
+      "hash": "6e3ea7a25b52c9a2",
+      "spoken_text": "Ma na lek, aka yil yabenal te técnico."
+    },
+    "audio/tzh/diag_minador.mp3": {
+      "hash": "b8492702fe3ef7c2",
+      "spoken_text": "Ja minador yilel ta yabenal."
+    },
+    "audio/tzh/diag_phoma.mp3": {
+      "hash": "ae1fe0440a463aa1",
+      "spoken_text": "Ja phoma yilel, quema o derrite."
+    },
+    "audio/tzh/diag_roya.mp3": {
+      "hash": "8c77882d71a49e46",
+      "spoken_text": "Ja roya yilel ta kajpe."
+    },
+    "audio/tzh/diag_sano.mp3": {
+      "hash": "a6265f9dfb63ba2f",
+      "spoken_text": "Lek ay te yabenal. Mayuk schamel."
+    },
+    "audio/tzh/limits_yield.mp3": {
+      "hash": "683b1e8131f5fba9",
+      "spoken_text": "Te ap ini ja nash ya yil yabenal. Ma stak yil te broca, teme mayuk abono, te takin kinal, te poko kajpe, sok te chamel ta lum. Teme teb nash la akaj akajpe, kopona te técnico."
+    },
+    "audio/tzh/name_acaro_rojo.mp3": {
+      "hash": "2653c4ec33a3159f",
+      "spoken_text": "sajal chin chan, arañita"
+    },
+    "audio/tzh/name_cercospora.mp3": {
+      "hash": "7c6892daed9e0184",
+      "spoken_text": "Mancha de hierro"
+    },
+    "audio/tzh/name_duda.mp3": {
+      "hash": "3f5a21726c5cb746",
+      "spoken_text": "Ma na lek"
+    },
+    "audio/tzh/name_minador.mp3": {
+      "hash": "1b210b3b224653ff",
+      "spoken_text": "Minador"
+    },
+    "audio/tzh/name_phoma.mp3": {
+      "hash": "f701bfe9af32a46e",
+      "spoken_text": "Phoma, quema"
+    },
+    "audio/tzh/name_roya.mp3": {
+      "hash": "03c330c3e818973f",
+      "spoken_text": "Roya"
+    },
+    "audio/tzh/name_sano.mp3": {
+      "hash": "2e7a5a989b1ffa0e",
+      "spoken_text": "Lek ay"
+    },
+    "audio/tzh/ui_analyzing.mp3": {
+      "hash": "c77d07425ad22cdf",
+      "spoken_text": "Yakal ta ilel te yabenal."
+    },
+    "audio/tzh/ui_app_name.mp3": {
+      "hash": "c14f033b8cb83294",
+      "spoken_text": "Cafetal"
+    },
+    "audio/tzh/ui_back.mp3": {
+      "hash": "1485b6ce438d8b25",
+      "spoken_text": "Sujtel"
+    },
+    "audio/tzh/ui_cancel.mp3": {
+      "hash": "21e8f855d30b8067",
+      "spoken_text": "Mauk"
+    },
+    "audio/tzh/ui_choose_language.mp3": {
+      "hash": "053c483e139ded7d",
+      "spoken_text": "saha akop"
+    },
+    "audio/tzh/ui_choose_photo.mp3": {
+      "hash": "171c6b64a332b6c9",
+      "spoken_text": "saha jun lokomba"
+    },
+    "audio/tzh/ui_confidence.mp3": {
+      "hash": "9128c12586bd194b",
+      "spoken_text": "Jayeb sna lek"
+    },
+    "audio/tzh/ui_consent_accept.mp3": {
+      "hash": "0be092e446f0e14c",
+      "spoken_text": "Jich, ya chun"
+    },
+    "audio/tzh/ui_consent_decline.mp3": {
+      "hash": "ae3880f989fd4033",
+      "spoken_text": "Mauk, wokol awal"
+    },
+    "audio/tzh/ui_consent_text.mp3": {
+      "hash": "21ff391189c0008d",
+      "spoken_text": "Cafetal ya skej ta in teléfono ini te fecha, te bin la sta, sok te banti nopol ay akajpetal. Te lokomba ya shjil ta in teléfono ini. Ya skej sok awajtal ta cooperativa, ma sok abihil. Mayuk bin ya shbaj teme ma anet Enviar. Teme ya akan, te lokombaetik ya shbajik ta cooperativa, ta swifi cooperativa nash. Ya stak atup spisil kalal ya akan."
+    },
+    "audio/tzh/ui_consent_title.mp3": {
+      "hash": "c679c92c568800da",
+      "spoken_text": "Ya kanbat apermiso"
+    },
+    "audio/tzh/ui_continue.mp3": {
+      "hash": "2ef4511c8f60b863",
+      "spoken_text": "Batik"
+    },
+    "audio/tzh/ui_delete_all.mp3": {
+      "hash": "73abf9c9068a9e40",
+      "spoken_text": "Tupa spisil"
+    },
+    "audio/tzh/ui_delete_confirm.mp3": {
+      "hash": "c8c943cbe470f428",
+      "spoken_text": "¿Ya bal atup spisil te bin kejbil sok te lokombaetik ta in teléfono ini? Ma shsujt shan."
+    },
+    "audio/tzh/ui_delete_yes.mp3": {
+      "hash": "6c20658e7e087348",
+      "spoken_text": "Jich, tupa spisil"
+    },
+    "audio/tzh/ui_demo.mp3": {
+      "hash": "ddd456f652081085",
+      "spoken_text": "demo: ja nash ejemplo"
+    },
+    "audio/tzh/ui_history.mp3": {
+      "hash": "ee2b44b894c3abef",
+      "spoken_text": "Te bin kejbil"
+    },
+    "audio/tzh/ui_hub_offline.mp3": {
+      "hash": "81301ef2c5dc8a92",
+      "spoken_text": "Ma shkot ta cooperativa."
+    },
+    "audio/tzh/ui_language.mp3": {
+      "hash": "efc69e8cc6db59ab",
+      "spoken_text": "Kop"
+    },
+    "audio/tzh/ui_limits_note.mp3": {
+      "hash": "01e38607aa50b52f",
+      "spoken_text": "Ja nash ya yil yabenal. Ma stak yil te broca, te abono, te takin kinal, te lum."
+    },
+    "audio/tzh/ui_lock.mp3": {
+      "hash": "6528b4df71658930",
+      "spoken_text": "Makel"
+    },
+    "audio/tzh/ui_member_id_invalid.mp3": {
+      "hash": "29eb9817d93fd795",
+      "spoken_text": "sibaya M sok chaneb ajtal, jich bitil M0123."
+    },
+    "audio/tzh/ui_member_id_prompt.mp3": {
+      "hash": "33e03ee0670ffe6c",
+      "spoken_text": "Awajtal ta cooperativa, M0123"
+    },
+    "audio/tzh/ui_new_photo.mp3": {
+      "hash": "cedbd0d07c8be243",
+      "spoken_text": "Yan lokomba"
+    },
+    "audio/tzh/ui_no_records.mp3": {
+      "hash": "0efaea4f2f8f4460",
+      "spoken_text": "Mayuk to bin kejbil."
+    },
+    "audio/tzh/ui_offline_ready.mp3": {
+      "hash": "40708a5fe264a0e4",
+      "spoken_text": "Ya shatej ta mayuk internet"
+    },
+    "audio/tzh/ui_pending_sms.mp3": {
+      "hash": "b3177c92e394b2c7",
+      "spoken_text": "Ma to tikunbil"
+    },
+    "audio/tzh/ui_photo_tip_underside.mp3": {
+      "hash": "dec54d34f53d2f8b",
+      "spoken_text": "Loktaya te yanil yabenal kajpe, ta lek lus."
+    },
+    "audio/tzh/ui_pin_optional.mp3": {
+      "hash": "fa63de2dd36a473c",
+      "spoken_text": "pin, chaneb ajtal, teme ya akan"
+    },
+    "audio/tzh/ui_pin_prompt.mp3": {
+      "hash": "fd9a710867262e2b",
+      "spoken_text": "sibaya apin"
+    },
+    "audio/tzh/ui_pin_wrong.mp3": {
+      "hash": "11660f3d543a6189",
+      "spoken_text": "Ma lekuk te pin. sibaya shan."
+    },
+    "audio/tzh/ui_play_es.mp3": {
+      "hash": "65f3de2a1a740594",
+      "spoken_text": "Aiya ta kashlan kop"
+    },
+    "audio/tzh/ui_play_tzh.mp3": {
+      "hash": "aeea877f43690d8d",
+      "spoken_text": "Aiya ta batsil kop"
+    },
+    "audio/tzh/ui_reason_blurry.mp3": {
+      "hash": "b049b92bcfbb2f6e",
+      "spoken_text": "Ma lekuk lok te lokomba."
+    },
+    "audio/tzh/ui_reason_low_conf.mp3": {
+      "hash": "bc9858449be1f36d",
+      "spoken_text": "Ma sna lek te ap."
+    },
+    "audio/tzh/ui_reason_not_coffee.mp3": {
+      "hash": "f81d8bf7b405e8fb",
+      "spoken_text": "Ma yabenaluk kajpe yilel."
+    },
+    "audio/tzh/ui_saved.mp3": {
+      "hash": "e2739d0d5868abb1",
+      "spoken_text": "Kejbilish ta in teléfono ini"
+    },
+    "audio/tzh/ui_send_sms.mp3": {
+      "hash": "b7e07e397f1f687f",
+      "spoken_text": "Tikuna ta ese eme ese"
+    },
+    "audio/tzh/ui_sent.mp3": {
+      "hash": "3bf6d5f3f4393dbe",
+      "spoken_text": "Tikunbilish"
+    },
+    "audio/tzh/ui_settings.mp3": {
+      "hash": "92e009c7725a14ba",
+      "spoken_text": "Chajpanel"
+    },
+    "audio/tzh/ui_simulate_send.mp3": {
+      "hash": "693aec05d3468166",
+      "spoken_text": "Tikuna, simulado"
+    },
+    "audio/tzh/ui_simulated.mp3": {
+      "hash": "7c9c5588cfe9ea5d",
+      "spoken_text": "simulado: ja nash ejemplo, mayuk ese eme ese"
+    },
+    "audio/tzh/ui_sms_preview.mp3": {
+      "hash": "bc01bf6bdce5dbf2",
+      "spoken_text": "Ja ini te mensaje ya shbaj:"
+    },
+    "audio/tzh/ui_sync_photos.mp3": {
+      "hash": "9db53543a3a320fd",
+      "spoken_text": "Tikuna lokombaetik ta cooperativa, wifi"
+    },
+    "audio/tzh/ui_synced.mp3": {
+      "hash": "1ae08d197cbca5e4",
+      "spoken_text": "Kotish te lokombaetik ta cooperativa"
+    },
+    "audio/tzh/ui_take_photo.mp3": {
+      "hash": "cb11e0b402028a30",
+      "spoken_text": "Loktaya yabenal"
+    },
+    "audio/tzh/ui_tip_bring_leaf_home.mp3": {
+      "hash": "5cc6fca62fe32576",
+      "spoken_text": "Teme ma shbaj ateléfono ta kajpetal, icha tel jayeb yabenal ta ana, loktaya li."
+    },
+    "audio/tzh/ui_unverified.mp3": {
+      "hash": "9dce895d855cb3b6",
+      "spoken_text": "ma to ilbil, sin verificar"
+    },
+    "audio/tzh/ui_what_to_do.mp3": {
+      "hash": "e57f3b5810b31950",
+      "spoken_text": "Bin ya apas ta semana ini"
+    }
+  },
+  "note": "Hash of the text actually spoken per file; make_audio.py skips files whose hash is unchanged. Native recordings (audio_source 'native...') are never touched.",
+  "voice": "es-mls_10246-low.onnx"
+}

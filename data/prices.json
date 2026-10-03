@@ -1,0 +1,54 @@
+{
+  "updated": "2026-10-03",
+  "demo": true,
+  "note": "DEMO reference prices. Not AI. Every figure below was seen only in web-search summaries on 2026-10-03: the official pages (InfoAserca, SNIIM, Banxico, ICE, AMECAFE) are blocked from the build machine, so no figure was confirmed on an official page. A person must check each value on the source page and set demo=false before real use. These are national/international reference prices, NEVER the farm-gate price in a community: buyers in Chiapas reportedly paid producers about 45-48 MXN/kg in Jan-Apr 2026 (press, product form not stated).",
+  "sms_fuente": "DEMO ICE/Banxico/SNIIM",
+  "sms_fecha": "sept 2026",
+  "sms_note": "Short strings for the PRECIO SMS (card sms_precio): {fuente} = sms_fuente, {fecha} = sms_fecha (the item dates differ: 2026-09-09 to 2026-09-30). Keep sms_fuente short so the SMS stays under 160 characters; it starts with DEMO while demo=true.",
+  "items": [
+    {
+      "id": "cafe_pergamino",
+      "name_es": "Café pergamino",
+      "price": 94.0,
+      "unit": "MXN/kg",
+      "source": "ICE NY + Banxico",
+      "source_url": "https://info.aserca.gob.mx/futuros/futuro.asp?de=cafe",
+      "date": "2026-09-30",
+      "demo": true,
+      "method": "International equivalent, not a market quote: ICE 'C' arabica close 294.85 US cents/lb (2026-09-30) x 2.20462 lb/kg = 6.50 USD/kg green coffee; x 18.0710 MXN/USD (Banxico FIX, published in DOF 2026-09-30) = 117.47 MXN/kg green; x 0.80 kg green per kg parchment (assumed conversion, 57.5 kg pergamino = 46 kg oro) = 93.97 MXN/kg pergamino, rounded to 94. No quality differential, processing, transport or buyer margin is deducted, so farm-gate prices are lower.",
+      "inputs": {
+        "ice_c_usc_per_lb": 294.85,
+        "ice_c_date": "2026-09-30",
+        "ice_c_seen_at": "web-search summary (ICE 'Coffee C' settlement as reported by market news; InfoAserca republishes it at the source_url)",
+        "usd_mxn_fix": 18.071,
+        "usd_mxn_fix_seen_at": "web-search summary of Banxico FIX in DOF 2026-09-30; official series https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=6&accion=consultarCuadro&idCuadro=CF373&locale=es",
+        "green_per_parchment": 0.8
+      },
+      "context": "ICO composite indicator averaged 287.29 US cents/lb in Aug 2026 (ICO Coffee Market Report, https://www.ico.org/documents/cy2025-26/cmr-0826-e.pdf, search summary). Press: Chiapas producers paid 45-48 MXN/kg (Alerta Chiapas 2026-04-10, https://alertachiapas.com/2026/04/10/el-cafe-chiapaneco-en-crisis/); Veracruz parchment around 4,500 MXN per quintal at the start of the 2025-26 harvest (Quadratin Veracruz, https://veracruz.quadratin.com.mx/cosecha-de-cafe-2025-2026-inicia-con-precios-alentadores/). A December 2025 law creates a committee that will publish official coffee reference prices; use it when it exists."
+    },
+    {
+      "id": "maiz",
+      "name_es": "Maíz blanco",
+      "price": 9.0,
+      "unit": "MXN/kg",
+      "source": "SNIIM",
+      "source_url": "https://www.economia-sniim.gob.mx/nuevo/Precios_de_Granos.htm",
+      "date": "2026-09-09",
+      "demo": true,
+      "method": "Midpoint of the SNIIM wholesale range 8.00-10.00 MXN/kg for white maize (market not identified in the search summary). Wholesale, not farm-gate.",
+      "context": "SADER kept 6,000 MXN/t (6.00 MXN/kg) for white maize sold to tortillerias in the official supply scheme (press, Sept 2026, https://www.elfinanciero.com.mx/economia/2026/09/21/maiz-sube-6-pero-gobierno-de-sheinbaum-advierte-no-hay-razon-para-subir-el-precio-de-la-tortilla/)."
+    },
+    {
+      "id": "frijol",
+      "name_es": "Frijol negro",
+      "price": 24.9,
+      "unit": "MXN/kg",
+      "source": "SNIIM",
+      "source_url": "http://www.economia-sniim.gob.mx/PreciosProdSelPorEstado.asp?edo=15",
+      "date": "2026-09-17",
+      "demo": true,
+      "method": "SNIIM wholesale modal price for black beans, Estado de Mexico markets, 2026-09-17 (range 17.00-46.47 MXN/kg). Wholesale, not farm-gate. For Chiapas use the SNIIM Chiapas page (edo=5) and keep the same market every week.",
+      "context": "SNIIM Chiapas page showed black beans at 15.00-25.00 MXN/kg (date not shown in the search summary): http://www.economia-sniim.gob.mx/PreciosProdSelPorEstado.asp?edo=5"
+    }
+  ]
+}

@@ -1,0 +1,546 @@
+text,intent,lang,source
+precio,precio,es,team
+cual es el precio del cafe,precio,es,team
+q precio tiene el cafe,precio,es,team
+cuanto pagan x kilo,precio,es,team
+cuanto esta el cafe pergamino,precio,es,team
+a como esta el cafe hoy,precio,es,team
+a cuanto compran el kilo de cafe,precio,es,team
+precio del cafe porfa,precio,es,team
+cuanto vale el quintal de pergamino,precio,es,team
+cuanto pagan el cafe en la cooperativa,precio,es,team
+me puede decir el precio del maiz,precio,es,team
+precio del frijol,precio,es,team
+a como anda el frijol,precio,es,team
+cuanto cuesta el maiz ahorita,precio,es,team
+ya subio el precio del cafe?,precio,es,team
+el coyote me ofrece 40 el kilo es buen precio,precio,es,team
+cuanto esta pagando el intermediario,precio,es,team
+kiero saber el precio,precio,es,team
+precio de hoy,precio,es,team
+precios de cafe maiz y frijol,precio,es,team
+a como pagan el cafe oro,precio,es,team
+cuanto dan por el pergamino,precio,es,team
+a cuanto esta el kilo,precio,es,team
+informacion de precios,precio,es,team
+precio cafe,precio,es,team
+cual es el precio de referencia,precio,es,team
+cuanto vale mi cafe,precio,es,team
+k precio tiene el kilo de cafe,precio,es,team
+buenas tardes a como esta el cafe,precio,es,team
+cuanto esta la bolsa de nueva york,precio,es,team
+a como se vende el cafe esta semana,precio,es,team
+me pasa el precio x favor,precio,es,team
+precio del cafe pergamino seco,precio,es,team
+cuanto pagan por kilo de cafe cereza,precio,es,team
+quiero vender mi cafe a cuanto esta,precio,es,team
+esta bien pagado a 45 el kilo?,precio,es,team
+cuanto se paga el maiz blanco,precio,es,team
+presio del cafe,precio,es,team
+el precio,precio,es,team
+cuanto es el precio del cafe,precio,es,team
+precio x kilo pergamino,precio,es,team
+ya bajo el cafe?,precio,es,team
+cuanto ofrecen por quintal,precio,es,team
+cual es el precio justo del cafe,precio,es,team
+Buenos dias. A como esta pagando el cafe?,precio,es,team
+cuanto vale el frijol negro,precio,es,team
+PRECIO CAFE,precio,es,team
+nesecito saber cuanto pagan el cafe,precio,es,team
+a como el kg de cafe,precio,es,team
+cuanto me darian por 10 kilos de pergamino,precio,es,team
+jayeb stojol te kajpe,precio,tzh,ai-draft-unverified
+bayel stojol te kajpe yo'tik,precio,tzh,ai-draft-unverified
+jayeb ya stoj te ixim,precio,tzh,ai-draft-unverified
+stojol kajpe,precio,tzh,ai-draft-unverified
+mi cafe tiene manchas amarillas,reporte,es,team
+las hojas tienen polvo naranja abajo,reporte,es,team
+creo que mi cafe tiene roya,reporte,es,team
+se estan cayendo las hojas del cafe,reporte,es,team
+hay manchas cafes en las hojas,reporte,es,team
+las hojas se ponen amarillas y se caen,reporte,es,team
+mis matas de cafe estan enfermas,reporte,es,team
+tiene como caminitos las hojas,reporte,es,team
+hay plaga en mi cafetal,reporte,es,team
+quiero reportar roya,reporte,es,team
+quiero reportar una plaga,reporte,es,team
+las hojas tienen un polvito anaranjado,reporte,es,team
+mis plantas se estan secando,reporte,es,team
+las hojitas tienen manchas negras,reporte,es,team
+tengo roya en mi parcela,reporte,es,team
+hay un gusanito dentro de la hoja,reporte,es,team
+la hoja esta quemada en la punta,reporte,es,team
+mi cafetal se ve mal,reporte,es,team
+las hojas tienen hoyitos,reporte,es,team
+hay manchas como ojo en la hoja,reporte,es,team
+reporte de plaga,reporte,es,team
+se me esta muriendo el cafe,reporte,es,team
+el cafe tiene manchas raras,reporte,es,team
+como mando mi reporte,reporte,es,team
+quiero mandar un reporte de mi cafe,reporte,es,team
+manchas naranjas debajo de la hoja,reporte,es,team
+las plantas tienen arañitas rojas,reporte,es,team
+las hojas estan como bronceadas,reporte,es,team
+mi cafe se esta poniendo amarillo,reporte,es,team
+encontre roya en el cafe de arriba,reporte,es,team
+reportar enfermedad cafe,reporte,es,team
+hay mucha roya este año,reporte,es,team
+la hoja tiene manchas cafe con orilla amarilla,reporte,es,team
+se ve polvo amarillo en las hojas,reporte,es,team
+las matas nuevas se estan muriendo,reporte,es,team
+las hojas se enrollan y se secan,reporte,es,team
+tengo un problema con las hojas de mi cafe,reporte,es,team
+como reporto que mi cafe esta enfermo,reporte,es,team
+reporte,reporte,es,team
+mancha de hierro en el cafe,reporte,es,team
+minador en las hojas,reporte,es,team
+se secaron las ramas de abajo,reporte,es,team
+hay hongo en el cafe,reporte,es,team
+mis cafetos estan tirando hojas,reporte,es,team
+Mi kafe tiene roya creo,reporte,es,team
+las ojas tienen manchas,reporte,es,team
+le salio algo a las hojas del cafe,reporte,es,team
+hay muchos granos negros y hojas manchadas,reporte,es,team
+ay chamel ta jkajpetal,reporte,tzh,ai-draft-unverified
+k'anub yabenal te kajpe,reporte,tzh,ai-draft-unverified
+ay roya ta jkajpe,reporte,tzh,ai-draft-unverified
+ya xlaj te kajpe,reporte,tzh,ai-draft-unverified
+ayuda,ayuda,es,team
+ayudame,ayuda,es,team
+que puedo escribir,ayuda,es,team
+como funciona esto,ayuda,es,team
+como se usa cafetal,ayuda,es,team
+que es este numero,ayuda,es,team
+no entiendo como usar,ayuda,es,team
+menu,ayuda,es,team
+opciones,ayuda,es,team
+que servicios tienen,ayuda,es,team
+info,ayuda,es,team
+como uso la app,ayuda,es,team
+para que sirve este mensaje,ayuda,es,team
+que hago con el codigo,ayuda,es,team
+como mando el codigo,ayuda,es,team
+no me funciona la app,ayuda,es,team
+se me olvido como se usa,ayuda,es,team
+instrucciones,ayuda,es,team
+que significa CAF1,ayuda,es,team
+como pido el precio,ayuda,es,team
+hola que puedo hacer aqui,ayuda,es,team
+necesito ayuda con la aplicacion,ayuda,es,team
+ayuda por favor,ayuda,es,team
+como le hago,ayuda,es,team
+no se usar el celular,ayuda,es,team
+me explica como funciona,ayuda,es,team
+que palabras puedo mandar,ayuda,es,team
+comandos,ayuda,es,team
+como descargo la aplicacion,ayuda,es,team
+la app no abre,ayuda,es,team
+no puedo tomar la foto,ayuda,es,team
+donde esta el boton enviar,ayuda,es,team
+como borro mis datos,ayuda,es,team
+olvide mi numero de socio,ayuda,es,team
+cual es mi numero de socio,ayuda,es,team
+como cambio el idioma,ayuda,es,team
+como funciona el sms,ayuda,es,team
+que es cafetal,ayuda,es,team
+ayudaa,ayuda,es,team
+aiuda,ayuda,es,team
+help,ayuda,es,team
+no entiendo q hago,ayuda,es,team
+como se manda la foto,ayuda,es,team
+que tengo que escribir para el precio,ayuda,es,team
+como funciona el servicio de la cooperativa,ayuda,es,team
+la aplicacion no me da resultado,ayuda,es,team
+koltayawon,ayuda,tzh,ai-draft-unverified
+bin ya jts'ibay,ayuda,tzh,ai-draft-unverified
+bit'il ya jtuntes te app,ayuda,tzh,ai-draft-unverified
+tecnico,hablar_con_tecnico,es,team
+quiero hablar con el tecnico,hablar_con_tecnico,es,team
+kiero hablar con el ingeniero,hablar_con_tecnico,es,team
+que venga el tecnico,hablar_con_tecnico,es,team
+necesito que me visite el ingeniero,hablar_con_tecnico,es,team
+cuando viene el tecnico,hablar_con_tecnico,es,team
+me puede llamar el tecnico,hablar_con_tecnico,es,team
+pasame con el ingeniero,hablar_con_tecnico,es,team
+quiero una visita a mi parcela,hablar_con_tecnico,es,team
+necesito asesoria,hablar_con_tecnico,es,team
+que me marque el agronomo,hablar_con_tecnico,es,team
+puede venir alguien a ver mi cafe,hablar_con_tecnico,es,team
+quiero hablar con una persona,hablar_con_tecnico,es,team
+comuniqueme con el tecnico,hablar_con_tecnico,es,team
+llamenme por favor,hablar_con_tecnico,es,team
+necesito hablar con alguien de la cooperativa,hablar_con_tecnico,es,team
+urge que venga el tecnico,hablar_con_tecnico,es,team
+cuando pasa el extensionista,hablar_con_tecnico,es,team
+quiero que el tecnico vea mi cafetal,hablar_con_tecnico,es,team
+me hace favor de mandar al ingeniero,hablar_con_tecnico,es,team
+el ingeniero no ha venido,hablar_con_tecnico,es,team
+necesito una visita urgente,hablar_con_tecnico,es,team
+quiero platicar con el tecnico,hablar_con_tecnico,es,team
+tecnico porfavor,hablar_con_tecnico,es,team
+hablar con tecnico,hablar_con_tecnico,es,team
+inge necesito que venga,hablar_con_tecnico,es,team
+quiero una cita con el tecnico,hablar_con_tecnico,es,team
+necesito consejo del ingeniero,hablar_con_tecnico,es,team
+favor de que me hablen,hablar_con_tecnico,es,team
+quiero hablar con el encargado,hablar_con_tecnico,es,team
+puede llamarme el tecnico a este numero,hablar_con_tecnico,es,team
+necesito orientacion de un tecnico,hablar_con_tecnico,es,team
+que me visiten esta semana,hablar_con_tecnico,es,team
+el tecnico puede revisar mi parcela?,hablar_con_tecnico,es,team
+quiero que alguien me explique en persona,hablar_con_tecnico,es,team
+manden un tecnico a ondera alto,hablar_con_tecnico,es,team
+tecnico urgente,hablar_con_tecnico,es,team
+tengo una pregunta para el ingeniero,hablar_con_tecnico,es,team
+quiero hablar con el promotor,hablar_con_tecnico,es,team
+necesito ver al tecnico,hablar_con_tecnico,es,team
+Ingeniero me puede visitar el sabado,hablar_con_tecnico,es,team
+q venga el ing a mi terreno,hablar_con_tecnico,es,team
+me urge hablar con el tecnico de la cooperativa,hablar_con_tecnico,es,team
+quiero que me asesore un agronomo,hablar_con_tecnico,es,team
+cuando me toca la visita del tecnico,hablar_con_tecnico,es,team
+ya jk'an ya jk'opon te tecnico,hablar_con_tecnico,tzh,ai-draft-unverified
+ak'a tal te tecnico,hablar_con_tecnico,tzh,ai-draft-unverified
+ya jk'an ya yil jkajpetal te ingeniero,hablar_con_tecnico,tzh,ai-draft-unverified
+hola,otro,es,team
+buenos dias,otro,es,team
+gracias,otro,es,team
+ok,otro,es,team
+si,otro,es,team
+no,otro,es,team
+quien es,otro,es,team
+feliz navidad,otro,es,team
+te quiero mama,otro,es,team
+ya llegue,otro,es,team
+recarga tu saldo y gana el doble,otro,es,team
+felicidades ganaste un premio marca ya,otro,es,team
+a que hora es la junta,otro,es,team
+mañana no voy a ir,otro,es,team
+donde estas,otro,es,team
+ya comiste,otro,es,team
+voy para alla,otro,es,team
+saludos a la familia,otro,es,team
+dios te bendiga,otro,es,team
+ok gracias,otro,es,team
+la reunion es el sabado,otro,es,team
+se fue la luz,otro,es,team
+va a llover mañana,otro,es,team
+ya pague la cuota,otro,es,team
+me prestas 200 pesos,otro,es,team
+a que hora sale la combi,otro,es,team
+jajaja,otro,es,team
+bueno,otro,es,team
+sale pues,otro,es,team
+numero equivocado,otro,es,team
+quien me escribio,otro,es,team
+mi hija va a ir el domingo,otro,es,team
+pasame tu numero,otro,es,team
+estoy en el campo,otro,es,team
+ya cosechamos,otro,es,team
+que tal como estas,otro,es,team
+nos vemos en la fiesta,otro,es,team
+compra tortillas,otro,es,team
+ya llego el camion de la leña,otro,es,team
+no tengo saldo,otro,es,team
+wokol awal,otro,tzh,ai-draft-unverified
+bit'il ayat,otro,tzh,ai-draft-unverified
+me enseñas a qué horas tengo alarmas esta semana,otro,es,MASSIVE
+cancelar mi alarma de las tres de la tarde,otro,es,MASSIVE
+poner alarma para mañana al mediodía,otro,es,MASSIVE
+no no bájale el volumen,otro,es,MASSIVE
+por favor pon la televisión en modo silencioso por una hora,otro,es,MASSIVE
+podrías cambiar el volumen,otro,es,MASSIVE
+habla más alto,otro,es,MASSIVE
+que eventos hay esta semana,otro,es,MASSIVE
+elimina todos los eventos del calendario,otro,es,MASSIVE
+recuérda me a las seis lo de la reunión a las siete,otro,es,MASSIVE
+qué se cocina para la merienda,otro,es,MASSIVE
+como puedo preparar toda mi comida para cocinar,otro,es,MASSIVE
+si son las seis a. m. aqui que hora es en tokyo,otro,es,MASSIVE
+que hora es en barcelona,otro,es,MASSIVE
+crear un nuevo contacto con este correo electrónico,otro,es,MASSIVE
+envié un correo electrónico a claudio la semana pasada por favor acuérdame que es lo que escribí,otro,es,MASSIVE
+abre el perfil de juan de mi contacto,otro,es,MASSIVE
+a b c arroba gmail punto com en vez de x y z arroba gmail punto com,otro,es,MASSIVE
+como te va,otro,es,MASSIVE
+tienes una broma,otro,es,MASSIVE
+tuve el peor dia de mi vida hoy,otro,es,MASSIVE
+inicia robot aspirador,otro,es,MASSIVE
+por favor haz que las luces ideales para ver,otro,es,MASSIVE
+olly baja las luces,otro,es,MASSIVE
+dame oscuridad,otro,es,MASSIVE
+por favor enciende las luces,otro,es,MASSIVE
+por favor sube las luces al máximo,otro,es,MASSIVE
+desactiva el enchufe inteligente,otro,es,MASSIVE
+enciende los enchufes de las luces,otro,es,MASSIVE
+haga una nueva lista para útiles escolares,otro,es,MASSIVE
+olly lo que hay en mis listas,otro,es,MASSIVE
+eliminar la última entrada,otro,es,MASSIVE
+esta canción es muy larga,otro,es,MASSIVE
+me gusta esta canción cuál es puedes repetir la una vez,otro,es,MASSIVE
+estupendo,otro,es,MASSIVE
+repite la canción anterior,otro,es,MASSIVE
+avisarme si surge algún tema relacionado con la política,otro,es,MASSIVE
+retrocede el audiolibro en treinta segundos,otro,es,MASSIVE
+pon angry bird,otro,es,MASSIVE
+quiero escuchcar cadena ser por favor,otro,es,MASSIVE
+podcast siguiente episodio,otro,es,MASSIVE
+búscame el canal de televisión española,otro,es,MASSIVE
+qué significa instalarse,otro,es,MASSIVE
+cual es la altura del monte everest,otro,es,MASSIVE
+calcula qué porcentaje es treinta de ciento sesenta y tres,otro,es,MASSIVE
+qué tipo de actividades gratuitas puedo hacer localmente esta semana,otro,es,MASSIVE
+puedes encontrar un buen restaurante en el centro,otro,es,MASSIVE
+olly es swat una buena película,otro,es,MASSIVE
+enviar una queja al servicio al consumidor de esta empresa,otro,es,MASSIVE
+ha publicado algo nuevo pedro sánchez en twitter,otro,es,MASSIVE
+necesitas darme diferentes direciones,otro,es,MASSIVE
+búscame un uber para que me lleve al aeropuerto ahora,otro,es,MASSIVE
+cómprame un billete de tren,otro,es,MASSIVE
+cómo está en tráfico ahora en calle de valldemossa,otro,es,MASSIVE
+a qué hora está mi alarma programada para mañana por la mañana,otro,es,MASSIVE
+quitar la alarma que está puesta a las nueve y media de la noche,otro,es,MASSIVE
+cambiar la alarma de ajuste,otro,es,MASSIVE
+baja el volumen,otro,es,MASSIVE
+por favor espera durante la próxima hora,otro,es,MASSIVE
+cambia los ajustes de volumen a negativo,otro,es,MASSIVE
+sube el sonido,otro,es,MASSIVE
+hay algo en mi calendario el viernes por la mañana después de que llegue al trabajo,otro,es,MASSIVE
+cancelar todos los eventos en los próximos dos días,otro,es,MASSIVE
+tengo una reunión con el jefe de departamento el viernes a las nueve de la mañana,otro,es,MASSIVE
+necesito una receta de alitas de pollo para mi olla,otro,es,MASSIVE
+cúal es una receta fácil para cocinar comida,otro,es,MASSIVE
+es medianoche en andalucía que hora es en madrid,otro,es,MASSIVE
+que hora es en la zona horaria del pacífico en este momento,otro,es,MASSIVE
+por favor añádelo a mi lista de contactos y envíales un correo electrónico recordatorio,otro,es,MASSIVE
+tengo un nuevo correo electrónico de sandy,otro,es,MASSIVE
+en qué calle vive ana revisa mi agenda telefónica,otro,es,MASSIVE
+por favor envía un correo electrónico a la siguiente dirección hwu arroba gmail punto com,otro,es,MASSIVE
+hola como estas hoy,otro,es,MASSIVE
+olly hazme reir,otro,es,MASSIVE
+sobre la realidad en el mundo,otro,es,MASSIVE
+enciende la aspiradora ahora,otro,es,MASSIVE
+olly rota el color de las luces,otro,es,MASSIVE
+por favor baja las luces de techo,otro,es,MASSIVE
+no necesito luz,otro,es,MASSIVE
+enciende todas las luces,otro,es,MASSIVE
+enciende las luces por favor,otro,es,MASSIVE
+corte la energía wemo por favor,otro,es,MASSIVE
+haz que el enchufe esté disponible para mí,otro,es,MASSIVE
+crear una nueva lista de la compra,otro,es,MASSIVE
+qué listas tengo,otro,es,MASSIVE
+retire el helado del compra,otro,es,MASSIVE
+no me gusta esta canción,otro,es,MASSIVE
+guarda este canal en pandora por favor,otro,es,MASSIVE
+quién es el cantante de la canción que está sonando ahora mismo,otro,es,MASSIVE
+seleccionar todas en modo aleatorio,otro,es,MASSIVE
+solo muéstrame alguna noticias de b. b. c.,otro,es,MASSIVE
+empezar a jugar desde donde lo dejé en el cáliz de fuego,otro,es,MASSIVE
+juega conmigo,otro,es,MASSIVE
+activar música,otro,es,MASSIVE
+siguiente por favor,otro,es,MASSIVE
+solo pon una buena película en mi televisor,otro,es,MASSIVE
+cual es el punto de un plátano,otro,es,MASSIVE
+cuál es la montaña más alta de san sebastián,otro,es,MASSIVE
+solo cuál es la suma de los dos números cuatro y seis,otro,es,MASSIVE
+enséñame conciertos en madrid,otro,es,MASSIVE
+búscame una gasolinera cerca,otro,es,MASSIVE
+dime la película con la mejor puntuación de i. m. b. d. en cines cerca a mi,otro,es,MASSIVE
+quiero poner un tweet de queja a target,otro,es,MASSIVE
+enséñame las publicaciones de mi marido de hoy de facebook,otro,es,MASSIVE
+a qué hora sale el próximo tren a parís,otro,es,MASSIVE
+un uber por favor,otro,es,MASSIVE
+necesito reservar un billete de tren a málaga,otro,es,MASSIVE
+cuál es el nivel de tráfico en washington,otro,es,MASSIVE
+alarmas,otro,es,MASSIVE
+quitar mi alarma despertador,otro,es,MASSIVE
+añade alarma,otro,es,MASSIVE
+baja el volumen a veinte,otro,es,MASSIVE
+poner el volumen a cero,otro,es,MASSIVE
+cambiar el volumen de los altavoces,otro,es,MASSIVE
+pon el volumen de la musica a noventa,otro,es,MASSIVE
+por favor dime cuándo es mi reunión de finanzas,otro,es,MASSIVE
+eliminar todos los eventos programados en mi calendario por favor,otro,es,MASSIVE
+crea un recordatorio de alarma al calendario,otro,es,MASSIVE
+olly puedo usar azúcar moreno en vez de blanco para hacer calamares,otro,es,MASSIVE
+cómo se hace un filete en la barbacoa bien,otro,es,MASSIVE
+las ocho de la mañana en lanzarote que hora son en la zona del este,otro,es,MASSIVE
+puedo saber la hora,otro,es,MASSIVE
+añadir este correo a mi agenda,otro,es,MASSIVE
+abrir todos los correos electrónicos no leídos,otro,es,MASSIVE
+cuáles son los detalles del contacto de juan,otro,es,MASSIVE
+necesito enviar un correo electrónico a laura,otro,es,MASSIVE
+buenos dias que pasa,otro,es,MASSIVE
+cuenta un chiste que me ponga una sonrisa en la cara,otro,es,MASSIVE
+que sigue,otro,es,MASSIVE
+limpia el suelo por favor,otro,es,MASSIVE
+solo ponga las luces a veinte por ciento,otro,es,MASSIVE
+más oscuro,otro,es,MASSIVE
+sandle,otro,es,MASSIVE
+podemos encender las luces,otro,es,MASSIVE
+me encantaría que el enchufe wemo no estuviera activo en este momento,otro,es,MASSIVE
+enchufe encender,otro,es,MASSIVE
+quiero hacer una lista y esto debería guardarse automáticamente como un archivo de texto con la lista de títulos,otro,es,MASSIVE
+léeme lo que hay en mi lista de la compra,otro,es,MASSIVE
+eliminar la lista de miércoles,otro,es,MASSIVE
+recuerda que a mi no me gusta esta música,otro,es,MASSIVE
+guarda esta canción en mis favoritos,otro,es,MASSIVE
+por favor muéstrame detalles de la canción anterior,otro,es,MASSIVE
+repite esta canción,otro,es,MASSIVE
+como son las tendencias sobre tecnología hoy,otro,es,MASSIVE
+quiero que avance rápido el audio y luego reanude,otro,es,MASSIVE
+empieza bejeweled,otro,es,MASSIVE
+después de esta canción pon atmósfera,otro,es,MASSIVE
+ir a la lista de favoritos,otro,es,MASSIVE
+pon los cuarenta principales,otro,es,MASSIVE
+definir locuacidad,otro,es,MASSIVE
+dime algo sobre,otro,es,MASSIVE
+cursos de matematicas,otro,es,MASSIVE
+que esta pasando en la palma,otro,es,MASSIVE
+olly donde puedo ir de compras en esta zona,otro,es,MASSIVE
+solo qué películas se proyectan esta noche a las nueve de la noche en el amc nueve,otro,es,MASSIVE
+tuitear al servicio de atención al cliente que deberían esforzarse por ser más complacientes,otro,es,MASSIVE
+qué está pasando ahora mismo en twitter,otro,es,MASSIVE
+buscar el horario del tren a madrid,otro,es,MASSIVE
+necesito un taxi ahora mismo,otro,es,MASSIVE
+reserve el billete de tren de mañana para mí a bombay en cualquier tren,otro,es,MASSIVE
+en madrid el tráfico es elevado,otro,es,MASSIVE
+hay alguna alarma para hoy,otro,es,MASSIVE
+borrar todas las alarmas del domingo,otro,es,MASSIVE
+pon una alarma a las cinco de la tarde el martes,otro,es,MASSIVE
+ok google baja todo el volumen de los altavoces por favor,otro,es,MASSIVE
+silencio,otro,es,MASSIVE
+ajusta el volumen,otro,es,MASSIVE
+por favor habla alto,otro,es,MASSIVE
+tengo algún plan para esta noche despues de las ocho de la tarde,otro,es,MASSIVE
+eliminar todo en mi calendario durante las próximas dos semanas,otro,es,MASSIVE
+recuérda me mi reunión a las cinco de la tarde,otro,es,MASSIVE
+cuál es la forma mas fácil y rápida de cocinar un pavo,otro,es,MASSIVE
+buscar una receta que utilice carne picada y calabacín,otro,es,MASSIVE
+si es mediodia en madrid que hora es en california,otro,es,MASSIVE
+olly que hora es en california,otro,es,MASSIVE
+añade dale arroba gmail punto com a mis contactos,otro,es,MASSIVE
+puedes ir a revisar mis correos en mi lugar,otro,es,MASSIVE
+busca el contacto,otro,es,MASSIVE
+escribe un correo a tom la fecha y la hora de la reunión de mañana,otro,es,MASSIVE
+buen dia,otro,es,MASSIVE
+necesito una broma graciosa para contarle a samuel,otro,es,MASSIVE
+necesito que me revisen la presion de los neumaticos,otro,es,MASSIVE
+aspirar la cocina,otro,es,MASSIVE
+cambia el color de las luces,otro,es,MASSIVE
+baja el brillo,otro,es,MASSIVE
+hora de dormir olly,otro,es,MASSIVE
+alexa por favor enciende las luces,otro,es,MASSIVE
+enciende las luces,otro,es,MASSIVE
+no quiero usar más el enchufe,otro,es,MASSIVE
+enciende esta toma de corriente,otro,es,MASSIVE
+por favor agregue un nuevo artículo a la lista,otro,es,MASSIVE
+dame la lista de la compra,otro,es,MASSIVE
+borrar el artículo por favor de mi lista,otro,es,MASSIVE
+hola google esta canción es demasiado ruidosa,otro,es,MASSIVE
+a mi me gusta esto,otro,es,MASSIVE
+identificador de canción,otro,es,MASSIVE
+cambiar canción,otro,es,MASSIVE
+qué es tan limpias de las últimas seis horas,otro,es,MASSIVE
+iniciar audiolibro las dos torres,otro,es,MASSIVE
+juega solitario conmigo,otro,es,MASSIVE
+pon todas las canciones de rock,otro,es,MASSIVE
+ponme el último podcast sobre cadena ser,otro,es,MASSIVE
+encender la radio,otro,es,MASSIVE
+usa esta palabra en una oración,otro,es,MASSIVE
+quién es el actual secretario del tesoro de estados unidos,otro,es,MASSIVE
+cuatro más cinco es igual a nueve,otro,es,MASSIVE
+que eventos hay cercano de yo,otro,es,MASSIVE
+lo que hay cerca para cenar,otro,es,MASSIVE
+necesito una peli de chicas algunas ideas,otro,es,MASSIVE
+publicar una foto en mi teléfono en facebook,otro,es,MASSIVE
+tengo nuevos likes,otro,es,MASSIVE
+puedes encontrarme un billete de tren a montauk,otro,es,MASSIVE
+reserva una uber,otro,es,MASSIVE
+compre un boleto de tren de lakeland florida a nueva york,otro,es,MASSIVE
+atasco de tráfico,otro,es,MASSIVE
+me enseñas mis alarmas,otro,es,MASSIVE
+quitar mis alarmas de las nueve de la mañana,otro,es,MASSIVE
+ponga mi alarma para el tiempo,otro,es,MASSIVE
+está muy alto por favor puedes bajar la música,otro,es,MASSIVE
+por favor silencia el sonido,otro,es,MASSIVE
+necesito ver la configuración del volumen,otro,es,MASSIVE
+sube el volumen de la música,otro,es,MASSIVE
+que puedes decirme sobre el baile del viernes,otro,es,MASSIVE
+eliminar chat con juan,otro,es,MASSIVE
+organice el evento de reunión habitual para nuestros viajes de negocios,otro,es,MASSIVE
+enseña receta de pollo al chilindrón,otro,es,MASSIVE
+necesito convertir las nueve a. m. c. s. t. a hora e. s. t.,otro,es,MASSIVE
+dime la fecha de hoy,otro,es,MASSIVE
+añadir la dirección de correo del trabajo,otro,es,MASSIVE
+abrir correo electrónico,otro,es,MASSIVE
+busca a mi esposa,otro,es,MASSIVE
+no quería que enviaras ese texto todavía espera a que te diga que lo envíes,otro,es,MASSIVE
+que pasa,otro,es,MASSIVE
+enséñame un chiste divertido,otro,es,MASSIVE
+dame las cosas más recientes que tienes angelina jolie,otro,es,MASSIVE
+por favor enciende roomba,otro,es,MASSIVE
+cambia las luces a rosa,otro,es,MASSIVE
+atenua luz,otro,es,MASSIVE
+no luces,otro,es,MASSIVE
+esta un poquito oscuro sube la luz,otro,es,MASSIVE
+deshabilitar el enchufe wemo,otro,es,MASSIVE
+enciende el enchufe de la olla arrocera,otro,es,MASSIVE
+hacer una nueva lista de entrenamientos recientes,otro,es,MASSIVE
+tengo algo en la lista,otro,es,MASSIVE
+busca la lista que quieres eliminar,otro,es,MASSIVE
+esta canción no es muy buena,otro,es,MASSIVE
+alexa gran canción para el viaje,otro,es,MASSIVE
+qué servicio tiene música soul para escuchar,otro,es,MASSIVE
+establecer la pista veintiocho en el reproductor de música en repetición,otro,es,MASSIVE
+cuales son las últimas noticias de el país,otro,es,MASSIVE
+consígueme el currículum del audiolibro más reciente,otro,es,MASSIVE
+por favor abre un juego de billar quiesiera jugar contigo,otro,es,MASSIVE
+reproducir algunas canciones de bachata,otro,es,MASSIVE
+toca la siguiente,otro,es,MASSIVE
+pon la radio noventa y cinco punto cinco,otro,es,MASSIVE
+describe el edificio de telefónica,otro,es,MASSIVE
+que tan grande es la torre de londres,otro,es,MASSIVE
+diez porcentajes de cien,otro,es,MASSIVE
+qué eventos están programados para este fin de semana en mi área,otro,es,MASSIVE
+encontrar zapatería cerca de mi casa,otro,es,MASSIVE
+qué es una nueva película de ciencia ficción,otro,es,MASSIVE
+tuitea una queja sobre el mal sistema de drenaje,otro,es,MASSIVE
+puedes decirme los últimos tuits de mi feed por favor,otro,es,MASSIVE
+dime los trenes de california a nueva jersey después de las once de la noche,otro,es,MASSIVE
+programar un taxi de casa al aeropuerto a las ocho de la mañana,otro,es,MASSIVE
+resérvame un billete a parís en eurostar este fin de semana,otro,es,MASSIVE
+como esta el trafico en el centro de la ciudad,otro,es,MASSIVE
+dime cuando son las próximas alarmas,otro,es,MASSIVE
+quitar alarma de las seis de la mañana el martes,otro,es,MASSIVE
+me pondrás una alarma un día antes de todas mis clases de gimnasia en mi calendario,otro,es,MASSIVE
+baja el volumen a diez por ciento,otro,es,MASSIVE
+por favor para el altavoz,otro,es,MASSIVE
+configuración de volumen por favor,otro,es,MASSIVE
+no te oigo puedes repetirlo más alto,otro,es,MASSIVE
+esta mi calendario libre para hoy a las cuatro de la tarde,otro,es,MASSIVE
+ya no me uniré a mamá para almorzar mañana,otro,es,MASSIVE
+fecha de inscripción,otro,es,MASSIVE
+comidas sanas,otro,es,MASSIVE
+cambiar mi reloj a la zona horaria central de mi zona actual,otro,es,MASSIVE
+dime la hora local en españa,otro,es,MASSIVE
+añade sam arroba gmail punto com a mi lista de contactos,otro,es,MASSIVE
+olly tengo algún email de roberto,otro,es,MASSIVE
+cuál es el número de teléfono de maria garcia,otro,es,MASSIVE
+responder al último correo recibido,otro,es,MASSIVE
+buenas tardes,otro,es,MASSIVE
+cuentame chistes,otro,es,MASSIVE
+como es posible,otro,es,MASSIVE
+enciende la aspiradora,otro,es,MASSIVE
+por favor pon la luz adecuada para leer,otro,es,MASSIVE
+alexa baja las luces del salon,otro,es,MASSIVE
+no necesito las luces,otro,es,MASSIVE
+olly está demasiado oscuro no me puedo ver ni las manos,otro,es,MASSIVE
+cambia el color de las luces en la casa,otro,es,MASSIVE
+desactiva el enchufe,otro,es,MASSIVE
+puedes establecer horarios para tus dispositivos y controlarlos a distancia mediante una conexión móvil a internet,otro,es,MASSIVE
+hazme una nueva lista de verificación,otro,es,MASSIVE
+por favor dame el nombre de todas mis listas,otro,es,MASSIVE
+borra la lista reciente ahora,otro,es,MASSIVE
+esa canción de fondo es terrible,otro,es,MASSIVE
+me gusta la música rock suave,otro,es,MASSIVE

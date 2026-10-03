@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bandeja de salida</title>
+<link rel="stylesheet" href="/hub/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<main>
+  <h1>Bandeja de salida (SMS)</h1>
+  <div class="notice"><span class="badge sim">PASARELA SIMULADA</span> Las respuestas a un socio que escribió salen solas (él preguntó).
+    <b>Los avisos a todos los socios no salen hasta que alguien de la cooperativa toca «Aprobar».</b>
+    Todo texto viene de las tarjetas revisadas (<a href="/hub/contenido.html">Contenido</a>).</div>
+  <p class="row" style="gap:6px;align-items:center">
+    <label class="inline">Ver: <select id="filter">
+      <option value="pending_approval">Por aprobar</option><option value="sent_simulated">Enviados (simulado)</option>
+      <option value="rejected">Rechazados</option><option value="">Todos</option></select></label>
+    <label class="inline">Quién aprueba: <input id="by" placeholder="su nombre" maxlength="80"></label>
+  </p>
+  <div id="groups"></div>
+</main>
+<script src="/hub/common.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const STATUS = { pending_approval: '<span class="badge demo">por aprobar</span>', sent_simulated: '<span class="badge sim">enviado (simulado)</span>',
+  rejected: '<span class="badge grey">rechazado</span>' };
+async function load() {
+  const f = $("filter").value;
+  const r = await api("/api/outbox" + (f ? "?status=" + f : ""));
+  const groups = {};
+  for (const m of r.messages) {
+    const k = m.alert_id ? "a" + m.alert_id : "replies";
+    (groups[k] = groups[k] || []).push(m);
+  }
+  const keys = Object.keys(groups).sort((a, b) => (a === "replies") - (b === "replies") || b.localeCompare(a, undefined, { numeric: true }));
+  $("groups").innerHTML = keys.map((k) => {
+    const msgs = groups[k];
+    const pending = msgs.filter((m) => m.status === "pending_approval");
+    const title = k === "replies" ? "Respuestas a socios que escribieron" : `Aviso de brote #${k.slice(1)} — ${msgs.length} mensajes`;
+    const bulk = pending.length ? `<button class="primary" onclick="decideAll('${k}','approve')">Aprobar los ${pending.length}</button>
+      <button class="danger" onclick="decideAll('${k}','reject')">Rechazar los ${pending.length}</button>` : "";
+    return `<div class="card"><h2 style="margin-top:0">${title}</h2><p>${bulk}</p><div class="table-wrap"><table>
+      <thead><tr><th>Para</th><th>Mensaje</th><th>Tarjeta</th><th>Estado</th><th></th></tr></thead><tbody>` +
+      msgs.slice(0, 200).map((m) => `<tr>
+        <td class="small">${esc(m.name || "no registrado")}<br><span class="code">${esc(m.phone)}</span></td>
+        <td>${esc(m.body)}<br><span class="small muted">${m.length} caracteres · ${m.segments} SMS · ${fmtDate(m.created_at)}</span></td>
+        <td class="small"><span class="code">${esc(m.card_id || "")}</span> (${esc(m.lang || "")})<br>${m.card_status ? statusBadge(m.card_status) : ""}</td>
+        <td class="small">${STATUS[m.status] || esc(m.status)}${m.decided_by ? "<br>" + esc(m.decided_by) : ""}</td>
+        <td>${m.status === "pending_approval" ? `<button class="primary" onclick="decide(${m.id},'approve')">Aprobar</button> <button class="danger" onclick="decide(${m.id},'reject')">Rechazar</button>` : ""}</td>
+      </tr>`).join("") + `</tbody></table></div>${msgs.length > 200 ? `<p class="small muted">Mostrando 200 de ${msgs.length}.</p>` : ""}</div>`;
+  }).join("") || '<div class="card muted">No hay mensajes.</div>';
+  window._groups = groups;
+}
+async function decide(id, what) {
+  try { await api(`/api/outbox/${id}/${what}`, { json: { by: $("by").value || null } }); } catch (e) { alert(e.message); }
+  load();
+}
+async function decideAll(k, what) {
+  const ids = window._groups[k].filter((m) => m.status === "pending_approval").map((m) => m.id);
+  if (!confirm(`${what === "approve" ? "¿Aprobar y mandar" : "¿Rechazar"} ${ids.length} mensajes?`)) return;
+  for (const id of ids) { try { await api(`/api/outbox/${id}/${what}`, { json: { by: $("by").value || null } }); } catch (e) { /* already decided */ } }
+  load();
+}
+$("filter").onchange = load;
+try { $("by").value = localStorage.getItem("cafetal-by") || ""; } catch (e) {}
+$("by").onchange = () => { try { localStorage.setItem("cafetal-by", $("by").value); } catch (e) {} };
+(async function () { await initPage(); load(); })();
+</script>
+</body>
+</html>

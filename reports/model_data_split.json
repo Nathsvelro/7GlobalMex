@@ -1,0 +1,187 @@
+{
+  "hash": "dHash 72-bit on equalised grayscale 9x9, min over 8 flips/rotations, Hamming <= 8, union-find",
+  "seed": 42,
+  "size": 224,
+  "classes": [
+    "sano",
+    "roya",
+    "minador",
+    "phoma",
+    "cercospora",
+    "otro"
+  ],
+  "strata": {
+    "imagenette/otro": {
+      "images": 700,
+      "exact_dup_groups": 700,
+      "groups": 689,
+      "largest_group": 5,
+      "median_group": 1,
+      "images_per_split": {
+        "val": 105,
+        "test": 105,
+        "train": 490
+      },
+      "groups_per_split": {
+        "val": 105,
+        "test": 105,
+        "train": 479
+      }
+    },
+    "jmuben/cercospora": {
+      "images": 7681,
+      "exact_dup_groups": 80,
+      "groups": 78,
+      "largest_group": 192,
+      "median_group": 96,
+      "images_per_split": {
+        "train": 5377,
+        "val": 1152,
+        "test": 1152
+      },
+      "groups_per_split": {
+        "val": 12,
+        "test": 12,
+        "train": 54
+      }
+    },
+    "jmuben/minador": {
+      "images": 16978,
+      "exact_dup_groups": 455,
+      "groups": 246,
+      "largest_group": 352,
+      "median_group": 64,
+      "images_per_split": {
+        "train": 11906,
+        "test": 2560,
+        "val": 2512
+      },
+      "groups_per_split": {
+        "val": 36,
+        "test": 38,
+        "train": 172
+      }
+    },
+    "jmuben/phoma": {
+      "images": 6571,
+      "exact_dup_groups": 181,
+      "groups": 171,
+      "largest_group": 160,
+      "median_group": 40,
+      "images_per_split": {
+        "train": 4593,
+        "test": 992,
+        "val": 986
+      },
+      "groups_per_split": {
+        "val": 24,
+        "test": 27,
+        "train": 120
+      }
+    },
+    "jmuben/roya": {
+      "images": 8336,
+      "exact_dup_groups": 520,
+      "groups": 373,
+      "largest_group": 304,
+      "median_group": 16,
+      "images_per_split": {
+        "train": 5824,
+        "val": 1264,
+        "test": 1248
+      },
+      "groups_per_split": {
+        "val": 63,
+        "test": 65,
+        "train": 245
+      }
+    },
+    "jmuben/sano": {
+      "images": 18983,
+      "exact_dup_groups": 14,
+      "groups": 11,
+      "largest_group": 3600,
+      "median_group": 1401,
+      "images_per_split": {
+        "val": 2761,
+        "train": 13102,
+        "test": 3120
+      },
+      "groups_per_split": {
+        "val": 2,
+        "test": 2,
+        "train": 7
+      }
+    },
+    "plantdoc/otro": {
+      "images": 2569,
+      "exact_dup_groups": 2518,
+      "groups": 2440,
+      "largest_group": 29,
+      "median_group": 1,
+      "images_per_split": {
+        "train": 1798,
+        "test": 385,
+        "val": 386
+      },
+      "groups_per_split": {
+        "val": 373,
+        "test": 367,
+        "train": 1700
+      }
+    }
+  },
+  "unreadable_files": 0,
+  "cross_label_exact_duplicates": 0,
+  "selected": {
+    "train": {
+      "sano": 1500,
+      "roya": 1500,
+      "minador": 1500,
+      "phoma": 1500,
+      "cercospora": 1500,
+      "otro": 2663
+    },
+    "train_groups": {
+      "sano": 7,
+      "roya": 245,
+      "minador": 172,
+      "phoma": 120,
+      "cercospora": 54,
+      "otro": 1500
+    },
+    "val": {
+      "sano": 300,
+      "roya": 300,
+      "minador": 300,
+      "phoma": 300,
+      "cercospora": 300,
+      "otro": 267
+    },
+    "val_groups": {
+      "sano": 2,
+      "roya": 63,
+      "minador": 36,
+      "phoma": 24,
+      "cercospora": 12,
+      "otro": 150
+    },
+    "test": {
+      "sano": 500,
+      "roya": 500,
+      "minador": 500,
+      "phoma": 500,
+      "cercospora": 500,
+      "otro": 446
+    },
+    "test_groups": {
+      "sano": 2,
+      "roya": 65,
+      "minador": 38,
+      "phoma": 27,
+      "cercospora": 12,
+      "otro": 250
+    }
+  },
+  "extra_inat_images": 200
+}

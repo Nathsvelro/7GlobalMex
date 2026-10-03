@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cafetal Hub</title>
+<link rel="stylesheet" href="/hub/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<main>
+  <h1>Hub de la cooperativa</h1>
+  <p class="muted">Registro de socios, reportes de hojas por SMS, avisos de brote, lista de visitas del técnico y precio de referencia.
+    La computadora de la cooperativa guarda todo; no usa internet.</p>
+
+  <div id="demo-note"></div>
+  <div class="stats" id="stats"></div>
+
+  <h2>Avisos de brote activos</h2>
+  <div id="alerts" class="card muted">Cargando…</div>
+
+  <div class="row">
+    <div class="card grow">
+      <h2 style="margin-top:0">Páginas</h2>
+      <ul>
+        <li><a href="/hub/registro.html">Registro de socios</a> — alta con consentimiento, lista, borrar socio.</li>
+        <li><a href="/hub/simulador.html">Simulador SMS</a> — el teléfono básico de Noor (SIMULADO).</li>
+        <li><a href="/hub/bandeja.html">Bandeja de salida</a> — aprobar o rechazar avisos antes de mandarlos.</li>
+        <li><a href="/hub/mapa.html">Mapa</a> — parcelas, últimos resultados y zonas de aviso.</li>
+        <li><a href="/hub/tecnico.html">Técnico</a> — lista de visitas ordenada; el técnico decide.</li>
+        <li><a href="/hub/contenido.html">Contenido</a> — revisar textos y audios, grabar voz nativa.</li>
+        <li><a href="/app/">App del teléfono</a> (para el teléfono inteligente de la hija).</li>
+      </ul>
+    </div>
+    <div class="card grow">
+      <h2 style="margin-top:0">Precio de referencia (no es IA)</h2>
+      <div id="prices" class="muted">Cargando…</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Reglas (decisiones de diseño, no umbrales agronómicos)</h2>
+    <div id="params" class="small"></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Datos DEMO</h2>
+    <p class="small muted">Borra todo lo guardado en el hub (socios, reportes, mensajes, fotos) y vuelve a cargar los datos de ejemplo.</p>
+    <button class="danger" id="reset">Reiniciar datos DEMO</button> <span id="reset-msg" class="small"></span>
+  </div>
+</main>
+<script src="/hub/common.js"></script>
+<script>
+(async function () {
+  const s = await initPage();
+  if (s) {
+    if (s.demo) document.getElementById("demo-note").innerHTML =
+      '<div class="notice warn"><b>DEMO:</b> los socios, teléfonos y reportes cargados son datos de ejemplo inventados. La pasarela SMS es SIMULADA.</div>';
+    const items = [
+      ["Socios", s.members, "/hub/registro.html"], ["Reportes (7 días)", s.observations_7d, "/hub/mapa.html"],
+      ["Roya (7 días)", s.roya_7d, "/hub/mapa.html"], ["Avisos activos", s.active_alerts, "/hub/mapa.html"],
+      ["Por aprobar", s.pending_approval, "/hub/bandeja.html"], ["Lista del técnico", s.worklist, "/hub/tecnico.html"],
+      ["Mensajes al técnico", s.officer_messages_new, "/hub/tecnico.html#mensajes"], ["Ejemplos revisados", s.labels, "/hub/tecnico.html#etiquetas"],
+    ];
+    document.getElementById("stats").innerHTML = items.map(([l, v, h]) =>
+      `<div class="stat"><a href="${h}"><b>${v}</b>${l}</a></div>`).join("");
+  }
+  const a = await api("/api/alerts");
+  const act = a.alerts.filter((x) => x.active);
+  document.getElementById("alerts").innerHTML = act.length ? act.map((x) =>
+    `<div class="notice alert"><b>Roya cerca de ${esc(x.community)}</b>: ${x.n_reports} socios reportaron roya en 7 días (${fmtDate(x.created_at)}).
+     Mensajes: ${x.messages.pending_approval || 0} por aprobar, ${x.messages.sent_simulated || 0} enviados (simulado), ${x.messages.rejected || 0} rechazados.
+     <a href="/hub/bandeja.html">Ir a la bandeja</a></div>`).join("") : "No hay avisos activos.";
+
+  const p = await api("/api/prices");
+  document.getElementById("prices").innerHTML = !p.available ? "No hay tabla de precios (data/prices.json)." :
+    `${p.demo ? '<span class="badge demo">DEMO</span> ' : ""}<table><tr><th>Producto</th><th>Precio</th><th>Fecha</th><th>Fuente</th></tr>` +
+    p.items.map((i) => `<tr><td>${esc(i.name_es)}</td><td>${i.price.toFixed(2)} ${esc(i.unit)}</td><td>${esc(i.date)}</td><td>${esc(i.source)}</td></tr>`).join("") +
+    `</table><p class="small">Precio nacional o internacional de referencia, nunca el precio en la comunidad.${p.demo ? " Valores DEMO: falta revisarlos en la fuente oficial." : ""}</p>`;
+
+  const prm = await api("/api/params");
+  const o = prm.outbreak, w = prm.worklist;
+  document.getElementById("params").innerHTML =
+    `<p><b>Aviso de brote:</b> ${o.min_members} o más socios distintos reportan ROYA (confianza ≥ ${o.min_conf}%) a menos de ${o.radius_km} km entre sí en los últimos ${o.window_days} días →
+     un aviso por zona cada ${o.one_alert_per_area_days} días. El SMS a los socios espera la aprobación del personal.</p>
+     <p><b>Lista del técnico:</b> últimos ${w.days} días; puntaje = peso × confianza + ${w.alert_bonus} si está en zona de aviso.
+     Pesos: ${Object.entries(w.weights).map(([k, v]) => k + " " + v).join(", ")}.</p>
+     <p><b>Mensajes de texto libre:</b> clasificador pequeño (umbral ${prm.intent.threshold}); si no está seguro, el mensaje pasa al técnico.
+     Palabras exactas: PRECIO, AYUDA, TECNICO.</p>`;
+})();
+
+document.getElementById("reset").onclick = async () => {
+  if (!confirm("¿Borrar todos los datos del hub y cargar los datos DEMO otra vez?")) return;
+  const m = document.getElementById("reset-msg");
+  try { const r = await api("/api/demo/reset", { method: "POST" }); m.textContent = `Listo: ${r.members} socios, ${r.observations} reportes.`; setTimeout(() => location.reload(), 800); }
+  catch (e) { m.textContent = "Error: " + e.message; m.className = "small err"; }
+};
+</script>
+</body>
+</html>

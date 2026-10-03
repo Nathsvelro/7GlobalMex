@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revisión de contenido</title>
+<link rel="stylesheet" href="/hub/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<main>
+  <h1>Revisión de contenido (tarjetas)</h1>
+  <div class="notice">Todo lo que un socio ve o escucha sale de estas tarjetas (<span class="code">content/cards.json</span>). Nada se inventa.
+    Cada idioma queda <span class="badge unv">SIN VERIFICAR</span> hasta que una persona lo revisa: un agrónomo o el técnico para los consejos,
+    un hablante nativo de tseltal para el texto y la voz en tseltal. El tseltal actual es un borrador hecho con IA y su audio es una voz sintética provisional.</div>
+  <div class="card row" style="gap:8px 18px;align-items:flex-end">
+    <div><label for="reviewer">Quién revisa</label><input id="reviewer" maxlength="80" placeholder="nombre y cargo"></div>
+    <div><label for="speaker">Quién graba (voz nativa)</label><input id="speaker" maxlength="80" placeholder="nombre"></div>
+    <div><label for="type">Tipo</label><select id="type"><option value="">Todos</option><option value="diagnosis">Diagnóstico</option><option value="advice">Consejo</option>
+      <option value="sms">SMS</option><option value="alert">Aviso</option><option value="ui">Pantalla (UI)</option></select></div>
+    <div><label for="st">Estado</label><select id="st"><option value="">Todos</option><option value="unverified">Con algo sin verificar</option><option value="verified">Todo verificado</option></select></div>
+    <div><label for="q">Buscar</label><input id="q" placeholder="texto o id"></div>
+  </div>
+  <p class="small muted" id="summary"></p>
+  <p class="small muted" id="rec-note"></p>
+  <div id="list"></div>
+</main>
+<script src="/hub/common.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+let data = null, recorder = null, chunks = [], recTarget = null;
+const LANG_NAME = { es: "Español", tzh: "Tseltal" };
+function remember(id) { try { const v = localStorage.getItem("cafetal-" + id); if (v) $(id).value = v; } catch (e) {} $(id).addEventListener("change", () => { try { localStorage.setItem("cafetal-" + id, $(id).value); } catch (e) {} }); }
+
+async function load() { data = await api("/api/cards"); render(); }
+function render() {
+  const langs = Object.keys(data.languages);
+  const t = $("type").value, st = $("st").value, q = $("q").value.toLowerCase();
+  const cards = data.cards.filter((c) => (!t || c.type === t) &&
+    (!st || (st === "verified" ? langs.every((l) => c.status[l] === "verified") : langs.some((l) => c.status[l] !== "verified"))) &&
+    (!q || (c.id + " " + langs.map((l) => c[l]).join(" ")).toLowerCase().includes(q)));
+  const nVer = (l) => data.cards.filter((c) => c.status[l] === "verified").length;
+  $("summary").textContent = `${data.cards.length} tarjetas · verificadas: ` + langs.map((l) => `${LANG_NAME[l] || l} ${nVer(l)}`).join(", ") + ` · mostrando ${cards.length}`;
+  $("list").innerHTML = cards.map((c) => `<div class="card"><div><b class="code">${esc(c.id)}</b> <span class="badge grey">${esc(c.type)}</span>
+      ${c.slots && c.slots.length ? `<span class="small muted">espacios: ${c.slots.map((s) => "{" + esc(s) + "}").join(" ")}</span>` : ""}</div>
+    <div class="row" style="margin-top:8px">` + langs.map((l) => {
+      const audio = c.audio && c.audio[l];
+      const src = c.audio_source && c.audio_source[l];
+      return `<div class="grow" style="border-left:3px solid #dcd8cc;padding-left:10px">
+        <div><b>${LANG_NAME[l] || l}</b> ${statusBadge(c.status[l])} ${c.reviewed_by && c.reviewed_by[l] ? `<span class="small muted">por ${esc(c.reviewed_by[l])}</span>` : ""}</div>
+        <p style="margin:6px 0" class="wrap">${esc(c[l] || "(sin texto)")}</p>
+        ${audio ? `<audio controls preload="none" src="/content/${esc(audio)}?v=${encodeURIComponent(src || "")}" style="width:100%;max-width:340px;height:34px"></audio>
+          <div class="small muted">Audio: ${esc(src || "")} ${src && src.startsWith("native") ? '<span class="badge ok">voz nativa</span>' : '<span class="badge unv">sintético</span>'}</div>` : '<div class="small muted">Sin audio (solo SMS).</div>'}
+        <p class="row" style="gap:6px;margin:8px 0 0">
+          ${c.status[l] === "verified" ? `<button onclick="verify('${c.id}','${l}',false)">Quitar verificado</button>` : `<button class="primary" onclick="verify('${c.id}','${l}',true)">Marcar verificado</button>`}
+          ${c.type !== "sms" && c.type !== "alert" ? `<button id="rec-${c.id}-${l}" onclick="rec('${c.id}','${l}')">● Grabar</button>
+          <label class="btn" style="margin:0;font-weight:400">Subir archivo<input type="file" accept="audio/*" style="display:none" onchange="uploadFile('${c.id}','${l}',this)"></label>` : ""}
+        </p></div>`;
+    }).join("") + `</div><p class="small muted wrap" style="margin:8px 0 0">Fuente: ${esc(c.source || "")}</p></div>`).join("");
+}
+async function verify(id, lang, ok) {
+  const reviewer = $("reviewer").value.trim();
+  if (ok && !reviewer) { alert("Escriba arriba el nombre de quien revisa."); $("reviewer").focus(); return; }
+  try { await api(`/api/cards/${id}/verify`, { json: { lang, reviewer, verified: ok } }); await load(); } catch (e) { alert(e.message); }
+}
+async function upload(id, lang, blob, filename) {
+  const speaker = $("speaker").value.trim();
+  if (!speaker) { alert("Escriba arriba el nombre de quien graba."); $("speaker").focus(); return; }
+  const fd = new FormData();
+  fd.append("file", blob, filename);
+  fd.append("speaker", speaker);
+  try {
+    const r = await fetch(`/api/cards/${id}/audio/${lang}`, { method: "POST", body: fd });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.detail || r.statusText);
+    await load();
+    $("rec-note").textContent = `Guardado ${j.path}${j.converted_to_mp3 ? " (convertido a MP3)" : ""}. Queda SIN VERIFICAR hasta que alguien lo escuche y lo marque.`;
+  } catch (e) { alert("No se pudo subir: " + e.message); }
+}
+function uploadFile(id, lang, input) { if (input.files[0]) upload(id, lang, input.files[0], input.files[0].name); }
+async function rec(id, lang) {
+  const btn = $(`rec-${id}-${lang}`);
+  if (recorder && recorder.state === "recording") {
+    if (recTarget !== id + lang) return;
+    recorder.stop();
+    return;
+  }
+  if (!navigator.mediaDevices || !window.MediaRecorder) { alert("Este navegador no puede grabar aquí (necesita localhost o HTTPS). Use «Subir archivo»."); return; }
+  if (!$("speaker").value.trim()) { alert("Escriba arriba el nombre de quien graba."); $("speaker").focus(); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const type = ["audio/webm", "audio/ogg", "audio/mp4"].find((t) => MediaRecorder.isTypeSupported(t)) || "";
+    recorder = new MediaRecorder(stream, type ? { mimeType: type } : undefined);
+    chunks = []; recTarget = id + lang;
+    recorder.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+    recorder.onstop = () => {
+      stream.getTracks().forEach((t) => t.stop());
+      const mime = (recorder.mimeType || "audio/webm").split(";")[0];
+      const ext = mime.includes("ogg") ? "ogg" : mime.includes("mp4") ? "m4a" : "webm";
+      btn.textContent = "● Grabar";
+      upload(id, lang, new Blob(chunks, { type: mime }), `${id}.${ext}`);
+    };
+    recorder.start();
+    btn.textContent = "■ Detener y guardar";
+  } catch (e) { alert("No se pudo usar el micrófono: " + e.message); }
+}
+["type", "st"].forEach((id) => ($(id).onchange = render));
+$("q").oninput = render;
+(async function () {
+  await initPage();
+  remember("reviewer"); remember("speaker");
+  if (!window.isSecureContext) $("rec-note").textContent = "Para grabar con el micrófono abra esta página como http://localhost:8000 (o HTTPS). Desde otra computadora use «Subir archivo».";
+  load();
+})();
+</script>
+</body>
+</html>

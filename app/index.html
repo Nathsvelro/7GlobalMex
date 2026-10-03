@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4e342e">
+<title>Cafetal</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- All visible words are filled from ../content/cards.json via data-card="<card id>" (see content.js). -->
+<header class="top" id="top">
+  <img src="icons/logo.svg" alt="" class="logo">
+  <h1 data-card="ui_app_name"></h1>
+  <button type="button" id="btn-lock" class="icon-btn" hidden><svg class="i"><use href="icons/icons.svg#lock"/></svg></button>
+</header>
+<div class="strip" id="strip">
+  <span class="pill demo" id="pill-demo" hidden><span data-card="ui_demo"></span></span>
+  <span class="pill unverified" id="pill-unverified" hidden><span data-card="ui_unverified"></span></span>
+  <span class="pill ok" id="pill-offline" hidden><svg class="i"><use href="icons/icons.svg#offline"/></svg><span data-card="ui_offline_ready"></span></span>
+</div>
+
+<main>
+  <!-- 1a. language -->
+  <section class="screen" id="s-lang" hidden>
+    <img src="icons/logo.svg" alt="" class="hero-logo">
+    <div class="say center" data-card="ui_choose_language" data-lang="tzh"></div>
+    <div class="say center" data-card="ui_choose_language" data-lang="es"></div>
+    <div class="lang-list" id="lang-list"></div>
+    <button type="button" class="btn primary big" id="lang-next" disabled><svg class="i"><use href="icons/icons.svg#arrow"/></svg><span data-card="ui_continue"></span></button>
+  </section>
+
+  <!-- 1b. consent -->
+  <section class="screen" id="s-consent" hidden>
+    <div class="say title" data-card="ui_consent_title"></div>
+    <div class="say card-box" data-card="ui_consent_text"></div>
+    <div class="row2">
+      <button type="button" class="btn danger" id="consent-no"><svg class="i"><use href="icons/icons.svg#x"/></svg><span data-card="ui_consent_decline"></span></button>
+      <button type="button" class="btn primary" id="consent-yes"><svg class="i"><use href="icons/icons.svg#check"/></svg><span data-card="ui_consent_accept"></span></button>
+    </div>
+  </section>
+
+  <!-- 1c. member ID + optional PIN -->
+  <section class="screen" id="s-member" hidden>
+    <div class="say" data-card="ui_member_id_prompt"></div>
+    <label class="field member"><svg class="i"><use href="icons/icons.svg#person"/></svg><span class="prefix">M</span>
+      <input id="member-digits" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="0123"></label>
+    <div class="say error" data-card="ui_member_id_invalid" id="member-err" hidden></div>
+    <div class="say" data-card="ui_pin_optional"></div>
+    <label class="field"><svg class="i"><use href="icons/icons.svg#key"/></svg>
+      <input id="pin-new" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="new-password" placeholder="••••"></label>
+    <button type="button" class="btn primary big" id="member-next"><svg class="i"><use href="icons/icons.svg#arrow"/></svg><span data-card="ui_continue"></span></button>
+  </section>
+
+  <!-- lock screen (PIN set) -->
+  <section class="screen" id="s-lock" hidden>
+    <svg class="i hero-icon"><use href="icons/icons.svg#lock"/></svg>
+    <div class="say center" data-card="ui_pin_prompt"></div>
+    <label class="field"><svg class="i"><use href="icons/icons.svg#key"/></svg>
+      <input id="pin-enter" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="••••"></label>
+    <div class="say error" data-card="ui_pin_wrong" id="pin-err" hidden></div>
+    <button type="button" class="btn primary big" id="pin-ok"><svg class="i"><use href="icons/icons.svg#arrow"/></svg><span data-card="ui_continue"></span></button>
+  </section>
+
+  <!-- 2. home -->
+  <section class="screen" id="s-home" hidden>
+    <label class="camera-btn">
+      <svg class="i"><use href="icons/icons.svg#camera"/></svg>
+      <span data-card="ui_take_photo"></span>
+      <input type="file" accept="image/*" capture="environment" id="file-camera" class="vh">
+    </label>
+    <label class="btn">
+      <svg class="i"><use href="icons/icons.svg#image"/></svg><span data-card="ui_choose_photo"></span>
+      <input type="file" accept="image/*" id="file-gallery" class="vh">
+    </label>
+    <div class="tip"><img src="icons/tip.svg" alt=""><div class="say" data-card="ui_photo_tip_underside"></div></div>
+    <div class="tip"><img src="icons/leaf_home.svg" alt=""><div class="say" data-card="ui_tip_bring_leaf_home"></div></div>
+    <button type="button" class="chip warn big-chip" id="home-pending" hidden><svg class="i"><use href="icons/icons.svg#sms"/></svg><span data-card="ui_pending_sms"></span><b id="home-pending-n"></b></button>
+    <div class="say small muted" data-card="ui_limits_note"></div>
+  </section>
+
+  <!-- 3-7. analysis and result -->
+  <section class="screen" id="s-result" hidden>
+    <div id="r-busy" class="busy">
+      <div class="spinner"></div>
+      <div class="say center" data-card="ui_analyzing"></div>
+    </div>
+    <div id="r-result" class="result-head">
+      <img id="r-photo" alt="" class="photo">
+      <img id="r-icon" alt="" class="res-icon">
+    </div>
+    <div id="r-body" hidden>
+      <h2 class="res-name" id="r-name"></h2>
+      <div class="say big" id="r-diag"></div>
+      <div class="say reason" id="r-reason" hidden></div>
+      <div class="conf"><span data-card="ui_confidence"></span><div class="bar"><i id="r-bar"></i></div><b id="r-conf"></b></div>
+      <div class="row2 play">
+        <button type="button" class="btn play-btn" id="r-play-tzh"><svg class="i"><use href="icons/icons.svg#speaker"/></svg><span data-card="ui_play_tzh"></span><span class="badge unverified" id="r-badge-tzh" data-card="ui_unverified"></span></button>
+        <button type="button" class="btn play-btn" id="r-play-es"><svg class="i"><use href="icons/icons.svg#speaker"/></svg><span data-card="ui_play_es"></span><span class="badge unverified" id="r-badge-es" data-card="ui_unverified"></span></button>
+      </div>
+      <audio id="audio-tzh" preload="auto"></audio>
+      <audio id="audio-es" preload="auto"></audio>
+      <h3 class="sec"><svg class="i"><use href="icons/icons.svg#leaf"/></svg><span data-card="ui_what_to_do"></span></h3>
+      <div class="say card-box" id="r-advice"></div>
+      <div class="say card-box warn" id="r-advice2" hidden></div>
+      <div class="say small muted" id="r-limits" data-card="limits_yield"></div>
+      <div class="saved"><svg class="i"><use href="icons/icons.svg#check"/></svg><span data-card="ui_saved"></span></div>
+
+      <div class="sms-box" id="r-sms">
+        <a class="btn primary big" id="r-send" href="#"><svg class="i"><use href="icons/icons.svg#send"/></svg><span data-card="ui_send_sms"></span></a>
+        <div class="row2" id="r-confirm" hidden>
+          <button type="button" class="btn" id="r-sent-no"><svg class="i"><use href="icons/icons.svg#x"/></svg><span data-card="ui_cancel"></span></button>
+          <button type="button" class="btn primary" id="r-sent-yes"><svg class="i"><use href="icons/icons.svg#check"/></svg><span data-card="ui_sent"></span></button>
+        </div>
+        <div class="chips">
+          <span class="chip" id="r-sms-status"></span>
+          <span class="chip sim" id="r-sim-chip" hidden><span data-card="ui_simulated"></span></span>
+          <span class="chip ok" id="r-synced" hidden><svg class="i"><use href="icons/icons.svg#sync"/></svg><span data-card="ui_synced"></span></span>
+          <span class="chip demo" id="r-demo" hidden><span data-card="ui_demo"></span></span>
+        </div>
+        <div class="say small" data-card="ui_sms_preview"></div>
+        <code class="code" id="r-code"></code>
+      </div>
+
+      <div class="hub-box" id="r-hub" hidden>
+        <button type="button" class="btn" id="r-sim"><svg class="i"><use href="icons/icons.svg#phone"/></svg><span data-card="ui_simulate_send"></span></button>
+        <span class="pill sim"><span data-card="ui_simulated"></span></span>
+        <div id="r-sim-reply"></div>
+        <button type="button" class="btn" id="r-sync"><svg class="i"><use href="icons/icons.svg#sync"/></svg><span data-card="ui_sync_photos"></span></button>
+        <div id="r-sync-msg"></div>
+      </div>
+
+      <label class="btn">
+        <svg class="i"><use href="icons/icons.svg#camera"/></svg><span data-card="ui_new_photo"></span>
+        <input type="file" accept="image/*" capture="environment" id="file-again" class="vh">
+      </label>
+    </div>
+  </section>
+
+  <!-- 8. history -->
+  <section class="screen" id="s-history" hidden>
+    <h2 class="screen-title"><svg class="i"><use href="icons/icons.svg#history"/></svg><span data-card="ui_history"></span></h2>
+    <div class="hub-box" id="hist-hub" hidden>
+      <button type="button" class="btn" id="hist-sync"><svg class="i"><use href="icons/icons.svg#sync"/></svg><span data-card="ui_sync_photos"></span></button>
+      <div id="hist-sync-msg"></div>
+    </div>
+    <div class="say" data-card="ui_no_records" id="hist-empty" hidden></div>
+    <ul class="hist" id="hist-list"></ul>
+  </section>
+
+  <!-- 9. settings -->
+  <section class="screen" id="s-settings" hidden>
+    <h2 class="screen-title"><svg class="i"><use href="icons/icons.svg#gear"/></svg><span data-card="ui_settings"></span></h2>
+    <div class="card-box">
+      <h3 class="sec"><svg class="i"><use href="icons/icons.svg#globe"/></svg><span data-card="ui_language"></span></h3>
+      <div class="lang-list" id="set-langs"></div>
+    </div>
+    <div class="card-box">
+      <div class="member-id"><svg class="i"><use href="icons/icons.svg#person"/></svg><b id="set-member"></b></div>
+      <div class="say" data-card="ui_pin_optional"></div>
+      <label class="field"><svg class="i"><use href="icons/icons.svg#key"/></svg>
+        <input id="set-pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="new-password" placeholder="••••"></label>
+      <div class="row2">
+        <button type="button" class="btn" id="set-pin-save"><svg class="i"><use href="icons/icons.svg#check"/></svg><span data-card="ui_continue"></span></button>
+        <button type="button" class="btn" id="set-lock" hidden><svg class="i"><use href="icons/icons.svg#lock"/></svg><span data-card="ui_lock"></span></button>
+      </div>
+    </div>
+    <button type="button" class="btn danger big" id="set-delete"><svg class="i"><use href="icons/icons.svg#trash"/></svg><span data-card="ui_delete_all"></span></button>
+    <p class="tech" id="set-tech"></p>
+  </section>
+</main>
+
+<nav class="bottom" id="nav" hidden>
+  <button type="button" data-go="home"><svg class="i"><use href="icons/icons.svg#camera"/></svg><span data-card="ui_take_photo"></span></button>
+  <button type="button" data-go="history"><svg class="i"><use href="icons/icons.svg#history"/></svg><span data-card="ui_history"></span></button>
+  <button type="button" data-go="settings"><svg class="i"><use href="icons/icons.svg#gear"/></svg><span data-card="ui_settings"></span></button>
+</nav>
+
+<dialog id="dlg-delete">
+  <svg class="i hero-icon danger-c"><use href="icons/icons.svg#trash"/></svg>
+  <div class="say" data-card="ui_delete_confirm"></div>
+  <div class="row2">
+    <button type="button" class="btn" id="del-no"><svg class="i"><use href="icons/icons.svg#x"/></svg><span data-card="ui_cancel"></span></button>
+    <button type="button" class="btn danger" id="del-yes"><svg class="i"><use href="icons/icons.svg#trash"/></svg><span data-card="ui_delete_yes"></span></button>
+  </div>
+</dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

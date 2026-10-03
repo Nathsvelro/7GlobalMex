@@ -1,0 +1,247 @@
+{
+  "emulated": true,
+  "hub": "http://localhost:8000",
+  "measured_at": "2026-10-03T19:12:05.637Z",
+  "env": {
+    "chromium": "141.0.7390.37",
+    "cpus": 4,
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+    "headless": true,
+    "device": "Pixel 5 (Playwright)"
+  },
+  "inference": [
+    {
+      "cpu_throttle": 1,
+      "cold_first_photo_ms": 653.1,
+      "first_result": {
+        "label": "roya",
+        "conf": 99
+      },
+      "diagnose_128px_median_ms": 19.1,
+      "diagnose_12mp_median_ms": 15.5,
+      "session_run_median_ms": 12.9,
+      "raw_ms": {
+        "diagnose_128px": [
+          32.4,
+          19.4,
+          18.8,
+          18.6,
+          25.5,
+          25.4,
+          16.9,
+          18.6,
+          16.8,
+          19.9
+        ],
+        "diagnose_12mp": [
+          41,
+          19.4,
+          15.3,
+          23.3,
+          14.9,
+          14.9,
+          15.3,
+          14.4,
+          15.7,
+          16.1
+        ],
+        "session_run": [
+          33.5,
+          25.9,
+          28.1,
+          13.9,
+          13.1,
+          12.3,
+          12.6,
+          12.3,
+          12.6,
+          12.4
+        ]
+      }
+    },
+    {
+      "cpu_throttle": 4,
+      "cold_first_photo_ms": 2648.8,
+      "first_result": {
+        "label": "roya",
+        "conf": 99
+      },
+      "diagnose_128px_median_ms": 66.3,
+      "diagnose_12mp_median_ms": 68.5,
+      "session_run_median_ms": 59.4,
+      "raw_ms": {
+        "diagnose_128px": [
+          97.6,
+          73.8,
+          67.6,
+          66.1,
+          66.4,
+          65.3,
+          63.3,
+          55.5,
+          94.7,
+          65.2
+        ],
+        "diagnose_12mp": [
+          144.7,
+          67.3,
+          69.8,
+          66.8,
+          69.4,
+          71.1,
+          74.5,
+          66.5,
+          67.6,
+          65.6
+        ],
+        "session_run": [
+          57.2,
+          59.6,
+          58.4,
+          60.1,
+          58.3,
+          59.2,
+          62.9,
+          59.6,
+          57.2,
+          61.3
+        ]
+      }
+    },
+    {
+      "cpu_throttle": 6,
+      "cold_first_photo_ms": 4061.6,
+      "first_result": {
+        "label": "roya",
+        "conf": 99
+      },
+      "diagnose_128px_median_ms": 101.8,
+      "diagnose_12mp_median_ms": 80.5,
+      "session_run_median_ms": 68.7,
+      "raw_ms": {
+        "diagnose_128px": [
+          105.2,
+          104.5,
+          102.7,
+          95.8,
+          98.5,
+          98.8,
+          105.6,
+          100.9,
+          132.7,
+          91
+        ],
+        "diagnose_12mp": [
+          182.1,
+          82.3,
+          81.3,
+          80,
+          79.5,
+          83.2,
+          80.2,
+          79.7,
+          79.4,
+          80.8
+        ],
+        "session_run": [
+          69.5,
+          68.2,
+          70.3,
+          67.8,
+          69.6,
+          66.6,
+          68.5,
+          68.9,
+          69.2,
+          68.3
+        ]
+      }
+    }
+  ],
+  "network": {
+    "as built (no compression)": [
+      {
+        "profile": {
+          "name": "3G",
+          "down_kbps": 750,
+          "up_kbps": 250,
+          "latency_ms": 100
+        },
+        "model": {
+          "seconds": 21.2,
+          "body_bytes": 1972251,
+          "wire_bytes": 1972524
+        },
+        "bundle": {
+          "seconds": 169.2,
+          "files": 171,
+          "body_bytes": 15654738,
+          "wire_bytes": 15698862,
+          "gzip_responses": 0
+        }
+      },
+      {
+        "profile": {
+          "name": "slow 3G",
+          "down_kbps": 400,
+          "up_kbps": 400,
+          "latency_ms": 400
+        },
+        "model": {
+          "seconds": 39.9,
+          "body_bytes": 1972251,
+          "wire_bytes": 1972524
+        },
+        "bundle": {
+          "seconds": 318.3,
+          "files": 171,
+          "body_bytes": 15654738,
+          "wire_bytes": 15698862,
+          "gzip_responses": 0
+        }
+      }
+    ],
+    "gzip for text/JS/WASM (hub after integration fix)": [
+      {
+        "profile": {
+          "name": "3G",
+          "down_kbps": 750,
+          "up_kbps": 250,
+          "latency_ms": 100
+        },
+        "model": {
+          "seconds": 21.2,
+          "body_bytes": 1972251,
+          "wire_bytes": 1972524
+        },
+        "bundle": {
+          "seconds": 81.1,
+          "files": 171,
+          "body_bytes": 15654738,
+          "wire_bytes": 7431778,
+          "gzip_responses": 26
+        }
+      },
+      {
+        "profile": {
+          "name": "slow 3G",
+          "down_kbps": 400,
+          "up_kbps": 400,
+          "latency_ms": 400
+        },
+        "model": {
+          "seconds": 39.9,
+          "body_bytes": 1972251,
+          "wire_bytes": 1972524
+        },
+        "bundle": {
+          "seconds": 153.1,
+          "files": 171,
+          "body_bytes": 15654738,
+          "wire_bytes": 7431778,
+          "gzip_responses": 26
+        }
+      }
+    ]
+  }
+}

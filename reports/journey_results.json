@@ -1,0 +1,530 @@
+{
+  "hub": "http://localhost:8000",
+  "started": "2026-10-03T19:18:15.916Z",
+  "checks": [
+    {
+      "ok": true,
+      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1425 ms (unthrottled, localhost)"
+    },
+    {
+      "ok": true,
+      "msg": "airplane mode: app opens from the cache; DEMO badge visible"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"language\" comes from cards.json (9 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"consent\" comes from cards.json (8 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"member id\" comes from cards.json (8 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"home\" comes from cards.json (11 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "JMuBEN rust TEST image -> roya 99% (expected roya)"
+    },
+    {
+      "ok": true,
+      "msg": "audio for tzh and es present and loadable offline: ../content/audio/tzh/diag_roya.mp3 (6183 B), ../content/audio/es/diag_roya.mp3 (6497 B)"
+    },
+    {
+      "ok": true,
+      "msg": "tzh advice audio plays offline (currentTime 1.20 s)"
+    },
+    {
+      "ok": true,
+      "msg": "es advice audio plays offline (currentTime 1.21 s)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"result (roya)\" comes from cards.json (23 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "SMS code valid, 46 chars: CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #7W94"
+    },
+    {
+      "ok": true,
+      "msg": "location rounded to 2 decimals (~1 km)"
+    },
+    {
+      "ok": true,
+      "msg": "\"Enviar por SMS\" link: sms:+520000000000?body=CAF1%20M0123%20ROYA%2099%2020261003%2016.91%2C-92.11%20%237W94"
+    },
+    {
+      "ok": true,
+      "msg": "after the sms: link the app asks \"did you send it?\" (nothing is sent by itself)"
+    },
+    {
+      "ok": true,
+      "msg": "PlantDoc test image (apple scab leaf) -> \"No estoy seguro — muestre la hoja al técnico.\" (OTRO, top otro 99%, reason not_coffee)"
+    },
+    {
+      "ok": true,
+      "msg": "Imagenette test image (cassette player, not a plant) -> \"No estoy seguro — muestre la hoja al técnico.\" (OTRO, top otro 99%, reason not_coffee)"
+    },
+    {
+      "ok": true,
+      "msg": "synthetic non-plant photo (bucket) -> \"No estoy seguro — muestre la hoja al técnico.\" (OTRO, top otro 99%, reason not_coffee)"
+    },
+    {
+      "ok": true,
+      "msg": "heavily blurred rust photo -> \"No estoy seguro — muestre la hoja al técnico.\" (DUDA, top null 0%, reason blurry)"
+    },
+    {
+      "ok": true,
+      "msg": "blurred photo caught by the blur check (score 2.35)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"result (duda)\" comes from cards.json (23 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"history\" comes from cards.json (12 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"settings\" comes from cards.json (15 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"settings (tzh)\" comes from cards.json (15 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"result (roya, tzh)\" comes from cards.json (23 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "airplane mode: 0 responses from the network (11 attempts blocked: sw /app/config.json, sw /content/cards.json, sw /app/model/labels.json, sw /api/health)"
+    },
+    {
+      "ok": true,
+      "msg": "\"Simular envío\" -> hub reply (card sms_obs_recibida): \"Cafetal: recibimos su reporte. Gracias. El tecnico revisa la lista de visitas. Si es urgente, llame a la cooperativa.\""
+    },
+    {
+      "ok": true,
+      "msg": "SIMULATED label shown on the phone"
+    },
+    {
+      "ok": true,
+      "msg": "hub stored the observation M0123-7W94 (ROYA 99%) from the SMS"
+    },
+    {
+      "ok": true,
+      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-03T19:18:35\",\"community\":\"Ondera Alto\",\"lat\":16.91,\"lon\":-92.11,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-7W94\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
+    },
+    {
+      "ok": true,
+      "msg": "24 alert_roya broadcasts queued as pending_approval (nothing sent yet)"
+    },
+    {
+      "ok": true,
+      "msg": "Noor's farm on the officer worklist: rank 1, \"Roya 99% · zona de alerta · 2 reportes en 30 días\""
+    },
+    {
+      "ok": true,
+      "msg": "sync photos -> ui_synced"
+    },
+    {
+      "ok": true,
+      "msg": "photo attached to M0123-7W94: /api/photos/M0123-7W94"
+    },
+    {
+      "ok": true,
+      "msg": "no page errors on the phone"
+    },
+    {
+      "ok": true,
+      "msg": "staff approved one broadcast in the Bandeja page -> sent_simulated; 23 still pending"
+    },
+    {
+      "ok": true,
+      "msg": "PRECIO -> reference price 94.00, source \"DEMO ICE/Banxico/SNIIM\", date \"sept 2026\": \"Precio de referencia sept 2026: cafe pergamino 94.00 MXN/kg, maiz 9.00, frijol 24.90 MXN/kg. Fuente: DEMO ICE/Banxico/SNIIM. No es el precio de su comunidad.\""
+    },
+    {
+      "ok": true,
+      "msg": "\"cuanto estan pagando el kilo de cafe\" -> precio (0.9951) -> sms_precio"
+    },
+    {
+      "ok": true,
+      "msg": "\"mis matas tienen polvo naranja\" -> reporte (0.6526) -> sms_reporte_instrucciones"
+    },
+    {
+      "ok": true,
+      "msg": "\"asdf qwerty\" -> otro (0.6938) -> sms_pasar_tecnico, forwarded to officer: true"
+    },
+    {
+      "ok": true,
+      "msg": "the unknown message is in the officer's inbox (/api/officer/messages)"
+    },
+    {
+      "ok": true,
+      "msg": "no page errors on the hub pages"
+    },
+    {
+      "ok": true,
+      "msg": "all 51 outbox + 7 thread messages are cards.json templates with only slot values filled"
+    }
+  ],
+  "results": {
+    "first_load_ready_ms": 1425,
+    "roya": {
+      "obs_id": "7W94",
+      "label": "roya",
+      "code": "ROYA",
+      "top": "roya",
+      "conf": 99,
+      "reason": null,
+      "blur": 51.69,
+      "ms": 637,
+      "probs": {
+        "sano": 0,
+        "roya": 1,
+        "minador": 0,
+        "phoma": 0,
+        "cercospora": 0,
+        "otro": 0
+      },
+      "sms_code": "CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #7W94",
+      "model_version": "cafetal-img-v1",
+      "diag_text": "Parece roya del cafeto."
+    },
+    "plantdoc": {
+      "obs_id": "51C1",
+      "label": "otro",
+      "code": "OTRO",
+      "top": "otro",
+      "conf": 99,
+      "reason": "not_coffee",
+      "blur": 1583.54,
+      "ms": 25,
+      "probs": {
+        "sano": 0,
+        "roya": 0,
+        "minador": 0,
+        "phoma": 0,
+        "cercospora": 0,
+        "otro": 1
+      },
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #51C1",
+      "model_version": "cafetal-img-v1",
+      "diag_text": "No estoy seguro — muestre la hoja al técnico."
+    },
+    "imagenette": {
+      "obs_id": "3JYJ",
+      "label": "otro",
+      "code": "OTRO",
+      "top": "otro",
+      "conf": 99,
+      "reason": "not_coffee",
+      "blur": 1032.66,
+      "ms": 26,
+      "probs": {
+        "sano": 0,
+        "roya": 0,
+        "minador": 0,
+        "phoma": 0,
+        "cercospora": 0,
+        "otro": 1
+      },
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #3JYJ",
+      "model_version": "cafetal-img-v1",
+      "diag_text": "No estoy seguro — muestre la hoja al técnico."
+    },
+    "object": {
+      "obs_id": "EOVB",
+      "label": "otro",
+      "code": "OTRO",
+      "top": "otro",
+      "conf": 99,
+      "reason": "not_coffee",
+      "blur": 145.58,
+      "ms": 23,
+      "probs": {
+        "sano": 0,
+        "roya": 0,
+        "minador": 0,
+        "phoma": 0,
+        "cercospora": 0,
+        "otro": 1
+      },
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #EOVB",
+      "model_version": "cafetal-img-v1",
+      "diag_text": "No estoy seguro — muestre la hoja al técnico."
+    },
+    "blurred": {
+      "obs_id": "GOG4",
+      "label": "duda",
+      "code": "DUDA",
+      "top": null,
+      "conf": 0,
+      "reason": "blurry",
+      "blur": 2.35,
+      "ms": 2,
+      "probs": null,
+      "sms_code": "CAF1 M0123 DUDA 0 20261003 16.91,-92.11 #GOG4",
+      "model_version": "cafetal-img-v1",
+      "diag_text": "No estoy seguro — muestre la hoja al técnico."
+    },
+    "offline_network": {
+      "attempts": [
+        "sw /app/config.json",
+        "sw /content/cards.json",
+        "sw /app/model/labels.json",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health"
+      ],
+      "responses": []
+    },
+    "alerts": [
+      {
+        "id": 1,
+        "created_at": "2026-10-03T19:18:35",
+        "community": "Ondera Alto",
+        "lat": 16.91,
+        "lon": -92.11,
+        "n_reports": 3,
+        "member_ids": [
+          "M0105",
+          "M0108",
+          "M0123"
+        ],
+        "obs_uids": [
+          "M0123-7W94",
+          "M0105-A1R2",
+          "M0108-B7K4"
+        ],
+        "status": "active",
+        "demo": 0,
+        "active": true,
+        "messages": {
+          "pending_approval": 24
+        }
+      }
+    ],
+    "worklist_noor": {
+      "member_id": "M0123",
+      "name": "Noor (DEMO)",
+      "community": "Ondera Alto",
+      "phone": "+529670000123",
+      "obs_uid": "M0123-7W94",
+      "obs_id": "7W94",
+      "code": "ROYA",
+      "conf": 99,
+      "date": "2026-10-03",
+      "lat": 16.91,
+      "lon": -92.11,
+      "score": 4.97,
+      "reason": "Roya 99% · zona de alerta · 2 reportes en 30 días",
+      "in_alert": true,
+      "alert_id": 1,
+      "photo_url": null,
+      "model_label": "roya",
+      "status": null,
+      "demo": 0,
+      "rank": 1
+    },
+    "sms": {
+      "PRECIO": {
+        "replies": [
+          {
+            "id": 72,
+            "to": "+529670000123",
+            "body": "Precio de referencia sept 2026: cafe pergamino 94.00 MXN/kg, maiz 9.00, frijol 24.90 MXN/kg. Fuente: DEMO ICE/Banxico/SNIIM. No es el precio de su comunidad.",
+            "card_id": "sms_precio",
+            "lang": "es",
+            "status": "sent_simulated",
+            "length": 157,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "precio",
+            "conf": 1,
+            "accepted": true,
+            "method": "keyword"
+          }
+        ]
+      },
+      "cuanto estan pagando el kilo de cafe": {
+        "replies": [
+          {
+            "id": 74,
+            "to": "+529670000123",
+            "body": "Precio de referencia sept 2026: cafe pergamino 94.00 MXN/kg, maiz 9.00, frijol 24.90 MXN/kg. Fuente: DEMO ICE/Banxico/SNIIM. No es el precio de su comunidad.",
+            "card_id": "sms_precio",
+            "lang": "es",
+            "status": "sent_simulated",
+            "length": 157,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "precio",
+            "conf": 0.9951,
+            "accepted": true,
+            "threshold": 0.65,
+            "method": "classifier"
+          }
+        ]
+      },
+      "mis matas tienen polvo naranja": {
+        "replies": [
+          {
+            "id": 76,
+            "to": "+529670000123",
+            "body": "Para reportar: tome foto de la hoja con la app Cafetal y toque Enviar por SMS. Sin app, lleve la hoja a la cooperativa o escriba TECNICO.",
+            "card_id": "sms_reporte_instrucciones",
+            "lang": "es",
+            "status": "sent_simulated",
+            "length": 137,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "reporte",
+            "conf": 0.6526,
+            "accepted": true,
+            "threshold": 0.65,
+            "method": "classifier"
+          }
+        ]
+      },
+      "asdf qwerty": {
+        "replies": [
+          {
+            "id": 78,
+            "to": "+529670000123",
+            "body": "Cafetal: le paso su mensaje al tecnico. Él o la cooperativa le van a responder.",
+            "card_id": "sms_pasar_tecnico",
+            "lang": "es",
+            "status": "sent_simulated",
+            "length": 79,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "otro",
+            "conf": 0.6938,
+            "accepted": true,
+            "threshold": 0.65,
+            "method": "classifier"
+          },
+          {
+            "type": "forwarded_to_officer"
+          }
+        ]
+      }
+    },
+    "template_slots": {
+      "n_reportes": [
+        "3"
+      ],
+      "comunidad": [
+        "Ondera Alto"
+      ],
+      "fecha": [
+        "sept 2026"
+      ],
+      "precio_cafe": [
+        "94.00"
+      ],
+      "unidad_cafe": [
+        "MXN/kg"
+      ],
+      "precio_maiz": [
+        "9.00"
+      ],
+      "precio_frijol": [
+        "24.90"
+      ],
+      "fuente": [
+        "DEMO ICE/Banxico/SNIIM"
+      ]
+    }
+  },
+  "text_audit": {
+    "screens": [
+      {
+        "where": "language",
+        "strings": 9,
+        "bad": []
+      },
+      {
+        "where": "consent",
+        "strings": 8,
+        "bad": []
+      },
+      {
+        "where": "member id",
+        "strings": 8,
+        "bad": []
+      },
+      {
+        "where": "home",
+        "strings": 11,
+        "bad": []
+      },
+      {
+        "where": "result (roya)",
+        "strings": 23,
+        "bad": []
+      },
+      {
+        "where": "result (duda)",
+        "strings": 23,
+        "bad": []
+      },
+      {
+        "where": "history",
+        "strings": 12,
+        "bad": []
+      },
+      {
+        "where": "settings",
+        "strings": 15,
+        "bad": []
+      },
+      {
+        "where": "settings (tzh)",
+        "strings": 15,
+        "bad": []
+      },
+      {
+        "where": "result (roya, tzh)",
+        "strings": 23,
+        "bad": []
+      }
+    ],
+    "notFromCards": []
+  },
+  "finished": "2026-10-03T19:18:48.667Z",
+  "failures": 0
+}

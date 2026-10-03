@@ -1,0 +1,27 @@
+{
+  "version": "cafetal-img-v1",
+  "classes": [
+    "sano",
+    "roya",
+    "minador",
+    "phoma",
+    "cercospora",
+    "otro"
+  ],
+  "input": {
+    "name": "image",
+    "size": 224,
+    "layout": "NHWC",
+    "dtype": "float32",
+    "range": "0-255 RGB, no normalisation (preprocessing is inside the model)"
+  },
+  "output": {
+    "name": "probs",
+    "type": "probabilities"
+  },
+  "threshold": 0.7,
+  "blur_threshold": 4.2,
+  "file": "cafetal.onnx",
+  "size_bytes": 1972251,
+  "trained_on": "JMuBEN/JMuBEN2 (Kenya, Arabica) + PlantDoc and Imagenette as 'otro'; see DATA_CARD.md"
+}

@@ -1,0 +1,1167 @@
+{
+  "model": {
+    "classes": [
+      "sano",
+      "roya",
+      "minador",
+      "phoma",
+      "cercospora",
+      "otro"
+    ],
+    "size": 224,
+    "threshold": 0.7,
+    "blur_threshold": 4.2,
+    "shipped": "fp16_weights"
+  },
+  "test": {
+    "n_images": 2946,
+    "distinct_groups_per_class": {
+      "sano": 2,
+      "roya": 65,
+      "minador": 38,
+      "phoma": 27,
+      "cercospora": 12,
+      "otro": 250
+    },
+    "fp32": {
+      "accuracy": 0.9847,
+      "macro_f1": 0.9845,
+      "per_class": {
+        "sano": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 500
+        },
+        "roya": {
+          "precision": 1.0,
+          "recall": 0.968,
+          "f1": 0.9837,
+          "support": 500
+        },
+        "minador": {
+          "precision": 0.9835,
+          "recall": 0.956,
+          "f1": 0.9696,
+          "support": 500
+        },
+        "phoma": {
+          "precision": 0.9802,
+          "recall": 0.988,
+          "f1": 0.9841,
+          "support": 500
+        },
+        "cercospora": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 500
+        },
+        "otro": {
+          "precision": 0.9428,
+          "recall": 0.9978,
+          "f1": 0.9695,
+          "support": 446
+        }
+      },
+      "confusion_matrix": [
+        [
+          500,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          484,
+          8,
+          0,
+          0,
+          8
+        ],
+        [
+          0,
+          0,
+          478,
+          9,
+          0,
+          13
+        ],
+        [
+          0,
+          0,
+          0,
+          494,
+          0,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          500,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          445
+        ]
+      ]
+    },
+    "shipped": {
+      "accuracy": 0.9847,
+      "macro_f1": 0.9845,
+      "per_class": {
+        "sano": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 500
+        },
+        "roya": {
+          "precision": 1.0,
+          "recall": 0.968,
+          "f1": 0.9837,
+          "support": 500
+        },
+        "minador": {
+          "precision": 0.9835,
+          "recall": 0.956,
+          "f1": 0.9696,
+          "support": 500
+        },
+        "phoma": {
+          "precision": 0.9802,
+          "recall": 0.988,
+          "f1": 0.9841,
+          "support": 500
+        },
+        "cercospora": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 500
+        },
+        "otro": {
+          "precision": 0.9428,
+          "recall": 0.9978,
+          "f1": 0.9695,
+          "support": 446
+        }
+      },
+      "confusion_matrix": [
+        [
+          500,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          484,
+          8,
+          0,
+          0,
+          8
+        ],
+        [
+          0,
+          0,
+          478,
+          9,
+          0,
+          13
+        ],
+        [
+          0,
+          0,
+          0,
+          494,
+          0,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          500,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          445
+        ]
+      ]
+    },
+    "app_decision_shipped": {
+      "sano": {
+        "n": 500,
+        "correct": 1.0,
+        "wrong": 0.0,
+        "DUDA": 0.0
+      },
+      "roya": {
+        "n": 500,
+        "correct": 0.884,
+        "wrong": 0.0,
+        "DUDA": 0.116
+      },
+      "minador": {
+        "n": 500,
+        "correct": 0.922,
+        "wrong": 0.006,
+        "DUDA": 0.072
+      },
+      "phoma": {
+        "n": 500,
+        "correct": 0.984,
+        "wrong": 0.0,
+        "DUDA": 0.016
+      },
+      "cercospora": {
+        "n": 500,
+        "correct": 1.0,
+        "wrong": 0.0,
+        "DUDA": 0.0
+      },
+      "otro": {
+        "n": 446,
+        "rejected_to_DUDA": 0.9978
+      },
+      "_summary": {
+        "coffee_coverage": 0.9592,
+        "coffee_selective_accuracy": 0.9987,
+        "diseased_called_sano": 0.0
+      }
+    },
+    "otro_rejection_shipped": {
+      "imagenette/full": {
+        "n": 54,
+        "rejected": 1.0,
+        "argmax_otro": 1.0
+      },
+      "plantdoc/crop": {
+        "n": 196,
+        "rejected": 0.9949,
+        "argmax_otro": 0.9949
+      },
+      "plantdoc/full": {
+        "n": 196,
+        "rejected": 1.0,
+        "argmax_otro": 1.0
+      }
+    },
+    "shipped_vs_fp32_top1_agreement": 1.0
+  },
+  "robustness": {
+    "clean": {
+      "accuracy_argmax": 0.9847,
+      "macro_f1_argmax": 0.9845,
+      "coffee_failsafe_rate": 0.0824,
+      "coffee_failsafe_by_blur": 0.0532,
+      "coffee_selective_accuracy": 0.9987,
+      "coffee_wrong_accepted": 0.0012,
+      "otro_rejected": 0.9978
+    },
+    "jpeg_q25": {
+      "accuracy_argmax": 0.9752,
+      "macro_f1_argmax": 0.975,
+      "coffee_failsafe_rate": 0.0436,
+      "coffee_failsafe_by_blur": 0.0032,
+      "coffee_selective_accuracy": 0.9971,
+      "coffee_wrong_accepted": 0.0028,
+      "otro_rejected": 0.9978
+    },
+    "gaussian_blur_r2": {
+      "accuracy_argmax": 0.979,
+      "macro_f1_argmax": 0.9786,
+      "coffee_failsafe_rate": 0.2644,
+      "coffee_failsafe_by_blur": 0.2428,
+      "coffee_selective_accuracy": 0.9967,
+      "coffee_wrong_accepted": 0.0024,
+      "otro_rejected": 0.9933
+    },
+    "gaussian_blur_r4": {
+      "accuracy_argmax": 0.9735,
+      "macro_f1_argmax": 0.9726,
+      "coffee_failsafe_rate": 0.9092,
+      "coffee_failsafe_by_blur": 0.8988,
+      "coffee_selective_accuracy": 0.9736,
+      "coffee_wrong_accepted": 0.0024,
+      "otro_rejected": 0.9798
+    },
+    "brightness_x0.6": {
+      "accuracy_argmax": 0.984,
+      "macro_f1_argmax": 0.9838,
+      "coffee_failsafe_rate": 0.1368,
+      "coffee_failsafe_by_blur": 0.1148,
+      "coffee_selective_accuracy": 0.9963,
+      "coffee_wrong_accepted": 0.0032,
+      "otro_rejected": 1.0
+    },
+    "brightness_x1.4": {
+      "accuracy_argmax": 0.981,
+      "macro_f1_argmax": 0.9808,
+      "coffee_failsafe_rate": 0.0508,
+      "coffee_failsafe_by_blur": 0.0268,
+      "coffee_selective_accuracy": 0.9937,
+      "coffee_wrong_accepted": 0.006,
+      "otro_rejected": 0.9978
+    },
+    "rotate_90": {
+      "accuracy_argmax": 0.9762,
+      "macro_f1_argmax": 0.9759,
+      "coffee_failsafe_rate": 0.0956,
+      "coffee_failsafe_by_blur": 0.0532,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 1.0
+    },
+    "downscale_64": {
+      "accuracy_argmax": 0.9847,
+      "macro_f1_argmax": 0.9845,
+      "coffee_failsafe_rate": 0.2852,
+      "coffee_failsafe_by_blur": 0.2612,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.991
+    }
+  },
+  "field_test": {
+    "n_images": 0,
+    "note": "0 images - not yet collected (put photos in data/field_test/<label>/ and rerun)"
+  },
+  "leakage_check": {
+    "n_images": 1800,
+    "accuracy": 0.995,
+    "macro_f1": 0.995,
+    "note": "unused copies (flips/rotations/colour shifts/burst shots) of TRAINING photos, i.e. what a naive random split would have put in the test set. Compare with the group-split test."
+  },
+  "inat_coffee_photos": {
+    "n_images": 200,
+    "app_decision_share": {
+      "DUDA": 1.0
+    },
+    "argmax_share": {
+      "sano": 0.0,
+      "roya": 0.0,
+      "minador": 0.0,
+      "phoma": 0.0,
+      "cercospora": 0.0,
+      "otro": 1.0
+    },
+    "app_decision_counts_centre_crops": {
+      "centre_50pct": {
+        "DUDA": 200
+      },
+      "centre_25pct": {
+        "DUDA": 196,
+        "phoma": 4
+      },
+      "centre_12pct": {
+        "DUDA": 182,
+        "cercospora": 2,
+        "minador": 1,
+        "phoma": 13,
+        "roya": 2
+      }
+    },
+    "note": "iNatAg-mini/coffea_arabica (iNaturalist, CC BY-NC 4.0): whole plants, flowers, cherries; disease status unknown. Not used for training. Desired behaviour: mostly DUDA."
+  },
+  "size_latency": {
+    "size_bytes": {
+      "fp32": 3782909,
+      "shipped": 1972251
+    },
+    "size_mb": {
+      "fp32": 3.78,
+      "shipped": 1.97
+    },
+    "cpu_latency_ms_median_1thread": {
+      "fp32": 3.22,
+      "shipped": 3.18
+    },
+    "latency_note": "onnxruntime Python 1.19.2, CPUExecutionProvider, 1 thread, batch 1, median of 50, build server x86 CPU (not a phone)",
+    "ortweb_node_wasm_ms_median": {
+      "fp32": 9.666834999999992,
+      "fp16_weights": 13.692633999999998
+    },
+    "ortweb_note": "onnxruntime-web 1.19.2 WASM backend, 1 thread, Node.js on the build server (not a phone)",
+    "download_seconds_computed": {
+      "fp32": {
+        "3G_384kbps": 78.8,
+        "3G_1Mbps": 30.3
+      },
+      "shipped": {
+        "3G_384kbps": 41.1,
+        "3G_1Mbps": 15.8
+      }
+    },
+    "download_note": "computed = bytes*8/bitrate, no protocol overhead; measure in a throttled browser for METRICS.md"
+  },
+  "data_split": {
+    "hash": "dHash 72-bit on equalised grayscale 9x9, min over 8 flips/rotations, Hamming <= 8, union-find",
+    "seed": 42,
+    "size": 224,
+    "classes": [
+      "sano",
+      "roya",
+      "minador",
+      "phoma",
+      "cercospora",
+      "otro"
+    ],
+    "strata": {
+      "imagenette/otro": {
+        "images": 700,
+        "exact_dup_groups": 700,
+        "groups": 689,
+        "largest_group": 5,
+        "median_group": 1,
+        "images_per_split": {
+          "val": 105,
+          "test": 105,
+          "train": 490
+        },
+        "groups_per_split": {
+          "val": 105,
+          "test": 105,
+          "train": 479
+        }
+      },
+      "jmuben/cercospora": {
+        "images": 7681,
+        "exact_dup_groups": 80,
+        "groups": 78,
+        "largest_group": 192,
+        "median_group": 96,
+        "images_per_split": {
+          "train": 5377,
+          "val": 1152,
+          "test": 1152
+        },
+        "groups_per_split": {
+          "val": 12,
+          "test": 12,
+          "train": 54
+        }
+      },
+      "jmuben/minador": {
+        "images": 16978,
+        "exact_dup_groups": 455,
+        "groups": 246,
+        "largest_group": 352,
+        "median_group": 64,
+        "images_per_split": {
+          "train": 11906,
+          "test": 2560,
+          "val": 2512
+        },
+        "groups_per_split": {
+          "val": 36,
+          "test": 38,
+          "train": 172
+        }
+      },
+      "jmuben/phoma": {
+        "images": 6571,
+        "exact_dup_groups": 181,
+        "groups": 171,
+        "largest_group": 160,
+        "median_group": 40,
+        "images_per_split": {
+          "train": 4593,
+          "test": 992,
+          "val": 986
+        },
+        "groups_per_split": {
+          "val": 24,
+          "test": 27,
+          "train": 120
+        }
+      },
+      "jmuben/roya": {
+        "images": 8336,
+        "exact_dup_groups": 520,
+        "groups": 373,
+        "largest_group": 304,
+        "median_group": 16,
+        "images_per_split": {
+          "train": 5824,
+          "val": 1264,
+          "test": 1248
+        },
+        "groups_per_split": {
+          "val": 63,
+          "test": 65,
+          "train": 245
+        }
+      },
+      "jmuben/sano": {
+        "images": 18983,
+        "exact_dup_groups": 14,
+        "groups": 11,
+        "largest_group": 3600,
+        "median_group": 1401,
+        "images_per_split": {
+          "val": 2761,
+          "train": 13102,
+          "test": 3120
+        },
+        "groups_per_split": {
+          "val": 2,
+          "test": 2,
+          "train": 7
+        }
+      },
+      "plantdoc/otro": {
+        "images": 2569,
+        "exact_dup_groups": 2518,
+        "groups": 2440,
+        "largest_group": 29,
+        "median_group": 1,
+        "images_per_split": {
+          "train": 1798,
+          "test": 385,
+          "val": 386
+        },
+        "groups_per_split": {
+          "val": 373,
+          "test": 367,
+          "train": 1700
+        }
+      }
+    },
+    "unreadable_files": 0,
+    "cross_label_exact_duplicates": 0,
+    "selected": {
+      "train": {
+        "sano": 1500,
+        "roya": 1500,
+        "minador": 1500,
+        "phoma": 1500,
+        "cercospora": 1500,
+        "otro": 2663
+      },
+      "train_groups": {
+        "sano": 7,
+        "roya": 245,
+        "minador": 172,
+        "phoma": 120,
+        "cercospora": 54,
+        "otro": 1500
+      },
+      "val": {
+        "sano": 300,
+        "roya": 300,
+        "minador": 300,
+        "phoma": 300,
+        "cercospora": 300,
+        "otro": 267
+      },
+      "val_groups": {
+        "sano": 2,
+        "roya": 63,
+        "minador": 36,
+        "phoma": 24,
+        "cercospora": 12,
+        "otro": 150
+      },
+      "test": {
+        "sano": 500,
+        "roya": 500,
+        "minador": 500,
+        "phoma": 500,
+        "cercospora": 500,
+        "otro": 446
+      },
+      "test_groups": {
+        "sano": 2,
+        "roya": 65,
+        "minador": 38,
+        "phoma": 27,
+        "cercospora": 12,
+        "otro": 250
+      }
+    },
+    "extra_inat_images": 200
+  },
+  "calibration": {
+    "threshold": {
+      "value": 0.7,
+      "data_driven_value": 0.5,
+      "policy_floor": 0.7,
+      "floor_reason": "validation images come from the same Kenyan dataset as training, so confidence on real Chiapas photos will be lower and less reliable; the floor keeps the PLAN.md default 0.70 when the data-driven value is lower",
+      "rule": "lowest t in [0.50,0.90] where accepted validation predictions reach >= 95% accuracy on clean images AND on clean + 5 phone-like degradations (jpeg q25, blur r2, brightness x0.6/x1.4, downscale 64); blur-rejected images count as not accepted",
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.9904,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.51,
+          "coverage": 0.9904,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.52,
+          "coverage": 0.9904,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.53,
+          "coverage": 0.9904,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.54,
+          "coverage": 0.9904,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.55,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.56,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.57,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.58,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.59,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.61,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.62,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.63,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.64,
+          "coverage": 0.9762,
+          "selective_accuracy": 0.9954
+        },
+        {
+          "threshold": 0.65,
+          "coverage": 0.9734,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.66,
+          "coverage": 0.9734,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.67,
+          "coverage": 0.9734,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.68,
+          "coverage": 0.9689,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.69,
+          "coverage": 0.9683,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.9683,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.71,
+          "coverage": 0.9683,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.72,
+          "coverage": 0.9683,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.73,
+          "coverage": 0.9683,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.74,
+          "coverage": 0.961,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.75,
+          "coverage": 0.9587,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.76,
+          "coverage": 0.9587,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.77,
+          "coverage": 0.9587,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.78,
+          "coverage": 0.9587,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.79,
+          "coverage": 0.9587,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.9564,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.81,
+          "coverage": 0.9564,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.82,
+          "coverage": 0.9564,
+          "selective_accuracy": 0.9953
+        },
+        {
+          "threshold": 0.83,
+          "coverage": 0.9525,
+          "selective_accuracy": 0.9952
+        },
+        {
+          "threshold": 0.84,
+          "coverage": 0.9479,
+          "selective_accuracy": 1.0
+        },
+        {
+          "threshold": 0.85,
+          "coverage": 0.9479,
+          "selective_accuracy": 1.0
+        },
+        {
+          "threshold": 0.86,
+          "coverage": 0.9479,
+          "selective_accuracy": 1.0
+        },
+        {
+          "threshold": 0.87,
+          "coverage": 0.9479,
+          "selective_accuracy": 1.0
+        },
+        {
+          "threshold": 0.88,
+          "coverage": 0.9451,
+          "selective_accuracy": 1.0
+        },
+        {
+          "threshold": 0.89,
+          "coverage": 0.9451,
+          "selective_accuracy": 1.0
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.9451,
+          "selective_accuracy": 1.0
+        }
+      ],
+      "curve_with_degradations": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.9283,
+          "selective_accuracy": 0.9912
+        },
+        {
+          "threshold": 0.51,
+          "coverage": 0.9282,
+          "selective_accuracy": 0.9913
+        },
+        {
+          "threshold": 0.52,
+          "coverage": 0.9282,
+          "selective_accuracy": 0.9913
+        },
+        {
+          "threshold": 0.53,
+          "coverage": 0.9282,
+          "selective_accuracy": 0.9913
+        },
+        {
+          "threshold": 0.54,
+          "coverage": 0.9269,
+          "selective_accuracy": 0.9912
+        },
+        {
+          "threshold": 0.55,
+          "coverage": 0.9245,
+          "selective_accuracy": 0.9912
+        },
+        {
+          "threshold": 0.56,
+          "coverage": 0.9231,
+          "selective_accuracy": 0.9912
+        },
+        {
+          "threshold": 0.57,
+          "coverage": 0.9226,
+          "selective_accuracy": 0.9918
+        },
+        {
+          "threshold": 0.58,
+          "coverage": 0.9217,
+          "selective_accuracy": 0.992
+        },
+        {
+          "threshold": 0.59,
+          "coverage": 0.9212,
+          "selective_accuracy": 0.992
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 0.9212,
+          "selective_accuracy": 0.992
+        },
+        {
+          "threshold": 0.61,
+          "coverage": 0.9169,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.62,
+          "coverage": 0.9169,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.63,
+          "coverage": 0.9162,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.64,
+          "coverage": 0.9161,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.65,
+          "coverage": 0.9156,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.66,
+          "coverage": 0.9156,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.67,
+          "coverage": 0.9154,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.68,
+          "coverage": 0.9111,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.69,
+          "coverage": 0.9098,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.9093,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.71,
+          "coverage": 0.9078,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.72,
+          "coverage": 0.9078,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.73,
+          "coverage": 0.9065,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.74,
+          "coverage": 0.9053,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.75,
+          "coverage": 0.9036,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.76,
+          "coverage": 0.9031,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.77,
+          "coverage": 0.9025,
+          "selective_accuracy": 0.9944
+        },
+        {
+          "threshold": 0.78,
+          "coverage": 0.8994,
+          "selective_accuracy": 0.9951
+        },
+        {
+          "threshold": 0.79,
+          "coverage": 0.8994,
+          "selective_accuracy": 0.9951
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.8955,
+          "selective_accuracy": 0.9957
+        },
+        {
+          "threshold": 0.81,
+          "coverage": 0.895,
+          "selective_accuracy": 0.9957
+        },
+        {
+          "threshold": 0.82,
+          "coverage": 0.8946,
+          "selective_accuracy": 0.9957
+        },
+        {
+          "threshold": 0.83,
+          "coverage": 0.894,
+          "selective_accuracy": 0.9957
+        },
+        {
+          "threshold": 0.84,
+          "coverage": 0.8908,
+          "selective_accuracy": 0.9971
+        },
+        {
+          "threshold": 0.85,
+          "coverage": 0.89,
+          "selective_accuracy": 0.9974
+        },
+        {
+          "threshold": 0.86,
+          "coverage": 0.8882,
+          "selective_accuracy": 0.9976
+        },
+        {
+          "threshold": 0.87,
+          "coverage": 0.8874,
+          "selective_accuracy": 0.9982
+        },
+        {
+          "threshold": 0.88,
+          "coverage": 0.8848,
+          "selective_accuracy": 0.9982
+        },
+        {
+          "threshold": 0.89,
+          "coverage": 0.8796,
+          "selective_accuracy": 0.9982
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.8761,
+          "selective_accuracy": 0.9982
+        }
+      ]
+    },
+    "blur_threshold": {
+      "value": 4.2,
+      "rule": "floor(min over coffee classes of the 5th percentile of real validation images), 1 decimal",
+      "per_class": {
+        "sano": {
+          "n": 300,
+          "real_median": 381.0,
+          "real_p5": 331.0,
+          "real_rejected": 0.0,
+          "blur_r3_median": 3.5,
+          "blur_r3_rejected": 1.0,
+          "blur_r4_rejected": 1.0
+        },
+        "roya": {
+          "n": 300,
+          "real_median": 16.2,
+          "real_p5": 4.3,
+          "real_rejected": 0.04,
+          "blur_r3_median": 1.6,
+          "blur_r3_rejected": 0.9,
+          "blur_r4_rejected": 1.0
+        },
+        "minador": {
+          "n": 300,
+          "real_median": 432.4,
+          "real_p5": 145.4,
+          "real_rejected": 0.0,
+          "blur_r3_median": 6.0,
+          "blur_r3_rejected": 0.2533,
+          "blur_r4_rejected": 0.8233
+        },
+        "phoma": {
+          "n": 300,
+          "real_median": 642.2,
+          "real_p5": 290.5,
+          "real_rejected": 0.0,
+          "blur_r3_median": 7.4,
+          "blur_r3_rejected": 0.0,
+          "blur_r4_rejected": 0.65
+        },
+        "cercospora": {
+          "n": 300,
+          "real_median": 169.9,
+          "real_p5": 57.2,
+          "real_rejected": 0.0,
+          "blur_r3_median": 3.7,
+          "blur_r3_rejected": 0.75,
+          "blur_r4_rejected": 1.0
+        },
+        "otro": {
+          "n": 150,
+          "real_median": 800.6,
+          "real_p5": 283.7,
+          "real_rejected": 0.0,
+          "blur_r3_median": 16.0,
+          "blur_r3_rejected": 0.02,
+          "blur_r4_rejected": 0.2533
+        }
+      }
+    },
+    "val_macro_f1": {
+      "fp32": 0.9925,
+      "shipped": 0.9925
+    },
+    "val_accuracy": {
+      "fp32": 0.9926,
+      "shipped": 0.9926
+    },
+    "fp32_vs_keras_max_abs_diff": 3.5762786865234375e-07,
+    "shipped": "fp16_weights",
+    "choice_reason": "smallest candidate that runs in onnxruntime-web (WASM) and loses <= 1.0 points of validation macro-F1 vs fp32",
+    "candidates": {
+      "int8_static": {
+        "size_bytes": 1379470,
+        "val_macro_f1": 0.0438,
+        "val_accuracy": 0.1511,
+        "top1_agreement_with_fp32": 0.1556,
+        "ortweb_node": {
+          "ok": true,
+          "backend": "wasm",
+          "entry": "ort.node.min.mjs",
+          "input": "image",
+          "output": "probs",
+          "ms_first": 46.30815100000001,
+          "ms_median": 16.856709000000023,
+          "runs": 20,
+          "max_abs_diff_vs_python_ort": 0.0
+        }
+      },
+      "int8_weights": {
+        "size_bytes": 1122656,
+        "val_macro_f1": 0.9608,
+        "val_accuracy": 0.961,
+        "top1_agreement_with_fp32": 0.9626,
+        "ortweb_node": {
+          "ok": true,
+          "backend": "wasm",
+          "entry": "ort.node.min.mjs",
+          "input": "image",
+          "output": "probs",
+          "ms_first": 38.49633399999999,
+          "ms_median": 10.579629999999952,
+          "runs": 20,
+          "max_abs_diff_vs_python_ort": 3.5762786865234375e-07
+        }
+      },
+      "fp16_weights": {
+        "size_bytes": 1972251,
+        "val_macro_f1": 0.9925,
+        "val_accuracy": 0.9926,
+        "top1_agreement_with_fp32": 1.0,
+        "ortweb_node": {
+          "ok": true,
+          "backend": "wasm",
+          "entry": "ort.node.min.mjs",
+          "input": "image",
+          "output": "probs",
+          "ms_first": 36.28634099999999,
+          "ms_median": 13.692633999999998,
+          "runs": 20,
+          "max_abs_diff_vs_python_ort": 4.016328603029251e-09
+        }
+      },
+      "fp32": {
+        "size_bytes": 3782909,
+        "val_macro_f1": 0.9925,
+        "val_accuracy": 0.9926,
+        "top1_agreement_with_fp32": 1.0,
+        "ortweb_node": {
+          "ok": true,
+          "backend": "wasm",
+          "entry": "ort.node.min.mjs",
+          "input": "image",
+          "output": "probs",
+          "ms_first": 30.687397000000033,
+          "ms_median": 9.666834999999992,
+          "runs": 20,
+          "max_abs_diff_vs_python_ort": 5.9371814131736755e-09
+        }
+      }
+    }
+  }
+}

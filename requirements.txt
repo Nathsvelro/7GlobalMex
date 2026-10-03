@@ -1,0 +1,4 @@
+# Hub runtime only (Python 3.10+). Training deps: requirements-train.txt. Tests: pip install pytest httpx
+fastapi==0.142.2
+uvicorn==0.54.0
+python-multipart==0.0.32
