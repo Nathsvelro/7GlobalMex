@@ -149,6 +149,13 @@ def test_static_and_mime(client):
     assert client.get("/app", follow_redirects=False).status_code in (307, 308)
 
 
+def test_no_api_docs_pages(client):
+    # FastAPI's /docs and /redoc load Swagger UI / ReDoc from a CDN and give a console for every endpoint: off.
+    for path in ("/docs", "/redoc", "/openapi.json"):
+        r = client.get(path)
+        assert r.status_code == 404 and "cdn.jsdelivr" not in r.text, path
+
+
 def test_accented_community_keeps_alert_in_one_gsm_sms(client):
     ms = [register(client, name=f"R{i}", phone=f"+52967000600{i}", community="Ondera Río", lat=lat, lon=lon)
           for i, (lat, lon) in enumerate([(16.96, -92.21), (16.97, -92.20), (16.96, -92.20)])]

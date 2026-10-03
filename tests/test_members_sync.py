@@ -15,6 +15,8 @@ def test_registration_requires_consent(client):
     assert client.post("/api/members", json={**base, "consent": False}).status_code == 400
     assert client.post("/api/members", json=base).status_code == 422             # consent missing
     assert client.post("/api/members", json={**base, "consent": True, "consent_by": ""}).status_code == 422
+    assert client.post("/api/members", json={**base, "consent": True, "consent_by": "   "}).status_code == 400
+    assert client.post("/api/members", json={**base, "consent": True, "name": "   "}).status_code == 400
     r = client.post("/api/members", json={**base, "consent": True})
     assert r.status_code == 201
     m = r.json()

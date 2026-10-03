@@ -235,6 +235,7 @@ def route(conn, phone: str, body: str) -> dict:
                 _reply(conn, phone, member, "sms_precio_sin_datos", out)
         else:
             _reply(conn, phone, member, INTENT_CARD[name], out)
-            if name in ("hablar_con_tecnico", "otro"):
+            # A free-text symptom report also reaches a person: a basic-phone member cannot send a CAF1 code.
+            if name in ("hablar_con_tecnico", "otro", "reporte"):
                 _forward_to_officer(conn, member, phone, body, msg_id, cls, out)
         return out

@@ -43,7 +43,7 @@ def test_intents_route_to_the_right_card(client, conn):
     for body, card in cases.items():
         assert card_ids(sms(client, "+529670001000", body)) == [card], body
     fwd = [r[0] for r in conn.execute("SELECT body FROM officer_messages ORDER BY id")]
-    assert fwd == ["kiero hablar con el ingeniero", "TECNICO"]
+    assert fwd == ["mi cafe tiene manchas amarillas", "kiero hablar con el ingeniero", "TECNICO"]
 
 
 def test_unknown_text_goes_to_officer(client, conn):

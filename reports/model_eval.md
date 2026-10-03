@@ -116,7 +116,7 @@ Meaning: these are mostly whole plants, flowers and cherries, not leaf close-ups
 
 ## (g) Labelled field photos (iNaturalist, held-out field test)
 
-Held-out field test only (observers never used in training); iNaturalist photos are a proxy for Chiapas photos; details, ship rule and v1/v2 comparison in reports/field_eval.md. Decided like the app (`single`).
+Held-out field test only (observers not used in training, except the observer of 1 ojo de gallo photo); iNaturalist photos are a proxy for Chiapas photos; details, ship rule and v1/v2 comparison in reports/field_eval.md. Decided like the app (`single`).
 
 Shipped cafetal-img-v2@0.9, app rule `single`:
 

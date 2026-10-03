@@ -118,7 +118,9 @@ def check(conn, new_obs: dict) -> dict | None:
     clat = round(sum(c["lat"] for c in cluster) / len(cluster), 4)
     clon = round(sum(c["lon"] for c in cluster) / len(cluster), 4)
     member = db.member_by_id(conn, new_obs["member_id"])
-    community = member["community"] if member else "su zona"
+    if not member:   # no registered community to name: no alert (farmer text only from cards and registry)
+        return None
+    community = member["community"]
     member_ids = sorted({c["member_id"] for c in cluster})
     cur = conn.execute(
         "INSERT INTO alerts(created_at, community, lat, lon, n_reports, member_ids, obs_uids, status, demo)"

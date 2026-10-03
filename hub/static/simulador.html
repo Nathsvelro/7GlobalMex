@@ -36,7 +36,7 @@
           <button data-q="mi cafe tiene manchas amarillas">texto: reporte</button>
         </p>
         <p class="small muted">El código CAF1 lo arma la app del teléfono inteligente (botón «Enviar por SMS»). Formato:
-          <span class="code">CAF1 M0123 ROYA 87 20261004 16.91,-92.11 #K3F9</span></p>
+          <span class="code">CAF1 M0123 ROYA 96 20261004 16.91,-92.11 #K3F9</span></p>
       </div>
       <div class="card">
         <h2 style="margin-top:0">Qué hizo el hub con el último mensaje</h2>
@@ -105,7 +105,7 @@ function sampleCode() {
   const d = new Date(); const ymd = d.getFullYear() + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0");
   const id = Array.from({ length: 4 }, () => "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 36)]).join("");
   const loc = m.lat != null ? `${m.lat.toFixed(2)},${m.lon.toFixed(2)}` : "-";
-  return `CAF1 ${m.member_id} ROYA 87 ${ymd} ${loc} #${id}`;
+  return `CAF1 ${m.member_id} ROYA 96 ${ymd} ${loc} #${id}`;  // >= 90: the shipped app never sends ROYA below its threshold, and the outbreak rule counts only those
 }
 $("send").onclick = () => send();
 $("body").oninput = updateLen;

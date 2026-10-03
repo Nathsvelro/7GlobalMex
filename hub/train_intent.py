@@ -239,7 +239,7 @@ def write_md(r):
               "- The Tseltal examples are unverified AI drafts and too few to measure; Tseltal free text will mostly "
               "fall below the threshold and go to the officer (safe, not smart).",
               "- MASSIVE is Spain Spanish about smart-speaker commands; it only teaches what is off-topic.",
-              "- PRECIO, AYUDA and TECNICO are also matched as exact keywords before the classifier runs.", ""]
+              "- PRECIO, AYUDA and TECNICO (and in English PRICE, HELP, OFFICER) are also matched as exact keywords before the classifier runs.", ""]
     (REPORTS / "intent_eval.md").write_text("\n".join(lines), encoding="utf-8")
 
 

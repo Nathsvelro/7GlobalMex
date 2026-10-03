@@ -90,4 +90,4 @@ Test errors before threshold (9):
 - Small, team-written data: the test split comes from the same writers, so real member SMS will score lower. Collect real (consented) messages and relabel.
 - The Tseltal examples are unverified AI drafts and too few to measure; Tseltal free text will mostly fall below the threshold and go to the officer (safe, not smart).
 - MASSIVE is Spain Spanish about smart-speaker commands; it only teaches what is off-topic.
-- PRECIO, AYUDA and TECNICO are also matched as exact keywords before the classifier runs.
+- PRECIO, AYUDA and TECNICO (and in English PRICE, HELP, OFFICER) are also matched as exact keywords before the classifier runs.

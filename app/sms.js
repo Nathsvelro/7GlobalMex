@@ -1,6 +1,6 @@
 // Observation SMS code v1 (PLAN.md §5). One SMS (<=160 chars), GSM-7 only, works on 2G.
 //   CAF1 <member> <code> <conf> <yyyymmdd> <lat>,<lon>|- #<obs>
-//   CAF1 M0123 ROYA 87 20261004 16.91,-92.11 #K3F9
+//   CAF1 M0123 ROYA 96 20261004 16.91,-92.11 #K3F9
 
 export const CODES = {
   sano: 'SANO', roya: 'ROYA', minador: 'MINA', phoma: 'PHOM',

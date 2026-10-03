@@ -12,23 +12,27 @@ statistics sites. It could reach PyPI/npm, GitHub and public S3 buckets. That de
 | # | dataset / resource | used for | licence | size used | in the shipped app? |
 |---|---|---|---|---|---|
 | 1 | JMuBEN + JMuBEN2 (Kenya) | train / validate / test the image model (5 coffee classes) | CC BY 4.0 | 58,549 images, about 880 distinct groups | model weights only |
-| 2 | PlantDoc | `otro` (not a coffee leaf) | CC BY 4.0 (repo); see note | 2,569 images | model weights only |
+| 2 | PlantDoc | `otro` (not a coffee leaf) | CC BY 4.0 per the repo; AgML says CC BY-SA 4.0 (to be checked) | 2,569 images | model weights only |
 | 3 | Imagenette | `otro` (not a plant) | ImageNet terms (non-commercial research) | 700 images | model weights only |
-| 4 | iNaturalist field photos | field test; trained the experimental v2 (not shipped) | per photo: CC0 to CC BY-NC-ND | 768 photos | no |
+| 4 | iNaturalist field photos | **trains the shipped v2** (147 photos); threshold calibration (400 *Coffea* photos); field test | per photo: CC0 to CC BY-NC-ND | 768 + 400 photos | model weights only (one CC BY demo photo is in the repo) |
 | 5 | iNatAg-mini *Coffea arabica* | evaluation only | CC BY-NC 4.0 (to be checked) | 200 photos | no |
 | 6 | BRACOL, RoCoLe | **not used** (Mendeley blocked) | to be checked | — | no |
 | 7 | Amazon MASSIVE 1.1 es-ES | `otro` examples for the SMS intent classifier | CC BY 4.0 | 300 utterances | classifier weights only |
 | 8 | Hand-written SMS examples (team + AI-draft Tseltal) | SMS intent classifier | project | 275 messages | classifier weights only |
 | 9 | Reference prices | PRECIO reply (not AI) | public sources, **all DEMO** | 3 prices | yes (DEMO) |
-| 10 | Piper TTS, voice `es-mls_10246-low` | Spanish audio; provisional Tseltal audio | Piper MIT; voice data CC BY 4.0 | 146 MP3 files | yes (MP3 only) |
-| 11 | Tseltal card text (AI draft, Polian 2018 dictionary) | Tseltal text | dictionary CC BY 4.0 | 82 cards | yes (UNVERIFIED) |
+| 10 | Piper TTS, voices `es-mls_10246-low` and `en-us-lessac-medium` | Spanish audio; provisional Tseltal audio; English audio | Piper MIT; voice data: CC BY 4.0 (es), Lessac licence (en, to be checked) | 222 MP3 files | yes (MP3 only) |
+| 11 | Tseltal card text (AI draft, Polian 2018 dictionary) | Tseltal text | dictionary CC BY 4.0 | 83 cards | yes (UNVERIFIED) |
+| 11b | English card text (AI translation of the Spanish cards) | English text for judges and visitors | project | 83 cards | yes (UNVERIFIED) |
 | 12 | Meta MMS Tseltal models | **not used** | CC BY-NC 4.0 | — | no |
 | 13 | Evidence sources (GSMA, Findex, FAOSTAT, INEGI, OpenCelliD, …) | problem evidence | various | see [`docs/evidence.md`](docs/evidence.md) | no |
 | 14 | DEMO hub data | demo of the co-op hub | project | 24 fictional members | yes (DEMO) |
 
 The image model also starts from **ImageNet-pretrained MobileNetV3-Small weights** from Keras Applications
-(code Apache-2.0; the weights were trained on ImageNet). No dataset images ship in the app. `model/demo_samples/`
-holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
+(code Apache-2.0; the weights were trained on ImageNet). No dataset images ship in the app. For the demo,
+[`model/demo_samples/`](model/demo_samples/README.md) holds 10 held-out JMuBEN test crops plus one blurred copy of one
+of them (CC BY 4.0), and one held-out CC BY iNaturalist field photo (a whole rust-infected tree; the app answers
+"No estoy seguro"). Two held-out CC BY-NC iNaturalist rust photos from Mexico (the app answers "roya") are downloaded on
+the demo machine by `python3 model/demo_samples.py --field` and are not stored in the repo.
 
 ---
 
@@ -56,14 +60,19 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
   3. **Round-robin sub-sampling**, one image per group per round: up to 1,500 train, 300 validation and 500 test images per class.
   4. Centre square, resized to 224 px. Strong photometric augmentation during training.
 - **What it does NOT cover:**
-  - **Kenya only.** There are no images from Mexico or Latin America. The brief planned BRACOL (Brazil) and RoCoLe
-    (Ecuador). We could not download them (section 6), so the shipped model has seen **only Kenyan Arabica**.
+  - **Kenya only.** JMuBEN has no images from Mexico or Latin America. The brief planned BRACOL (Brazil) and RoCoLe
+    (Ecuador). We could not download them (section 6). Besides JMuBEN, the shipped v2 has seen only 147 diseased
+    iNaturalist field photos, about 86 of them from Latin America (Brazil, Central America, Colombia, Caribbean;
+    *computed* from the coordinates in the attribution CSV) and none from Mexico or the Mexico+Guatemala box (section 4).
   - **Close-up 128 px crops, not phone photos.** It has no whole leaves, branches, backgrounds, hands, shadows or wet
-    leaves. On field photos the model mostly says "not a coffee leaf" ([`METRICS.md`](METRICS.md) §4).
+    leaves. On field photos, v1 (trained on JMuBEN only) mostly said "not a coffee leaf"; that is why v2 adds field
+    photos ([`METRICS.md`](METRICS.md) §4).
   - **Augmented copies.** The dataset repeats each photo as flipped, rotated and colour-shifted copies. 58,549 images
     are only about 880 distinct groups. A random split would leak copies into the test set ([`METRICS.md`](METRICS.md) §6).
   - **Very few healthy photos.** `sano` has 18,983 images, but only 14 exact source photos and 11 groups.
-    The split puts 7 groups in train, 2 in validation and 2 in test. A real healthy Chiapas leaf will most likely get DUDA, not "sano".
+    The split puts 7 groups in train, 2 in validation and 2 in test, so the healthy class was learned from 7
+    near-duplicate groups (about 7–10 distinct source photos). The field photos added for v2 are all diseased.
+    A real healthy Chiapas leaf will most likely get DUDA, not "sano".
   - **Hazy rust crops.** On validation images the median blur score for rust is 16.2, against 381 for healthy and 432 for leaf miner
     ([`reports/model_eval.md`](reports/model_eval.md), blur table). A model could learn "haze = rust". We add haze and
     blur to every class during training to fight this, but we cannot rule it out.
@@ -75,8 +84,8 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
   doi:[10.1145/3371158.3371196](https://doi.org/10.1145/3371158.3371196); https://github.com/pratikkayal/PlantDoc-Dataset.
   We used the AgML copy `plant_doc_classification.zip` from the same S3 bucket.
 - **Licence:** the repo's `LICENSE.txt` is CC BY 4.0 (read on GitHub, 2026-10-03). AgML's metadata says CC BY-SA 4.0
-  instead, so check before redistributing. The images were collected from the web, so the copyright of individual images is unclear.
-  We do not redistribute any.
+  instead: **to be checked** before redistributing. The images were collected from the web, so the copyright of
+  individual images is unclear. We do not redistribute any.
 - **Size:** 2,569 images read (AgML lists 2,598), 28 classes, 13 crops: apple, bell pepper, blueberry, cherry, corn,
   grape, peach, potato, raspberry, soybean, squash, strawberry, tomato. The classes include healthy and diseased leaves.
 - **Used for:** the `otro` class. These are hard negatives: they include rust on apple and corn, and spider mites on tomato.
@@ -89,6 +98,8 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
 - **What it does NOT cover:**
   - The plants around a Chiapas coffee plot: shade trees, banana, citrus, beans, local weeds. These are not in PlantDoc.
   - Phone photos taken by farmers. PlantDoc images come from web searches.
+  - **Enough hard negatives.** The shipped v2 accepts 8 of 446 `otro` test images (7 distinct PlantDoc photos), mostly
+    apple rust and apple scab leaves answered "roya" ([`reports/model_eval.md`](reports/model_eval.md) section (a)).
 
 ## 3. Imagenette: "not a plant" examples
 
@@ -103,14 +114,22 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
   garbage truck, gas pump, golf ball and parachute. None are the things a farmer is likely to photograph by mistake, such
   as soil, hands, sacks, tarps, cherries or flowers.
 
-## 4. iNaturalist field photos (field test and the v2 experiment)
+## 4. iNaturalist field photos: training of the shipped v2, threshold calibration, field test
 
 - **Source:** iNaturalist open data. The metadata export was filtered to six taxa. The images come from the public
-  `inaturalist-open-data` S3 bucket, at the `medium` size (about 500 px on the long side). Code: [`model/inat_field.py`](model/inat_field.py).
+  `inaturalist-open-data` S3 bucket, at the `medium` size (about 500 px on the long side). Code:
+  [`model/inat_field.py`](model/inat_field.py) (field set) and [`model/field_threshold.py`](model/field_threshold.py)
+  (calibration sample).
 - **Licence:** **per photo**: CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA or CC BY-NC-ND. Attribution for every photo
-  (observer, licence, link) is in [`reports/field_inat_attribution.csv`](reports/field_inat_attribution.csv). The images are **not** in the repo,
-  because many are NC or ND. Before any product use, someone has to decide whether training on NC/ND photos is
-  allowed. Only the unshipped v2 was trained on these photos.
+  (observer, licence, link) is in [`reports/field_inat_attribution.csv`](reports/field_inat_attribution.csv) (field set)
+  and [`reports/field_calib_attribution.csv`](reports/field_calib_attribution.csv) (calibration sample). The images are
+  **not** in the repo, because many are NC or ND. The only exception is one CC BY field-test photo in
+  [`model/demo_samples/`](model/demo_samples/README.md), attributed there; the two CC BY-NC demo photos are downloaded
+  on the demo machine and not redistributed.
+- **The shipped model was trained on some of these photos.** Its 147 field-train photos are, by licence (*computed*
+  from the two CSVs above): CC BY-NC 89, CC BY 38, CC BY-NC-ND 14, CC0 4, CC BY-NC-SA 2. Whether model weights trained
+  on NC and ND photos may be shared or used commercially is **to be checked** before any product use; the fallback is
+  to retrain v2 on the 42 CC0 / CC BY photos only.
 - **Labels:** the taxon of each observation, which is the iNaturalist **community identification**, not an agronomist's
   diagnosis:
 
@@ -123,7 +142,7 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
   | *Coffea arabica* | coffee plant, health unknown |
 
   Quality grades for rust: research 118, needs ID 100, casual 1.
-- **Size:** 768 photos. One *Coffea* photo failed to download, so there are 399 *Coffea* photos instead of 400. From [`reports/field_eval.md`](reports/field_eval.md):
+- **Size of the field set:** 768 photos. One *Coffea* photo failed to download, so there are 399 *Coffea* photos instead of 400. From [`reports/field_eval.md`](reports/field_eval.md):
 
   | label | photos | observers | field-train / field-test | symptom clearly visible (screened) | inside Mexico | in Mexico+Guatemala box |
   |---|---|---|---|---|---|---|
@@ -134,7 +153,10 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
   | *Coffea arabica* | 399 | 399 | evaluation only | n/a | **37** | 46 |
 
   **Mexico subset:** 45 of the 768 photos fall inside Mexico (4 + 2 + 0 + 2 + 37, computed from the table). Only
-  6 of them show a disease: 4 rust and 2 leaf miner.
+  8 of them show a disease: 4 rust, 2 leaf miner and 2 ojo de gallo. All 45 are test photos; none was used for training.
+- **Calibration sample (separate):** 400 more *Coffea arabica* photos, one per observer, from observers who appear
+  nowhere in the field set ([`reports/field_v2_threshold_sweep.md`](reports/field_v2_threshold_sweep.md)). By licence
+  (*computed* from the CSV): CC BY-NC 360, CC BY 22, CC BY-NC-SA 6, CC BY-SA 5, CC0 4, CC BY-NC-ND 3; 40 are inside Mexico.
 - **Processing:**
   - **Split by observer** (seed 42). Every observer with any photo in the Mexico+Guatemala box is held out for the field test,
     plus a random ~30 % of the other observers of each disease. Ojo de gallo is always test. *Coffea*: one photo per
@@ -144,18 +166,25 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
     and Tecún Umán do not. It uses the observation's public coordinates. The attribution CSV stores them rounded.
   - **Screening:** one person looked at every disease photo on contact sheets of thumbnails. "yes" means a leaf
     symptom is clearly visible ([`reports/field_inat_screening.csv`](reports/field_inat_screening.csv)).
-  - **v2 experiment:** the 147 screened field-train photos (roya 122, minador 15, cercospora 10), 7 views each,
-    oversampled ×2. **Not shipped** ([`METRICS.md`](METRICS.md) §4c).
-- **Used for:** the field test of the shipped model. All 768 photos count for v1, which never saw them. The held-out part is
-  the comparison of v1 and v2.
+  - **v2 training:** the 147 field-train photos screened "yes" (roya 122, minador 15, cercospora 10; 43 observers,
+    none in the Mexico+Guatemala box), 7 views each, oversampled ×2, added to the JMuBEN/PlantDoc/Imagenette training set.
+  - **Threshold:** t = 0.90 was chosen on the calibration sample and the validation `otro` images only. 60 field-train
+    photos screened "no" were looked at as a weak recall proxy and not used to choose t.
+- **Used for:**
+  - **training** the shipped v2 (147 photos);
+  - **choosing its threshold** (the 400-photo calibration sample);
+  - **the field test** (held out: rust 53, leaf miner 9, Cercospora 10, ojo de gallo 90, *Coffea* 399). v2 shipped at
+    0.90 by a team decision that is an exception to the ship rule ([`METRICS.md`](METRICS.md) §4c). v1 never saw any of
+    the 768 photos, so all of them count as a test for v1.
 - **What it does NOT cover:**
-  - **Chiapas.** Most photos are from other countries. Only 4 rust photos are from Mexico.
+  - **Chiapas.** Most photos are from other countries. Only 4 rust photos are from Mexico, and all are test photos.
   - **Photos taken the way the app asks**, with the leaf underside filling the frame. Many show whole plants, branches,
     microscope slides or very severe, textbook infections.
   - **Labelled healthy field leaves.** *Coffea* photos have unknown health, so we never used them as `sano`.
-    This is why v2 raises false alarms.
-  - **Phoma.** No Phoma taxon was included, so the field test has no phoma photos.
-  - **A second rater.** Screening was done by one person, from thumbnails. 8 rust-labelled training photos look like Cercospora to that person.
+    This is why v2 gives false alarms: a disease answer for 2.5 % of the *Coffea* test photos at 0.90 (8.0 % at 0.70).
+  - **Phoma.** No Phoma taxon was included, so the field test has no phoma photos and v2 saw no field phoma.
+  - **A second rater.** Screening was done by one person, from thumbnails. 8 rust-labelled training photos look like
+    Cercospora to that person; they were kept as rust.
   - **Blurry phone shots.** The blur check fired on 0 of the 768 photos.
 
 ## 5. iNatAg-mini *Coffea arabica* (evaluation only)
@@ -165,8 +194,10 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
 - **Licence:** recorded as CC BY-NC 4.0 in our evaluation code ([`model/evaluate.py`](model/evaluate.py)). The AgML
   `annotations.json` has no per-photo licence field. **To be checked.**
 - **Size:** 200 photos of whole plants, flowers and cherries. Their disease status is unknown.
-- **Used for:** evaluation only, section (e) of [`reports/model_eval.md`](reports/model_eval.md). v1 answered DUDA for 100 % of them.
-  Never trained on, not shipped.
+- **Used for:** evaluation only, section (e) of [`reports/model_eval.md`](reports/model_eval.md). The shipped v2 at
+  0.90 answers DUDA for 93.5 % of them and gives a disease answer for 6.5 % (roya 5.5 %, minador 1.0 %); v1 answered
+  DUDA for 100 %. Their health is unknown, so these answers are false alarms or real symptoms we cannot check.
+  Never trained on (neither v1 nor v2), not shipped.
 - **What it does NOT cover:** any disease labels, and close-ups of leaves.
 
 ## 6. BRACOL and RoCoLe: named in the brief, NOT used
@@ -184,7 +215,7 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
 
 - **Licence:** shown on each Mendeley page, which we could not open. **To be checked.**
 - **What we lose without them:**
-  - photos from Latin America;
+  - a labelled Latin-American lab dataset (v2 has only about 86 iNaturalist field photos from the region);
   - Robusta;
   - red spider mite (`acaro_rojo`);
   - rust **severity** levels. RoCoLe has rust levels 1–4. BRACOL's paper is about "severity estimation" too, but we have
@@ -199,7 +230,8 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
        --bracol /home/user/data_raw/bracol --rocole /home/user/data_raw/rocole --out /home/user/data_proc/cafetal_v3
      ```
   4. Train, export with `--app-dir` to a separate folder (not `app/model/`), evaluate, and run `model/field_eval.py`
-     with the same ship rule ([`model/README.md`](model/README.md)). Copy to `app/model/` only if it passes.
+     with the same ship rule ([`model/README.md`](model/README.md)). Copy to `app/model/` only if it passes, or record
+     an explicit team exception in `model/ship_decision.json`, as was done for the shipped v2@0.90 ([`METRICS.md`](METRICS.md) §4c).
 - **What the flags do (UNTESTED: they have never run on the real files):**
   - `--bracol` and `--rocole` accept class sub-folders whose names contain a keyword, or a CSV with a file column and a label column.
   - BRACOL's `predominant_stress` codes map as: 0 → sano, 1 → minador, 2 → roya, 3 → phoma, 4 → cercospora.
@@ -255,30 +287,36 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
   and an official coffee reference price (a committee created by a December 2025 law is due to publish one, per the
   context note in `prices.json`).
 
-## 10. Piper TTS voice (Spanish audio)
+## 10. Piper TTS voices (Spanish, provisional Tseltal and English audio)
 
-- **Source:** Piper offline TTS (https://github.com/rhasspy/piper) with the voice `es-mls_10246-low`. The voice is 16 kHz,
-  1 speaker, low quality, and was fine-tuned from the US-English "Ryan" voice (its `MODEL_CARD`).
-- **Licence:** Piper is MIT (the repo's `LICENSE.md`, read 2026-10-03). The voice's `MODEL_CARD` names its training data as Multilingual LibriSpeech Spanish
-  (http://www.openslr.org/94/, **CC BY 4.0**). It gives no separate licence for the voice weights: **to be checked**.
-  Piper uses espeak-ng to turn text into phonemes (voice `es-419`). Only the generated MP3 files ship, not the 63 MB voice
-  model.
-- **Size:** 73 Spanish MP3s and 73 provisional Tseltal MP3s, 24 kbps mono, about 2.6 MB in total
-  ([`content/README.md`](content/README.md)).
+- **Source:** Piper offline TTS (https://github.com/rhasspy/piper) with two voices:
+  - `es-mls_10246-low`: 16 kHz, 1 speaker, low quality, fine-tuned from the US-English "Ryan" voice (its `MODEL_CARD`).
+  - `en-us-lessac-medium`: 22,050 Hz, 1 speaker, medium quality, trained from scratch (its `MODEL_CARD`). It is read
+    with `--length_scale 1.4`, so it speaks at about 170 words a minute, like the Spanish audio.
+- **Licence:** Piper is MIT (the repo's `LICENSE.md`, read 2026-10-03). The Spanish voice's `MODEL_CARD` names its
+  training data as Multilingual LibriSpeech Spanish (http://www.openslr.org/94/, **CC BY 4.0**). The English voice's
+  `MODEL_CARD` names the Blizzard Challenge 2013 Lessac dataset and links its licence page
+  (https://www.cstr.ed.ac.uk/projects/blizzard/2013/lessac_blizzard2013/license.html), which we could not open here.
+  Neither card gives a separate licence for the voice weights: **to be checked**, for both voices.
+  Piper uses espeak-ng to turn text into phonemes (`es-419` for Spanish and Tseltal, `en-us` for English). Only the
+  generated MP3 files ship, not the 63 MB voice models.
+- **Size:** 74 Spanish, 74 provisional Tseltal and 74 English MP3s (222 files), 24 kbps mono, about 3.5 MB in total
+  ([`content/README.md`](content/README.md)). The 9 SMS and alert cards are text only.
 - **Used for:** spoken Spanish for every UI, diagnosis and advice card. It is also a **stop-gap** for Tseltal: the
-  Spanish voice reads the Tseltal text, marked `synthetic-provisional`.
+  Spanish voice reads the Tseltal text, marked `synthetic-provisional`. The English voice reads the English cards
+  (section 11b).
 - **What it does NOT cover:** a Mexican-accented speaker; we only switched phonemes to Latin-American `es-419`. It does not
   cover Tseltal sounds either: glottal stops and glottalised consonants are dropped, so it does not sound like a Tseltal speaker.
 
 ## 11. Tseltal content (AI draft)
 
-- **Source:** all 82 cards in [`content/cards.json`](content/cards.json) have Tseltal text **drafted by an AI model**.
+- **Source:** all 83 cards in [`content/cards.json`](content/cards.json) have Tseltal text **drafted by an AI model**.
   The vocabulary was looked up word by word in Polian (2018), *Tseltal–Spanish multidialectal dictionary*, Dictionaria,
   https://dictionaria.clld.org/contributions/tseltal (**CC BY 4.0**). The grammar is a best guess
   ([`content/README.md`](content/README.md)). Exception: the two cards added on 2026-10-03
   (`ui_member_not_registered`, `ui_consent_hub_text`) reuse words from other cards plus loanwords; only a few of
   their words were looked up.
-- **Status:** **82 of 82 cards are `unverified`** in Tseltal, and in Spanish as well. The app shows "SIN VERIFICAR" next to every
+- **Status:** **83 of 83 cards are `unverified`** in Tseltal, and in Spanish and English as well. The app shows "SIN VERIFICAR" next to every
   unverified text and audio. A native speaker can verify a card or upload a recording on the hub's content page. A
   native recording is never overwritten by the audio script.
 - **What it does NOT cover:**
@@ -286,6 +324,21 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
   - dialect variation: Tseltal differs a lot between towns, e.g. three words for "leaf" (*yabenal*, *ya'malel*, *wamal*);
   - whether an older woman who does not read Spanish understands it when it is played aloud;
   - real Tseltal audio.
+
+## 11b. English content (AI translation, for judges and visitors)
+
+- **What it is:** a third UI language, added so that international judges and visitors can follow the demo. Tseltal
+  and Spanish remain the co-op's languages; no member is expected to use English.
+- **Source:** all 83 cards have English text, an **AI translation of the Spanish cards** in plain, short sentences
+  ([`content/README.md`](content/README.md)). The fail-safe reads exactly "I'm not sure — show the leaf to the
+  extension officer." The 74 spoken cards have English audio from the Piper voice `en-us-lessac-medium` (section 10).
+- **Status:** **83 of 83 English cards are `unverified`**. The app shows the UNVERIFIED badge next to them.
+- **SMS:** English SMS cards advertise the keywords **PRICE, HELP, OFFICER**; the hub accepts them as well as PRECIO,
+  AYUDA, TECNICO ([`hub/sms.py`](hub/sms.py) `KEYWORDS`). The co-op can register a member with language `en`, and the
+  hub then replies in English. The SMS intent classifier has no English training examples, so English free text will
+  mostly go to the officer.
+- **What it does NOT cover:** review by an English speaker; the advice itself is only as good as the Spanish card it
+  translates, which is unverified too.
 
 ## 12. Meta MMS Tseltal models (not used)
 
@@ -339,28 +392,34 @@ Do not present an S figure as verified. Say "to be checked", or use the F/L/D ro
 
 ## Gaps (what our data does not cover)
 
-1. **No Chiapas photos.** The model is trained only on Kenyan Arabica crops. The field test has 768 iNaturalist photos,
-   but only 4 rust and 2 leaf-miner photos from Mexico, and **0** photos taken by the team.
+1. **No Chiapas photos.** The model is trained on Kenyan Arabica crops plus 147 diseased iNaturalist field photos from
+   other countries. The field test has 768 iNaturalist photos, but only 4 rust and 2 leaf-miner photos from Mexico,
+   and **0** photos taken by the team.
 2. **Field conditions are untested where it matters.** Messy backgrounds, shade, wet leaves, cheap phone cameras and
-   the photos Noor's daughter would take have never been tested. On iNaturalist field photos the shipped model answers
-   0 of 219 rust photos correctly. It falls back to "No estoy seguro" instead of guessing.
-3. **No labelled healthy field leaves.** `sano` was learned from 7 distinct Kenyan photos. Healthy Chiapas leaves will
-   mostly get DUDA. An attempt to add field photos (v2) produced false alarms for this reason.
+   the photos Noor's daughter would take have never been tested. On held-out iNaturalist field photos the shipped v2
+   answers 34 of 53 rust photos correctly (64.2 %; v1: 0). The rest get "No estoy seguro". It names leaf miner in 2 of
+   9 photos and Cercospora in 0 of 10.
+3. **No labelled healthy field leaves.** `sano` was learned from 7 near-duplicate groups of Kenyan photos (about 7–10
+   distinct source photos). Healthy Chiapas leaves will mostly get DUDA, and some will get a false disease answer:
+   v2 gives one for 2.5 % of the iNaturalist *Coffea* test photos, because all its field training photos are diseased.
 4. **Leaf symptoms only.** The app cannot see coffee berry borer (*broca*), nutrient deficiency, drought, old trees or
    soil problems, any of which could explain Noor's lower yield. The card `limits_yield` says so and points to the officer.
 5. **Severity only in RoCoLe (not used).** The model has no severity output. BRACOL may have severity labels too, but it is not used either.
 6. **`acaro_rojo` (red spider mite) is not in the model.** It is only in RoCoLe. The card exists, but the model never outputs it.
-7. **Phoma has no field test.** Cercospora has 10 held-out field photos, and v2 got none of them right.
+7. **Phoma has no field test.** Cercospora has 10 held-out field photos, and v2 got none of them right (2 called roya).
 8. **Tseltal speech data is scarce.** There is no Common Voice data and no FLORES. MMS has only two dialects, non-commercial and
-   trained on Bible readings. Our Tseltal text is an AI draft, and our Tseltal audio is a Spanish voice. Everything is UNVERIFIED.
+   trained on Bible readings. Our Tseltal text is an AI draft, and our Tseltal audio is a Spanish voice. Everything is
+   UNVERIFIED, including the English cards for visitors.
 9. **Real SMS language is missing.** Intent examples are team-written. Tseltal free text is effectively untested.
 10. **Prices are references, not farm-gate.** They are international or wholesale equivalents, all DEMO, all seen only in search
     snippets. Reported Chiapas farm-gate prices (45–48 MXN/kg, unverified) are far below the reference.
 11. **All sample data is DEMO.** This covers members, observations, the outbreak and the SMS gateway (SIMULATED).
 12. **Licences need a check before any product use.** These are: Imagenette (ImageNet terms), PlantDoc (CC BY vs CC BY-SA),
-    iNaturalist NC/ND photos (if a future model trains on them), iNatAg-mini, the Piper voice weights, and the Meta MMS models (NC).
+    the iNaturalist NC/ND photos **the shipped v2 was trained on** (105 of its 147 field photos), iNatAg-mini, both
+    Piper voices' weights (and the Lessac data licence for English), and the Meta MMS models (NC).
 
 **How these gaps close.** First, the extension officer confirms or rejects reports in the hub. Those confirmations become
 labelled Chiapas photos, healthy and diseased, taken with the app. They go into `data/field_test/` and, later, into
-training. Then rerun the field protocol and ship rule ([`model/README.md`](model/README.md)). In parallel, a native Tseltal
-speaker from the co-op's area reviews and records the 82 cards ([`content/README.md`](content/README.md)).
+training. Then rerun the field protocol and ship rule ([`model/README.md`](model/README.md)), and record any exception
+openly, as for the shipped v2@0.90 (`model/ship_decision.json`). In parallel, a native Tseltal
+speaker from the co-op's area reviews the 83 cards and records the 74 spoken ones ([`content/README.md`](content/README.md)).

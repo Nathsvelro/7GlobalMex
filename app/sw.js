@@ -5,7 +5,7 @@
 //  - /api/*: network only (never cached, so "hub reachable" is never faked)
 // VERSION = hash of every precached file, written by scripts/bump_sw_version.py (run.sh runs it before starting the
 // hub; run it by hand before copying app/ to a static host). A new VERSION makes phones re-download everything.
-const VERSION = 'cafetal-7b8eb4c086';
+const VERSION = 'cafetal-1d8c27fb25';
 const SHELL = [
   './', 'index.html', 'style.css', 'app.js', 'content.js', 'store.js', 'infer.js', 'sms.js',
   'manifest.webmanifest',

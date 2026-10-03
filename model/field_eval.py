@@ -530,7 +530,8 @@ def render_md(r):
          "> **Read this first.** iNaturalist photos are a *proxy* for Chiapas field photos, not a substitute: most are "
          "from other countries (only " + str(ph["roya"]["in_mexico"]) + " roya photos are inside Mexico), taken with "
          "many different cameras and framings, and many show severe, textbook infections. Labels are the iNaturalist "
-         "community identification (\"research\" or \"needs_id\" grade), not an agronomist's diagnosis. Sample sizes "
+         "community identification (mostly \"research\" or \"needs_id\" grade; 3 disease test photos and 189 *Coffea* "
+         "photos are \"casual\"), not an agronomist's diagnosis. Sample sizes "
          "are small, so the intervals are wide.", "",
          "## Result", ""]
     tradeoff, tt, team = None, None, []
@@ -639,7 +640,8 @@ def render_md(r):
           "unknown (never trained on, only used to count disease answers).",
           f"- **Mexico rule**: {r['mexico_rule']}",
           "- **Split by observer** (seed 42, `model/inat_field.py`): field test = every observer with a photo in the box "
-          "+ a random ~30 % of the other observers of each disease; ojo de gallo is always test; the rest is field-train "
+          "+ a random ~30 % of the other observers of each disease; ojo de gallo is always test, so 1 ojo de gallo test "
+          "photo shares its observer with a v2 training photo (no other test photo does); the rest is field-train "
           f"(used only by the v2 experiment). Coffea: one photo per observer, {ph['coffea']['observers']} distinct "
           "observers, none of them a field-train observer.",
           "- **Screening** (`reports/field_inat_screening.csv`): every disease photo was looked at on contact sheets "

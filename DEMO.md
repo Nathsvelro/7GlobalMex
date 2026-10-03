@@ -8,6 +8,8 @@ This is the whole journey for the 2–5 minute video and for judges trying Cafet
 4. **Harvest:** Noor texts `PRECIO` from her basic phone.
 
 Button names below are the exact Spanish labels in the app and the hub. The English in brackets is only for you.
+The app also has an English interface, added for judges and visitors (step 2.1); Noor's languages are Tseltal and
+Spanish.
 
 Honesty labels you will see on screen, and should leave visible:
 
@@ -37,20 +39,30 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
 2. **Reset the DEMO data.** On http://localhost:8000/, press **"Reiniciar datos DEMO"** and confirm. You can also
    run `curl -X POST http://localhost:8000/api/demo/reset`. The DEMO reports are dated relative to the day of
    seeding, so a database from an earlier day may no longer fire the alert.
-3. **Copy the demo photos to the phone:**
+3. **Get the field photos, then copy the demo photos to the phone.** The two field rust photos are CC BY-NC, so
+   they are not in the repository. Download them once, with internet:
    ```
+   python3 model/demo_samples.py --field
+   adb push model/demo_samples/field/roya_field_1.jpg /sdcard/Download/
    adb push model/demo_samples/roya_1.jpg /sdcard/Download/
    adb push model/demo_samples/blurred_roya.jpg /sdcard/Download/
    ```
-4. **Why these two photos:**
-   - **roya_1.jpg** is a held-out JMuBEN test image: a Kenyan close-up the model never trained on. The shipped
-     model only recognises close-ups like its training crops. On field photos it almost always answers "No estoy
-     seguro" ([reports/field_eval.md](reports/field_eval.md): 0 of 219 iNaturalist rust photos answered
-     correctly).
-   - **blurred_roya.jpg** is the same leaf, blurred.
-   - In the real app page (desktop Chromium), roya_1.jpg gave **Roya 99%** and blurred_roya.jpg gave the
-     fail-safe with "La foto salió borrosa".
-   - Other samples, one per class, are in [model/demo_samples/](model/demo_samples/README.md).
+4. **Why these photos:**
+   - **roya_field_1.jpg** (main demo) is a real field photo of leaf rust from Mexico, from iNaturalist
+     (© jpgalvan, CC BY-NC, https://www.inaturalist.org/photos/31642233). It is from the held-out field test: the
+     model never trained on this observer's photos. We picked it because the app answers it correctly. It shows
+     what the app can do on a clear field photo, not how often: on the held-out field rust photos the shipped
+     model is right in 34 of 53 (64%), and the rest get "No estoy seguro"
+     ([reports/field_eval.md](reports/field_eval.md)). If the photo appears in the video, show the credit line.
+   - **roya_1.jpg** (backup) is a Kenyan lab close-up from the JMuBEN test split. Use it if the field photo is
+     missing.
+   - **blurred_roya.jpg** is roya_1.jpg, blurred.
+   - In the real app page (desktop Chromium), roya_field_1.jpg gave **Roya 99%**, roya_1.jpg gave **Roya 99%**,
+     and blurred_roya.jpg gave the fail-safe with "La foto salió borrosa"
+     ([reports/model_demo_samples_check.json](reports/model_demo_samples_check.json)).
+   - Other samples, one per class, are in [model/demo_samples/](model/demo_samples/README.md). The optional
+     `field_whole_tree.jpg` is a real photo of a sick tree taken from too far away: the app says "No estoy
+     seguro".
 5. **Connect the phone:** USB debugging on, cable in, then `adb reverse tcp:8000 tcp:8000`.
 6. **Load the app once while online.** On the phone, open **http://localhost:8000/app/** in Chrome. Wait for the
    green label **"Listo para usar sin internet"**. Everything is now cached: app, model, cards, audio.
@@ -62,11 +74,14 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
 
 ## 2. Saturday scene: Noor checks a leaf (phone, offline)
 
-1. **"Elija su idioma"** (choose your language). Tap **"Español"**, then **"Seguir"**.
+1. **"Elija su idioma"** (choose your language). There are three buttons: **"Bats'il k'op (Tseltal)"**,
+   **"Español"** and **"English"**. Tap **"Español"**, then **"Seguir"**.
    - Tapping a language says "choose your language" in that language. The next two screens read themselves
      aloud, if the browser allows it.
    - To show the whole interface in Tseltal, tap **"Bats'il k'op (Tseltal)"** instead. You can also switch later
      in "Ajustes" → "Idioma".
+   - **"English"** is for judges and visitors. The result screen then gets a third button, "Listen in English".
+     The English text is an AI translation, also marked UNVERIFIED.
 2. **"Su permiso"** (consent). The text says what is stored and that nothing is sent without a tap. Tap **"Sí,
    acepto"**. ("No, gracias" goes back and stores nothing.)
 3. **Member number:**
@@ -79,11 +94,14 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
 5. **Home screen.** Point at the two tips:
    - *"Tome la foto por debajo de la hoja, de cerca…"* (photograph the underside of the leaf, close up)
    - *"¿No lleva el teléfono al cafetal? Traiga unas hojas a la casa…"* (no phone in the field? bring leaves home)
-6. Tap **"Elegir una foto"** (choose a photo) → Downloads → **roya_1.jpg**. ("Tomar foto" opens the camera.)
-   - **Say on camera:** this is a test close-up the model never trained on, and on real field photos our model
-     still says "No estoy seguro".
+6. Tap **"Elegir una foto"** (choose a photo) → Downloads → **roya_field_1.jpg** (backup: **roya_1.jpg**).
+   ("Tomar foto" opens the camera.)
+   - **Say on camera:** this is a real field photo from Mexico that the model never trained on. On field photos
+     like it, our model names rust about two times in three; otherwise it says "No estoy seguro". It can also be
+     wrong, so the officer confirms.
+   - With roya_1.jpg, say instead: this is a Kenyan lab close-up from the test set, not a field photo.
 7. **"Revisando la hoja…"** appears. The first photo takes a few seconds while the runtime and model load from the
-   cache (2.6 s in our emulated phone; [reports/browser_metrics.md](reports/browser_metrics.md)).
+   cache (2.5 s in our emulated phone; [reports/browser_metrics.md](reports/browser_metrics.md)).
 8. **Result:**
    - **"Roya"**, *"Parece roya del cafeto."*, and the **"Seguridad"** (confidence) bar.
    - The audio starts by itself if the browser allows it. Otherwise tap **"Escuchar en tseltal"**, then
@@ -100,10 +118,12 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
     - *"No estoy seguro — muestre la hoja al técnico."* (I'm not sure, show the leaf to the officer)
     - *"La foto salió borrosa."* (the photo is blurry)
     - Seguridad 0%
-11. **Fail-safe, not a coffee leaf:** tap **"Otra foto"** and photograph anything else, such as a cup or your
-    hand. Expected: the same *"No estoy seguro…"* with *"No parece hoja de café."* (doesn't look like a coffee
-    leaf). Our tests checked this with test images, not with a live phone camera: 99.8% of non-coffee test images
-    were rejected ([reports/model_eval.md](reports/model_eval.md)).
+11. **Fail-safe, not a coffee leaf:** tap **"Otra foto"** and photograph an object, such as a cup. **Do not
+    photograph a person:** step 3.6 uploads this photo to the hub too. Expected: the same *"No estoy seguro…"*
+    with *"No parece hoja de café."* (doesn't look like a coffee leaf). Our tests checked this with test images,
+    not with a live phone camera: 98.2% of non-coffee test images were rejected. The 8 of 446 that were not are
+    mostly apple leaves with rust or scab, answered "roya" ([reports/model_eval.md](reports/model_eval.md)).
+    So point the camera at an object, not at another plant's leaf.
 12. **"Mis revisiones"** (my checks): the three checks, each marked **"Por enviar"** (to send).
 
 ## 3. Save now, send later
@@ -126,6 +146,9 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
    - the status **"Enviado"**
 6. Tap **"Mandar fotos a la cooperativa (Wi-Fi)"** (send photos to the co-op). You should see **"Fotos enviadas a
    la cooperativa"**. The photo now appears on the officer's list.
+   - **Note:** this one tap sends **every record on the phone not yet sent to the hub, photos included**, not
+     just the open one. Here that is also the blurred photo and the not-coffee photo from steps 2.10–2.11. There is
+     no per-photo choice.
 
 ## 4. At the co-op: the hub (laptop, http://localhost:8000/)
 
@@ -137,15 +160,19 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
 2. **"Bandeja de salida"** (outbox) shows **"Aviso de brote #1 — 24 mensajes"**, one alert SMS per member.
    - Each SMS is a card: `alert_roya` in Spanish or Tseltal, marked SIN VERIFICAR, 1 SMS long.
    - Type a name in **"Quién aprueba"** (who approves).
-   - Press **"Aprobar los 24"** and confirm, or **"Aprobar"** on a single row. "Rechazar" also exists.
+   - Press **"Aprobar los 24"** and confirm. "Rechazar los 24" and per-row "Aprobar" / "Rechazar" buttons also
+     exist.
+   - To approve a single message instead, use **"Aprobar"** on the row **"Noor (DEMO)"**, phone +529670000123. It
+     is the second row, **not** the first (that is Elena, M0124). The next step ("Simulador SMS") shows Noor's
+     alert only once her own message is approved.
    - Nothing went out until this tap.
 3. **"Simulador SMS"**: Noor's basic phone now shows the alert *"AVISO DE LA COOPERATIVA: 3 reportes de roya
    cerca de Ondera Alto esta semana…"*, tagged "AVISO". It also shows her earlier report and the reply.
 4. **"Mapa"** (map): Noor's plot is inside the red circle **"Aviso #1"** (5 km). Every dot has the colour of
    that farm's most serious report in 30 days. It is a plain SVG map, with no internet and no streets.
 5. **"Técnico"** (officer):
-   - Noor is **#1**: *"Roya 99% · zona de alerta · … · con foto"*, with the leaf photo. The banner says **"Usted
-     decide a quién visitar"** (you decide whom to visit).
+   - Noor is **#1**: *"Roya 99% · zona de alerta · … · con foto"*, with the leaf photo (the percentage is the one
+     in your SMS code). The banner says **"Usted decide a quién visitar"** (you decide whom to visit).
    - Press **"Visita programada"** (visit scheduled).
    - After the visit, the officer picks the true label in **"Etiqueta real…"** (set at first to the app's
      answer). Then press **"Confirmado"** (or "No confirmado" with a different label) and add an optional note.
@@ -173,7 +200,8 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
    - The right panel, "Qué hizo el hub con el último mensaje" (what the hub did), shows intent **precio** with its
      confidence.
    - The reply is the same price card.
-   - The **"texto: hablar con técnico"** and **"texto: reporte"** buttons send other examples.
+   - The **"texto: hablar con técnico"** and **"texto: reporte"** buttons send other examples. Both also go to the
+     officer's inbox: a free-text symptom report gets the how-to-report card *and* reaches the officer.
 4. **Unknown message → officer:** type `se secaron mis matas con el calor que hago` (drought, which the app
    cannot see) and press **"Enviar"**.
    - The panel shows the intent is below the threshold, *"pasa al técnico"* (goes to the officer).
@@ -184,6 +212,8 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
    - Choose *"Pedro López Hernández (DEMO) · M0105"*, a Tseltal-registered member, and press "PRECIO" to see the
      Tseltal SMS (SIN VERIFICAR).
    - Choose *"Número NO registrado"* to see the "please register at the co-op" reply.
+   - The English keywords `PRICE`, `HELP` and `OFFICER` work like `PRECIO`, `AYUDA` and `TECNICO`. The reply comes
+     in the member's registered language; "Registro" can register a member in English (for visitors).
 
 ## 6. After the demo
 
@@ -212,9 +242,14 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
       http://localhost:8000/api/health in the phone's Chrome, then reopen the record from "Mis revisiones".
 - [ ] **No sound.** The browser blocked autoplay: tap "Escuchar en tseltal" / "Escuchar en español". Check the
       phone is not on silent.
-- [ ] **A live photo of a real coffee leaf says "No estoy seguro".** This is expected with the shipped model
-      (see [reports/field_eval.md](reports/field_eval.md)). Present it as the fail-safe working, and don't
-      promise a diagnosis on a live leaf.
+- [ ] **A live photo of a real coffee leaf** may get an answer or "No estoy seguro". Both are expected: on
+      held-out field rust photos the shipped model answered "roya" in 64% and "No estoy seguro" in the rest, and
+      it gave a disease answer to 2.5% of ordinary coffee-plant photos (false alarms;
+      [reports/field_eval.md](reports/field_eval.md)). Don't promise a diagnosis on a live leaf: say the officer
+      confirms. A live "Roya" answer sent to the hub fires the outbreak alert just like the demo photo, so try live
+      leaves only after the main demo, or reset the DEMO data afterwards.
+- [ ] **roya_field_1.jpg is missing.** Run `python3 model/demo_samples.py --field` on a machine with internet,
+      or use roya_1.jpg and say it is a Kenyan lab close-up.
 - [ ] **The phone already has another member or old records** → "Ajustes" → "Borrar todo" → "Sí, borrar todo".
 - [ ] **Port 8000 is busy** → `PORT=9000 ./run.sh`, then `adb reverse tcp:9000 tcp:9000` and
       http://localhost:9000/app/.
@@ -229,8 +264,8 @@ You can do the whole journey in desktop Chrome on the hub laptop:
    origin.
 2. Wait for "Listo para usar sin internet".
 3. **Offline:** stop `./run.sh` with Ctrl+C, so nothing answers on port 8000. Reload the app: it opens from the
-   cache. Do section 2, choosing the files from `model/demo_samples/`. Block location when Chrome asks, for the
-   same reason as on the phone.
+   cache. Do section 2, choosing the files from `model/demo_samples/` (the field photo is in
+   `model/demo_samples/field/`). Block location when Chrome asks, for the same reason as on the phone.
 4. Start `./run.sh` again. The database is kept, not re-seeded. Then do sections 3–5. Skip the "Enviar por SMS"
    step; a laptop has no SMS app.
 

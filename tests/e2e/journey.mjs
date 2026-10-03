@@ -383,8 +383,8 @@ async function hubPages(browser, { bcast }) {
   check(intentOf(r).intent === 'precio' && r.replies[0].card_id === 'sms_precio',
     `"cuanto estan pagando el kilo de cafe" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}`);
   r = sms['mis matas tienen polvo naranja'];
-  check(intentOf(r).intent === 'reporte' && r.replies[0].card_id === 'sms_reporte_instrucciones',
-    `"mis matas tienen polvo naranja" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}`);
+  check(intentOf(r).intent === 'reporte' && r.replies[0].card_id === 'sms_reporte_instrucciones' && fw(r),
+    `"mis matas tienen polvo naranja" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}, forwarded to officer: ${fw(r)}`);
   r = sms['asdf qwerty'];
   check(fw(r) && r.replies[0].card_id === 'sms_pasar_tecnico',
     `"asdf qwerty" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}, forwarded to officer: ${fw(r)}`);

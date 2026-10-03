@@ -1,10 +1,10 @@
 {
   "hub": "http://localhost:8000",
-  "started": "2026-10-03T22:16:11.654Z",
+  "started": "2026-10-03T23:10:12.614Z",
   "checks": [
     {
       "ok": true,
-      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1931 ms (unthrottled, localhost)"
+      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1944 ms (unthrottled, localhost)"
     },
     {
       "ok": true,
@@ -48,7 +48,7 @@
     },
     {
       "ok": true,
-      "msg": "SMS code valid, 46 chars: CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #6683"
+      "msg": "SMS code valid, 46 chars: CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #OCTN"
     },
     {
       "ok": true,
@@ -56,7 +56,7 @@
     },
     {
       "ok": true,
-      "msg": "\"Enviar por SMS\" link: sms:+520000000000?body=CAF1%20M0123%20ROYA%2099%2020261003%2016.91%2C-92.11%20%236683"
+      "msg": "\"Enviar por SMS\" link: sms:+520000000000?body=CAF1%20M0123%20ROYA%2099%2020261003%2016.91%2C-92.11%20%23OCTN"
     },
     {
       "ok": true,
@@ -116,11 +116,11 @@
     },
     {
       "ok": true,
-      "msg": "hub stored the observation M0123-6683 (ROYA 99%) from the SMS"
+      "msg": "hub stored the observation M0123-OCTN (ROYA 99%) from the SMS"
     },
     {
       "ok": true,
-      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-03T22:16:32\",\"community\":\"Ondera Alto\",\"lat\":16.91,\"lon\":-92.11,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-6683\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
+      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-03T23:10:33\",\"community\":\"Ondera Alto\",\"lat\":16.91,\"lon\":-92.11,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-OCTN\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
     },
     {
       "ok": true,
@@ -136,7 +136,7 @@
     },
     {
       "ok": true,
-      "msg": "photo attached to M0123-6683: /api/photos/M0123-6683"
+      "msg": "photo attached to M0123-OCTN: /api/photos/M0123-OCTN"
     },
     {
       "ok": true,
@@ -156,7 +156,7 @@
     },
     {
       "ok": true,
-      "msg": "\"mis matas tienen polvo naranja\" -> reporte (0.597) -> sms_reporte_instrucciones"
+      "msg": "\"mis matas tienen polvo naranja\" -> reporte (0.597) -> sms_reporte_instrucciones, forwarded to officer: true"
     },
     {
       "ok": true,
@@ -176,16 +176,16 @@
     }
   ],
   "results": {
-    "first_load_ready_ms": 1931,
+    "first_load_ready_ms": 1944,
     "roya": {
-      "obs_id": "6683",
+      "obs_id": "OCTN",
       "label": "roya",
       "code": "ROYA",
       "top": "roya",
       "conf": 99,
       "reason": null,
       "blur": 51.69,
-      "ms": 656,
+      "ms": 658,
       "probs": {
         "sano": 0,
         "roya": 0.996,
@@ -194,12 +194,12 @@
         "cercospora": 0,
         "otro": 0.004
       },
-      "sms_code": "CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #6683",
+      "sms_code": "CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #OCTN",
       "model_version": "cafetal-img-v2",
       "diag_text": "Parece roya del cafeto."
     },
     "plantdoc": {
-      "obs_id": "7Q7V",
+      "obs_id": "JYG8",
       "label": "otro",
       "code": "OTRO",
       "top": "otro",
@@ -215,19 +215,19 @@
         "cercospora": 0,
         "otro": 0.999
       },
-      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #7Q7V",
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #JYG8",
       "model_version": "cafetal-img-v2",
       "diag_text": "No estoy seguro — muestre la hoja al técnico."
     },
     "imagenette": {
-      "obs_id": "H291",
+      "obs_id": "X64U",
       "label": "otro",
       "code": "OTRO",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 1032.66,
-      "ms": 16,
+      "ms": 17,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -236,19 +236,19 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #H291",
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #X64U",
       "model_version": "cafetal-img-v2",
       "diag_text": "No estoy seguro — muestre la hoja al técnico."
     },
     "object": {
-      "obs_id": "2KNA",
+      "obs_id": "6NZL",
       "label": "otro",
       "code": "OTRO",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 145.58,
-      "ms": 21,
+      "ms": 22,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -257,12 +257,12 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #2KNA",
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #6NZL",
       "model_version": "cafetal-img-v2",
       "diag_text": "No estoy seguro — muestre la hoja al técnico."
     },
     "blurred": {
-      "obs_id": "G2GN",
+      "obs_id": "W1WG",
       "label": "duda",
       "code": "DUDA",
       "top": null,
@@ -271,7 +271,7 @@
       "blur": 2.35,
       "ms": 2,
       "probs": null,
-      "sms_code": "CAF1 M0123 DUDA 0 20261003 16.91,-92.11 #G2GN",
+      "sms_code": "CAF1 M0123 DUDA 0 20261003 16.91,-92.11 #W1WG",
       "model_version": "cafetal-img-v2",
       "diag_text": "No estoy seguro — muestre la hoja al técnico."
     },
@@ -294,7 +294,7 @@
     "alerts": [
       {
         "id": 1,
-        "created_at": "2026-10-03T22:16:32",
+        "created_at": "2026-10-03T23:10:33",
         "community": "Ondera Alto",
         "lat": 16.91,
         "lon": -92.11,
@@ -305,7 +305,7 @@
           "M0123"
         ],
         "obs_uids": [
-          "M0123-6683",
+          "M0123-OCTN",
           "M0105-A1R2",
           "M0108-B7K4"
         ],
@@ -322,8 +322,8 @@
       "name": "Noor (DEMO)",
       "community": "Ondera Alto",
       "phone": "+529670000123",
-      "obs_uid": "M0123-6683",
-      "obs_id": "6683",
+      "obs_uid": "M0123-OCTN",
+      "obs_id": "OCTN",
       "code": "ROYA",
       "conf": 99,
       "date": "2026-10-03",
@@ -411,6 +411,9 @@
             "accepted": true,
             "threshold": 0.45,
             "method": "classifier"
+          },
+          {
+            "type": "forwarded_to_officer"
           }
         ]
       },
@@ -525,6 +528,6 @@
     ],
     "notFromCards": []
   },
-  "finished": "2026-10-03T22:16:45.071Z",
+  "finished": "2026-10-03T23:10:45.765Z",
   "failures": 0
 }

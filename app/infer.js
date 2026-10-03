@@ -6,7 +6,7 @@ const DEFAULTS = {
   classes: ['sano', 'roya', 'minador', 'phoma', 'cercospora', 'otro'],
   input: { name: null, size: 224 },
   output: { name: null, type: 'probabilities' },
-  threshold: 0.7,
+  threshold: 1.0, // never used to answer: see getLabels()
   blur_threshold: 0,
   file: 'cafetal.onnx',
 };
@@ -15,12 +15,19 @@ const BLUR_SIZE = 128;
 let labelsPromise = null;
 let sessionPromise = null;
 
+// Fail closed: if labels.json (threshold, blur threshold) did not load, `loaded` is false and diagnose() answers
+// DUDA; the failed fetch is not cached, so the next photo tries again.
 export function getLabels() {
   if (!labelsPromise) {
     labelsPromise = fetch('model/labels.json')
       .then((r) => (r.ok ? r.json() : {}))
       .catch(() => ({}))
-      .then((l) => ({ ...DEFAULTS, ...l, input: { ...DEFAULTS.input, ...l.input }, output: { ...DEFAULTS.output, ...l.output } }));
+      .then((l) => {
+        if (!l || typeof l !== 'object') l = {};
+        const loaded = typeof l.threshold === 'number' && typeof l.blur_threshold === 'number';
+        if (!loaded) labelsPromise = null;
+        return { ...DEFAULTS, ...l, loaded, input: { ...DEFAULTS.input, ...l.input }, output: { ...DEFAULTS.output, ...l.output } };
+      });
   }
   return labelsPromise;
 }
@@ -103,6 +110,10 @@ export async function diagnose(img) {
   const t0 = performance.now();
   const blur = blurScore(img);
   const base = { blur: Math.round(blur * 100) / 100, model_version: L.version, probs: null, top: null };
+  if (!L.loaded) {
+    return { ...base, label: 'duda', code: 'DUDA', conf: 0, reason: 'model_error', model_version: 'none',
+      ms: Math.round(performance.now() - t0) };
+  }
   if (blur < L.blur_threshold) {
     return { ...base, label: 'duda', code: 'DUDA', conf: 0, reason: 'blurry', ms: Math.round(performance.now() - t0) };
   }

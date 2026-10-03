@@ -447,7 +447,8 @@ def main():
         out, _, _ = evaluate_model(args.shipped, labels, rows, squares, blur, None, args.cache, methods)
         rep["inat_field"] = {"n_photos": len(rows), "app_method": methods[-1],
                              "field_test": {m: out["methods"][m]["field_test"] for m in methods},
-                             "note": "held-out field test only (observers never used in training); iNaturalist photos "
+                             "note": "held-out field test only (observers not used in training, except the observer of 1 ojo de gallo "
+                                     "photo); iNaturalist photos "
                                      "are a proxy for Chiapas photos; details, ship rule and v1/v2 comparison in "
                                      "reports/field_eval.md"}
         print("inat field", {m: rep["inat_field"]["field_test"][m]["roya"]["correct"] for m in methods})

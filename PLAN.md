@@ -7,8 +7,23 @@ Source of truth for the user, rules and judging: `PROJECT_BRIEF.md` and `docs/co
 handle it myself, or get the extension officer to come?"* Plus a non-AI reference price ("PRECIO").
 
 Setting: Chiapas highlands, Mexico. Local language **Tseltal** (`tzh`), national language **Spanish** (`es`).
+**English** (`en`) was added later as a third UI language for judges and visitors.
 
 Design rule: **keep it simple.** Vanilla HTML/JS (no build step), FastAPI + SQLite, one command to start.
+
+> **As built (2026-10-03).** This plan was written before the build; where it differs, the build wins:
+> - The shipped image model is **v2** (`cafetal-img-v2`), **fp16 weights** (1.97 MB), at confidence threshold
+>   **0.90**. INT8 broke the model ([METRICS.md](METRICS.md) §1). v2 = JMuBEN (Kenya) + PlantDoc/Imagenette `otro`
+>   + 147 iNaturalist field photos. It shipped by an explicit team decision, as an exception to the pre-registered ship
+>   rule (it misses one of five conditions by 0.04 points; [METRICS.md](METRICS.md) §4c, `model/ship_decision.json`).
+> - BRACOL and RoCoLe were never downloaded (Mendeley is blocked). The only Latin-American training images are v2's
+>   iNaturalist field photos: about 86 of its 147 (Brazil, Central America, Colombia, Caribbean; *computed* from the
+>   coordinates in `reports/field_inat_attribution.csv`), none from Mexico or the Mexico+Guatemala box.
+> - **83 cards** in three languages (`es`, `tzh`, `en`), 74 of them spoken (222 MP3s). Adding a language means about
+>   83 card texts (about 860 words; 60 required ids) and 74 recordings, with no model retraining.
+> - The blur threshold (4.2) is calibrated on **validation** images. The "too little leaf colour" check in §3 was
+>   **not built**; the `otro` class does that job.
+> - SMS keywords: PRECIO/PRECIOS, AYUDA, TECNICO, and in English PRICE/PRICES, HELP, OFFICER.
 
 ---
 
@@ -16,11 +31,12 @@ Design rule: **keep it simple.** Vanilla HTML/JS (no build step), FastAPI + SQLi
 
 | Topic | Decision | Why |
 |---|---|---|
-| Training data | **JMuBEN/JMuBEN2** (Kenya, Arabica, real field, CC BY 4.0) via the AgML public bucket, plus **PlantDoc** for "not coffee" | Mendeley (BRACOL, RoCoLe), Hugging Face and Kaggle are blocked by this build environment's network policy. `model/prepare_data.py` also accepts BRACOL/RoCoLe folders if the team downloads them by hand (steps in `DATA_CARD.md`). |
-| Image model | Keras **MobileNetV3-Small** (ImageNet weights) fine-tuned → ONNX → INT8 | Weights reachable from storage.googleapis.com; ONNX runs in the browser with onnxruntime-web (WASM). |
+| Training data | **JMuBEN/JMuBEN2** (Kenya, Arabica, CC BY 4.0) via the AgML public bucket, plus **PlantDoc** and Imagenette for "not coffee"; the shipped v2 adds 147 screened **iNaturalist** field photos (`DATA_CARD.md` §4) | Mendeley (BRACOL, RoCoLe), Hugging Face and Kaggle are blocked by this build environment's network policy. `model/prepare_data.py` also accepts BRACOL/RoCoLe folders if the team downloads them by hand (steps in `DATA_CARD.md`). |
+| Image model | Keras **MobileNetV3-Small** (ImageNet weights) fine-tuned → ONNX → **fp16 weights** (planned INT8; static INT8 broke the model) | Weights reachable from storage.googleapis.com; ONNX runs in the browser with onnxruntime-web (WASM). |
 | Phone runtime | **onnxruntime-web 1.19.2**, vendored in `app/vendor/` (WASM, 1 thread) | No CDN at run time; works offline once cached by the service worker. |
 | Spanish voice | **Piper** TTS, voice `es-mls_10246-low`, pre-rendered to MP3 | Offline, free, good enough. |
-| Tseltal voice | Meta MMS has no reachable `tzh` model here, so: **provisional synthetic audio** (Spanish Piper voice reading Tseltal text) clearly marked **UNVERIFIED**, plus a hub page where a native speaker records each card and it replaces the file | Honest, and shows how a less-supported language is added: translate ~40 cards + record them; no retraining. |
+| Tseltal voice | Meta MMS has no reachable `tzh` model here, so: **provisional synthetic audio** (Spanish Piper voice reading Tseltal text) clearly marked **UNVERIFIED**, plus a hub page where a native speaker records each card and it replaces the file | Honest, and shows how a less-supported language is added: translate ~83 cards + record the 74 spoken ones; no retraining. |
+| English (for judges/visitors) | AI translation of the Spanish cards, **Piper** voice `en-us-lessac-medium`, all **UNVERIFIED** | Lets visitors follow the demo; added exactly like any other language. |
 | Text intents | Tiny **char n-gram TF-IDF + logistic regression**, exported to JSON, pure-Python inference in the hub | Multilingual embedding models are not reachable here; this is small, fast, explainable. |
 | SMS gateway | **Simulator page** (labeled SIMULATED); real Android gateway is a stretch goal | Brief allows it. |
 | Map | Plain **SVG** map (no tiles) | OSM tiles blocked; SVG works offline. |
@@ -38,10 +54,11 @@ content/
   cards.json              # EVERY sentence a farmer can see or hear (UI strings, advice, SMS replies)
   audio/es/<card_id>.mp3
   audio/tzh/<card_id>.mp3
+  audio/en/<card_id>.mp3
 scripts/make_audio.py     # Piper → MP3; never overwrites a native-speaker recording
 app/                      # phone PWA (static). Served by the hub at /app/ ; also deployable to any HTTPS static host
   index.html app.js style.css sw.js manifest.webmanifest config.json icons/
-  model/cafetal.onnx      # INT8 image model (≤10 MB)
+  model/cafetal.onnx      # image model v2, fp16 weights, 1.97 MB (limit 10 MB)
   model/labels.json       # model metadata (contract §4)
   vendor/                 # onnxruntime-web files
 hub/                      # co-op hub (FastAPI + SQLite)
@@ -60,7 +77,7 @@ Paths are relative so `app/` can fetch `../content/cards.json` both from the hub
 
 ## 3. Labels and codes (shared by model, app, SMS and hub)
 
-| label (model/app) | SMS code | diagnosis card | in model v1? |
+| label (model/app) | SMS code | diagnosis card | in the model (v1 and v2)? |
 |---|---|---|---|
 | `sano` | `SANO` | `diag_sano` | yes |
 | `roya` (leaf rust) | `ROYA` | `diag_roya` | yes |
@@ -71,7 +88,7 @@ Paths are relative so `app/` can fetch `../content/cards.json` both from the hub
 | `otro` (not a coffee leaf) | `OTRO` | `diag_duda` | yes |
 | *(fail-safe: unsure / blurry / low confidence)* | `DUDA` | `diag_duda` | n/a |
 
-Fail-safe: if the photo is blurry, has too little leaf colour, top-1 < threshold, or top-1 is `otro`,
+Fail-safe: if the photo is blurry, top-1 < threshold, or top-1 is `otro`,
 the app shows/plays **`diag_duda`** = "No estoy seguro — muestre la hoja al técnico." and the
 observation is sent as `DUDA`/`OTRO`, which puts the farm on the officer's worklist.
 
@@ -79,24 +96,26 @@ observation is sent as `DUDA`/`OTRO`, which puts the farm on the officer's workl
 
 ```json
 {
-  "version": "cafetal-img-v1",
+  "version": "cafetal-img-v2",
   "classes": ["sano", "roya", "minador", "phoma", "cercospora", "otro"],
   "input":  {"name": "<onnx input name>", "size": 224, "layout": "NHWC", "dtype": "float32", "range": "0-255 RGB, no normalisation (preprocessing is inside the model)"},
   "output": {"name": "<onnx output name>", "type": "probabilities"},
-  "threshold": 0.70,
-  "blur_threshold": 0.0,
+  "threshold": 0.9,
+  "blur_threshold": 4.2,
   "file": "cafetal.onnx",
-  "size_bytes": 0,
-  "trained_on": "JMuBEN (Kenya) + PlantDoc; see DATA_CARD.md"
+  "size_bytes": 1972422,
+  "trained_on": "JMuBEN/JMuBEN2 (Kenya, Arabica) + 147 screened iNaturalist field photos ... + PlantDoc and Imagenette as 'otro'; see DATA_CARD.md",
+  "threshold_note": "0.90 chosen on calibration data only; see reports/field_v2_threshold_sweep.md"
 }
 ```
+(Values as shipped; the planned defaults were threshold 0.70 and INT8.)
 The app center-crops the photo to a square, resizes to `size`, feeds raw RGB 0–255 floats NHWC
 `[1,size,size,3]`, reads probabilities in `classes` order. Class order is defined ONLY by this file.
 
 **Blur check (same algorithm in app and in the calibration script):** center-square crop → resize to 128×128 →
 grey = 0.299R + 0.587G + 0.114B (0–255) → 3×3 Laplacian `[0,1,0; 1,-4,1; 0,1,0]` on interior pixels →
 variance. If variance < `blur_threshold` → fail-safe `DUDA` without trusting the model.
-`blur_threshold` is calibrated on training images by `model/` and written to labels.json.
+`blur_threshold` is calibrated on validation images by `model/` and written to labels.json.
 
 **App config (`app/config.json`):** `{"gateway_number": "+520000000000", "gateway_label": "DEMO"}` — the co-op's SMS
 gateway number used in the `sms:` link.
@@ -105,7 +124,7 @@ gateway number used in the `sms:` link.
 
 ```
 CAF1 <member> <code> <conf> <yyyymmdd> <lat>,<lon> #<obs>
-CAF1 M0123 ROYA 87 20261004 16.91,-92.11 #K3F9
+CAF1 M0123 ROYA 96 20261004 16.91,-92.11 #K3F9
 ```
 - `CAF1` format/version tag. `member` = `M` + 4 digits. `code` from §3.
 - `conf` = top-1 probability as integer percent 0–99 (for `DUDA` the model's top-1, or 0 if no model run).
@@ -136,11 +155,15 @@ CAF1 M0123 ROYA 87 20261004 16.91,-92.11 #K3F9
 
 ## 7. SMS routing (hub)
 
-1. Sender not registered → reply card `sms_no_registrado`. Nothing else stored except the raw message log.
+1. Sender not registered → reply card `sms_no_registrado`; nothing else stored except the raw message log.
+   **Exception (family phone):** a `CAF1` code from an unregistered phone is accepted if the member in the code
+   exists (the daughter's smartphone): the observation is stored and `sms_obs_recibida` goes back to that number.
+   A registered phone cannot send a code for another member. See RESPONSIBLE_AI.md §9 (fake-report risk).
 2. Body starts with `CAF1` → parse (§5). Invalid → `sms_codigo_invalido`. Valid → store observation,
    reply `sms_obs_recibida`, run the outbreak rule (§8). Worklist is computed from observations.
-3. Body is `PRECIO`/`PRECIOS` (any case/accents) → `sms_precio` filled from `data/prices.json`.
-4. Otherwise → intent classifier: `precio` → `sms_precio`; `reporte` → `sms_reporte_instrucciones`;
+3. Body is an exact keyword (any case/accents): `PRECIO`/`PRECIOS`/`PRICE`/`PRICES` → `sms_precio` filled from
+   `data/prices.json`; `AYUDA`/`HELP` → `sms_ayuda`; `TECNICO`/`OFFICER` → `sms_pasar_tecnico` + forward to officer.
+4. Otherwise → intent classifier: `precio` → `sms_precio`; `reporte` → `sms_reporte_instrucciones` + forward to officer;
    `ayuda` → `sms_ayuda`; `hablar_con_tecnico` → `sms_pasar_tecnico` + forward to officer;
    `otro` or confidence < threshold → `sms_pasar_tecnico` + forward to officer.
 5. Replies to a member who just texted are recorded in the outbox as `sent_simulated`
@@ -152,7 +175,7 @@ CAF1 M0123 ROYA 87 20261004 16.91,-92.11 #K3F9
 ## 8. Outbreak rule (not AI, a transparent rule)
 
 `ROYA` reports from **≥3 different members**, **within 5 km** of each other, in the **last 7 days**
-(confidence ≥ model threshold) → create an alert (at most one per 7 days per area) and queue card
+(confidence ≥ model threshold, 0.90 now) → create an alert (at most one per 7 days per area) and queue card
 `alert_roya` to every consenting member as `pending_approval`. Parameters are design choices,
 shown in the UI and documented; they are not agronomic thresholds.
 
@@ -213,8 +236,8 @@ SMS/alerts: `sms_obs_recibida`, `sms_codigo_invalido`, `sms_no_registrado`, `sms
 ## 12. Milestones
 
 1. Plan + scaffold (this file). ✔
-2. Image model: data → train → ONNX INT8 → evaluation report (`reports/`), `DATA_CARD.md` started.
-3. Offline diagnosis on the phone: photo → result → card → audio (es, tzh). Airplane mode.
+2. Image model: data → train → ONNX (fp16 as built) → evaluation report (`reports/`), `DATA_CARD.md` started.
+3. Offline diagnosis on the phone: photo → result → card → audio (es, tzh; en added later). Airplane mode.
 4. Save-and-send-later: SMS code, hub inbox, simulator, Wi-Fi photo sync.
 5. Hub: registry + consent, outbreak alert, officer worklist, PRECIO, intent sorting, DEMO seed.
 6. Guardrails + privacy pass.
@@ -222,9 +245,11 @@ SMS/alerts: `sms_obs_recibida`, `sms_codigo_invalido`, `sms_no_registrado`, `sms
 
 ## 13. Known limits (short; details in DATA_CARD.md / RESPONSIBLE_AI.md)
 
-- No Mexican images; JMuBEN is Kenyan, 128×128 crops, with many augmented near-duplicates (we split by
-  near-duplicate group to limit leakage). `acaro_rojo` is not in model v1.
-- Tseltal text and audio are AI drafts / synthetic until a native speaker reviews and records them.
+- No Mexican training images; JMuBEN is Kenyan, 128×128 crops, with many augmented near-duplicates (we split by
+  near-duplicate group to limit leakage); v2's 147 field photos come from other countries. `acaro_rojo` is not in the
+  model.
+- Tseltal text and audio are AI drafts / synthetic until a native speaker reviews and records them. English text is
+  an AI translation, also unverified.
 - Prices are DEMO reference values until replaced with the official table; never a farm-gate price.
 - Service workers need a secure origin: for the demo the phone opens the hub via `adb reverse` (localhost)
   or a static HTTPS host; see README.

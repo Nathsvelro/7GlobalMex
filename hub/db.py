@@ -48,11 +48,12 @@ def now_iso() -> str:
 
 
 def model_threshold() -> float:
-    """Confidence threshold of the image model (app/model/labels.json), default 0.70."""
+    """Confidence threshold of the image model (app/model/labels.json). Fails closed: if the file cannot be read,
+    1.0, so no ROYA report (conf <= 99) counts toward an outbreak alert on an unknown configuration."""
     try:
         return float(json.loads((app_dir() / "model" / "labels.json").read_text())["threshold"])
     except Exception:
-        return 0.70
+        return 1.0
 
 
 SCHEMA = """

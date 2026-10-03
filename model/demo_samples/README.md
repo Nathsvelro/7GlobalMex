@@ -4,7 +4,7 @@ Upload them in the app to show each result. Everything here is **held out**: nev
 
 ## Lab crops (in the repo)
 
-Kenyan JMuBEN close-up crops (about 128x128 px) from the model's held-out TEST split, like the training data - **not** Chiapas field photos. For 'not coffee' (expected: DUDA) photograph any object or another plant.
+Kenyan JMuBEN close-up crops (about 128x128 px) from the model's held-out TEST split, like the training data - **not** Chiapas field photos. For 'not coffee' (expected: DUDA) photograph an object (a cup, a bucket), **not** another plant's leaf: the shipped model answers some apple, cherry and tomato leaves as a disease (`reports/model_eval.md`, section (a)).
 
 | file | true label | what the app should say | source (dataset path) | licence |
 |---|---|---|---|---|

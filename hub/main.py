@@ -35,9 +35,12 @@ MAX_PHOTO_BYTES = 2 * 1024 * 1024
 MAX_AUDIO_BYTES = 10 * 1024 * 1024
 UID_RE = re.compile(r"^M\d{4}-[0-9A-Z]{4}$")
 
+# No /docs, /redoc or /openapi.json: they load Swagger UI / ReDoc from a CDN and would give anyone on the LAN a
+# ready-made console for every state-changing endpoint (RESPONSIBLE_AI.md section 5).
 app = FastAPI(title="Cafetal hub", version="1.0",
               description="Co-op hub: registry with consent, SMS inbox (SIMULATED gateway), outbreak alerts, "
-                          "officer worklist, PRECIO, content review. PLAN.md section 6.")
+                          "officer worklist, PRECIO, content review. PLAN.md section 6.",
+              docs_url=None, redoc_url=None, openapi_url=None)
 
 _local = threading.local()
 
@@ -168,6 +171,10 @@ def list_members():
 def register_member(m: MemberIn):
     if m.consent is not True:
         raise HTTPException(400, "Se necesita el consentimiento del socio para registrarlo (consent=true).")
+    if not m.consent_by.strip():
+        raise HTTPException(400, "Escriba quién le explicó el consentimiento.")
+    if not m.name.strip():
+        raise HTTPException(400, "Escriba el nombre del socio.")
     phone = sms.normalize_phone(m.phone)
     if not re.fullmatch(r"\+\d{10,15}", phone):
         raise HTTPException(400, "Número de teléfono no válido.")

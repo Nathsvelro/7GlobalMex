@@ -20,8 +20,9 @@ model that finds rust in field photos (v1: 0 of 53). Rule, numbers and decision:
 **Why not INT8?** Static INT8 post-training quantization (onnxruntime QDQ, per-channel) collapses
 this model to a constant answer (validation accuracy 15 %; tried per-tensor, percentile
 calibration, float bias, Conv-only - same result; signal-to-noise turns negative in the middle
-blocks). INT8 *weights only* works but loses 3.2 points of validation macro-F1. fp16 weights are
-lossless and halve the download. Quantization-aware training would be the next step.
+blocks). INT8 *weights only* works but changes 2.4 % of answers (validation macro-F1 0.971 vs 0.978,
+`reports/field_v2_calibration.json`; v1 lost 3.2 points, `reports/model_calibration.json`). fp16 weights give the same validation top-1 as fp32
+and halve the download. Quantization-aware training would be the next step.
 
 | file | what |
 |---|---|
@@ -152,7 +153,7 @@ minador, phoma / brown leaf spot -> phoma, cercospora -> cercospora, red spider 
 - **Strong photometric augmentation on every class** (brightness, contrast, saturation, hue, haze,
   auto-contrast, blur, down/up-scaling, JPEG, noise, crops, flips, 90-degree rotations), because rust
   crops are often hazy and the model could otherwise learn "haze = rust".
-- **"otro"** = PlantDoc leaves of 27 other crops (whole photo + a close-up crop, so "otro" is not just
+- **"otro"** = PlantDoc leaves of 13 other crops, 28 classes (whole photo + a close-up crop, so "otro" is not just
   "a whole leaf in the frame") + 700 Imagenette photos.
 - **Preprocessing is inside the model** (Keras `include_preprocessing=True`): the app feeds raw RGB
   0-255 floats, NHWC.
@@ -184,7 +185,7 @@ Shipped v2 at t = 0.90, all numbers measured (`reports/model_eval.md`, `reports/
   sends more close-ups to DUDA than v1 (phoma 13.2 % vs 1.6 %): that is condition (2) above.
 - Photograph the leaf so the lesion **fills the frame**: whole trees and branches get DUDA (the in-repo demo photo
   `demo_samples/field_whole_tree.jpg` shows this).
-- `sano` was learned from **7 distinct source photos** (JMuBEN ships 18,983 copies of 14 photos) and there are no
+- `sano` was learned from **7 near-duplicate groups** (about 7-10 distinct source photos; JMuBEN ships 18,983 copies of 14 photos) and there are no
   labelled healthy field leaves: a real healthy Chiapas leaf will most likely get DUDA, not "sano".
 - Not covered: red spider mite (`acaro_rojo`), broca, nutrient deficiency, Robusta, night/flash photos, other
   phones and cameras. The fix is labelled Chiapas photos, healthy and diseased (officer confirmations in the hub's
@@ -198,9 +199,9 @@ Shipped v2 at t = 0.90, all numbers measured (`reports/model_eval.md`, `reports/
 | dataset | license | use |
 |---|---|---|
 | JMuBEN + JMuBEN2 (Jepkoech et al. 2021, *Data in Brief* 36:107142), via the AgML public bucket | CC BY 4.0 | train/val/test (5 coffee classes) |
-| PlantDoc (Singh et al., CoDS-COMAD 2020) | CC BY 4.0 (dataset); images were collected from the web, so the copyright of individual images varies | `otro` (other crops); not redistributed |
+| PlantDoc (Singh et al., CoDS-COMAD 2020) | CC BY 4.0 per the repo's licence file; AgML metadata says CC BY-SA 4.0 (to be checked); images were collected from the web, so the copyright of individual images varies | `otro` (other crops); not redistributed |
 | Imagenette (fast.ai) | repo Apache-2.0; images are an ImageNet subset, ImageNet terms (non-commercial research) apply | `otro` (non-plant) |
-| iNatAg-mini `coffea_arabica` (iNaturalist via AgML) | CC BY-NC 4.0 (per AgML) | evaluation only, not trained on, not shipped |
+| iNatAg-mini `coffea_arabica` (iNaturalist via AgML) | CC BY-NC 4.0 as recorded in our evaluation code (to be checked: AgML has no per-photo licence field) | evaluation only, not trained on, not shipped |
 | iNaturalist field photos (768: rust, leaf miner, Cercospora, ojo de gallo, *Coffea arabica*), per-photo attribution in `reports/field_inat_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | field evaluation; 147 screened field-train photos trained v2 (the shipped model); images not redistributed, except one CC BY field-test photo in `demo_samples/` (attributed there) |
 | iNaturalist *Coffea arabica* calibration photos (400, observers not in any other set), per-photo attribution in `reports/field_calib_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | choosing v2's threshold only (not trained on); images not redistributed |
 

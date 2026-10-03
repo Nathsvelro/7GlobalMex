@@ -13,7 +13,8 @@ field photos also sha256 + size). `node model/check_demo_samples.mjs` checks eve
 Lab crops: per coffee class, 2 test photos from different near-duplicate groups that the shipped model answers
 correctly with top-1 >= max(0.9, threshold), plus a blurred copy (fail-safe DUDA). Kenyan JMuBEN crops (CC BY 4.0),
 not Chiapas photos. No 'otro' samples: PlantDoc and Imagenette images are web-scraped and their copyright varies -
-for "not coffee" photograph any object or another plant.
+for "not coffee" photograph an object (a cup, a bucket), not another plant's leaf: v2 answers some apple, cherry and
+tomato leaves as a disease (reports/model_eval.md, section (a)).
 """
 import argparse
 import hashlib
@@ -90,8 +91,9 @@ def write_readme():
          "`otro` -> DUDA) by `node model/check_demo_samples.mjs` (result: `reports/model_demo_samples_check.json`).", "",
          "## Lab crops (in the repo)", "",
          "Kenyan JMuBEN close-up crops (about 128x128 px) from the model's held-out TEST split, like the training "
-         "data - **not** Chiapas field photos. For 'not coffee' (expected: DUDA) photograph any object or another "
-         "plant.", "",
+         "data - **not** Chiapas field photos. For 'not coffee' (expected: DUDA) photograph an object (a cup, a "
+         "bucket), **not** another plant's leaf: the shipped model answers some apple, cherry and tomato leaves as a "
+         "disease (`reports/model_eval.md`, section (a)).", "",
          "| file | true label | what the app should say | source (dataset path) | licence |", "|---|---|---|---|---|"]
     for s in lab:
         L.append(f"| {s['file']} | {s['true']} | {s['expected_app']} | {s['source']} | {s['license']} |")

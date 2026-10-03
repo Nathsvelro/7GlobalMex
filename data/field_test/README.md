@@ -10,9 +10,10 @@ Status: **0 images - not yet collected.**
 Meanwhile a **proxy field test** uses 768 labelled iNaturalist photos (leaf rust, leaf miner,
 Cercospora, ojo de gallo, coffee plants; only 4 rust photos are from Mexico). Those images are NOT in
 this folder (CC BY-NC / ND licenses; attribution in `reports/field_inat_attribution.csv`); see
-`reports/field_eval.md` and `model/README.md` to rebuild them. Result for the shipped model: 0 of 219
-rust photos answered correctly (it says DUDA). Photos taken here, in Chiapas, with the app, remain the
-real test.
+`reports/field_eval.md` and `model/README.md` to rebuild them. Result for the shipped model (v2 at
+threshold 0.90) on the held-out field test: 34 of 53 rust photos answered correctly (64.2 %), the rest
+DUDA. The previous model v1 got 0 of 219 (`reports/field_eval.md`). Photos taken here, in Chiapas, with
+the app, remain the real test.
 
 ## How to add photos
 
@@ -27,7 +28,7 @@ real test.
    | `minador/` | coffee leaf miner |
    | `phoma/` | brown leaf spot (Phoma) |
    | `cercospora/` | Cercospora leaf spot |
-   | `acaro_rojo/` | red spider mite (not in model v1: the right answer is the fail-safe DUDA) |
+   | `acaro_rojo/` | red spider mite (not in the model, v1 or v2: the right answer is the fail-safe DUDA) |
    | `otro/` | anything that is not a coffee leaf (the right answer is DUDA) |
 
    Only label a disease when an agronomist or the extension officer confirmed it. If unsure, do not
