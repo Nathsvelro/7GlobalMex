@@ -18,7 +18,7 @@
         <div><label for="phone">Teléfono (el que recibe los SMS)</label><input id="phone" required placeholder="+52 967 000 0000" style="width:100%"></div>
         <div><label for="community">Comunidad</label><input id="community" required list="communities" maxlength="60" style="width:100%"><datalist id="communities"></datalist></div>
         <div><label for="language">Idioma de los SMS</label>
-          <select id="language" style="width:100%"><option value="es">Español</option><option value="tzh">Tseltal (textos SIN VERIFICAR)</option></select></div>
+          <select id="language" style="width:100%"><option value="es">Español</option><option value="tzh">Tseltal (textos SIN VERIFICAR)</option><option value="en">Inglés / English (visitantes; textos SIN VERIFICAR)</option></select></div>
         <div><label for="lat">Parcela: latitud (aprox.)</label><input id="lat" type="number" step="0.001" min="-90" max="90" placeholder="16.91" style="width:100%"></div>
         <div><label for="lon">Parcela: longitud (aprox.)</label><input id="lon" type="number" step="0.001" min="-180" max="180" placeholder="-92.11" style="width:100%"></div>
       </div>
@@ -46,6 +46,7 @@
 </main>
 <script src="/hub/common.js"></script>
 <script>
+const LANG_NAME = { es: "Español", tzh: "Tseltal", en: "Inglés" };
 let members = [];
 async function load() {
   const r = await api("/api/members");
@@ -61,7 +62,7 @@ function render() {
     <td class="code">${esc(m.member_id)}</td>
     <td>${esc(m.name)} ${m.demo ? '<span class="badge demo">DEMO</span>' : ""}</td>
     <td class="code">${esc(m.phone)}</td><td>${esc(m.community)}</td>
-    <td>${m.language === "tzh" ? "Tseltal" : "Español"}</td>
+    <td>${LANG_NAME[m.language] || esc(m.language)}</td>
     <td class="small">${m.lat != null ? m.lat + ", " + m.lon : "—"}</td>
     <td class="small">${fmtDate(m.consent_date)}<br><span class="muted">${esc(m.consent_by)} · texto ${esc(m.consent_text_version)}</span></td>
     <td>${m.n_observations}</td>
@@ -95,8 +96,8 @@ document.getElementById("f").onsubmit = async (ev) => {
   try {
     const c = await api("/api/cards");
     const card = c.cards.find((x) => x.id === "ui_consent_text");
-    document.getElementById("consent-text").innerHTML = card ?
-      `<b>Español</b> ${statusBadge(card.status.es)}<br>${esc(card.es)}<br><br><b>Tseltal</b> ${statusBadge(card.status.tzh)}<br>${esc(card.tzh)}` : "Falta la tarjeta ui_consent_text.";
+    document.getElementById("consent-text").innerHTML = card ? Object.keys(c.languages).filter((l) => card[l])
+      .map((l) => `<b>${LANG_NAME[l] || esc(l)}</b> ${statusBadge(card.status[l])}<br>${esc(card[l])}`).join("<br><br>") : "Falta la tarjeta ui_consent_text.";
   } catch (e) { document.getElementById("consent-text").textContent = "No se pudo cargar el texto."; }
   load();
 })();

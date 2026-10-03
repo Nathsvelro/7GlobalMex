@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS members (
   phone TEXT NOT NULL UNIQUE,
   community TEXT NOT NULL,
   lat REAL, lon REAL,                     -- plot location (rounded to 2 decimals)
-  language TEXT NOT NULL DEFAULT 'es',    -- es | tzh
+  language TEXT NOT NULL DEFAULT 'es',    -- es | tzh | en
   consent INTEGER NOT NULL,               -- must be 1
   consent_date TEXT NOT NULL,
   consent_by TEXT NOT NULL,               -- staff member who explained it

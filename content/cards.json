@@ -2,32 +2,38 @@
   "version": 1,
   "languages": {
     "es": "Español",
-    "tzh": "Bats'il k'op (Tseltal)"
+    "tzh": "Bats'il k'op (Tseltal)",
+    "en": "English"
   },
-  "notes": "Every sentence a farmer can see or hear. All text and audio start UNVERIFIED. Tseltal (tzh) text is an AI draft and its audio is a Spanish voice reading Tseltal until a native speaker reviews and records it. See content/README.md.",
+  "notes": "Every sentence a farmer can see or hear. All text and audio start UNVERIFIED. Tseltal (tzh) text is an AI draft and its audio is a Spanish voice reading Tseltal until a native speaker reviews and records it. See content/README.md. English (en) is for visitors and judges: translated from the Spanish by an AI model, read by an English synthetic voice, also UNVERIFIED until a person checks it.",
   "cards": [
     {
       "id": "ui_app_name",
       "type": "ui",
       "es": "Cafetal",
       "tzh": "Cafetal",
+      "en": "Cafetal",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_app_name.mp3",
-        "tzh": "audio/tzh/ui_app_name.mp3"
+        "tzh": "audio/tzh/ui_app_name.mp3",
+        "en": "audio/en/ui_app_name.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -35,23 +41,28 @@
       "type": "ui",
       "es": "Elija su idioma",
       "tzh": "Tsaha ak'op",
+      "en": "Choose your language",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_choose_language.mp3",
-        "tzh": "audio/tzh/ui_choose_language.mp3"
+        "tzh": "audio/tzh/ui_choose_language.mp3",
+        "en": "audio/en/ui_choose_language.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -59,23 +70,28 @@
       "type": "ui",
       "es": "Su permiso",
       "tzh": "Ya jk'anbat apermiso",
+      "en": "Your permission",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_consent_title.mp3",
-        "tzh": "audio/tzh/ui_consent_title.mp3"
+        "tzh": "audio/tzh/ui_consent_title.mp3",
+        "en": "audio/en/ui_consent_title.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal privacy design: PROJECT_BRIEF.md section 7 and PLAN.md section 5 (member ID not name, photo stays on phone, nothing sent without a tap, delete everything).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -83,23 +99,28 @@
       "type": "ui",
       "es": "Cafetal guarda en este teléfono la fecha, el resultado y el lugar aproximado de cada revisión. La foto se queda en este teléfono. Todo se guarda con su número de socio, no con su nombre. No se manda nada si usted no toca «Enviar». Si usted quiere, las fotos se mandan a la cooperativa, solo por el Wi-Fi de la cooperativa. Puede borrar todo cuando quiera.",
       "tzh": "Cafetal ya sk'ej ta in teléfono ini te fecha, te bin la sta, sok te banti nopol ay akajpetal. Te lok'omba ya xjil ta in teléfono ini. Ya sk'ej sok awajtal ta cooperativa, ma sok abihil. Ma'yuk bin ya xbaj teme ma anet' «Enviar». Teme ya ak'an, te lok'ombaetik ya xbajik ta cooperativa, ta swifi cooperativa nax. Ya stak' atup' spisil k'alal ya ak'an.",
+      "en": "Cafetal saves on this phone the date, the result and the rough place of each check. The photo stays on this phone. Everything is saved with your member number, not your name. Nothing is sent unless you tap “Send”. If you want, the photos go to the co-op, only over the co-op Wi-Fi. You can delete everything at any time.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_consent_text.mp3",
-        "tzh": "audio/tzh/ui_consent_text.mp3"
+        "tzh": "audio/tzh/ui_consent_text.mp3",
+        "en": "audio/en/ui_consent_text.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal privacy design: PROJECT_BRIEF.md section 7 and PLAN.md section 5 (member ID not name, photo stays on phone, nothing sent without a tap, delete everything).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -107,23 +128,28 @@
       "type": "ui",
       "es": "Sí, acepto",
       "tzh": "Jich, ya jch'un",
+      "en": "Yes, I agree",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_consent_accept.mp3",
-        "tzh": "audio/tzh/ui_consent_accept.mp3"
+        "tzh": "audio/tzh/ui_consent_accept.mp3",
+        "en": "audio/en/ui_consent_accept.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal privacy design: PROJECT_BRIEF.md section 7 and PLAN.md section 5 (member ID not name, photo stays on phone, nothing sent without a tap, delete everything).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -131,23 +157,28 @@
       "type": "ui",
       "es": "No, gracias",
       "tzh": "Ma'uk, wokol awal",
+      "en": "No, thank you",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_consent_decline.mp3",
-        "tzh": "audio/tzh/ui_consent_decline.mp3"
+        "tzh": "audio/tzh/ui_consent_decline.mp3",
+        "en": "audio/en/ui_consent_decline.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal privacy design: PROJECT_BRIEF.md section 7 and PLAN.md section 5 (member ID not name, photo stays on phone, nothing sent without a tap, delete everything).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -155,23 +186,28 @@
       "type": "ui",
       "es": "Su número de socio (ejemplo: M0123)",
       "tzh": "Awajtal ta cooperativa (M0123)",
+      "en": "Your member number (example: M0123)",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_member_id_prompt.mp3",
-        "tzh": "audio/tzh/ui_member_id_prompt.mp3"
+        "tzh": "audio/tzh/ui_member_id_prompt.mp3",
+        "en": "audio/en/ui_member_id_prompt.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -179,23 +215,28 @@
       "type": "ui",
       "es": "PIN de 4 números (si quiere)",
       "tzh": "PIN, chaneb ajtal (teme ya ak'an)",
+      "en": "4-number PIN (if you want)",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_pin_optional.mp3",
-        "tzh": "audio/tzh/ui_pin_optional.mp3"
+        "tzh": "audio/tzh/ui_pin_optional.mp3",
+        "en": "audio/en/ui_pin_optional.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -203,23 +244,28 @@
       "type": "ui",
       "es": "Escriba su PIN",
       "tzh": "Ts'ibaya aPIN",
+      "en": "Type your PIN",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_pin_prompt.mp3",
-        "tzh": "audio/tzh/ui_pin_prompt.mp3"
+        "tzh": "audio/tzh/ui_pin_prompt.mp3",
+        "en": "audio/en/ui_pin_prompt.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -227,23 +273,28 @@
       "type": "ui",
       "es": "Seguir",
       "tzh": "Ba'tik",
+      "en": "Continue",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_continue.mp3",
-        "tzh": "audio/tzh/ui_continue.mp3"
+        "tzh": "audio/tzh/ui_continue.mp3",
+        "en": "audio/en/ui_continue.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -251,23 +302,28 @@
       "type": "ui",
       "es": "Tomar foto",
       "tzh": "Lok'taya yabenal",
+      "en": "Take photo",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_take_photo.mp3",
-        "tzh": "audio/tzh/ui_take_photo.mp3"
+        "tzh": "audio/tzh/ui_take_photo.mp3",
+        "en": "audio/en/ui_take_photo.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -275,23 +331,28 @@
       "type": "ui",
       "es": "Tome la foto por debajo de la hoja, de cerca: que la mancha llene la foto. Con buena luz.",
       "tzh": "Lok'taya te yanil yabenal kajpe ta nopol, yu'un ya snojes te lok'omba te smancha. Ta lek lus.",
+      "en": "Take the photo under the leaf, up close: let the spot fill the photo. Use good light.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_photo_tip_underside.mp3",
-        "tzh": "audio/tzh/ui_photo_tip_underside.mp3"
+        "tzh": "audio/tzh/ui_photo_tip_underside.mp3",
+        "en": "audio/en/ui_photo_tip_underside.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "SENASICA, Ficha tecnica 'Roya del cafeto (Hemileia vastatrix)', https://prod.senasica.gob.mx/SIRVEF/ContenidoPublico/Roya%20cafeto/Fichas%20tecnicas/Ficha%20T%C3%A9cnica%20de%20Roya%20del%20cafeto.pdf ; SENASICA-DGSV/CNRF 'Manual tecnico para el manejo preventivo de la roya del cafeto', https://royacafe.lanref.org.mx/Documentos/GS_DS_Manualroyadelcafeto.pdf (shade regulation, partial pruning for aeration, nutrition, weed control, sampling). [Seen via web-search summary on 2026-10-03; the PDF itself was blocked from the build machine. Open it before marking verified.]",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -299,23 +360,28 @@
       "type": "ui",
       "es": "Revisando la hoja…",
       "tzh": "Yakal ta ilel te yabenal…",
+      "en": "Checking the leaf…",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_analyzing.mp3",
-        "tzh": "audio/tzh/ui_analyzing.mp3"
+        "tzh": "audio/tzh/ui_analyzing.mp3",
+        "en": "audio/en/ui_analyzing.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -323,23 +389,28 @@
       "type": "ui",
       "es": "Seguridad",
       "tzh": "Jayeb sna' lek",
+      "en": "How sure",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_confidence.mp3",
-        "tzh": "audio/tzh/ui_confidence.mp3"
+        "tzh": "audio/tzh/ui_confidence.mp3",
+        "en": "audio/en/ui_confidence.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -347,23 +418,28 @@
       "type": "ui",
       "es": "Escuchar en tseltal",
       "tzh": "A'iya ta bats'il k'op",
+      "en": "Listen in Tseltal",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_play_tzh.mp3",
-        "tzh": "audio/tzh/ui_play_tzh.mp3"
+        "tzh": "audio/tzh/ui_play_tzh.mp3",
+        "en": "audio/en/ui_play_tzh.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -371,23 +447,57 @@
       "type": "ui",
       "es": "Escuchar en español",
       "tzh": "A'iya ta kaxlan k'op",
+      "en": "Listen in Spanish",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_play_es.mp3",
-        "tzh": "audio/tzh/ui_play_es.mp3"
+        "tzh": "audio/tzh/ui_play_es.mp3",
+        "en": "audio/en/ui_play_es.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
+      }
+    },
+    {
+      "id": "ui_play_en",
+      "type": "ui",
+      "es": "Escuchar en inglés",
+      "tzh": "A'iya ta inglés",
+      "en": "Listen in English",
+      "slots": [],
+      "audio": {
+        "es": "audio/es/ui_play_en.mp3",
+        "tzh": "audio/tzh/ui_play_en.mp3",
+        "en": "audio/en/ui_play_en.mp3"
+      },
+      "audio_source": {
+        "es": "synthetic:piper-es-mls_10246-low",
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
+      },
+      "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
+      "status": {
+        "es": "unverified",
+        "tzh": "unverified",
+        "en": "unverified"
+      },
+      "reviewed_by": {
+        "es": null,
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -395,23 +505,28 @@
       "type": "ui",
       "es": "Enviar por SMS",
       "tzh": "Tikuna ta SMS",
+      "en": "Send by SMS",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_send_sms.mp3",
-        "tzh": "audio/tzh/ui_send_sms.mp3"
+        "tzh": "audio/tzh/ui_send_sms.mp3",
+        "en": "audio/en/ui_send_sms.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -419,23 +534,28 @@
       "type": "ui",
       "es": "Enviar (SIMULADO)",
       "tzh": "Tikuna (SIMULADO)",
+      "en": "Send (SIMULATED)",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_simulate_send.mp3",
-        "tzh": "audio/tzh/ui_simulate_send.mp3"
+        "tzh": "audio/tzh/ui_simulate_send.mp3",
+        "en": "audio/en/ui_simulate_send.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -443,23 +563,28 @@
       "type": "ui",
       "es": "Guardado en este teléfono",
       "tzh": "K'ejbilix ta in teléfono ini",
+      "en": "Saved on this phone",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_saved.mp3",
-        "tzh": "audio/tzh/ui_saved.mp3"
+        "tzh": "audio/tzh/ui_saved.mp3",
+        "en": "audio/en/ui_saved.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -467,23 +592,28 @@
       "type": "ui",
       "es": "Mis revisiones",
       "tzh": "Te bin k'ejbil",
+      "en": "My checks",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_history.mp3",
-        "tzh": "audio/tzh/ui_history.mp3"
+        "tzh": "audio/tzh/ui_history.mp3",
+        "en": "audio/en/ui_history.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -491,23 +621,28 @@
       "type": "ui",
       "es": "Ajustes",
       "tzh": "Chajpanel",
+      "en": "Settings",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_settings.mp3",
-        "tzh": "audio/tzh/ui_settings.mp3"
+        "tzh": "audio/tzh/ui_settings.mp3",
+        "en": "audio/en/ui_settings.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -515,23 +650,28 @@
       "type": "ui",
       "es": "Borrar todo",
       "tzh": "Tup'a spisil",
+      "en": "Delete all",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_delete_all.mp3",
-        "tzh": "audio/tzh/ui_delete_all.mp3"
+        "tzh": "audio/tzh/ui_delete_all.mp3",
+        "en": "audio/en/ui_delete_all.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -539,23 +679,28 @@
       "type": "ui",
       "es": "¿Borrar todas las revisiones y fotos de este teléfono? No se puede deshacer.",
       "tzh": "¿Ya bal atup' spisil te bin k'ejbil sok te lok'ombaetik ta in teléfono ini? Ma xsujt xan.",
+      "en": "Delete all checks and photos from this phone? This cannot be undone.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_delete_confirm.mp3",
-        "tzh": "audio/tzh/ui_delete_confirm.mp3"
+        "tzh": "audio/tzh/ui_delete_confirm.mp3",
+        "en": "audio/en/ui_delete_confirm.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -563,23 +708,28 @@
       "type": "ui",
       "es": "Mandar fotos a la cooperativa (Wi-Fi)",
       "tzh": "Tikuna lok'ombaetik ta cooperativa (Wi-Fi)",
+      "en": "Send photos to the co-op (Wi-Fi)",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_sync_photos.mp3",
-        "tzh": "audio/tzh/ui_sync_photos.mp3"
+        "tzh": "audio/tzh/ui_sync_photos.mp3",
+        "en": "audio/en/ui_sync_photos.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal privacy design: PROJECT_BRIEF.md section 7 and PLAN.md section 5 (member ID not name, photo stays on phone, nothing sent without a tap, delete everything).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -587,23 +737,28 @@
       "type": "ui",
       "es": "Fotos enviadas a la cooperativa",
       "tzh": "K'otix te lok'ombaetik ta cooperativa",
+      "en": "Photos sent to the co-op",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_synced.mp3",
-        "tzh": "audio/tzh/ui_synced.mp3"
+        "tzh": "audio/tzh/ui_synced.mp3",
+        "en": "audio/en/ui_synced.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -611,23 +766,28 @@
       "type": "ui",
       "es": "Atrás",
       "tzh": "Sujtel",
+      "en": "Back",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_back.mp3",
-        "tzh": "audio/tzh/ui_back.mp3"
+        "tzh": "audio/tzh/ui_back.mp3",
+        "en": "audio/en/ui_back.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -635,23 +795,28 @@
       "type": "ui",
       "es": "SIN VERIFICAR",
       "tzh": "MA TO ILBIL (SIN VERIFICAR)",
+      "en": "UNVERIFIED",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_unverified.mp3",
-        "tzh": "audio/tzh/ui_unverified.mp3"
+        "tzh": "audio/tzh/ui_unverified.mp3",
+        "en": "audio/en/ui_unverified.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -659,23 +824,28 @@
       "type": "ui",
       "es": "DEMO: datos de ejemplo",
       "tzh": "DEMO: ja' nax ejemplo",
+      "en": "DEMO: sample data",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_demo.mp3",
-        "tzh": "audio/tzh/ui_demo.mp3"
+        "tzh": "audio/tzh/ui_demo.mp3",
+        "en": "audio/en/ui_demo.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -683,23 +853,28 @@
       "type": "ui",
       "es": "SIMULADO: no se mandó un SMS de verdad",
       "tzh": "SIMULADO: ja' nax ejemplo, ma'yuk SMS",
+      "en": "SIMULATED: no real SMS was sent",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_simulated.mp3",
-        "tzh": "audio/tzh/ui_simulated.mp3"
+        "tzh": "audio/tzh/ui_simulated.mp3",
+        "en": "audio/en/ui_simulated.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -707,23 +882,28 @@
       "type": "ui",
       "es": "Listo para usar sin internet",
       "tzh": "Ya x'a'tej ta ma'yuk internet",
+      "en": "Ready to use without internet",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_offline_ready.mp3",
-        "tzh": "audio/tzh/ui_offline_ready.mp3"
+        "tzh": "audio/tzh/ui_offline_ready.mp3",
+        "en": "audio/en/ui_offline_ready.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -731,23 +911,28 @@
       "type": "ui",
       "es": "Solo revisa hojas. No ve broca, abono, sequía ni suelo.",
       "tzh": "Ja' nax ya yil yabenal. Ma stak' yil te broca, te abono, te takin k'inal, te lum.",
+      "en": "It only checks leaves. It does not see berry borer, fertilizer, drought or soil.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_limits_note.mp3",
-        "tzh": "audio/tzh/ui_limits_note.mp3"
+        "tzh": "audio/tzh/ui_limits_note.mp3",
+        "en": "audio/en/ui_limits_note.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal data limits: PROJECT_BRIEF.md section 8.3 (the model only sees leaf symptoms; it cannot detect broca, nutrient deficiency, drought, ageing trees or soil problems).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -755,23 +940,28 @@
       "type": "ui",
       "es": "Idioma",
       "tzh": "K'op",
+      "en": "Language",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_language.mp3",
-        "tzh": "audio/tzh/ui_language.mp3"
+        "tzh": "audio/tzh/ui_language.mp3",
+        "en": "audio/en/ui_language.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -779,23 +969,28 @@
       "type": "ui",
       "es": "Por enviar",
       "tzh": "Ma to tikunbil",
+      "en": "Not sent yet",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_pending_sms.mp3",
-        "tzh": "audio/tzh/ui_pending_sms.mp3"
+        "tzh": "audio/tzh/ui_pending_sms.mp3",
+        "en": "audio/en/ui_pending_sms.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -803,23 +998,28 @@
       "type": "ui",
       "es": "Enviado",
       "tzh": "Tikunbilix",
+      "en": "Sent",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_sent.mp3",
-        "tzh": "audio/tzh/ui_sent.mp3"
+        "tzh": "audio/tzh/ui_sent.mp3",
+        "en": "audio/en/ui_sent.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -827,23 +1027,28 @@
       "type": "ui",
       "es": "Todavía no hay revisiones.",
       "tzh": "Ma'yuk to bin k'ejbil.",
+      "en": "No checks yet.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_no_records.mp3",
-        "tzh": "audio/tzh/ui_no_records.mp3"
+        "tzh": "audio/tzh/ui_no_records.mp3",
+        "en": "audio/en/ui_no_records.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -851,23 +1056,28 @@
       "type": "ui",
       "es": "¿No lleva el teléfono al cafetal? Traiga unas hojas a la casa y tome la foto aquí.",
       "tzh": "Teme ma xbaj ateléfono ta kajpetal, ich'a tel jayeb yabenal ta ana, lok'taya li'.",
+      "en": "No phone in the coffee field? Bring a few leaves home and take the photo here.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_tip_bring_leaf_home.mp3",
-        "tzh": "audio/tzh/ui_tip_bring_leaf_home.mp3"
+        "tzh": "audio/tzh/ui_tip_bring_leaf_home.mp3",
+        "en": "audio/en/ui_tip_bring_leaf_home.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -875,23 +1085,28 @@
       "type": "ui",
       "es": "Elegir una foto",
       "tzh": "Tsaha jun lok'omba",
+      "en": "Choose a photo",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_choose_photo.mp3",
-        "tzh": "audio/tzh/ui_choose_photo.mp3"
+        "tzh": "audio/tzh/ui_choose_photo.mp3",
+        "en": "audio/en/ui_choose_photo.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -899,23 +1114,28 @@
       "type": "ui",
       "es": "Otra foto",
       "tzh": "Yan lok'omba",
+      "en": "Another photo",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_new_photo.mp3",
-        "tzh": "audio/tzh/ui_new_photo.mp3"
+        "tzh": "audio/tzh/ui_new_photo.mp3",
+        "en": "audio/en/ui_new_photo.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -923,23 +1143,28 @@
       "type": "ui",
       "es": "Qué hacer esta semana",
       "tzh": "Bin ya apas ta semana ini",
+      "en": "What to do this week",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_what_to_do.mp3",
-        "tzh": "audio/tzh/ui_what_to_do.mp3"
+        "tzh": "audio/tzh/ui_what_to_do.mp3",
+        "en": "audio/en/ui_what_to_do.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -947,23 +1172,28 @@
       "type": "ui",
       "es": "Cancelar",
       "tzh": "Ma'uk",
+      "en": "Cancel",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_cancel.mp3",
-        "tzh": "audio/tzh/ui_cancel.mp3"
+        "tzh": "audio/tzh/ui_cancel.mp3",
+        "en": "audio/en/ui_cancel.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -971,23 +1201,28 @@
       "type": "ui",
       "es": "Sí, borrar todo",
       "tzh": "Jich, tup'a spisil",
+      "en": "Yes, delete all",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_delete_yes.mp3",
-        "tzh": "audio/tzh/ui_delete_yes.mp3"
+        "tzh": "audio/tzh/ui_delete_yes.mp3",
+        "en": "audio/en/ui_delete_yes.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -995,23 +1230,28 @@
       "type": "ui",
       "es": "Bloquear",
       "tzh": "Makel",
+      "en": "Lock",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_lock.mp3",
-        "tzh": "audio/tzh/ui_lock.mp3"
+        "tzh": "audio/tzh/ui_lock.mp3",
+        "en": "audio/en/ui_lock.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1019,23 +1259,28 @@
       "type": "ui",
       "es": "PIN equivocado. Intente otra vez.",
       "tzh": "Ma lekuk te PIN. Ts'ibaya xan.",
+      "en": "Wrong PIN. Try again.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_pin_wrong.mp3",
-        "tzh": "audio/tzh/ui_pin_wrong.mp3"
+        "tzh": "audio/tzh/ui_pin_wrong.mp3",
+        "en": "audio/en/ui_pin_wrong.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1043,23 +1288,28 @@
       "type": "ui",
       "es": "Escriba M y 4 números, por ejemplo M0123.",
       "tzh": "Ts'ibaya M sok chaneb ajtal, jich bit'il M0123.",
+      "en": "Type M and 4 numbers, for example M0123.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_member_id_invalid.mp3",
-        "tzh": "audio/tzh/ui_member_id_invalid.mp3"
+        "tzh": "audio/tzh/ui_member_id_invalid.mp3",
+        "en": "audio/en/ui_member_id_invalid.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1067,23 +1317,28 @@
       "type": "ui",
       "es": "La foto salió borrosa.",
       "tzh": "Ma lekuk lok' te lok'omba.",
+      "en": "The photo is blurry.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_reason_blurry.mp3",
-        "tzh": "audio/tzh/ui_reason_blurry.mp3"
+        "tzh": "audio/tzh/ui_reason_blurry.mp3",
+        "en": "audio/en/ui_reason_blurry.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal fail-safe and human-in-the-loop design: PROJECT_BRIEF.md section 7; PLAN.md sections 3 and 9.",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1091,23 +1346,28 @@
       "type": "ui",
       "es": "No parece hoja de café.",
       "tzh": "Ma yabenaluk kajpe yilel.",
+      "en": "It does not look like a coffee leaf.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_reason_not_coffee.mp3",
-        "tzh": "audio/tzh/ui_reason_not_coffee.mp3"
+        "tzh": "audio/tzh/ui_reason_not_coffee.mp3",
+        "en": "audio/en/ui_reason_not_coffee.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal fail-safe and human-in-the-loop design: PROJECT_BRIEF.md section 7; PLAN.md sections 3 and 9.",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1115,23 +1375,28 @@
       "type": "ui",
       "es": "La app no está segura.",
       "tzh": "Ma sna' lek te app.",
+      "en": "The app is not sure.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_reason_low_conf.mp3",
-        "tzh": "audio/tzh/ui_reason_low_conf.mp3"
+        "tzh": "audio/tzh/ui_reason_low_conf.mp3",
+        "en": "audio/en/ui_reason_low_conf.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal fail-safe and human-in-the-loop design: PROJECT_BRIEF.md section 7; PLAN.md sections 3 and 9.",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1139,23 +1404,28 @@
       "type": "ui",
       "es": "No hay conexión con la cooperativa.",
       "tzh": "Ma xk'ot ta cooperativa.",
+      "en": "No connection to the co-op.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_hub_offline.mp3",
-        "tzh": "audio/tzh/ui_hub_offline.mp3"
+        "tzh": "audio/tzh/ui_hub_offline.mp3",
+        "en": "audio/en/ui_hub_offline.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1163,23 +1433,28 @@
       "type": "ui",
       "es": "Este es el mensaje que se va a mandar:",
       "tzh": "Ja' ini te mensaje ya xbaj:",
+      "en": "This is the message that will be sent:",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_sms_preview.mp3",
-        "tzh": "audio/tzh/ui_sms_preview.mp3"
+        "tzh": "audio/tzh/ui_sms_preview.mp3",
+        "en": "audio/en/ui_sms_preview.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1187,23 +1462,28 @@
       "type": "ui",
       "es": "Sana",
       "tzh": "Lek ay",
+      "en": "Healthy",
       "slots": [],
       "audio": {
         "es": "audio/es/name_sano.mp3",
-        "tzh": "audio/tzh/name_sano.mp3"
+        "tzh": "audio/tzh/name_sano.mp3",
+        "en": "audio/en/name_sano.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1211,23 +1491,28 @@
       "type": "ui",
       "es": "Roya",
       "tzh": "Roya",
+      "en": "Leaf rust",
       "slots": [],
       "audio": {
         "es": "audio/es/name_roya.mp3",
-        "tzh": "audio/tzh/name_roya.mp3"
+        "tzh": "audio/tzh/name_roya.mp3",
+        "en": "audio/en/name_roya.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1235,23 +1520,28 @@
       "type": "ui",
       "es": "Minador",
       "tzh": "Minador",
+      "en": "Leaf miner",
       "slots": [],
       "audio": {
         "es": "audio/es/name_minador.mp3",
-        "tzh": "audio/tzh/name_minador.mp3"
+        "tzh": "audio/tzh/name_minador.mp3",
+        "en": "audio/en/name_minador.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1259,23 +1549,28 @@
       "type": "ui",
       "es": "Phoma (quema)",
       "tzh": "Phoma (quema)",
+      "en": "Phoma (leaf burn)",
       "slots": [],
       "audio": {
         "es": "audio/es/name_phoma.mp3",
-        "tzh": "audio/tzh/name_phoma.mp3"
+        "tzh": "audio/tzh/name_phoma.mp3",
+        "en": "audio/en/name_phoma.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1283,23 +1578,28 @@
       "type": "ui",
       "es": "Mancha de hierro",
       "tzh": "Mancha de hierro",
+      "en": "Brown eye spot",
       "slots": [],
       "audio": {
         "es": "audio/es/name_cercospora.mp3",
-        "tzh": "audio/tzh/name_cercospora.mp3"
+        "tzh": "audio/tzh/name_cercospora.mp3",
+        "en": "audio/en/name_cercospora.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1307,23 +1607,28 @@
       "type": "ui",
       "es": "Arañita roja",
       "tzh": "Tsajal ch'in chan (arañita)",
+      "en": "Red spider mite",
       "slots": [],
       "audio": {
         "es": "audio/es/name_acaro_rojo.mp3",
-        "tzh": "audio/tzh/name_acaro_rojo.mp3"
+        "tzh": "audio/tzh/name_acaro_rojo.mp3",
+        "en": "audio/en/name_acaro_rojo.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1331,23 +1636,28 @@
       "type": "ui",
       "es": "No seguro",
       "tzh": "Ma jna' lek",
+      "en": "Not sure",
       "slots": [],
       "audio": {
         "es": "audio/es/name_duda.mp3",
-        "tzh": "audio/tzh/name_duda.mp3"
+        "tzh": "audio/tzh/name_duda.mp3",
+        "en": "audio/en/name_duda.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal fail-safe and human-in-the-loop design: PROJECT_BRIEF.md section 7; PLAN.md sections 3 and 9.",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1355,23 +1665,28 @@
       "type": "diagnosis",
       "es": "La hoja se ve sana.",
       "tzh": "Lek ay te yabenal. Ma'yuk schamel.",
+      "en": "The leaf looks healthy.",
       "slots": [],
       "audio": {
         "es": "audio/es/diag_sano.mp3",
-        "tzh": "audio/tzh/diag_sano.mp3"
+        "tzh": "audio/tzh/diag_sano.mp3",
+        "en": "audio/en/diag_sano.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1379,23 +1694,28 @@
       "type": "diagnosis",
       "es": "Parece roya del cafeto.",
       "tzh": "Ja' roya yilel ta kajpe.",
+      "en": "It looks like coffee leaf rust.",
       "slots": [],
       "audio": {
         "es": "audio/es/diag_roya.mp3",
-        "tzh": "audio/tzh/diag_roya.mp3"
+        "tzh": "audio/tzh/diag_roya.mp3",
+        "en": "audio/en/diag_roya.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1403,23 +1723,28 @@
       "type": "diagnosis",
       "es": "Parece minador de la hoja.",
       "tzh": "Ja' minador yilel ta yabenal.",
+      "en": "It looks like coffee leaf miner.",
       "slots": [],
       "audio": {
         "es": "audio/es/diag_minador.mp3",
-        "tzh": "audio/tzh/diag_minador.mp3"
+        "tzh": "audio/tzh/diag_minador.mp3",
+        "en": "audio/en/diag_minador.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1427,23 +1752,28 @@
       "type": "diagnosis",
       "es": "Parece phoma, también llamada quema o derrite.",
       "tzh": "Ja' phoma yilel (quema o derrite).",
+      "en": "It looks like phoma, also called leaf burn.",
       "slots": [],
       "audio": {
         "es": "audio/es/diag_phoma.mp3",
-        "tzh": "audio/tzh/diag_phoma.mp3"
+        "tzh": "audio/tzh/diag_phoma.mp3",
+        "en": "audio/en/diag_phoma.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1451,23 +1781,28 @@
       "type": "diagnosis",
       "es": "Parece mancha de hierro (cercospora).",
       "tzh": "Ja' mancha de hierro yilel (cercospora).",
+      "en": "It looks like brown eye spot (cercospora).",
       "slots": [],
       "audio": {
         "es": "audio/es/diag_cercospora.mp3",
-        "tzh": "audio/tzh/diag_cercospora.mp3"
+        "tzh": "audio/tzh/diag_cercospora.mp3",
+        "en": "audio/en/diag_cercospora.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1475,23 +1810,28 @@
       "type": "diagnosis",
       "es": "Parece arañita roja (ácaro rojo).",
       "tzh": "Ja' tsajal ch'in chan yilel (arañita roja).",
+      "en": "It looks like red spider mite.",
       "slots": [],
       "audio": {
         "es": "audio/es/diag_acaro_rojo.mp3",
-        "tzh": "audio/tzh/diag_acaro_rojo.mp3"
+        "tzh": "audio/tzh/diag_acaro_rojo.mp3",
+        "en": "audio/en/diag_acaro_rojo.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Common names: SENASICA fichas tecnicas (roya del cafeto; minador de la hoja; quema o derrite = Phoma costarricensis), Cenicafe (mancha de hierro = Cercospora coffeicola), ANACAFE (arana roja = Oligonychus yothersi).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1499,23 +1839,28 @@
       "type": "diagnosis",
       "es": "No estoy seguro — muestre la hoja al técnico.",
       "tzh": "Ma jna' lek — ak'a yil yabenal te técnico.",
+      "en": "I'm not sure — show the leaf to the extension officer.",
       "slots": [],
       "audio": {
         "es": "audio/es/diag_duda.mp3",
-        "tzh": "audio/tzh/diag_duda.mp3"
+        "tzh": "audio/tzh/diag_duda.mp3",
+        "en": "audio/en/diag_duda.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal fail-safe and human-in-the-loop design: PROJECT_BRIEF.md section 7; PLAN.md sections 3 and 9.",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1523,23 +1868,28 @@
       "type": "advice",
       "es": "Revise cada semana por debajo de las hojas, en varias matas. Pode y regule la sombra para que entren aire y luz. Limpie la maleza y abone como le diga el técnico. No lleve hojas enfermas a otras parcelas; si ve mucho polvo naranja, avise al técnico.",
       "tzh": "Ila jujun semana te yanil yabenal, ta bayel kajpe. Boja te k'abte' sok te axinal, yu'un ya x'och ik' sok lus. Ak'entaya te ja'mal sok ak'a abono jich bit'il ya yal te técnico. Ma me awich' bel yabenal ta yan kajpetal; teme bayel k'an tan ay, ik'a te técnico.",
+      "en": "Check under the leaves every week, on several plants. Prune and adjust the shade so air and light get in. Clear the weeds and use fertilizer as the extension officer says. Do not carry sick leaves to other plots; if you see a lot of orange powder, tell the extension officer.",
       "slots": [],
       "audio": {
         "es": "audio/es/advice_roya.mp3",
-        "tzh": "audio/tzh/advice_roya.mp3"
+        "tzh": "audio/tzh/advice_roya.mp3",
+        "en": "audio/en/advice_roya.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "SENASICA, Ficha tecnica 'Roya del cafeto (Hemileia vastatrix)', https://prod.senasica.gob.mx/SIRVEF/ContenidoPublico/Roya%20cafeto/Fichas%20tecnicas/Ficha%20T%C3%A9cnica%20de%20Roya%20del%20cafeto.pdf ; SENASICA-DGSV/CNRF 'Manual tecnico para el manejo preventivo de la roya del cafeto', https://royacafe.lanref.org.mx/Documentos/GS_DS_Manualroyadelcafeto.pdf (shade regulation, partial pruning for aeration, nutrition, weed control, sampling). [Seen via web-search summary on 2026-10-03; the PDF itself was blocked from the build machine. Open it before marking verified.]",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1547,23 +1897,28 @@
       "type": "advice",
       "es": "El minador aumenta con mucho sol y tiempo seco. Deje una sombra pareja en su cafetal. Revise unas hojas cada semana. Si muchas hojas tienen manchas cafés y secas, avise al técnico.",
       "tzh": "Te minador ya xbayelub ta bayel k'aal sok ta takin k'inal. Ak'a lek axinal ta akajpetal. Ila jayeb yabenal jujun semana. Teme bayel yabenal ay takin smancha, ik'a te técnico.",
+      "en": "Leaf miner grows with strong sun and dry weather. Keep even shade in your coffee plot. Check a few leaves every week. If many leaves have dry brown spots, tell the extension officer.",
       "slots": [],
       "audio": {
         "es": "audio/es/advice_minador.mp3",
-        "tzh": "audio/tzh/advice_minador.mp3"
+        "tzh": "audio/tzh/advice_minador.mp3",
+        "en": "audio/en/advice_minador.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "SENASICA, Ficha tecnica 'Minador de la hoja del cafeto (Leucoptera coffeella)', https://prod.senasica.gob.mx/SIRVEF/ContenidoPublico/Roya%20cafeto/Fichas%20tecnicas/Ficha%20T%C3%A9cnica%20de%20Minador%20de%20la%20hoja%20del%20cafeto.pdf ; ANACAFE/CEDICAFE Boletin tecnico feb. 2020 'Manejo integrado del minador de la hoja del cafeto', https://www.anacafe.org/uploads/file/23aa9467eb854dc2848f673a89b40311/Boletin-Tecnico-CEDICAFE-Febrero-2020-02.pdf (worse with drought, full sun, heat, low humidity; sample leaves). [Seen via web-search summary on 2026-10-03; the PDF itself was blocked from the build machine. Open it before marking verified.]",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1571,23 +1926,28 @@
       "type": "advice",
       "es": "La phoma entra por heridas que deja el viento frío en las hojas. Cuide o siembre árboles que frenen el viento. Abone bien sus matas. Si se secan las puntas de las ramas, avise al técnico.",
       "tzh": "Te phoma ya x'och ta yejchen yabenal, ja' ya spas te sikil ik'. Kanantaya o ts'una te' yu'un ma x'och ik'. Ak'a lek abono ta akajpe. Teme ya xtakij sni' k'abte', ik'a te técnico.",
+      "en": "Phoma gets in through wounds that cold wind makes on the leaves. Care for or plant trees that stop the wind. Fertilize your plants well. If the branch tips dry out, tell the extension officer.",
       "slots": [],
       "audio": {
         "es": "audio/es/advice_phoma.mp3",
-        "tzh": "audio/tzh/advice_phoma.mp3"
+        "tzh": "audio/tzh/advice_phoma.mp3",
+        "en": "audio/en/advice_phoma.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "SENASICA-CNRF, Ficha tecnica No. 47 'Quema o derrite del cafeto (Phoma costarricensis)' (2014), https://royacafe.lanref.org.mx/Documentos/FTNo47Phomacostarricensis.pdf ; Revista Cultivar, 'Manejo de la mancha Phoma en cafeto', https://revistacultivar-es.com/articulos/Manejo-de-la-mancha-phoma-en-cafeto. (enters through wounds; cold wind at altitude; windbreaks; balanced nutrition). [Seen via web-search summary on 2026-10-03; the PDF itself was blocked from the build machine. Open it before marking verified.]",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1595,23 +1955,28 @@
       "type": "advice",
       "es": "La mancha de hierro sale en matas débiles o con mucho sol. Abone sus matas y pregunte al técnico qué abono usar. Deje sombra regulada y limpie la maleza.",
       "tzh": "Te mancha de hierro ya xlok' ta kajpe ti ma'yuk yip o ti bayel k'aal ya sta. Ak'a abono ta akajpe sok jojk'oybe te técnico bin abono. Ak'a lek axinal sok ak'entaya te ja'mal.",
+      "en": "Brown eye spot comes on weak plants or plants in strong sun. Fertilize your plants and ask the extension officer which fertilizer to use. Keep managed shade and clear the weeds.",
       "slots": [],
       "audio": {
         "es": "audio/es/advice_cercospora.mp3",
-        "tzh": "audio/tzh/advice_cercospora.mp3"
+        "tzh": "audio/tzh/advice_cercospora.mp3",
+        "en": "audio/en/advice_cercospora.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cenicafe, infografia 'Mancha de hierro (Cercospora coffeicola). Manejo de la enfermedad', https://publicaciones.cenicafe.org/index.php/infografias/article/view/2864 ; Cenicafe, Avance tecnico 'La mancha de hierro del cafeto', https://publicaciones.cenicafe.org/index.php/avances_tecnicos/article/view/1880 (linked to poor nutrition and full sun; fertilise per soil analysis, regulated shade, weed control). [Seen via web-search summary on 2026-10-03; the PDF itself was blocked from the build machine. Open it before marking verified.]",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1619,23 +1984,28 @@
       "type": "advice",
       "es": "La arañita roja aumenta en tiempo seco y con el polvo de los caminos. Revise cada semana las matas de la orilla, junto al camino. Deje sombra y plantas que detengan el polvo. Si las hojas se ven color cobre, avise al técnico.",
       "tzh": "Te tsajal ch'in chan ya xbayelub ta takin k'inal sok ta stanul beh. Ila jujun semana te kajpe ta sti'il beh. Ak'a axinal sok te' yu'un ma xk'ot te tan. Teme tsaj k'an yilel yabenal, ik'a te técnico.",
+      "en": "Red spider mite grows in dry weather and with dust from the roads. Every week, check the plants at the edge, next to the road. Keep shade and plants that stop the dust. If the leaves look copper-colored, tell the extension officer.",
       "slots": [],
       "audio": {
         "es": "audio/es/advice_acaro_rojo.mp3",
-        "tzh": "audio/tzh/advice_acaro_rojo.mp3"
+        "tzh": "audio/tzh/advice_acaro_rojo.mp3",
+        "en": "audio/en/advice_acaro_rojo.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "ANACAFE/CEDICAFE Boletin feb. 2019 'Manejo integrado de la arana roja del cafe', https://www.anacafe.org/uploads/file/626dbd79c07e482eae83dc85a6fe1c10/Boletin-Febrero-2019-02.pdf ; Agronomia Costarricense 44(1) 2020, 'Brote de Oligonychus yothersi en cafetales de Costa Rica', https://www.scielo.sa.cr/scielo.php?script=sci_arttext&pid=S0377-94242020000100113 (dry season, dusty roads, plot edges, copper-coloured leaves, sample every 2 weeks). [Seen via web-search summary on 2026-10-03; the PDF itself was blocked from the build machine. Open it before marking verified.]",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1643,23 +2013,28 @@
       "type": "advice",
       "es": "Muy bien. Siga revisando sus matas cada semana, por debajo de las hojas. Mantenga la sombra regulada, la maleza limpia y buen abono.",
       "tzh": "Lek ay. Ila jujun semana akajpe, ta yanil yabenal. Ak'a lek axinal, ak'entaya te ja'mal sok ak'a abono.",
+      "en": "Very good. Keep checking your plants every week, under the leaves. Keep the shade managed, the weeds cleared and good fertilizer.",
       "slots": [],
       "audio": {
         "es": "audio/es/advice_sano.mp3",
-        "tzh": "audio/tzh/advice_sano.mp3"
+        "tzh": "audio/tzh/advice_sano.mp3",
+        "en": "audio/en/advice_sano.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "General preventive practice from SENASICA 'Manual tecnico para el manejo preventivo de la roya del cafeto', https://royacafe.lanref.org.mx/Documentos/GS_DS_Manualroyadelcafeto.pdf (weekly monitoring, shade, weeds, nutrition). [Seen via web-search summary on 2026-10-03; the PDF itself was blocked from the build machine. Open it before marking verified.]",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1667,23 +2042,28 @@
       "type": "advice",
       "es": "Llame al técnico o a la cooperativa si ve polvo naranja en muchas matas, si se caen muchas hojas, o si la app no está segura. Guarde una hoja en una bolsa cerrada para mostrarla.",
       "tzh": "Ik'a te técnico o te cooperativa teme ay k'an tan ta bayel kajpe, teme ya xch'ay bayel yabenal, o teme ma sna' lek te app. K'eja jun yabenal ta makal bolsa, yu'un ya ak'bey yil.",
+      "en": "Call the extension officer or the co-op if you see orange powder on many plants, if many leaves fall, or if the app is not sure. Keep one leaf in a closed bag to show them.",
       "slots": [],
       "audio": {
         "es": "audio/es/advice_call_officer.mp3",
-        "tzh": "audio/tzh/advice_call_officer.mp3"
+        "tzh": "audio/tzh/advice_call_officer.mp3",
+        "en": "audio/en/advice_call_officer.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal fail-safe and human-in-the-loop design: PROJECT_BRIEF.md section 7; PLAN.md sections 3 and 9.",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1691,23 +2071,28 @@
       "type": "advice",
       "es": "Esta app solo mira las hojas. No puede ver la broca, la falta de abono, la sequía, las matas viejas ni problemas del suelo. Si su cosecha bajó, platique con el técnico.",
       "tzh": "Te app ini ja' nax ya yil yabenal. Ma stak' yil te broca, teme ma'yuk abono, te takin k'inal, te poko' kajpe, sok te chamel ta lum. Teme jteb nax la ak'aj akajpe, k'opona te técnico.",
+      "en": "This app only looks at leaves. It cannot see berry borer, lack of fertilizer, drought, old plants or soil problems. If your harvest went down, talk with the extension officer.",
       "slots": [],
       "audio": {
         "es": "audio/es/limits_yield.mp3",
-        "tzh": "audio/tzh/limits_yield.mp3"
+        "tzh": "audio/tzh/limits_yield.mp3",
+        "en": "audio/en/limits_yield.mp3"
       },
       "audio_source": {
         "es": "synthetic:piper-es-mls_10246-low",
-        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
+        "en": "synthetic:piper-en-us-lessac-medium"
       },
       "source": "Cafetal data limits: PROJECT_BRIEF.md section 8.3 (the model only sees leaf symptoms; it cannot detect broca, nutrient deficiency, drought, ageing trees or soil problems).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1715,17 +2100,20 @@
       "type": "sms",
       "es": "Cafetal: recibimos su reporte. Gracias. El tecnico revisa la lista de visitas. Si es urgente, llame a la cooperativa.",
       "tzh": "Cafetal: k'ot te areporte. Wokol awal. Te tecnico ya yil te lista. Teme bayel chamel ay, ik'a te cooperativa.",
+      "en": "Cafetal: we got your report. Thank you. The extension officer checks the visit list. If it is urgent, call the co-op.",
       "slots": [],
       "audio": {},
       "audio_source": {},
       "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Written without a, i, o, u accents and without dashes so the message stays in the GSM-7 alphabet (160 characters per SMS).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1733,17 +2121,20 @@
       "type": "sms",
       "es": "Cafetal: no entendimos el codigo. Reviselo y mandelo otra vez, o escriba AYUDA.",
       "tzh": "Cafetal: ma lekuk te codigo. Ila sok tikuna xan, o ts'ibaya AYUDA.",
+      "en": "Cafetal: we did not understand the code. Check it and send it again, or text HELP.",
       "slots": [],
       "audio": {},
       "audio_source": {},
       "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Written without a, i, o, u accents and without dashes so the message stays in the GSM-7 alphabet (160 characters per SMS).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1751,17 +2142,20 @@
       "type": "sms",
       "es": "Cafetal: este numero no esta registrado. Pase a la cooperativa para registrarse.",
       "tzh": "Cafetal: ma ts'ibabil te numero ini. La' ta cooperativa, ya jts'ibaytik abihil.",
+      "en": "Cafetal: this number is not registered. Please visit the co-op to sign up.",
       "slots": [],
       "audio": {},
       "audio_source": {},
       "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Written without a, i, o, u accents and without dashes so the message stays in the GSM-7 alphabet (160 characters per SMS).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1769,6 +2163,7 @@
       "type": "sms",
       "es": "Precio de referencia {fecha}: cafe pergamino {precio_cafe} {unidad_cafe}, maiz {precio_maiz}, frijol {precio_frijol} MXN/kg. Fuente: {fuente}. No es el precio de su comunidad.",
       "tzh": "Stojol (precio de referencia) {fecha}: kajpe pergamino {precio_cafe} {unidad_cafe}, ixim {precio_maiz}, chenek' {precio_frijol} MXN/kg. {fuente}. Ma ja'uk stojol ta alumal.",
+      "en": "Reference price {fecha}: parchment coffee {precio_cafe} {unidad_cafe}, maize {precio_maiz}, beans {precio_frijol} MXN/kg. Source: {fuente}. Not the price in your community.",
       "slots": [
         "precio_cafe",
         "unidad_cafe",
@@ -1782,11 +2177,13 @@
       "source": "Cafetal PRECIO module (not AI): PLAN.md section 7; values come from data/prices.json (reference prices, never farm-gate).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1794,17 +2191,20 @@
       "type": "sms",
       "es": "Cafetal: hoy no tenemos precio de referencia. Pregunte en la cooperativa.",
       "tzh": "Cafetal: ma'yuk to stojol (precio de referencia) yo'tik. Jojk'oya ta cooperativa.",
+      "en": "Cafetal: we have no reference price today. Ask at the co-op.",
       "slots": [],
       "audio": {},
       "audio_source": {},
       "source": "Cafetal PRECIO module (not AI): PLAN.md section 7; values come from data/prices.json (reference prices, never farm-gate).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1812,17 +2212,20 @@
       "type": "sms",
       "es": "Para reportar: tome foto de la hoja con la app Cafetal y toque Enviar por SMS. Sin app, lleve la hoja a la cooperativa o escriba TECNICO.",
       "tzh": "Yu'un areporte: lok'taya yabenal ta app Cafetal, net'a Enviar por SMS. Teme ma'yuk app, ich'a bel yabenal ta cooperativa o ts'ibaya TECNICO.",
+      "en": "To report: take a photo of the leaf with the Cafetal app and tap Send by SMS. No app? Take the leaf to the co-op or text OFFICER.",
       "slots": [],
       "audio": {},
       "audio_source": {},
       "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Written without a, i, o, u accents and without dashes so the message stays in the GSM-7 alphabet (160 characters per SMS).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1830,17 +2233,20 @@
       "type": "sms",
       "es": "Cafetal. Puede escribir: PRECIO = precio de referencia. TECNICO = hablar con el tecnico. Codigo CAF1 de la app = reporte de su hoja.",
       "tzh": "Cafetal. Ya stak' ats'ibay: PRECIO = stojol. TECNICO = ya ak'opon te tecnico. Codigo CAF1 ta app = areporte yabenal.",
+      "en": "Cafetal. You can text: PRICE = reference price. OFFICER = talk to the extension officer. CAF1 code from the app = report on your leaf.",
       "slots": [],
       "audio": {},
       "audio_source": {},
       "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Written without a, i, o, u accents and without dashes so the message stays in the GSM-7 alphabet (160 characters per SMS).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1848,17 +2254,20 @@
       "type": "sms",
       "es": "Cafetal: le paso su mensaje al tecnico. Él o la cooperativa le van a responder.",
       "tzh": "Cafetal: ya jtikunbe te amensaje te tecnico. Ja' o te cooperativa ya sjak'beyat.",
+      "en": "Cafetal: I am passing your message to the extension officer. They or the co-op will answer you.",
       "slots": [],
       "audio": {},
       "audio_source": {},
       "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Written without a, i, o, u accents and without dashes so the message stays in the GSM-7 alphabet (160 characters per SMS).",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     },
     {
@@ -1866,6 +2275,7 @@
       "type": "alert",
       "es": "AVISO DE LA COOPERATIVA: {n_reportes} reportes de roya cerca de {comunidad} esta semana. Revise por debajo de las hojas y avise a la cooperativa.",
       "tzh": "AVISO TA COOPERATIVA: {n_reportes} reporte yu'un roya ta nopol {comunidad} ta semana ini. Ila te yanil yabenal, ik'a te cooperativa.",
+      "en": "CO-OP ALERT: {n_reportes} leaf rust reports near {comunidad} this week. Check under the leaves and tell the co-op.",
       "slots": [
         "comunidad",
         "n_reportes"
@@ -1875,11 +2285,13 @@
       "source": "Cafetal outbreak rule (not AI): PLAN.md section 8. Advice to check the underside of leaves: SENASICA ficha tecnica 'Roya del cafeto'.",
       "status": {
         "es": "unverified",
-        "tzh": "unverified"
+        "tzh": "unverified",
+        "en": "unverified"
       },
       "reviewed_by": {
         "es": null,
-        "tzh": null
+        "tzh": null,
+        "en": null
       }
     }
   ]

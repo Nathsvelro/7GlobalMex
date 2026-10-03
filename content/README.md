@@ -1,15 +1,17 @@
 # Content: every sentence a farmer can see or hear
 
 `content/cards.json` holds all farmer-facing text in Cafetal: phone app labels, diagnoses, advice, SMS replies
-and the outbreak alert, in **Spanish (`es`)** and **Tseltal (`tzh`)**. Nothing a farmer sees or hears is written
+and the outbreak alert, in **Spanish (`es`)** and **Tseltal (`tzh`)**, the two languages of the co-op, plus
+**English (`en`)** for international judges and visitors. Nothing a farmer sees or hears is written
 anywhere else, and nothing is generated on the fly. The app and the hub only pick a card by its `id` and fill
 slots such as `{fecha}` with numbers, dates and source names.
 
 ```
 content/
-  cards.json            80 cards (schema: PLAN.md §10; required ids: PLAN.md §11)
-  audio/es/<id>.mp3     spoken Spanish, 71 files
-  audio/tzh/<id>.mp3    spoken Tseltal (provisional), 71 files
+  cards.json            81 cards (schema: PLAN.md §10; required ids: PLAN.md §11)
+  audio/es/<id>.mp3     spoken Spanish, 72 files
+  audio/tzh/<id>.mp3    spoken Tseltal (provisional), 72 files
+  audio/en/<id>.mp3     spoken English (synthetic English voice), 72 files
   audio/manifest.json   what text each MP3 says (hash), so make_audio.py only redoes what changed
 ```
 
@@ -22,6 +24,8 @@ content/
 | **Tseltal text** | **An AI draft.** Words were checked one by one against a published dictionary (below), but no native speaker has read it | A **native Tseltal speaker** from the co-op's own area |
 | Spanish audio | Piper offline TTS, voice `es-mls_10246-low` | Anyone: listen once |
 | **Tseltal audio** | **A Spanish voice reading the Tseltal draft.** It drops glottal stops and other sounds and does not sound like a Tseltal speaker. It is there only so the demo can play something | Replace with **recordings by a native speaker** |
+| English text | **An AI translation of the Spanish cards** (plain, short sentences), for judges and visitors | An **English speaker** checks that it is clear and says the same as the Spanish. The advice itself is verified in Spanish by the agronomist |
+| English audio | Piper offline TTS, voice `en-us-lessac-medium` (a real English voice, slowed a little) | Anyone who speaks English: listen once |
 
 The app shows an **UNVERIFIED / SIN VERIFICAR** badge next to any text or audio whose status is not `verified`.
 
@@ -32,11 +36,13 @@ best guess. Tseltal varies a lot between towns; some choices below may sound for
 
 ## How to review and mark a card verified
 
-1. Open the hub content page (linked from the hub home), which lists every card with both languages and plays the audio.
+1. Open the hub content page (linked from the hub home), which lists every card in all three languages and plays the audio.
 2. Read (and listen to) the card in one language. If it is right, type your name and press the verify button. The hub calls
    `POST /api/cards/{id}/verify` and stores `status[lang] = "verified"` and `reviewed_by[lang]` (name and date).
+   Each language is verified on its own: verifying English (`lang: "en"`) does not verify the Spanish or the Tseltal.
 3. If the text is wrong, correct it in `cards.json` (keep it short), set that language back to `"unverified"`,
    and run `python3 scripts/make_audio.py`. **Any change to a verified text must reset it to unverified.**
+   When the Spanish advice changes, change the English to match and set `status.en` back to `"unverified"` too.
 
 Checklist for reviewers:
 - **Agronomist / extension officer:** Is the common name right for Chiapas? Is the advice safe and doable this week
@@ -44,6 +50,7 @@ Checklist for reviewers:
   purpose: chemical control is the técnico's decision.
 - **Native Tseltal speaker:** Is it natural and polite? Would an older woman who does not read Spanish understand it
   when it is played aloud? Are the loanwords (roya, técnico, cooperativa, abono, SMS) the ones people really use?
+- **English speaker:** Does it say the same as the Spanish, nothing more? Is it plain enough to understand when heard once?
 
 ## How to record a native-speaker voice (replaces the synthetic audio)
 
@@ -58,13 +65,18 @@ Checklist for reviewers:
 ## How to add a new language (no model retraining)
 
 1. Add the language to `"languages"`, e.g. `"tzo": "Bats'i k'op (Tsotsil)"`.
-2. Add a `"tzo"` text to every card: **80 cards, about 760 words**. The minimum is the 59 required ids in
+2. Add a `"tzo"` text to every card: **81 cards, about 780 words**. The minimum is the 60 required ids in
    PLAN.md §11. Set `"status": {"tzo": "unverified"}` and `"reviewed_by": {"tzo": null}`.
-3. Audio: record the 71 spoken cards (types `ui`, `diagnosis`, `advice`) with a native speaker, or run
-   `python3 scripts/make_audio.py` to get provisional synthetic audio first (set `PIPER_VOICE` to a voice for that
-   language if one exists).
+3. Audio: record the 72 spoken cards (types `ui`, `diagnosis`, `advice`) with a native speaker, or run
+   `python3 scripts/make_audio.py` to get provisional synthetic audio first (it uses the Spanish voice for any
+   language other than `en`; add the language's own Piper voice in `voice_for()` if one exists).
 4. SMS cards must stay one SMS after filling slots: run `python3 scripts/make_audio.py --check`.
-5. Register members with that language at the co-op; the hub replies in the member's language.
+5. Register members with that language at the co-op (add it to the `language` choice in `hub/main.py` and
+   `hub/static/registro.html`); the hub replies in the member's language, and in Spanish for a card that lacks it.
+6. The phone app offers every language in `"languages"` on its first screen and in Settings, with no code change.
+   (A "Listen in …" button on the result screen exists for `tzh`, `es` and `en`.)
+
+English was added exactly this way (plus the card `ui_play_en`).
 
 The image model does not change: it outputs a label (`roya`, `minador`…), and the label points to a card.
 
@@ -72,7 +84,11 @@ The image model does not change: it outputs a label (`roya`, `minador`…), and 
 
 - Plain, warm, short. Spanish uses **usted**. UI labels 1–4 words; advice at most 3–4 short sentences.
 - `diag_*` = what is said first ("Parece roya del cafeto."). `advice_*` = what to do this week.
-- `diag_duda` (es) is exactly **"No estoy seguro — muestre la hoja al técnico."** (the fail-safe).
+- `diag_duda` (es) is exactly **"No estoy seguro — muestre la hoja al técnico."** (the fail-safe);
+  in English exactly **"I'm not sure — show the leaf to the extension officer."**
+- English: plain words, "you", the same meaning as the Spanish and no more. *técnico* = **extension officer**,
+  *cooperativa* = **co-op**, *roya* = **leaf rust**, *mancha de hierro* = **brown eye spot**, *broca* = **berry borer**.
+  English SMS cards advertise the keywords **PRICE, HELP, OFFICER** (the hub also accepts PRECIO, AYUDA, TECNICO).
 - Never name pesticide products or doses. Say "pregunte al técnico".
 - Common names: *Hemileia vastatrix* = **roya del cafeto**; *Leucoptera coffeella* = **minador de la hoja**;
   *Phoma costarricensis* = **phoma, quema o derrite**; *Cercospora coffeicola* = **mancha de hierro** (not "ojo de
@@ -131,11 +147,16 @@ python3 scripts/make_audio.py           # render only what changed
 python3 scripts/make_audio.py --force   # re-render all synthetic audio
 ```
 
-- Piper (`PIPER_BIN`, default `/home/user/tools/piper/piper`) with the first `.onnx` voice in
-  `/home/user/tools/voice-es/` (`PIPER_VOICE`). Text is turned into phonemes with espeak-ng **`es-419`**
-  (Latin-American Spanish: "c/z" said as "s", as in Mexico) instead of the voice's default Castilian `es`.
-- MP3 mono 22,050 Hz at **24 kbps** (`AUDIO_BITRATE`); long pauses are squeezed with ffmpeg. All 142 files take
-  **about 2.4 MB** (about 13 minutes of speech). At 32 kbps they took 3.2 MB.
+- Piper (`PIPER_BIN`, default `/home/user/tools/piper/piper`), one voice per language:
+  - `es` and `tzh`: the first `.onnx` voice in `/home/user/tools/voice-es/` (`PIPER_VOICE`). Text is turned into
+    phonemes with espeak-ng **`es-419`** (Latin-American Spanish: "c/z" said as "s", as in Mexico) instead of the
+    voice's default Castilian `es`.
+  - `en`: the first `.onnx` voice in `/home/user/tools/voice-en/` (`PIPER_VOICE_EN`; default
+    `en-us-lessac-medium`, espeak `en-us`), with `--length_scale 1.4` so it speaks at about 170 words a minute, like
+    the Spanish audio. `audio_source.en = "synthetic:piper-en-us-lessac-medium"`.
+- MP3 mono 22,050 Hz at **24 kbps** (`AUDIO_BITRATE`); long pauses are squeezed with ffmpeg. All 216 files take
+  **about 3.2 MB** (es 1.06 MB, tzh 1.37 MB, en 0.77 MB). Before English, the 142 es + tzh files took 2.4 MB.
+- `--check` validates every language listed in `"languages"`.
 - For Tseltal the script respells the text only for the voice (drops `'`, `x` → `sh`, drops a word-initial `j`
   before a consonant) so the Spanish voice does not spell letters out. This is a stop-gap, not Tseltal speech.
 - WAV files are temporary and never written to the repo.

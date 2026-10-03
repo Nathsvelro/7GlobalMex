@@ -18,6 +18,8 @@ const st = {
 };
 window.__cafetal = st; // for debugging and tests
 
+// Result-screen play buttons: Tseltal and Spanish always; English only while the UI language is English.
+const PLAY_LANGS = ['tzh', 'es', 'en'];
 const isDuda = (label) => label === 'duda' || label === 'otro';
 const ICON = (label) => 'icons/res_' + (isDuda(label) ? 'duda' : label) + '.svg';
 const DIAG = (label) => (isDuda(label) ? 'diag_duda' : 'diag_' + label);
@@ -60,6 +62,7 @@ function refresh() {
   $('pill-unverified').hidden = !unverified;
   $('pill-demo').hidden = st.config.gateway_label !== 'DEMO';
   $('pill-offline').hidden = !st.offlineReady;
+  $('r-play-en').hidden = C.getLang() !== 'en';
   $('btn-lock').setAttribute('aria-label', C.text('ui_lock'));
 }
 
@@ -278,7 +281,7 @@ function showResult(o, fresh) {
   $('r-advice2').hidden = adv.length < 2;
   if (adv[1]) $('r-advice2').dataset.card = adv[1];
   st.seq = [DIAG(o.label), ...(reason ? [reason] : []), ...adv, 'limits_yield'];
-  for (const l of ['tzh', 'es']) {
+  for (const l of PLAY_LANGS) {
     const a = $('audio-' + l);
     a.onended = null;
     a.src = C.audioUrl(st.seq[0], l) || '';
@@ -527,6 +530,7 @@ function bind() {
   $('home-pending').addEventListener('click', () => go('history'));
   $('r-play-tzh').addEventListener('click', () => playResult('tzh'));
   $('r-play-es').addEventListener('click', () => playResult('es'));
+  $('r-play-en').addEventListener('click', () => playResult('en'));
   $('r-send').addEventListener('click', () => ($('r-confirm').hidden = false)); // the sms: link opens the SMS app
   $('r-sent-yes').addEventListener('click', () => markSent('sms').then(() => toast('ui_sent')));
   $('r-sent-no').addEventListener('click', () => ($('r-confirm').hidden = true));

@@ -100,9 +100,12 @@
       <div class="row2 play">
         <button type="button" class="btn play-btn" id="r-play-tzh"><svg class="i"><use href="icons/icons.svg#speaker"/></svg><span data-card="ui_play_tzh"></span><span class="badge unverified" id="r-badge-tzh" data-card="ui_unverified"></span></button>
         <button type="button" class="btn play-btn" id="r-play-es"><svg class="i"><use href="icons/icons.svg#speaker"/></svg><span data-card="ui_play_es"></span><span class="badge unverified" id="r-badge-es" data-card="ui_unverified"></span></button>
+        <!-- English (visitors, judges): shown only when the UI language is English, so the two main buttons stay big -->
+        <button type="button" class="btn play-btn wide" id="r-play-en" hidden><svg class="i"><use href="icons/icons.svg#speaker"/></svg><span data-card="ui_play_en"></span><span class="badge unverified" id="r-badge-en" data-card="ui_unverified"></span></button>
       </div>
       <audio id="audio-tzh" preload="auto"></audio>
       <audio id="audio-es" preload="auto"></audio>
+      <audio id="audio-en" preload="auto"></audio>
       <h3 class="sec"><svg class="i"><use href="icons/icons.svg#leaf"/></svg><span data-card="ui_what_to_do"></span></h3>
       <div class="say card-box" id="r-advice"></div>
       <div class="say card-box warn" id="r-advice2" hidden></div>

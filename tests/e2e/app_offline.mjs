@@ -111,6 +111,9 @@ async function phaseOffline(browser) {
   await page.reload();
   await page.waitForSelector('#s-lang:not([hidden])');
   check(await page.isVisible('#pill-demo'), 'DEMO badge visible (config gateway_label = DEMO)');
+  const langBtns = await page.$$eval('#lang-list .lang-btn', (bs) => bs.map((b) => [b.dataset.lang, b.textContent.trim()]));
+  check(JSON.stringify(langBtns) === JSON.stringify([['tzh', cards.languages.tzh], ['es', 'Español'], ['en', 'English']]),
+    `language choice: Tseltal, Español, English (${JSON.stringify(langBtns)})`);
   await page.click('.lang-btn[data-lang="tzh"]');
   check((await page.textContent('#lang-next')).includes(T('ui_continue', 'tzh')), 'Tseltal selected -> labels switch to Tseltal');
   await page.click('.lang-btn[data-lang="es"]');
@@ -162,6 +165,7 @@ async function phaseOffline(browser) {
   check(name.length > 0 && !name.startsWith('['), `result name shown: ${name}`);
   check(await page.isVisible('#r-diag .badge.unverified'), 'UNVERIFIED badge next to diagnosis text');
   check(await page.isVisible('#r-badge-tzh'), 'UNVERIFIED badge on Tseltal audio button');
+  check(await page.isHidden('#r-play-en'), 'Spanish UI: only the Tseltal and Spanish play buttons are shown');
   const audio = await page.evaluate(async () => {
     const out = {};
     for (const l of ['tzh', 'es']) {
@@ -231,6 +235,10 @@ async function phaseOffline(browser) {
   await page.click('#set-langs .lang-btn[data-lang="tzh"]');
   check((await page.textContent('#nav [data-go="history"]')).includes(T('ui_history', 'tzh')), 'language toggle -> Tseltal UI');
   await shot(page, 'app_08_settings_tzh.png', true);
+  check((await page.$$eval('#set-langs .lang-btn', (bs) => bs.map((b) => b.dataset.lang).join(','))) === 'tzh,es,en',
+    'settings language toggle offers tzh, es, en');
+  await page.click('#set-langs .lang-btn[data-lang="en"]');
+  check((await page.textContent('#nav [data-go="history"]')).includes(T('ui_history', 'en')), 'language toggle -> English UI');
   await page.click('#set-langs .lang-btn[data-lang="es"]');
   await page.fill('#set-pin', '1234');
   await page.click('#set-pin-save');
@@ -261,6 +269,48 @@ async function phaseOffline(browser) {
   });
   check(left.ls === 0 && !left.dbs.includes('cafetal'), 'delete everything wiped settings and observations');
   check(left.caches.some((k) => k.startsWith('cafetal-')), 'offline app cache kept after delete');
+
+  // English (for visitors and judges), still in airplane mode: onboarding -> English diagnosis text + English audio
+  await page.click('.lang-btn[data-lang="en"]');
+  check((await page.textContent('#lang-next')).includes(T('ui_continue', 'en')), 'English selected -> labels switch to English');
+  await shot(page, 'app_en_01_language.png');
+  await page.click('#lang-next');
+  await page.waitForSelector('#s-consent:not([hidden])');
+  check((await page.textContent('#s-consent')).includes(T('ui_consent_text', 'en').slice(0, 40)), 'English consent text shown');
+  await page.click('#consent-yes');
+  await page.waitForSelector('#s-member:not([hidden])');
+  await page.fill('#member-digits', '0777');
+  await page.click('#member-next');
+  await page.waitForSelector('#s-home:not([hidden])');
+  const sEn = await page.evaluate(() => JSON.parse(localStorage.getItem('cafetal.settings')));
+  check(sEn && sEn.lang === 'en' && sEn.member_id === 'M0777', 'settings saved with language en');
+  check((await page.textContent('#s-home')).includes(T('ui_take_photo', 'en')), 'home screen in English');
+  await page.waitForTimeout(300);
+  await shot(page, 'app_en_02_home.png');
+  await noMissingCards(page, 'home, en');
+  await page.setInputFiles('#file-gallery', path.join(FIX, 'leaf_photo.jpg'));
+  await page.waitForSelector('#r-body:not([hidden])', { timeout: 120000 });
+  const rEn = await page.evaluate(() => window.__cafetal.obs);
+  const diagEn = ['duda', 'otro'].includes(rEn.label) ? 'diag_duda' : 'diag_' + rEn.label;
+  check((await page.textContent('#r-diag .say-text')) === T(diagEn, 'en'), `English diagnosis text: "${T(diagEn, 'en')}"`);
+  check((await page.textContent('#r-diag .badge.unverified')) === T('ui_unverified', 'en'), 'English text has the UNVERIFIED badge');
+  check(await page.isVisible('#r-play-tzh') && await page.isVisible('#r-play-es') && await page.isVisible('#r-play-en'),
+    'English UI: Tseltal, Spanish and English play buttons');
+  check(await page.isVisible('#r-badge-en'), 'UNVERIFIED badge on English audio button');
+  const enSrc = await page.getAttribute('#audio-en', 'src');
+  check(enSrc === `../content/audio/en/${diagEn}.mp3`, `English audio element points at ${enSrc}`);
+  await page.click('#r-play-en');
+  await page.waitForTimeout(1500);
+  const playingEn = await page.evaluate(() => {
+    const a = document.getElementById('audio-en');
+    return { t: a.currentTime, err: a.error && a.error.code };
+  });
+  check(playingEn.t > 0 && !playingEn.err, `English audio plays offline (currentTime ${playingEn.t.toFixed(2)} s)`);
+  await page.evaluate(() => document.querySelectorAll('audio').forEach((a) => a.pause()));
+  await page.waitForSelector('#toast', { state: 'hidden', timeout: 5000 });
+  await shot(page, 'app_en_03_result.png');
+  await noMissingCards(page, 'result, en');
+  check(await serverDown(), 'English run happened with the server stopped (offline)');
   check(errors.length === 0, 'no page errors' + (errors.length ? ': ' + errors.join(' | ') : ''));
   await ctx.close();
 }
