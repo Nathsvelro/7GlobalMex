@@ -1,0 +1,3945 @@
+{
+ "generated_by": "model/field_threshold.py test",
+ "chosen_t": 0.9,
+ "candidate": "v2@0.9",
+ "baseline": "v1@0.7",
+ "evaluations": {
+  "v1@0.7": {
+   "all_photos": {
+    "roya": {
+     "n": 219,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 218
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 217,
+      "low_conf": 1
+     },
+     "DUDA": 0.9954,
+     "DUDA_ci95": [
+      0.9746,
+      0.9992
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0172
+     ],
+     "wrong_accepted": 0.0046,
+     "wrong_accepted_ci95": [
+      0.0008,
+      0.0254
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0172
+     ]
+    },
+    "roya screened": {
+     "n": 164,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 163
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 162,
+      "low_conf": 1
+     },
+     "DUDA": 0.9939,
+     "DUDA_ci95": [
+      0.9663,
+      0.9989
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0229
+     ],
+     "wrong_accepted": 0.0061,
+     "wrong_accepted_ci95": [
+      0.0011,
+      0.0337
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0229
+     ]
+    },
+    "roya Mexico+GT box": {
+     "n": 31,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 30
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 30,
+      "low_conf": 0
+     },
+     "DUDA": 0.9677,
+     "DUDA_ci95": [
+      0.8381,
+      0.9943
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1103
+     ],
+     "wrong_accepted": 0.0323,
+     "wrong_accepted_ci95": [
+      0.0057,
+      0.1619
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1103
+     ]
+    },
+    "roya Mexico": {
+     "n": 4,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 4
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 4,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.5101,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.4899
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.4899
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.4899
+     ]
+    },
+    "minador": {
+     "n": 30,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 30
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 30,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.8865,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1135
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1135
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1135
+     ]
+    },
+    "minador screened": {
+     "n": 24,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 24
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 24,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.862,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.138
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.138
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.138
+     ]
+    },
+    "cercospora": {
+     "n": 30,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 2,
+      "cercospora": 0,
+      "DUDA": 28
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 28,
+      "low_conf": 0
+     },
+     "DUDA": 0.9333,
+     "DUDA_ci95": [
+      0.7868,
+      0.9815
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1135
+     ],
+     "wrong_accepted": 0.0667,
+     "wrong_accepted_ci95": [
+      0.0185,
+      0.2132
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1135
+     ]
+    },
+    "cercospora screened": {
+     "n": 16,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 2,
+      "cercospora": 0,
+      "DUDA": 14
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 14,
+      "low_conf": 0
+     },
+     "DUDA": 0.875,
+     "DUDA_ci95": [
+      0.6398,
+      0.965
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1936
+     ],
+     "wrong_accepted": 0.125,
+     "wrong_accepted_ci95": [
+      0.035,
+      0.3602
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1936
+     ]
+    },
+    "ojo_de_gallo": {
+     "n": 90,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 4,
+      "phoma": 2,
+      "cercospora": 0,
+      "DUDA": 84
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 84,
+      "low_conf": 0
+     },
+     "DUDA": 0.9333,
+     "DUDA_ci95": [
+      0.8621,
+      0.9691
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0409
+     ],
+     "wrong_accepted": 0.0667,
+     "wrong_accepted_ci95": [
+      0.0309,
+      0.1379
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0409
+     ]
+    },
+    "ojo_de_gallo screened": {
+     "n": 26,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 4,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 22
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 22,
+      "low_conf": 0
+     },
+     "DUDA": 0.8462,
+     "DUDA_ci95": [
+      0.6647,
+      0.9385
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1287
+     ],
+     "wrong_accepted": 0.1538,
+     "wrong_accepted_ci95": [
+      0.0615,
+      0.3353
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1287
+     ]
+    },
+    "minador Mexico": {
+     "n": 2,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 2,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.3424,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.6576
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.6576
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.6576
+     ]
+    },
+    "coffea sample": {
+     "n": 399,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 399
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 399,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.9905,
+      1.0
+     ],
+     "disease_answer": 0.0,
+     "disease_answer_ci95": [
+      0.0,
+      0.0095
+     ],
+     "sano_answer": 0.0
+    },
+    "coffea sample Mexico": {
+     "n": 37,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 37
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 37,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.9059,
+      1.0
+     ],
+     "disease_answer": 0.0,
+     "disease_answer_ci95": [
+      0.0,
+      0.0941
+     ],
+     "sano_answer": 0.0
+    }
+   },
+   "field_test": {
+    "roya": {
+     "n": 53,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 52
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 51,
+      "low_conf": 1
+     },
+     "DUDA": 0.9811,
+     "DUDA_ci95": [
+      0.9006,
+      0.9967
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0676
+     ],
+     "wrong_accepted": 0.0189,
+     "wrong_accepted_ci95": [
+      0.0033,
+      0.0994
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0676
+     ]
+    },
+    "roya screened": {
+     "n": 42,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 41
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 40,
+      "low_conf": 1
+     },
+     "DUDA": 0.9762,
+     "DUDA_ci95": [
+      0.8768,
+      0.9958
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0838
+     ],
+     "wrong_accepted": 0.0238,
+     "wrong_accepted_ci95": [
+      0.0042,
+      0.1232
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0838
+     ]
+    },
+    "roya Mexico+GT box": {
+     "n": 31,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 30
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 30,
+      "low_conf": 0
+     },
+     "DUDA": 0.9677,
+     "DUDA_ci95": [
+      0.8381,
+      0.9943
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1103
+     ],
+     "wrong_accepted": 0.0323,
+     "wrong_accepted_ci95": [
+      0.0057,
+      0.1619
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1103
+     ]
+    },
+    "roya Mexico": {
+     "n": 4,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 4
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 4,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.5101,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.4899
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.4899
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.4899
+     ]
+    },
+    "minador": {
+     "n": 9,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 9
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 9,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.7008,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.2992
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.2992
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2992
+     ]
+    },
+    "minador screened": {
+     "n": 9,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 9
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 9,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.7008,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.2992
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.2992
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2992
+     ]
+    },
+    "cercospora": {
+     "n": 10,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 9
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 9,
+      "low_conf": 0
+     },
+     "DUDA": 0.9,
+     "DUDA_ci95": [
+      0.5958,
+      0.9821
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.2775
+     ],
+     "wrong_accepted": 0.1,
+     "wrong_accepted_ci95": [
+      0.0179,
+      0.4042
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2775
+     ]
+    },
+    "cercospora screened": {
+     "n": 6,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 5
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 5,
+      "low_conf": 0
+     },
+     "DUDA": 0.8333,
+     "DUDA_ci95": [
+      0.4365,
+      0.9699
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.3903
+     ],
+     "wrong_accepted": 0.1667,
+     "wrong_accepted_ci95": [
+      0.0301,
+      0.5635
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.3903
+     ]
+    },
+    "ojo_de_gallo": {
+     "n": 90,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 4,
+      "phoma": 2,
+      "cercospora": 0,
+      "DUDA": 84
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 84,
+      "low_conf": 0
+     },
+     "DUDA": 0.9333,
+     "DUDA_ci95": [
+      0.8621,
+      0.9691
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0409
+     ],
+     "wrong_accepted": 0.0667,
+     "wrong_accepted_ci95": [
+      0.0309,
+      0.1379
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0409
+     ]
+    },
+    "ojo_de_gallo screened": {
+     "n": 26,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 4,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 22
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 22,
+      "low_conf": 0
+     },
+     "DUDA": 0.8462,
+     "DUDA_ci95": [
+      0.6647,
+      0.9385
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1287
+     ],
+     "wrong_accepted": 0.1538,
+     "wrong_accepted_ci95": [
+      0.0615,
+      0.3353
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1287
+     ]
+    },
+    "minador Mexico": {
+     "n": 2,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 2,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.3424,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.6576
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.6576
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.6576
+     ]
+    },
+    "coffea sample": {
+     "n": 399,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 399
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 399,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.9905,
+      1.0
+     ],
+     "disease_answer": 0.0,
+     "disease_answer_ci95": [
+      0.0,
+      0.0095
+     ],
+     "sano_answer": 0.0
+    },
+    "coffea sample Mexico": {
+     "n": 37,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 37
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 37,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.9059,
+      1.0
+     ],
+     "disease_answer": 0.0,
+     "disease_answer_ci95": [
+      0.0,
+      0.0941
+     ],
+     "sano_answer": 0.0
+    }
+   },
+   "field_dev": {
+    "roya": {
+     "n": 166,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 166
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 166,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.9774,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0226
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0226
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0226
+     ]
+    },
+    "roya screened": {
+     "n": 122,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 122
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 122,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.9695,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0305
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0305
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0305
+     ]
+    },
+    "minador": {
+     "n": 21,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 21
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 21,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.8454,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1546
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1546
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1546
+     ]
+    },
+    "minador screened": {
+     "n": 15,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 15
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 15,
+      "low_conf": 0
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.7961,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.2039
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.2039
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2039
+     ]
+    },
+    "cercospora": {
+     "n": 20,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 19
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 19,
+      "low_conf": 0
+     },
+     "DUDA": 0.95,
+     "DUDA_ci95": [
+      0.7639,
+      0.9911
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1611
+     ],
+     "wrong_accepted": 0.05,
+     "wrong_accepted_ci95": [
+      0.0089,
+      0.2361
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1611
+     ]
+    },
+    "cercospora screened": {
+     "n": 10,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 9
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 9,
+      "low_conf": 0
+     },
+     "DUDA": 0.9,
+     "DUDA_ci95": [
+      0.5958,
+      0.9821
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.2775
+     ],
+     "wrong_accepted": 0.1,
+     "wrong_accepted_ci95": [
+      0.0179,
+      0.4042
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2775
+     ]
+    }
+   },
+   "jmuben_otro_test": {
+    "jmuben_macro_f1_argmax": 0.9845,
+    "jmuben_coffee_correct_accepted": 0.958,
+    "jmuben_coffee_DUDA": 0.0408,
+    "jmuben_coffee_wrong_accepted": 0.0012,
+    "jmuben_diseased_called_sano": 0.0,
+    "jmuben_diseased_called_sano_n": 0,
+    "jmuben_app_macro_f1": 0.9774,
+    "otro_n": 446,
+    "otro_rejected": 0.9978,
+    "otro_rejected_ci95": [
+     0.9874,
+     0.9996
+    ],
+    "otro_disease_answer": 0.0022
+   },
+   "_meta": {
+    "model": "model/checkpoints/v1/cafetal.onnx",
+    "sha1_12": "99d722eb5ce7",
+    "threshold": 0.7,
+    "version": "cafetal-img-v1"
+   },
+   "jmuben_per_class": {
+    "sano": {
+     "n": 500,
+     "correct": 1.0,
+     "DUDA": 0.0
+    },
+    "roya": {
+     "n": 500,
+     "correct": 0.884,
+     "DUDA": 0.116
+    },
+    "minador": {
+     "n": 500,
+     "correct": 0.922,
+     "DUDA": 0.072
+    },
+    "phoma": {
+     "n": 500,
+     "correct": 0.984,
+     "DUDA": 0.016
+    },
+    "cercospora": {
+     "n": 500,
+     "correct": 1.0,
+     "DUDA": 0.0
+    },
+    "_app_macro_f1_exact": 0.977358174405191
+   }
+  },
+  "v2@0.7": {
+   "all_photos": {
+    "roya": {
+     "n": 219,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 166,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 53
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 44,
+      "low_conf": 9
+     },
+     "DUDA": 0.242,
+     "DUDA_ci95": [
+      0.19,
+      0.3029
+     ],
+     "correct": 0.758,
+     "correct_ci95": [
+      0.6971,
+      0.81
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0172
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0172
+     ]
+    },
+    "roya screened": {
+     "n": 164,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 157,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 7
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 2,
+      "low_conf": 5
+     },
+     "DUDA": 0.0427,
+     "DUDA_ci95": [
+      0.0208,
+      0.0855
+     ],
+     "correct": 0.9573,
+     "correct_ci95": [
+      0.9145,
+      0.9792
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0229
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0229
+     ]
+    },
+    "roya Mexico+GT box": {
+     "n": 31,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 26,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 5
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 4
+     },
+     "DUDA": 0.1613,
+     "DUDA_ci95": [
+      0.0709,
+      0.3263
+     ],
+     "correct": 0.8387,
+     "correct_ci95": [
+      0.6737,
+      0.9291
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1103
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1103
+     ]
+    },
+    "roya Mexico": {
+     "n": 4,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 2
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.15,
+      0.85
+     ],
+     "correct": 0.5,
+     "correct_ci95": [
+      0.15,
+      0.85
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.4899
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.4899
+     ]
+    },
+    "minador": {
+     "n": 30,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 4,
+      "minador": 18,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 8
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 3,
+      "low_conf": 5
+     },
+     "DUDA": 0.2667,
+     "DUDA_ci95": [
+      0.1418,
+      0.4445
+     ],
+     "correct": 0.6,
+     "correct_ci95": [
+      0.4232,
+      0.7541
+     ],
+     "wrong_accepted": 0.1333,
+     "wrong_accepted_ci95": [
+      0.0531,
+      0.2968
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1135
+     ]
+    },
+    "minador screened": {
+     "n": 24,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 3,
+      "minador": 17,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 4
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 3
+     },
+     "DUDA": 0.1667,
+     "DUDA_ci95": [
+      0.0668,
+      0.3585
+     ],
+     "correct": 0.7083,
+     "correct_ci95": [
+      0.5083,
+      0.8509
+     ],
+     "wrong_accepted": 0.125,
+     "wrong_accepted_ci95": [
+      0.0434,
+      0.31
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.138
+     ]
+    },
+    "cercospora": {
+     "n": 30,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 5,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 10,
+      "DUDA": 14
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 11,
+      "low_conf": 3
+     },
+     "DUDA": 0.4667,
+     "DUDA_ci95": [
+      0.3023,
+      0.6386
+     ],
+     "correct": 0.3333,
+     "correct_ci95": [
+      0.1923,
+      0.5122
+     ],
+     "wrong_accepted": 0.2,
+     "wrong_accepted_ci95": [
+      0.095,
+      0.3731
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1135
+     ]
+    },
+    "cercospora screened": {
+     "n": 16,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 4,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 10,
+      "DUDA": 1
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 1
+     },
+     "DUDA": 0.0625,
+     "DUDA_ci95": [
+      0.0111,
+      0.2833
+     ],
+     "correct": 0.625,
+     "correct_ci95": [
+      0.3864,
+      0.8152
+     ],
+     "wrong_accepted": 0.3125,
+     "wrong_accepted_ci95": [
+      0.1416,
+      0.556
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1936
+     ]
+    },
+    "ojo_de_gallo": {
+     "n": 90,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 14,
+      "minador": 4,
+      "phoma": 3,
+      "cercospora": 1,
+      "DUDA": 68
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 53,
+      "low_conf": 15
+     },
+     "DUDA": 0.7556,
+     "DUDA_ci95": [
+      0.6575,
+      0.8327
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0409
+     ],
+     "wrong_accepted": 0.2444,
+     "wrong_accepted_ci95": [
+      0.1673,
+      0.3425
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0409
+     ]
+    },
+    "ojo_de_gallo screened": {
+     "n": 26,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 9,
+      "minador": 2,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 15
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 8,
+      "low_conf": 7
+     },
+     "DUDA": 0.5769,
+     "DUDA_ci95": [
+      0.3895,
+      0.7446
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1287
+     ],
+     "wrong_accepted": 0.4231,
+     "wrong_accepted_ci95": [
+      0.2554,
+      0.6105
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1287
+     ]
+    },
+    "minador Mexico": {
+     "n": 2,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 1,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 1
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 1
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.0945,
+      0.9055
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.6576
+     ],
+     "wrong_accepted": 0.5,
+     "wrong_accepted_ci95": [
+      0.0945,
+      0.9055
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.6576
+     ]
+    },
+    "coffea sample": {
+     "n": 399,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 31,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 367
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 331,
+      "low_conf": 36
+     },
+     "DUDA": 0.9198,
+     "DUDA_ci95": [
+      0.889,
+      0.9426
+     ],
+     "disease_answer": 0.0802,
+     "disease_answer_ci95": [
+      0.0574,
+      0.111
+     ],
+     "sano_answer": 0.0
+    },
+    "coffea sample Mexico": {
+     "n": 37,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 5,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 32
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 27,
+      "low_conf": 5
+     },
+     "DUDA": 0.8649,
+     "DUDA_ci95": [
+      0.7202,
+      0.9409
+     ],
+     "disease_answer": 0.1351,
+     "disease_answer_ci95": [
+      0.0591,
+      0.2798
+     ],
+     "sano_answer": 0.0
+    }
+   },
+   "field_test": {
+    "roya": {
+     "n": 53,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 38,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 15
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 9,
+      "low_conf": 6
+     },
+     "DUDA": 0.283,
+     "DUDA_ci95": [
+      0.1797,
+      0.4157
+     ],
+     "correct": 0.717,
+     "correct_ci95": [
+      0.5843,
+      0.8203
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0676
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0676
+     ]
+    },
+    "roya screened": {
+     "n": 42,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 37,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 5
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 4
+     },
+     "DUDA": 0.119,
+     "DUDA_ci95": [
+      0.0519,
+      0.25
+     ],
+     "correct": 0.881,
+     "correct_ci95": [
+      0.75,
+      0.9481
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0838
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0838
+     ]
+    },
+    "roya Mexico+GT box": {
+     "n": 31,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 26,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 5
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 4
+     },
+     "DUDA": 0.1613,
+     "DUDA_ci95": [
+      0.0709,
+      0.3263
+     ],
+     "correct": 0.8387,
+     "correct_ci95": [
+      0.6737,
+      0.9291
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1103
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1103
+     ]
+    },
+    "roya Mexico": {
+     "n": 4,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 2
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.15,
+      0.85
+     ],
+     "correct": 0.5,
+     "correct_ci95": [
+      0.15,
+      0.85
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.4899
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.4899
+     ]
+    },
+    "minador": {
+     "n": 9,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 5,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 1
+     },
+     "DUDA": 0.2222,
+     "DUDA_ci95": [
+      0.0632,
+      0.5474
+     ],
+     "correct": 0.5556,
+     "correct_ci95": [
+      0.2666,
+      0.8112
+     ],
+     "wrong_accepted": 0.2222,
+     "wrong_accepted_ci95": [
+      0.0632,
+      0.5474
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2992
+     ]
+    },
+    "minador screened": {
+     "n": 9,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 5,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 1
+     },
+     "DUDA": 0.2222,
+     "DUDA_ci95": [
+      0.0632,
+      0.5474
+     ],
+     "correct": 0.5556,
+     "correct_ci95": [
+      0.2666,
+      0.8112
+     ],
+     "wrong_accepted": 0.2222,
+     "wrong_accepted_ci95": [
+      0.0632,
+      0.5474
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2992
+     ]
+    },
+    "cercospora": {
+     "n": 10,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 5,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 4
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 2,
+      "low_conf": 2
+     },
+     "DUDA": 0.4,
+     "DUDA_ci95": [
+      0.1682,
+      0.6873
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.2775
+     ],
+     "wrong_accepted": 0.6,
+     "wrong_accepted_ci95": [
+      0.3127,
+      0.8318
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2775
+     ]
+    },
+    "cercospora screened": {
+     "n": 6,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 4,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 1
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 1
+     },
+     "DUDA": 0.1667,
+     "DUDA_ci95": [
+      0.0301,
+      0.5635
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.3903
+     ],
+     "wrong_accepted": 0.8333,
+     "wrong_accepted_ci95": [
+      0.4365,
+      0.9699
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.3903
+     ]
+    },
+    "ojo_de_gallo": {
+     "n": 90,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 14,
+      "minador": 4,
+      "phoma": 3,
+      "cercospora": 1,
+      "DUDA": 68
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 53,
+      "low_conf": 15
+     },
+     "DUDA": 0.7556,
+     "DUDA_ci95": [
+      0.6575,
+      0.8327
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0409
+     ],
+     "wrong_accepted": 0.2444,
+     "wrong_accepted_ci95": [
+      0.1673,
+      0.3425
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0409
+     ]
+    },
+    "ojo_de_gallo screened": {
+     "n": 26,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 9,
+      "minador": 2,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 15
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 8,
+      "low_conf": 7
+     },
+     "DUDA": 0.5769,
+     "DUDA_ci95": [
+      0.3895,
+      0.7446
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1287
+     ],
+     "wrong_accepted": 0.4231,
+     "wrong_accepted_ci95": [
+      0.2554,
+      0.6105
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1287
+     ]
+    },
+    "minador Mexico": {
+     "n": 2,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 1,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 1
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 1
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.0945,
+      0.9055
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.6576
+     ],
+     "wrong_accepted": 0.5,
+     "wrong_accepted_ci95": [
+      0.0945,
+      0.9055
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.6576
+     ]
+    },
+    "coffea sample": {
+     "n": 399,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 31,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 367
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 331,
+      "low_conf": 36
+     },
+     "DUDA": 0.9198,
+     "DUDA_ci95": [
+      0.889,
+      0.9426
+     ],
+     "disease_answer": 0.0802,
+     "disease_answer_ci95": [
+      0.0574,
+      0.111
+     ],
+     "sano_answer": 0.0
+    },
+    "coffea sample Mexico": {
+     "n": 37,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 5,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 32
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 27,
+      "low_conf": 5
+     },
+     "DUDA": 0.8649,
+     "DUDA_ci95": [
+      0.7202,
+      0.9409
+     ],
+     "disease_answer": 0.1351,
+     "disease_answer_ci95": [
+      0.0591,
+      0.2798
+     ],
+     "sano_answer": 0.0
+    }
+   },
+   "field_dev": {
+    "roya": {
+     "n": 166,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 128,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 38
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 35,
+      "low_conf": 3
+     },
+     "DUDA": 0.2289,
+     "DUDA_ci95": [
+      0.1716,
+      0.2985
+     ],
+     "correct": 0.7711,
+     "correct_ci95": [
+      0.7015,
+      0.8284
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0226
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0226
+     ]
+    },
+    "roya screened": {
+     "n": 122,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 120,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 1
+     },
+     "DUDA": 0.0164,
+     "DUDA_ci95": [
+      0.0045,
+      0.0578
+     ],
+     "correct": 0.9836,
+     "correct_ci95": [
+      0.9422,
+      0.9955
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0305
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0305
+     ]
+    },
+    "minador": {
+     "n": 21,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 13,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 6
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 2,
+      "low_conf": 4
+     },
+     "DUDA": 0.2857,
+     "DUDA_ci95": [
+      0.1381,
+      0.4996
+     ],
+     "correct": 0.619,
+     "correct_ci95": [
+      0.4088,
+      0.7925
+     ],
+     "wrong_accepted": 0.0952,
+     "wrong_accepted_ci95": [
+      0.0265,
+      0.2891
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1546
+     ]
+    },
+    "minador screened": {
+     "n": 15,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 1,
+      "minador": 12,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 2
+     },
+     "DUDA": 0.1333,
+     "DUDA_ci95": [
+      0.0374,
+      0.3788
+     ],
+     "correct": 0.8,
+     "correct_ci95": [
+      0.5481,
+      0.9295
+     ],
+     "wrong_accepted": 0.0667,
+     "wrong_accepted_ci95": [
+      0.0119,
+      0.2982
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2039
+     ]
+    },
+    "cercospora": {
+     "n": 20,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 10,
+      "DUDA": 10
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 9,
+      "low_conf": 1
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.2993,
+      0.7007
+     ],
+     "correct": 0.5,
+     "correct_ci95": [
+      0.2993,
+      0.7007
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1611
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1611
+     ]
+    },
+    "cercospora screened": {
+     "n": 10,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 10,
+      "DUDA": 0
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 0
+     },
+     "DUDA": 0.0,
+     "DUDA_ci95": [
+      0.0,
+      0.2775
+     ],
+     "correct": 1.0,
+     "correct_ci95": [
+      0.7225,
+      1.0
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.2775
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2775
+     ]
+    }
+   },
+   "jmuben_otro_test": {
+    "jmuben_macro_f1_argmax": 0.985,
+    "jmuben_coffee_correct_accepted": 0.9696,
+    "jmuben_coffee_DUDA": 0.0304,
+    "jmuben_coffee_wrong_accepted": 0.0,
+    "jmuben_diseased_called_sano": 0.0,
+    "jmuben_diseased_called_sano_n": 0,
+    "jmuben_app_macro_f1": 0.9843,
+    "otro_n": 446,
+    "otro_rejected": 0.9574,
+    "otro_rejected_ci95": [
+     0.9344,
+     0.9726
+    ],
+    "otro_disease_answer": 0.0426
+   },
+   "_meta": {
+    "model": "model/checkpoints/v2/app/cafetal.onnx",
+    "sha1_12": "1ab8db2a32b8",
+    "threshold": 0.7,
+    "version": "cafetal-img-v2"
+   },
+   "jmuben_per_class": {
+    "sano": {
+     "n": 500,
+     "correct": 1.0,
+     "DUDA": 0.0
+    },
+    "roya": {
+     "n": 500,
+     "correct": 0.926,
+     "DUDA": 0.074
+    },
+    "minador": {
+     "n": 500,
+     "correct": 0.974,
+     "DUDA": 0.026
+    },
+    "phoma": {
+     "n": 500,
+     "correct": 0.948,
+     "DUDA": 0.052
+    },
+    "cercospora": {
+     "n": 500,
+     "correct": 1.0,
+     "DUDA": 0.0
+    },
+    "_app_macro_f1_exact": 0.9843426259438033
+   }
+  },
+  "v2@0.9": {
+   "all_photos": {
+    "roya": {
+     "n": 219,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 155,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 64
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 44,
+      "low_conf": 20
+     },
+     "DUDA": 0.2922,
+     "DUDA_ci95": [
+      0.236,
+      0.3556
+     ],
+     "correct": 0.7078,
+     "correct_ci95": [
+      0.6444,
+      0.764
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0172
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0172
+     ]
+    },
+    "roya screened": {
+     "n": 164,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 149,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 15
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 2,
+      "low_conf": 13
+     },
+     "DUDA": 0.0915,
+     "DUDA_ci95": [
+      0.0562,
+      0.1454
+     ],
+     "correct": 0.9085,
+     "correct_ci95": [
+      0.8546,
+      0.9438
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0229
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0229
+     ]
+    },
+    "roya Mexico+GT box": {
+     "n": 31,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 23,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 8
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 7
+     },
+     "DUDA": 0.2581,
+     "DUDA_ci95": [
+      0.137,
+      0.4325
+     ],
+     "correct": 0.7419,
+     "correct_ci95": [
+      0.5675,
+      0.863
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1103
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1103
+     ]
+    },
+    "roya Mexico": {
+     "n": 4,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 2
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.15,
+      0.85
+     ],
+     "correct": 0.5,
+     "correct_ci95": [
+      0.15,
+      0.85
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.4899
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.4899
+     ]
+    },
+    "minador": {
+     "n": 30,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 12,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 18
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 3,
+      "low_conf": 15
+     },
+     "DUDA": 0.6,
+     "DUDA_ci95": [
+      0.4232,
+      0.7541
+     ],
+     "correct": 0.4,
+     "correct_ci95": [
+      0.2459,
+      0.5768
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1135
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1135
+     ]
+    },
+    "minador screened": {
+     "n": 24,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 12,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 12
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 11
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.3143,
+      0.6857
+     ],
+     "correct": 0.5,
+     "correct_ci95": [
+      0.3143,
+      0.6857
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.138
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.138
+     ]
+    },
+    "cercospora": {
+     "n": 30,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 5,
+      "DUDA": 23
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 11,
+      "low_conf": 12
+     },
+     "DUDA": 0.7667,
+     "DUDA_ci95": [
+      0.5907,
+      0.8821
+     ],
+     "correct": 0.1667,
+     "correct_ci95": [
+      0.0734,
+      0.3356
+     ],
+     "wrong_accepted": 0.0667,
+     "wrong_accepted_ci95": [
+      0.0185,
+      0.2132
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1135
+     ]
+    },
+    "cercospora screened": {
+     "n": 16,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 1,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 5,
+      "DUDA": 10
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 10
+     },
+     "DUDA": 0.625,
+     "DUDA_ci95": [
+      0.3864,
+      0.8152
+     ],
+     "correct": 0.3125,
+     "correct_ci95": [
+      0.1416,
+      0.556
+     ],
+     "wrong_accepted": 0.0625,
+     "wrong_accepted_ci95": [
+      0.0111,
+      0.2833
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1936
+     ]
+    },
+    "ojo_de_gallo": {
+     "n": 90,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 6,
+      "minador": 1,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 82
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 53,
+      "low_conf": 29
+     },
+     "DUDA": 0.9111,
+     "DUDA_ci95": [
+      0.8343,
+      0.9543
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0409
+     ],
+     "wrong_accepted": 0.0889,
+     "wrong_accepted_ci95": [
+      0.0457,
+      0.1657
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0409
+     ]
+    },
+    "ojo_de_gallo screened": {
+     "n": 26,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 6,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 19
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 8,
+      "low_conf": 11
+     },
+     "DUDA": 0.7308,
+     "DUDA_ci95": [
+      0.5392,
+      0.863
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1287
+     ],
+     "wrong_accepted": 0.2692,
+     "wrong_accepted_ci95": [
+      0.137,
+      0.4608
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1287
+     ]
+    },
+    "minador Mexico": {
+     "n": 2,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 2
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.3424,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.6576
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.6576
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.6576
+     ]
+    },
+    "coffea sample": {
+     "n": 399,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 9,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 389
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 331,
+      "low_conf": 58
+     },
+     "DUDA": 0.9749,
+     "DUDA_ci95": [
+      0.9545,
+      0.9863
+     ],
+     "disease_answer": 0.0251,
+     "disease_answer_ci95": [
+      0.0137,
+      0.0455
+     ],
+     "sano_answer": 0.0
+    },
+    "coffea sample Mexico": {
+     "n": 37,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 1,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 36
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 27,
+      "low_conf": 9
+     },
+     "DUDA": 0.973,
+     "DUDA_ci95": [
+      0.8618,
+      0.9952
+     ],
+     "disease_answer": 0.027,
+     "disease_answer_ci95": [
+      0.0048,
+      0.1382
+     ],
+     "sano_answer": 0.0
+    }
+   },
+   "field_test": {
+    "roya": {
+     "n": 53,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 34,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 19
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 9,
+      "low_conf": 10
+     },
+     "DUDA": 0.3585,
+     "DUDA_ci95": [
+      0.243,
+      0.4931
+     ],
+     "correct": 0.6415,
+     "correct_ci95": [
+      0.5069,
+      0.757
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0676
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0676
+     ]
+    },
+    "roya screened": {
+     "n": 42,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 34,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 8
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 7
+     },
+     "DUDA": 0.1905,
+     "DUDA_ci95": [
+      0.0998,
+      0.333
+     ],
+     "correct": 0.8095,
+     "correct_ci95": [
+      0.667,
+      0.9002
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0838
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0838
+     ]
+    },
+    "roya Mexico+GT box": {
+     "n": 31,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 23,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 8
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 7
+     },
+     "DUDA": 0.2581,
+     "DUDA_ci95": [
+      0.137,
+      0.4325
+     ],
+     "correct": 0.7419,
+     "correct_ci95": [
+      0.5675,
+      0.863
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1103
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1103
+     ]
+    },
+    "roya Mexico": {
+     "n": 4,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 2
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.15,
+      0.85
+     ],
+     "correct": 0.5,
+     "correct_ci95": [
+      0.15,
+      0.85
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.4899
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.4899
+     ]
+    },
+    "minador": {
+     "n": 9,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 2,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 7
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 6
+     },
+     "DUDA": 0.7778,
+     "DUDA_ci95": [
+      0.4526,
+      0.9368
+     ],
+     "correct": 0.2222,
+     "correct_ci95": [
+      0.0632,
+      0.5474
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.2992
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2992
+     ]
+    },
+    "minador screened": {
+     "n": 9,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 2,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 7
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 6
+     },
+     "DUDA": 0.7778,
+     "DUDA_ci95": [
+      0.4526,
+      0.9368
+     ],
+     "correct": 0.2222,
+     "correct_ci95": [
+      0.0632,
+      0.5474
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.2992
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2992
+     ]
+    },
+    "cercospora": {
+     "n": 10,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 2,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 8
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 2,
+      "low_conf": 6
+     },
+     "DUDA": 0.8,
+     "DUDA_ci95": [
+      0.4902,
+      0.9433
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.2775
+     ],
+     "wrong_accepted": 0.2,
+     "wrong_accepted_ci95": [
+      0.0567,
+      0.5098
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2775
+     ]
+    },
+    "cercospora screened": {
+     "n": 6,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 1,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 5
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 5
+     },
+     "DUDA": 0.8333,
+     "DUDA_ci95": [
+      0.4365,
+      0.9699
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.3903
+     ],
+     "wrong_accepted": 0.1667,
+     "wrong_accepted_ci95": [
+      0.0301,
+      0.5635
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.3903
+     ]
+    },
+    "ojo_de_gallo": {
+     "n": 90,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 6,
+      "minador": 1,
+      "phoma": 1,
+      "cercospora": 0,
+      "DUDA": 82
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 53,
+      "low_conf": 29
+     },
+     "DUDA": 0.9111,
+     "DUDA_ci95": [
+      0.8343,
+      0.9543
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.0409
+     ],
+     "wrong_accepted": 0.0889,
+     "wrong_accepted_ci95": [
+      0.0457,
+      0.1657
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0409
+     ]
+    },
+    "ojo_de_gallo screened": {
+     "n": 26,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 6,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 19
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 8,
+      "low_conf": 11
+     },
+     "DUDA": 0.7308,
+     "DUDA_ci95": [
+      0.5392,
+      0.863
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.1287
+     ],
+     "wrong_accepted": 0.2692,
+     "wrong_accepted_ci95": [
+      0.137,
+      0.4608
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1287
+     ]
+    },
+    "minador Mexico": {
+     "n": 2,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 2
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 2
+     },
+     "DUDA": 1.0,
+     "DUDA_ci95": [
+      0.3424,
+      1.0
+     ],
+     "correct": 0.0,
+     "correct_ci95": [
+      0.0,
+      0.6576
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.6576
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.6576
+     ]
+    },
+    "coffea sample": {
+     "n": 399,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 9,
+      "minador": 1,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 389
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 331,
+      "low_conf": 58
+     },
+     "DUDA": 0.9749,
+     "DUDA_ci95": [
+      0.9545,
+      0.9863
+     ],
+     "disease_answer": 0.0251,
+     "disease_answer_ci95": [
+      0.0137,
+      0.0455
+     ],
+     "sano_answer": 0.0
+    },
+    "coffea sample Mexico": {
+     "n": 37,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 1,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 36
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 27,
+      "low_conf": 9
+     },
+     "DUDA": 0.973,
+     "DUDA_ci95": [
+      0.8618,
+      0.9952
+     ],
+     "disease_answer": 0.027,
+     "disease_answer_ci95": [
+      0.0048,
+      0.1382
+     ],
+     "sano_answer": 0.0
+    }
+   },
+   "field_dev": {
+    "roya": {
+     "n": 166,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 121,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 45
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 35,
+      "low_conf": 10
+     },
+     "DUDA": 0.2711,
+     "DUDA_ci95": [
+      0.2092,
+      0.3433
+     ],
+     "correct": 0.7289,
+     "correct_ci95": [
+      0.6567,
+      0.7908
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0226
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0226
+     ]
+    },
+    "roya screened": {
+     "n": 122,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 115,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 7
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 1,
+      "low_conf": 6
+     },
+     "DUDA": 0.0574,
+     "DUDA_ci95": [
+      0.0281,
+      0.1137
+     ],
+     "correct": 0.9426,
+     "correct_ci95": [
+      0.8863,
+      0.9719
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.0305
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.0305
+     ]
+    },
+    "minador": {
+     "n": 21,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 10,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 11
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 2,
+      "low_conf": 9
+     },
+     "DUDA": 0.5238,
+     "DUDA_ci95": [
+      0.3237,
+      0.7166
+     ],
+     "correct": 0.4762,
+     "correct_ci95": [
+      0.2834,
+      0.6763
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1546
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1546
+     ]
+    },
+    "minador screened": {
+     "n": 15,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 10,
+      "phoma": 0,
+      "cercospora": 0,
+      "DUDA": 5
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 5
+     },
+     "DUDA": 0.3333,
+     "DUDA_ci95": [
+      0.1518,
+      0.5829
+     ],
+     "correct": 0.6667,
+     "correct_ci95": [
+      0.4171,
+      0.8482
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.2039
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2039
+     ]
+    },
+    "cercospora": {
+     "n": 20,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 5,
+      "DUDA": 15
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 9,
+      "low_conf": 6
+     },
+     "DUDA": 0.75,
+     "DUDA_ci95": [
+      0.5313,
+      0.8881
+     ],
+     "correct": 0.25,
+     "correct_ci95": [
+      0.1119,
+      0.4687
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.1611
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.1611
+     ]
+    },
+    "cercospora screened": {
+     "n": 10,
+     "answer_counts": {
+      "sano": 0,
+      "roya": 0,
+      "minador": 0,
+      "phoma": 0,
+      "cercospora": 5,
+      "DUDA": 5
+     },
+     "duda_reasons": {
+      "blurry": 0,
+      "not_coffee": 0,
+      "low_conf": 5
+     },
+     "DUDA": 0.5,
+     "DUDA_ci95": [
+      0.2366,
+      0.7634
+     ],
+     "correct": 0.5,
+     "correct_ci95": [
+      0.2366,
+      0.7634
+     ],
+     "wrong_accepted": 0.0,
+     "wrong_accepted_ci95": [
+      0.0,
+      0.2775
+     ],
+     "dangerous_sano": 0,
+     "dangerous_sano_rate": 0.0,
+     "dangerous_sano_ci95": [
+      0.0,
+      0.2775
+     ]
+    }
+   },
+   "jmuben_otro_test": {
+    "jmuben_macro_f1_argmax": 0.985,
+    "jmuben_coffee_correct_accepted": 0.9376,
+    "jmuben_coffee_DUDA": 0.0624,
+    "jmuben_coffee_wrong_accepted": 0.0,
+    "jmuben_diseased_called_sano": 0.0,
+    "jmuben_diseased_called_sano_n": 0,
+    "jmuben_app_macro_f1": 0.967,
+    "otro_n": 446,
+    "otro_rejected": 0.9821,
+    "otro_rejected_ci95": [
+     0.965,
+     0.9909
+    ],
+    "otro_disease_answer": 0.0179
+   },
+   "_meta": {
+    "model": "model/checkpoints/v2/app/cafetal.onnx",
+    "sha1_12": "1ab8db2a32b8",
+    "threshold": 0.9,
+    "version": "cafetal-img-v2"
+   },
+   "jmuben_per_class": {
+    "sano": {
+     "n": 500,
+     "correct": 1.0,
+     "DUDA": 0.0
+    },
+    "roya": {
+     "n": 500,
+     "correct": 0.894,
+     "DUDA": 0.106
+    },
+    "minador": {
+     "n": 500,
+     "correct": 0.926,
+     "DUDA": 0.074
+    },
+    "phoma": {
+     "n": 500,
+     "correct": 0.868,
+     "DUDA": 0.132
+    },
+    "cercospora": {
+     "n": 500,
+     "correct": 1.0,
+     "DUDA": 0.0
+    },
+    "_app_macro_f1_exact": 0.9669896760372516
+   }
+  }
+ },
+ "ship_rule": {
+  "v2@0.7": {
+   "checks": {
+    "field_roya_correct_gain>=10pts": true,
+    "jmuben_macro_f1_drop<=1pt": true,
+    "otro_rejection>=98%": false,
+    "dangerous_not_increased": true,
+    "coffea_disease_rate_rise<=5pts": false
+   },
+   "passes": false
+  },
+  "v2@0.9": {
+   "checks": {
+    "field_roya_correct_gain>=10pts": true,
+    "jmuben_macro_f1_drop<=1pt": false,
+    "otro_rejection>=98%": true,
+    "dangerous_not_increased": true,
+    "coffea_disease_rate_rise<=5pts": true
+   },
+   "passes": false
+  }
+ },
+ "decision": "DO NOT SHIP",
+ "note": "single evaluation on the held-out test sets with t fixed beforehand in reports/field_v2_threshold_sweep.json; v2@0.7 repeats the earlier result for comparison",
+ "posthoc_validation_f1": {
+  "reference_app_macro_f1": 0.978,
+  "rows": [
+   {
+    "t": 0.7,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.705,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.71,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.715,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.72,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.725,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.73,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.735,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.74,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.745,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.75,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.755,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.76,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.765,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.77,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.775,
+    "app_macro_f1": 0.9778,
+    "drop_vs_ref_pts": 0.02
+   },
+   {
+    "t": 0.78,
+    "app_macro_f1": 0.976,
+    "drop_vs_ref_pts": 0.2
+   },
+   {
+    "t": 0.785,
+    "app_macro_f1": 0.976,
+    "drop_vs_ref_pts": 0.2
+   },
+   {
+    "t": 0.79,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.795,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.8,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.805,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.81,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.815,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.82,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.825,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.83,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.835,
+    "app_macro_f1": 0.9746,
+    "drop_vs_ref_pts": 0.34
+   },
+   {
+    "t": 0.84,
+    "app_macro_f1": 0.9735,
+    "drop_vs_ref_pts": 0.45
+   },
+   {
+    "t": 0.845,
+    "app_macro_f1": 0.9735,
+    "drop_vs_ref_pts": 0.45
+   },
+   {
+    "t": 0.85,
+    "app_macro_f1": 0.9735,
+    "drop_vs_ref_pts": 0.45
+   },
+   {
+    "t": 0.855,
+    "app_macro_f1": 0.9735,
+    "drop_vs_ref_pts": 0.45
+   },
+   {
+    "t": 0.86,
+    "app_macro_f1": 0.971,
+    "drop_vs_ref_pts": 0.7
+   },
+   {
+    "t": 0.865,
+    "app_macro_f1": 0.971,
+    "drop_vs_ref_pts": 0.7
+   },
+   {
+    "t": 0.87,
+    "app_macro_f1": 0.971,
+    "drop_vs_ref_pts": 0.7
+   },
+   {
+    "t": 0.875,
+    "app_macro_f1": 0.971,
+    "drop_vs_ref_pts": 0.7
+   },
+   {
+    "t": 0.88,
+    "app_macro_f1": 0.971,
+    "drop_vs_ref_pts": 0.7
+   },
+   {
+    "t": 0.885,
+    "app_macro_f1": 0.9702,
+    "drop_vs_ref_pts": 0.78
+   },
+   {
+    "t": 0.89,
+    "app_macro_f1": 0.9702,
+    "drop_vs_ref_pts": 0.78
+   },
+   {
+    "t": 0.895,
+    "app_macro_f1": 0.9702,
+    "drop_vs_ref_pts": 0.78
+   },
+   {
+    "t": 0.9,
+    "app_macro_f1": 0.9702,
+    "drop_vs_ref_pts": 0.78
+   },
+   {
+    "t": 0.905,
+    "app_macro_f1": 0.9702,
+    "drop_vs_ref_pts": 0.78
+   },
+   {
+    "t": 0.91,
+    "app_macro_f1": 0.9702,
+    "drop_vs_ref_pts": 0.78
+   },
+   {
+    "t": 0.915,
+    "app_macro_f1": 0.9702,
+    "drop_vs_ref_pts": 0.78
+   },
+   {
+    "t": 0.92,
+    "app_macro_f1": 0.9702,
+    "drop_vs_ref_pts": 0.78
+   },
+   {
+    "t": 0.925,
+    "app_macro_f1": 0.9652,
+    "drop_vs_ref_pts": 1.28
+   },
+   {
+    "t": 0.93,
+    "app_macro_f1": 0.96,
+    "drop_vs_ref_pts": 1.8
+   },
+   {
+    "t": 0.935,
+    "app_macro_f1": 0.9582,
+    "drop_vs_ref_pts": 1.98
+   },
+   {
+    "t": 0.94,
+    "app_macro_f1": 0.9582,
+    "drop_vs_ref_pts": 1.98
+   },
+   {
+    "t": 0.945,
+    "app_macro_f1": 0.9562,
+    "drop_vs_ref_pts": 2.18
+   },
+   {
+    "t": 0.95,
+    "app_macro_f1": 0.9547,
+    "drop_vs_ref_pts": 2.33
+   },
+   {
+    "t": 0.955,
+    "app_macro_f1": 0.9547,
+    "drop_vs_ref_pts": 2.33
+   },
+   {
+    "t": 0.96,
+    "app_macro_f1": 0.9481,
+    "drop_vs_ref_pts": 2.99
+   },
+   {
+    "t": 0.965,
+    "app_macro_f1": 0.9454,
+    "drop_vs_ref_pts": 3.26
+   },
+   {
+    "t": 0.97,
+    "app_macro_f1": 0.9401,
+    "drop_vs_ref_pts": 3.79
+   },
+   {
+    "t": 0.975,
+    "app_macro_f1": 0.9385,
+    "drop_vs_ref_pts": 3.95
+   },
+   {
+    "t": 0.98,
+    "app_macro_f1": 0.9365,
+    "drop_vs_ref_pts": 4.15
+   },
+   {
+    "t": 0.985,
+    "app_macro_f1": 0.9112,
+    "drop_vs_ref_pts": 6.68
+   },
+   {
+    "t": 0.99,
+    "app_macro_f1": 0.888,
+    "drop_vs_ref_pts": 9.0
+   },
+   {
+    "t": 0.995,
+    "app_macro_f1": 0.8361,
+    "drop_vs_ref_pts": 14.19
+   }
+  ],
+  "highest_t_with_drop<=1pt": 0.92
+ },
+ "posthoc_note": "computed AFTER the test evaluation, on the JMuBEN VALIDATION split only, to explain the result; it does not change t or the decision"
+}

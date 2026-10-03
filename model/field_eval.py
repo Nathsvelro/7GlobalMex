@@ -357,6 +357,8 @@ def photo_summary(rows):
 
 # ---------------------------------------------------------------- markdown
 ALARMS = os.path.join(REPO, "reports", "field_coffea_v2_alarms.csv")
+THRESHOLD_TEST = os.path.join(REPO, "reports", "field_v2_threshold_test.json")
+THRESHOLD_SWEEP = os.path.join(REPO, "reports", "field_v2_threshold_sweep.json")
 
 
 def conclusions(r):
@@ -468,6 +470,12 @@ def render_md(r):
          "community identification (\"research\" or \"needs_id\" grade), not an agronomist's diagnosis. Sample sizes "
          "are small, so the intervals are wide.", "",
          "## Result", "", f"**{sr['fired']}.** Shipped: `{sr['shipped']}`.", ""]
+    tradeoff = None
+    if os.path.exists(THRESHOLD_TEST) and os.path.exists(THRESHOLD_SWEEP):  # model/field_threshold.py (v2 recalibration)
+        from field_threshold import pointer_line, render_tradeoff
+        tt, sw = json.load(open(THRESHOLD_TEST)), json.load(open(THRESHOLD_SWEEP))
+        L += [pointer_line(tt), ""]
+        tradeoff = render_tradeoff(tt, sw)
     # comparison table on the held-out field test
     cols = [(base, "single"), (base, mc)] + [(n, m) for n in names[1:] for m in ("single", mc)]
     head = ["metric"] + [f"{n} {'single view' if m == 'single' else m.replace('mc:', 'multicrop ')}" for n, m in cols]
@@ -513,6 +521,8 @@ def render_md(r):
     for k, v in sr["candidates"].items():
         c = v["checks"]
         L.append(f"| {k} | " + " | ".join("yes" if c[x] else "**no**" for x in c) + f" | {'**yes**' if v['passes'] else 'no'} |")
+    if tradeoff:
+        L += ["", tradeoff.rstrip("\n")]
     L += ["", "## Conclusions (plain words)", ""] + conclusions(r) + [""]
     # v1 on all photos
     L += ["", f"## {base} (shipped before this test) on ALL photos", "",

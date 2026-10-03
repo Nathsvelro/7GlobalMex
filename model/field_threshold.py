@@ -40,7 +40,7 @@ from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from field_eval import (DISEASES, SCREENING, decisions, evaluate_model, field_dangerous, file_hash,  # noqa: E402
-                        load_rows, npz_eval, npz_with_blur, predict_photos, session, ship_rule, square_of, wilson)
+                        load_rows, npz_with_blur, predict_photos, session, ship_rule, square_of, wilson)
 from inat_field import (ATTRIBUTION, URL, _f, image_path, in_box, in_mexico, read_attribution,  # noqa: E402
                         write_attribution)
 
@@ -304,6 +304,8 @@ def cmd_test(args):
         evals[key] = out["methods"]["single"]
         evals[key]["_meta"] = {"model": out["model"], "sha1_12": out["sha1_12"], "threshold": lab["threshold"],
                                "version": lab.get("version")}
+        evals[key]["jmuben_per_class"] = jmuben_per_class(
+            os.path.join(args.cache, f"test_{out['sha1_12']}.npz"), npz, lab)
     base = evals[f"{rn}@{rl['threshold']}"]
     rule = {k: ship_rule(base, v) for k, v in evals.items() if k != f"{rn}@{rl['threshold']}"}
     cand = f"{name}@{t}" if t is not None else None
@@ -311,19 +313,70 @@ def cmd_test(args):
            "baseline": f"{rn}@{rl['threshold']}", "evaluations": evals, "ship_rule": rule,
            "decision": ("SHIP" if cand and rule[cand]["passes"] else "DO NOT SHIP"),
            "note": "single evaluation on the held-out test sets with t fixed beforehand in "
-                   "reports/field_v2_threshold_sweep.json; v2@0.7 repeats the earlier result for comparison"}
+                   "reports/field_v2_threshold_sweep.json; v2@0.7 repeats the earlier result for comparison",
+           "posthoc_validation_f1": posthoc_val_f1(args, (rp, rl), (mpath, labels)),
+           "posthoc_note": "computed AFTER the test evaluation, on the JMuBEN VALIDATION split only, to explain the "
+                           "result; it does not change t or the decision"}
     with open(TEST_JSON, "w") as fh:
         json.dump(res, fh, indent=1)
-    insert_section(render_tradeoff(res, sw))
+    insert_section(render_tradeoff(res, sw), pointer_line(res))
     print(json.dumps({k: v["checks"] for k, v in rule.items()}, indent=1))
     print("decision:", res["decision"])
+
+
+def count(st, group, key):
+    """Exact count behind a group_stats rate (the rates in field_eval are rounded to 4 decimals)."""
+    a = st["answer_counts"]
+    if key == "DUDA":
+        return a["DUDA"]
+    if key == "disease_answer":
+        return sum(a[d] for d in DISEASES)
+    return a.get(group.split(" ")[0], 0)  # correct: answers equal to the group's label
+
+
+def jmuben_per_class(cache, npz, labels):
+    """Per coffee class on the JMuBEN test split: correct & accepted, DUDA (from the cached test predictions)."""
+    from sklearn.metrics import f1_score
+    z = np.load(cache)
+    classes = labels["classes"]
+    ans, _ = decisions({k: z[k] for k in z.files}, npz["blur"], classes, labels["threshold"],
+                       labels["blur_threshold"], "single")
+    truth = np.array(classes)[npz["y"]]
+    coffee = truth != "otro"
+    out = {c: {"n": int((truth == c).sum()), "correct": round(float((ans[truth == c] == c).mean()), 4),
+               "DUDA": round(float((ans[truth == c] == "DUDA").mean()), 4)} for c in classes if c != "otro"}
+    out["_app_macro_f1_exact"] = float(f1_score(truth[coffee], ans[coffee], labels=[c for c in classes if c != "otro"],
+                                                average="macro", zero_division=0))
+    return out
+
+
+def posthoc_val_f1(args, ref, cand):
+    """App-level macro-F1 on JMuBEN VALIDATION: reference at its threshold, candidate over the grid (cached preds)."""
+    from sklearn.metrics import f1_score
+    va = npz_with_blur(os.path.join(args.data, "val.npz"))
+
+    def f1(path, lab, t):
+        z = np.load(os.path.join(args.cache, f"calib_val_{file_hash(path)}_{len(va['y'])}.npz"))
+        classes = lab["classes"]
+        ans, _ = decisions({k: z[k] for k in z.files}, va["blur"], classes, t, lab["blur_threshold"], "single")
+        truth = np.array(classes)[va["y"]]
+        cof = truth != "otro"
+        return round(float(f1_score(truth[cof], ans[cof], labels=[c for c in classes if c != "otro"],
+                                    average="macro", zero_division=0)), 4)
+    r = f1(ref[0], ref[1], ref[1]["threshold"])
+    rows = [{"t": t, "app_macro_f1": f1(cand[0], cand[1], t)} for t in GRID]
+    for x in rows:
+        x["drop_vs_ref_pts"] = round(100 * (r - x["app_macro_f1"]), 2)
+    ok = [x["t"] for x in rows if x["drop_vs_ref_pts"] <= 1.0 + 1e-9]
+    return {"reference_app_macro_f1": r, "rows": rows, "highest_t_with_drop<=1pt": max(ok) if ok else None}
 
 
 def summary_rows(ev):
     f, j = ev["field_test"], ev["jmuben_otro_test"]
 
     def fc(g, k="correct"):
-        return f"{pct(f[g][k])}{ci(f[g][k + '_ci95'])} (n={f[g]['n']})"
+        return f"{pct(count(f[g], g, k) / f[g]['n'])}{ci(f[g][k + '_ci95'])} ({count(f[g], g, k)}/{f[g]['n']})"
+    wrong = sum(round(f[g]["wrong_accepted"] * f[g]["n"]) for g in ("roya", "minador", "cercospora", "ojo_de_gallo"))
     return [
         ("roya: correct & accepted, all field-test photos", fc("roya")),
         ("roya: correct & accepted, screened (leaf symptom visible)", fc("roya screened")),
@@ -332,11 +385,14 @@ def summary_rows(ev):
         ("minador: correct & accepted", fc("minador")),
         ("cercospora: correct & accepted", fc("cercospora")),
         ("ojo de gallo: DUDA (desired)", fc("ojo_de_gallo", "DUDA")),
+        ("wrong-but-accepted, diseased field-test photos (incl. ojo de gallo), count", str(wrong)),
+        ("diseased field-test photos called \"sano\" (dangerous)", str(field_dangerous(ev))),
         ("Coffea test sample: disease answers", fc("coffea sample", "disease_answer")),
         ("Coffea test sample Mexico: disease answers", fc("coffea sample Mexico", "disease_answer")),
-        ("diseased field-test photos called \"sano\" (dangerous)", str(field_dangerous(ev))),
         ("otro test images rejected", f"{pct(j['otro_rejected'])}{ci(j['otro_rejected_ci95'])} (n={j['otro_n']})"),
-        ("JMuBEN test macro-F1 (argmax / app-level)", f"{j['jmuben_macro_f1_argmax']:.4f} / {j['jmuben_app_macro_f1']:.4f}"),
+        ("JMuBEN test macro-F1, argmax (6 classes)", f"{j['jmuben_macro_f1_argmax']:.4f}"),
+        ("JMuBEN test macro-F1, app-level (DUDA = miss, 5 coffee classes)", f"{j['jmuben_app_macro_f1']:.4f}"),
+        ("JMuBEN test: coffee close-ups sent to DUDA", pct(j["jmuben_coffee_DUDA"])),
         ("JMuBEN test: diseased called \"sano\"", str(j["jmuben_diseased_called_sano_n"])),
     ]
 
@@ -355,52 +411,141 @@ def render_tradeoff(res, sw):
     t = res["chosen_t"]
     row_t = next((r for r in s["sweep"] if r["t"] == t), None)
     row_07 = next(r for r in s["sweep"] if r["t"] == 0.7)
-    L = [MARK_A, "## Threshold trade-off (v2 recalibrated on calibration data, one test evaluation)", "",
-         f"**Decision: {res['decision']} v2 at t = {t}.** " + (
-             "It passes all five ship-rule conditions." if res["decision"] == "SHIP" else
-             "It fails: " + ", ".join(CHECK_NAMES[k] for k, v in res["ship_rule"][res["candidate"]]["checks"].items()
-                                      if not v) + "." if t is not None else "No threshold satisfies the calibration constraints."), "",
-         "v2's original threshold (0.70) was set on Kenyan validation images without any false-alarm constraint. We "
-         "re-chose it on **calibration data that shares no photo and no observer with any test set** "
-         f"(`reports/field_v2_threshold_sweep.md`): {sw['rule']}. Calibration sets: a new sample of "
-         f"{row_07['coffea_n']} iNaturalist *Coffea arabica* photos from new observers "
-         f"(`reports/field_calib_attribution.csv`) and the {row_07['otro_n']} validation-split `otro` images. "
-         "There is no clean field data left for recall (every screened field rust photo is either v2 training or "
-         "test), so recall could **not** be calibrated on field data.", "",
-         "| t (calibration) | Coffea disease answers | otro rejected | field calib roya correct* | JMuBEN val roya correct |",
-         "|---|---|---|---|---|"]
+    b = ev[res["baseline"]]
+    L = [MARK_A, "## Threshold trade-off (v2 recalibrated on calibration data, one test evaluation)", ""]
+    if t is None:
+        L += ["**No threshold in [0.700, 0.995] satisfies the calibration constraints; v2 is not shipped.**", MARK_B]
+        return "\n".join(L) + "\n"
+    c = ev[res["candidate"]]
+    ch = res["ship_rule"][res["candidate"]]["checks"]
+    bj, cj = b["jmuben_otro_test"], c["jmuben_otro_test"]
+    bf, cf = b["field_test"], c["field_test"]
+    otro_k = round(cj["otro_rejected"] * cj["otro_n"])
+    kr_c, kr_b, n_r = cf["roya"]["answer_counts"]["roya"], bf["roya"]["answer_counts"]["roya"], cf["roya"]["n"]
+    kc_c = count(cf["coffea sample"], "coffea sample", "disease_answer")
+    kc_b = count(bf["coffea sample"], "coffea sample", "disease_answer")
+    n_c = cf["coffea sample"]["n"]
+    fa_c, fa_b = cj["jmuben_macro_f1_argmax"], bj["jmuben_macro_f1_argmax"]
+    fp_c, fp_b = c["jmuben_per_class"]["_app_macro_f1_exact"], b["jmuben_per_class"]["_app_macro_f1_exact"]
+    detail = {
+        "field_roya_correct_gain>=10pts": f"{pct(kr_c / n_r)}{ci(cf['roya']['correct_ci95'])} ({kr_c}/{n_r}) vs "
+                                          f"{pct(kr_b / n_r)}{ci(bf['roya']['correct_ci95'])} ({kr_b}/{n_r}): "
+                                          f"{100 * (kr_c - kr_b) / n_r:+.1f} pts",
+        "jmuben_macro_f1_drop<=1pt": f"argmax {fa_c:.4f} vs {fa_b:.4f} (change {100 * (fa_c - fa_b):+.2f} pts, passes); "
+                                     f"app-level {fp_c:.4f} vs {fp_b:.4f} (change {100 * (fp_c - fp_b):+.2f} pts, "
+                                     f"{'passes' if fp_b - fp_c <= 0.01 + 1e-9 else 'limit -1.00'})",
+        "otro_rejection>=98%": f"{pct(otro_k / cj['otro_n'])}{ci(cj['otro_rejected_ci95'])} ({otro_k}/{cj['otro_n']}); "
+                               f"{otro_margin(otro_k, cj['otro_n'])}",
+        "dangerous_not_increased": f"field {field_dangerous(c)} vs {field_dangerous(b)}; JMuBEN "
+                                   f"{cj['jmuben_diseased_called_sano_n']} vs {bj['jmuben_diseased_called_sano_n']}",
+        "coffea_disease_rate_rise<=5pts": f"{pct(kc_c / n_c)}{ci(cf['coffea sample']['disease_answer_ci95'])} ({kc_c}/{n_c}) "
+                                          f"vs {pct(kc_b / n_c)} ({kc_b}/{n_c}): {100 * (kc_c - kc_b) / n_c:+.1f} pts"}
+    failed = [k for k, v in ch.items() if not v]
+    L += [f"**Decision: {res['decision']} v2 at t = {t:.2f}.** " + (
+        "It passes all five ship-rule conditions." if not failed else
+        f"It passes {5 - len(failed)} of the 5 conditions and fails " + "; ".join(
+            f"{CHECK_NAMES[k]}: {detail[k]}" for k in failed) + ". The app keeps v1."), "",
+          "v2's original threshold (0.70) came from Kenyan validation images with no false-alarm constraint. It was "
+          "re-chosen on **calibration data that shares no photo and no observer with any test set** "
+          f"(`reports/field_v2_threshold_sweep.md`): {sw['rule']}. Calibration sets: a new random sample of "
+          f"{row_07['coffea_n']} iNaturalist *Coffea arabica* photos from observers not used anywhere else "
+          f"(`reports/field_calib_attribution.csv`) and the {row_07['otro_n']} validation-split `otro` images. The "
+          f"choice (t = {t:.2f}) was committed before the test sets were scored at that threshold. There is no clean "
+          "field data left for recall (every screened field rust photo is either v2 training or test), so recall "
+          "could **not** be calibrated on field data.", "",
+          "Calibration sweep (excerpt; full table in `reports/field_v2_threshold_sweep.md`):", "",
+          "| t | Coffea disease answers (calibration) | otro rejected (validation) | field calib roya correct* | JMuBEN val roya correct |",
+          "|---|---|---|---|---|"]
     for r in s["sweep"]:
-        if r["t"] in (0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 0.99) or r["t"] == t:
+        if r["t"] in (0.7, 0.8, 0.85, 0.9, 0.95, 0.99) or r["t"] == t:
             L.append(f"| {r['t']:.3f}{' (chosen)' if r['t'] == t else ''} | {pct(r['coffea_alarm'])} ({r['coffea_alarm_k']}/{r['coffea_n']}) | "
                      f"{pct(r['otro_rejected'])} ({r['otro_rejected_k']}/{r['otro_n']}) | {pct(r['field_pos_roya_correct'])} "
                      f"(n={r['field_pos_roya_n']}) | {pct(r['val_roya_correct'])} |")
-    L += ["", "\\* field_train rust photos screened \"no\" (symptom not clearly visible; not used to train v2; same "
+    L += ["", f"The Coffea constraint alone is met from t = {s['first_t_coffea_ok']}; otro rejection is the binding "
+          f"constraint (met from t = {s['first_t_otro_ok']})." if s["first_t_otro_ok"] > s["first_t_coffea_ok"] else "",
+          "", "\\* field_train rust photos screened \"no\" (symptom not clearly visible; never used to train v2; same "
           "observers as v2's training photos) - a weak, biased recall proxy, not used to choose t.", "",
-          "**Single evaluation on the held-out test sets** (t fixed beforehand; Wilson 95 % intervals):", "",
+          "**Single evaluation on the held-out test sets** (t fixed beforehand; decided exactly like the app; Wilson "
+          "95 % intervals):", "",
           "| metric | " + " | ".join(keys) + " |", "|---|" + "---|" * len(keys)]
     tabs = {k: summary_rows(v) for k, v in ev.items()}
     for i, (label, _) in enumerate(tabs[keys[0]]):
         L.append(f"| {label} | " + " | ".join(tabs[k][i][1] for k in keys) + " |")
-    L += ["", "Ship rule (unchanged, vs " + res["baseline"] + " single view):", "",
-          "| candidate | " + " | ".join(CHECK_NAMES.values()) + " | passes |", "|---|" + "---|" * (len(CHECK_NAMES) + 1)]
-    for k, v in res["ship_rule"].items():
-        L.append(f"| {k} | " + " | ".join("yes" if v["checks"][c] else "**no**" for c in CHECK_NAMES)
-                 + f" | {'**yes**' if v['passes'] else 'no'} |")
-    if row_t is not None and t is not None:
-        e = ev[res["candidate"]]
-        L += ["", f"Calibration vs test at t = {t}: Coffea disease answers {pct(row_t['coffea_alarm'])} (calibration) vs "
-              f"{pct(e['field_test']['coffea sample']['disease_answer'])} (test); otro rejected "
-              f"{pct(row_t['otro_rejected'])} (validation) vs {pct(e['jmuben_otro_test']['otro_rejected'])} (test)."]
-    L += ["", "**What this means for the product** (plain words): the threshold is the dial between \"finds rust in "
-          "field photos\" and \"raises false alarms on healthy-looking coffee photos and non-coffee images\". "
-          "With only iNaturalist photos (a proxy for Chiapas, small n, community labels) and no labelled healthy "
-          "field leaves, the team has to choose explicitly; this table is the evidence for that choice. The fix "
-          "that moves both sides at once is labelled Chiapas photos, healthy and diseased (officer confirmations).",
-          MARK_B]
+    L += ["", f"**Ship rule, unchanged** (candidate vs `{res['baseline']}` single view; (2) is measured with both "
+          "F1 variants, as fixed before the first v2 test):", "",
+          "| condition | " + " | ".join(res["ship_rule"]) + " |", "|---|" + "---|" * len(res["ship_rule"])]
+    for k, name in CHECK_NAMES.items():
+        L.append(f"| {name} | " + " | ".join("pass" if v["checks"][k] else "**FAIL**" for v in res["ship_rule"].values()) + " |")
+    L.append("| **all five** | " + " | ".join("**pass**" if v["passes"] else "**FAIL**" for v in res["ship_rule"].values()) + " |")
+    L += ["", f"Details at t = {t:.2f}:", ""] + [f"- {CHECK_NAMES[k]}: {'pass' if ch[k] else '**FAIL**'} - {detail[k]}" for k in CHECK_NAMES]
+    if row_t is not None:
+        L += ["", f"Calibration carried over to test: Coffea disease answers {pct(row_t['coffea_alarm'])} "
+              f"({row_t['coffea_alarm_k']}/{row_t['coffea_n']}, calibration) vs {pct(kc_c / n_c)} ({kc_c}/{n_c}, test); "
+              f"otro rejected {pct(row_t['otro_rejected'])} ({row_t['otro_rejected_k']}/{row_t['otro_n']}, validation) vs "
+              f"{pct(otro_k / cj['otro_n'])} ({otro_k}/{cj['otro_n']}, test)."]
+    L += ["", "Why (2) moves: a higher threshold sends more Kenyan close-ups to DUDA (argmax F1 does not depend on t; "
+          "the app-level F1 counts DUDA as a miss). JMuBEN test, correct & accepted / DUDA per class:", "",
+          "| class | " + " | ".join(keys) + " |", "|---|" + "---|" * len(keys)]
+    for cl in [k for k in c["jmuben_per_class"] if not k.startswith("_")]:
+        L.append(f"| {cl} (n={c['jmuben_per_class'][cl]['n']}) | " + " | ".join(
+            f"{pct(ev[k]['jmuben_per_class'][cl]['correct'])} / {pct(ev[k]['jmuben_per_class'][cl]['DUDA'])}" for k in keys) + " |")
+    ph = res.get("posthoc_validation_f1")
+    if ph:
+        rv = next(x for x in ph["rows"] if x["t"] == t)
+        hi = ph["highest_t_with_drop<=1pt"] or 0
+        L += ["", f"Post-hoc check on the JMuBEN **validation** split (computed after the test evaluation; it explains "
+              f"the result and changes nothing): v2's app-level macro-F1 at t = {t:.2f} is {rv['app_macro_f1']:.4f} vs "
+              f"{ph['reference_app_macro_f1']:.4f} for v1 at 0.70 (drop {rv['drop_vs_ref_pts']:.2f} pts). The highest t "
+              f"whose validation drop is <= 1 pt is {hi}; the otro constraint needs t >= {s['first_t_otro_ok']}" + (
+                  ", so on calibration data no single threshold satisfies all three: the conflict is in the model, "
+                  "not in the threshold." if hi < s["first_t_otro_ok"] else
+                  f". So adding condition (2) to the calibration rule would not have changed t; on validation t = "
+                  f"{t:.2f} meets it, on the test split it misses by {100 * (fp_b - fp_c) - 1:.2f} pts. Validation and "
+                  "test are different JMuBEN source photos, and a handful of close-ups more or less in DUDA decides "
+                  "this margin.")]
+
+    def dis(x):
+        return sum(x["field_test"]["coffea sample"]["answer_counts"][d] for d in DISEASES)
+    safe = field_dangerous(c) == 0 and cj["jmuben_diseased_called_sano_n"] == 0
+    head = (f"at t = {t:.2f} v2 finds rust in {cf['roya']['answer_counts']['roya']} of {cf['roya']['n']} held-out field "
+            f"photos (v1: {bf['roya']['answer_counts']['roya']}), answers a disease on {dis(c)} of "
+            f"{cf['coffea sample']['n']} Coffea plant photos (v1: {dis(b)})"
+            + (" and never says \"sano\" to a diseased leaf" if safe else ""))
+    if failed:
+        tail = ("; the price is more \"No estoy seguro\" on Kenyan lab close-ups"
+                + (", which breaks condition (2) by a small margin" if failed == ["jmuben_macro_f1_drop<=1pt"] else "")
+                + ". The pre-registered rule says **do not ship**. Shipping v2 anyway would be an explicit, documented "
+                "exception to that rule, taken by people, not by this script; any further threshold change would now "
+                "be chosen with test knowledge and is not offered here.")
+    else:
+        tail = ". The pre-registered rule says **ship**."
+    L += ["", "**Product decision for the team** (plain words): " + head + tail + " Either way: iNaturalist is a "
+          f"proxy for Chiapas photos, n is small ({cf['roya']['n']} rust photos, {cf['roya Mexico']['n']} from Mexico), "
+          "labels are community identifications, and the real fix is labelled Chiapas photos, healthy and diseased "
+          "(officer confirmations in the hub).", MARK_B]
     return "\n".join(L) + "\n"
 
 
-def insert_section(sec, path=FIELD_MD):
+def otro_margin(k, n):
+    need = int(np.ceil(MIN_OTRO_REJECT * n - 1e-9))
+    if k == need:
+        return f"exactly at the limit ({need} of {n} needed): one more accepted non-coffee image would fail"
+    return (f"{k - need} image(s) above the limit ({need} of {n} needed)" if k > need else
+            f"{need - k} image(s) short ({need} of {n} needed)")
+
+
+POINTER = "<!-- threshold-pointer -->"
+
+
+def pointer_line(res):
+    """One line for the 'Result' paragraph of reports/field_eval.md."""
+    t = res["chosen_t"]
+    return (f"Update - v2 with its threshold re-chosen on calibration data (t = {t:.2f}), evaluated once on the same "
+            f"test sets: **{res['decision']}** (see \"Threshold trade-off\" below). {POINTER}" if t is not None else
+            f"Update - no v2 threshold satisfies the calibration constraints: **DO NOT SHIP**. {POINTER}")
+
+
+def insert_section(sec, pointer=None, path=FIELD_MD):
     md = open(path).read()
     if MARK_A in md:
         a, b = md.index(MARK_A), md.index(MARK_B) + len(MARK_B) + 1
@@ -408,6 +553,15 @@ def insert_section(sec, path=FIELD_MD):
     else:
         anchor = "## Conclusions (plain words)"
         md = md.replace(anchor, sec + "\n" + anchor, 1) if anchor in md else md + "\n" + sec
+    if pointer:
+        lines = md.split("\n")
+        lines = [x for x in lines if POINTER not in x]
+        i = next((k for k, x in enumerate(lines) if x.startswith("**") and "Shipped: `" in x), None)
+        if i is not None:
+            lines[i + 1:i + 1] = ["", pointer]
+            while lines[i + 3] == "" and lines[i + 4] == "":  # keep one blank line after the pointer
+                del lines[i + 3]
+        md = "\n".join(lines)
     with open(path, "w") as fh:
         fh.write(md)
 
