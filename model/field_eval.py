@@ -500,7 +500,10 @@ def render_md(r):
     row("JMuBEN test app macro-F1 (DUDA = miss, 5 coffee classes)", lambda x: f"{x['jmuben_otro_test']['jmuben_app_macro_f1']:.4f}")
     row("JMuBEN test: diseased accepted as \"sano\" (count)", lambda x: str(x["jmuben_otro_test"]["jmuben_diseased_called_sano_n"]))
     row("otro test images rejected (DUDA)", lambda x: f"{pct(x['jmuben_otro_test']['otro_rejected'])}{ci(x['jmuben_otro_test']['otro_rejected_ci95'])} (n={x['jmuben_otro_test']['otro_n']})")
-    L += ["", "### Ship rule (decided mechanically, conditions fixed before the v2 results were seen)", "",
+    L += ["", "### Ship rule (decided mechanically)", "",
+          "The five conditions come from the task brief; how each is measured (both F1 variants, dangerous errors "
+          "counted separately on the two test sets, fp16 export for v2, the multicrop scheme) was fixed before the v2 "
+          "field results were computed.", "",
           "Candidate vs `" + sr["baseline"] + "`: (1) field-test roya correct & accepted +10 points or more; (2) JMuBEN "
           "test macro-F1 (argmax and app-level) drops at most 1 point; (3) otro rejection >= 98 %; (4) diseased "
           "leaves accepted as \"sano\" do not increase (field test and JMuBEN test, counted separately); (5) Coffea "
@@ -560,14 +563,17 @@ def render_md(r):
           "+ a random ~30 % of the other observers of each disease; ojo de gallo is always test; the rest is field-train "
           f"(used only by the v2 experiment). Coffea: one photo per observer, {ph['coffea']['observers']} distinct "
           "observers, none of them a field-train observer.",
-          "- **Screening** (`reports/field_inat_screening.csv`): every disease photo was looked at on contact sheets and "
+          "- **Screening** (`reports/field_inat_screening.csv`): every disease photo was looked at on contact sheets "
+          "(220 px thumbnails) and "
           "marked `yes` if a leaf symptom is clearly visible (leaf or lesion close enough to see), `no` for whole "
           "plants, branches far away, microscope slides, cultures, mushrooms, fruit. One person, no second rater. "
           "v2 trained only on field-train photos marked `yes`.",
           "- **v2 training** (`model/train.py --extra ... --extra-repeat 2`): the v1 recipe (same architecture, data, "
           "augmentation, epochs, best epoch by JMuBEN validation macro-F1) plus 7 views of each screened field-train "
           "photo (centre square + 6 random squares of 60-100 % of the short side), oversampled x2. Exported with "
-          "`model/export_onnx.py` (fp16 weights, threshold floor 0.70, blur threshold from validation).", "",
+          "`model/export_onnx.py` (fp16 weights, threshold floor 0.70, blur threshold from validation). Training log "
+          "and calibration: `reports/field_v2_training_log.csv`, `reports/field_v2_calibration.json` (best epoch by "
+          "JMuBEN validation macro-F1; v1's log is `reports/model_training_log.csv`).", "",
           "| label | photos | observations | observers | field-train / field-test | screened yes | in Mexico | in box | licenses |",
           "|---|---|---|---|---|---|---|---|---|"]
     for lab, v in ph.items():
