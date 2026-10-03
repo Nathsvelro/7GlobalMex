@@ -141,6 +141,9 @@ CREATE TABLE IF NOT EXISTS officer_messages (  -- free-text SMS forwarded to the
   created_at TEXT NOT NULL,
   demo INTEGER NOT NULL DEFAULT 0
 );
+CREATE TABLE IF NOT EXISTS retired_member_ids (  -- ids of deleted members, never given out again; no personal data
+  member_id TEXT PRIMARY KEY
+);
 CREATE INDEX IF NOT EXISTS idx_obs_member ON observations(member_id);
 CREATE INDEX IF NOT EXISTS idx_msg_phone ON messages(phone);
 """
@@ -190,6 +193,7 @@ def one(cur) -> dict | None:
 
 
 def wipe(conn) -> None:
+    # retired_member_ids is kept on purpose: phones of deleted members may still hold those ids.
     with Tx(conn):
         for t in TABLES:
             conn.execute(f"DELETE FROM {t}")
@@ -209,7 +213,10 @@ def member_by_id(conn, member_id: str) -> dict | None:
 
 
 def next_member_id(conn) -> str:
-    r = conn.execute("SELECT MAX(CAST(SUBSTR(member_id, 2) AS INTEGER)) FROM members").fetchone()[0]
+    """Highest id ever given out + 1. Ids of deleted members are never reused: the deleted person's phone may
+    still send reports under the old id, and they must not land on someone else."""
+    r = conn.execute("SELECT MAX(CAST(SUBSTR(member_id, 2) AS INTEGER)) FROM"
+                     " (SELECT member_id FROM members UNION ALL SELECT member_id FROM retired_member_ids)").fetchone()[0]
     n = (r or 0) + 1
     if n > 9999:
         raise ValueError("member ids exhausted (M9999)")
@@ -241,6 +248,7 @@ def delete_member(conn, member_id: str) -> bool:
         conn.execute("DELETE FROM messages WHERE member_id = ? OR phone = ?", (member_id, m["phone"]))
         conn.execute("DELETE FROM officer_messages WHERE member_id = ? OR phone = ?", (member_id, m["phone"]))
         conn.execute("DELETE FROM members WHERE member_id = ?", (member_id,))
+        conn.execute("INSERT OR IGNORE INTO retired_member_ids(member_id) VALUES (?)", (member_id,))
         # Alerts keep only counts; drop the member id from their lists.
         for a in rows(conn.execute("SELECT id, member_ids, obs_uids FROM alerts")):
             mids = [x for x in json.loads(a["member_ids"]) if x != member_id]

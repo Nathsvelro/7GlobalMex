@@ -14,11 +14,17 @@ Built for the World Bank × Hack-Nation "Small AI for Development" hackathon, Ag
 **The one decision we improve:** *"Is something attacking my coffee, and what do I do this week: handle it myself,
 or get the extension officer to come?"*
 
-**Problem statement** (from [docs/evidence.md](docs/evidence.md)):
+**Problem statement** (template from the concept note §08; the same sentence is in [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md)
+and [docs/evidence.md](docs/evidence.md)):
 
-> Because of Cafetal, **Noor** will **know whether leaf rust or another leaf problem is hurting her coffee, and get
-> onto the extension officer's visit list,** by **the same weekend she notices it**, which she would otherwise only
-> discover **at harvest, after the yield is already lost**.
+> Because of Cafetal, **Noor** will **get a sick-looking coffee leaf onto her extension officer's visit list, with
+> spoken advice in Tseltal while she waits,** by **the same weekend she notices it**, which she would otherwise **do
+> late: whenever the officer next comes by, twice a year at best**; we know because **that is the gap the challenge
+> brief describes for her (concept note, Annex B, 2026).**
+
+It promises only what the shipped build does: a "not sure" answer still puts the farm on the officer's list. It
+does **not** promise that Noor will know which disease she has, because on field photos the shipped model almost
+always says "No estoy seguro" ([reports/field_eval.md](reports/field_eval.md)).
 
 The "we know because" part has two kinds of evidence:
 
@@ -52,7 +58,7 @@ The "we know because" part has two kinds of evidence:
 ```
 
 1. **Phone app** ([app/](app/)): plain HTML/JS, no build step. After one online load it works in airplane mode:
-   app, model, the 80 cards and their audio are cached. Diagnosis runs on the phone with onnxruntime-web (WASM).
+   app, model, the 82 cards and their audio are cached. Diagnosis runs on the phone with onnxruntime-web (WASM).
    Records are stored in the phone's browser (IndexedDB) under a member ID, with an optional PIN and a
    "delete everything" button.
 2. **SMS** ([app/sms.js](app/sms.js), [hub/sms.py](hub/sms.py)): the app builds a one-SMS code (at most 160
@@ -75,14 +81,16 @@ AI is used in two small places:
 
 - the blur check (a fixed formula)
 - the confidence threshold and the fail-safe
-- the advice cards and their audio (fixed text written by people, not generated)
+- the advice cards (fixed text: Spanish written by the team; Tseltal drafted with an AI model and marked SIN
+  VERIFICAR) and their audio (synthetic, rendered once with Piper TTS, not generated on the phone or the hub)
 - the SMS code
 - the outbreak rule: 3 or more members report rust within 5 km in 7 days. These are design choices, not
   agronomic thresholds.
 - the worklist ranking, the PRECIO price lookup and the registry
 
-No generative AI is used anywhere. Every sentence a farmer sees or hears comes from
-[content/cards.json](content/cards.json).
+No generative model runs in the app or the hub. Generative AI was used only offline, while building: an AI model
+drafted the Tseltal card text (unverified), and Piper TTS rendered the audio once. Every sentence a farmer sees or
+hears comes from [content/cards.json](content/cards.json).
 
 **Guardrails:**
 
@@ -168,7 +176,7 @@ Ways to get a secure origin on the phone:
 | What | Command | Notes |
 |---|---|---|
 | Hub unit tests | `.venv/bin/pip install pytest httpx` then `.venv/bin/python -m pytest tests -q` (or `make test`) | Uses a temporary database. One test is skipped unless scikit-learn is installed: it checks the pure-Python intent model against scikit-learn. |
-| Phone app, offline | `node tests/e2e/app_offline.mjs` | Starts its own server. Checks onboarding, diagnosis, the fail-safe, PIN, delete, simulated send and sync. Screenshots: `reports/screenshots/app_*.png`. |
+| Phone app, offline | `node tests/e2e/app_offline.mjs` | Starts its own server. Checks onboarding, diagnosis, the fail-safe, PIN, delete, simulated send and sync (also with a member ID the hub does not know). Screenshots: `reports/screenshots/app_*.png`. |
 | Whole journey | start `./run.sh`, then `node tests/e2e/journey.mjs` | Covers every item of the Definition of Done in [docs/CLAUDE_CODE_PROMPT.md](docs/CLAUDE_CODE_PROMPT.md). **Resets the DEMO data** before and after (`KEEP_STATE=1` keeps the end state). Writes `reports/journey_results.json` and `reports/screenshots/journey_*.png`. `HUB=http://localhost:9000` for another port. |
 | Browser metrics | with the hub running: `node tests/e2e/browser_metrics.mjs` | Emulated latency and 3G download → `reports/browser_metrics.md`. |
 
@@ -212,7 +220,7 @@ All numbers are **measured**, except where the table says *emulated* or *compute
 | Diagnosis time, *emulated* phone: desktop Chromium with a Pixel 5 profile, CPU slowed 4x | **66.3 ms** median per photo once loaded (68.5 ms for a 12 MP photo, not counting JPEG decoding); first photo **2.6 s** (runtime + model load) | [browser_metrics.md](reports/browser_metrics.md) |
 | Download over *emulated* 3G (750 kbps down, 100 ms latency) | model alone **21.2 s**; whole offline bundle **81.1 s** (7.43 MB on the wire with gzip, 15.65 MB unpacked) | [browser_metrics.md](reports/browser_metrics.md) |
 | Free-text SMS sorter, held-out 20% (n = 115) | accuracy **0.913**, macro-F1 **0.866** with the threshold. Without the off-topic MASSIVE examples (n = 57): 0.842 / 0.820. Tseltal: too few examples to measure. | [intent_eval.md](reports/intent_eval.md) |
-| Cards checked by a person | **0 of 80**, in both languages | [content/cards.json](content/cards.json) |
+| Cards checked by a person | **0 of 82**, in both languages | [content/cards.json](content/cards.json) |
 
 The model in the app is **v1**. An experimental **v2** added 147 iNaturalist field photos to training:
 

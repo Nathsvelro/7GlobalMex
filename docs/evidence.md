@@ -194,6 +194,14 @@ Cafetal takes the same lesson at co-op scale: the consented member registry and 
 
 ## Problem statement (template from PROJECT_BRIEF.md §3, filled with the strongest figures)
 
+**Current statement** (used in README.md and VIDEO_SCRIPT.md):
+
+> Because of Cafetal, **Noor** will **get a sick-looking coffee leaf onto her extension officer's visit list, with spoken advice in Tseltal while she waits,** by **the same weekend she notices it**, which she would otherwise **do late: whenever the officer next comes by, twice a year at best**; we know because **that is the gap the challenge brief describes for her (concept note, Annex B, 2026).**
+
+**Why it was narrowed:** the first draft below promised that Noor would *know which leaf problem* she has. On field photos the shipped model almost always says "No estoy seguro" (0 of 53 held-out iNaturalist rust photos correct, `reports/field_eval.md`), so the build cannot back that promise. A "not sure" answer still puts the farm on the officer's list. The evidence bullets below still apply; use only the code-L line until the code-S sources are opened.
+
+**First draft (kept for its evidence; do not use the sentence):**
+
 > Because of Cafetal, **Noor** will **know whether leaf rust or another leaf problem is hurting her coffee, and get onto the extension officer's visit list,** by **the same weekend she notices it**, which she would otherwise only discover **at harvest, after the yield is already lost**. We know because:
 > - **the extension officer reaches her area twice a year at best** (concept note, Annex B, 2026). In Mexico, only **about 3% of farms receive technical assistance** (INEGI Censo Agropecuario 2007, measured; analysed in *Rev. Mex. Cienc. Agríc.* 2012). In 2026, the federal coffee-pest campaign fields **77 specialists across eight coffee states** (SENASICA, July 2026);
 > - **leaf rust cut Mexico's coffee harvest by about half, from 4.3 to 2.2 million bags between 2012 and 2016, and hit about 60% of Chiapas' coffee area** (USDA FAS estimates, cited in *Rev. Mex. Sociología* 2019; USDA GAIN 2016). Rust is still present in every coffee zone (SENASICA, 2026);

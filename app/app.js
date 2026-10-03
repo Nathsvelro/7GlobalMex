@@ -348,6 +348,7 @@ async function simulateSend() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ member_id: st.obs.member_id, body: st.obs.sms_code }),
     });
+    if (res.status === 404) return sayInto(box, 'ui_member_not_registered'); // member id unknown at this hub
     if (!res.ok) throw new Error('hub ' + res.status);
     const j = await res.json();
     for (const r of j.replies || []) {
@@ -356,7 +357,10 @@ async function simulateSend() {
       b.textContent = typeof r === 'string' ? r : r.body || r.text || ''; // already a filled card from the hub
       box.append(b);
     }
-    await markSent('simulated');
+    // Sent only if the hub stored the report (not e.g. "no entendimos el codigo").
+    if ((j.actions || []).some((a) => a.type === 'observation_stored' || a.type === 'observation_duplicate')) {
+      await markSent('simulated');
+    }
   } catch (e) {
     console.warn(e);
     sayInto(box, 'ui_hub_offline');
@@ -372,6 +376,7 @@ const blobToDataUrl = (blob) => new Promise((resolve, reject) => {
 
 async function syncPhotos(msgBox) {
   msgBox.textContent = '';
+  let failed = null; // card to show if the hub refused a record
   try {
     const todo = (await S.listObs(st.settings.member_id)).filter((o) => !o.synced);
     for (let i = 0; i < todo.length; i += 5) {
@@ -385,9 +390,16 @@ async function syncPhotos(msgBox) {
         body: JSON.stringify({ records }),
       });
       if (!res.ok) throw new Error('hub ' + res.status);
-      for (const o of batch) await S.updateObs(o.obs_id, { synced: true });
+      // The hub answers 200 with one result per record: mark only the records it stored, so the rest can retry.
+      const results = (await res.json()).results || [];
+      for (const [k, o] of batch.entries()) {
+        const r = results[k] || {};
+        if (r.ok === true) await S.updateObs(o.obs_id, { synced: true });
+        else if (r.status === 404) failed = 'ui_member_not_registered';
+        else failed = failed || 'ui_hub_offline';
+      }
     }
-    sayInto(msgBox, 'ui_synced');
+    sayInto(msgBox, failed || 'ui_synced');
     if (st.obs) st.obs = (await S.getObs(st.obs.obs_id)) || st.obs;
     if (st.screen === 'result') renderSms();
     if (st.screen === 'history') showHistory();

@@ -20,8 +20,8 @@ statistics sites. It could reach PyPI/npm, GitHub and public S3 buckets. That de
 | 7 | Amazon MASSIVE 1.1 es-ES | `otro` examples for the SMS intent classifier | CC BY 4.0 | 300 utterances | classifier weights only |
 | 8 | Hand-written SMS examples (team + AI-draft Tseltal) | SMS intent classifier | project | 275 messages | classifier weights only |
 | 9 | Reference prices | PRECIO reply (not AI) | public sources, **all DEMO** | 3 prices | yes (DEMO) |
-| 10 | Piper TTS, voice `es-mls_10246-low` | Spanish audio; provisional Tseltal audio | Piper MIT; voice data CC BY 4.0 | 142 MP3 files | yes (MP3 only) |
-| 11 | Tseltal card text (AI draft, Polian 2018 dictionary) | Tseltal text | dictionary CC BY 4.0 | 80 cards | yes (UNVERIFIED) |
+| 10 | Piper TTS, voice `es-mls_10246-low` | Spanish audio; provisional Tseltal audio | Piper MIT; voice data CC BY 4.0 | 146 MP3 files | yes (MP3 only) |
+| 11 | Tseltal card text (AI draft, Polian 2018 dictionary) | Tseltal text | dictionary CC BY 4.0 | 82 cards | yes (UNVERIFIED) |
 | 12 | Meta MMS Tseltal models | **not used** | CC BY-NC 4.0 | — | no |
 | 13 | Evidence sources (GSMA, Findex, FAOSTAT, INEGI, OpenCelliD, …) | problem evidence | various | see [`docs/evidence.md`](docs/evidence.md) | no |
 | 14 | DEMO hub data | demo of the co-op hub | project | 24 fictional members | yes (DEMO) |
@@ -263,7 +263,7 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
   (http://www.openslr.org/94/, **CC BY 4.0**). It gives no separate licence for the voice weights: **to be checked**.
   Piper uses espeak-ng to turn text into phonemes (voice `es-419`). Only the generated MP3 files ship, not the 63 MB voice
   model.
-- **Size:** 71 Spanish MP3s and 71 provisional Tseltal MP3s, 24 kbps mono, about 2.4 MB in total
+- **Size:** 73 Spanish MP3s and 73 provisional Tseltal MP3s, 24 kbps mono, about 2.6 MB in total
   ([`content/README.md`](content/README.md)).
 - **Used for:** spoken Spanish for every UI, diagnosis and advice card. It is also a **stop-gap** for Tseltal: the
   Spanish voice reads the Tseltal text, marked `synthetic-provisional`.
@@ -272,11 +272,13 @@ holds 11 JMuBEN test crops (CC BY 4.0) for the demo.
 
 ## 11. Tseltal content (AI draft)
 
-- **Source:** all 80 cards in [`content/cards.json`](content/cards.json) have Tseltal text **drafted by an AI model**.
+- **Source:** all 82 cards in [`content/cards.json`](content/cards.json) have Tseltal text **drafted by an AI model**.
   The vocabulary was looked up word by word in Polian (2018), *Tseltal–Spanish multidialectal dictionary*, Dictionaria,
   https://dictionaria.clld.org/contributions/tseltal (**CC BY 4.0**). The grammar is a best guess
-  ([`content/README.md`](content/README.md)).
-- **Status:** **80 of 80 cards are `unverified`** in Tseltal, and in Spanish as well. The app shows "SIN VERIFICAR" next to every
+  ([`content/README.md`](content/README.md)). Exception: the two cards added on 2026-10-03
+  (`ui_member_not_registered`, `ui_consent_hub_text`) reuse words from other cards plus loanwords; only a few of
+  their words were looked up.
+- **Status:** **82 of 82 cards are `unverified`** in Tseltal, and in Spanish as well. The app shows "SIN VERIFICAR" next to every
   unverified text and audio. A native speaker can verify a card or upload a recording on the hub's content page. A
   native recording is never overwritten by the audio script.
 - **What it does NOT cover:**
@@ -361,4 +363,4 @@ Do not present an S figure as verified. Say "to be checked", or use the F/L/D ro
 **How these gaps close.** First, the extension officer confirms or rejects reports in the hub. Those confirmations become
 labelled Chiapas photos, healthy and diseased, taken with the app. They go into `data/field_test/` and, later, into
 training. Then rerun the field protocol and ship rule ([`model/README.md`](model/README.md)). In parallel, a native Tseltal
-speaker from the co-op's area reviews and records the 80 cards ([`content/README.md`](content/README.md)).
+speaker from the co-op's area reviews and records the 82 cards ([`content/README.md`](content/README.md)).

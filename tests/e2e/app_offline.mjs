@@ -271,14 +271,24 @@ async function phaseHub(browser) {
   const ctx = await browser.newContext({ ...phone, serviceWorkers: 'block' });
   const page = await ctx.newPage();
   const seen = { inbound: null, sync: null };
+  // hub.member: 'unknown' = member id not registered at the hub (it answers 404 / per-record ok:false),
+  // 'badcode' = the hub did not accept the code, 'ok' = stored.
+  const hub = { member: 'unknown' };
   await page.route('**/api/health', (r) => r.fulfill({ json: { ok: true } }));
   await page.route('**/api/sms/inbound', (r) => {
     seen.inbound = r.request().postDataJSON();
-    r.fulfill({ json: { replies: [{ body: T('sms_obs_recibida'), card_id: 'sms_obs_recibida' }], actions: [] } });
+    if (hub.member === 'unknown') return r.fulfill({ status: 404, json: { detail: 'member not found' } });
+    if (hub.member === 'badcode') {
+      return r.fulfill({ json: { replies: [{ body: T('sms_codigo_invalido'), card_id: 'sms_codigo_invalido' }],
+        actions: [{ type: 'invalid_code' }] } });
+    }
+    r.fulfill({ json: { replies: [{ body: T('sms_obs_recibida'), card_id: 'sms_obs_recibida' }],
+      actions: [{ type: 'observation_stored' }] } });
   });
   await page.route('**/api/observations/sync', (r) => {
     seen.sync = r.request().postDataJSON();
-    r.fulfill({ json: { results: seen.sync.records.map(() => ({ ok: true })) } });
+    r.fulfill({ json: { results: seen.sync.records.map(() => (hub.member === 'unknown'
+      ? { ok: false, status: 404, error: 'member not found' } : { ok: true })) } });
   });
   await page.goto(BASE);
   await page.click('.lang-btn[data-lang="es"]');
@@ -290,6 +300,21 @@ async function phaseHub(browser) {
   await page.waitForSelector('#r-body:not([hidden])', { timeout: 120000 });
   await page.waitForSelector('#r-hub:not([hidden])', { timeout: 5000 });
   check(true, 'hub reachable -> "Simular envío" and "Sincronizar fotos" shown');
+  // Member id not registered at the hub: say so, and mark nothing as sent or synced.
+  await page.click('#r-sim');
+  await page.waitForSelector('#r-sim-reply .say');
+  check((await page.textContent('#r-sim-reply')).includes(T('ui_member_not_registered')) && await page.isHidden('#r-sim-chip'),
+    'unknown member: simulated send says ui_member_not_registered, not marked sent');
+  await page.click('#r-sync');
+  await page.waitForSelector('#r-sync-msg .say');
+  check((await page.textContent('#r-sync-msg')).includes(T('ui_member_not_registered')) && await page.isHidden('#r-synced'),
+    'unknown member: sync says ui_member_not_registered, record stays unsynced (can retry)');
+  hub.member = 'badcode';
+  await page.click('#r-sim');
+  await page.waitForSelector('#r-sim-reply .bubble');
+  check((await page.textContent('#r-sim-reply .bubble')) === T('sms_codigo_invalido') && await page.isHidden('#r-sim-chip'),
+    'code refused by the hub: its reply shown, not marked sent');
+  hub.member = 'ok';
   await page.click('#r-sim');
   await page.waitForSelector('#r-sim-reply .bubble');
   const code = await page.textContent('#r-code');

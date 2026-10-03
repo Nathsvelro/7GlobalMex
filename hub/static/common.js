@@ -72,7 +72,7 @@ async function initPage() {
   document.body.prepend(h);
   const f = document.createElement("footer");
   f.className = "foot";
-  f.textContent = "Los datos del hub se quedan en la cooperativa. Solo el personal de la cooperativa y el técnico los ven. Pasarela SMS SIMULADA: no se envían SMS reales.";
+  f.textContent = "Los datos del hub se quedan en la computadora de la cooperativa. Son para el personal y el técnico, pero el hub todavía no tiene contraseña: cualquiera en esta red puede verlos. Pasarela SMS SIMULADA: no se envían SMS reales.";
   document.body.append(f);
   try {
     const s = await api("/api/summary");

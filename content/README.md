@@ -7,9 +7,9 @@ slots such as `{fecha}` with numbers, dates and source names.
 
 ```
 content/
-  cards.json            80 cards (schema: PLAN.md §10; required ids: PLAN.md §11)
-  audio/es/<id>.mp3     spoken Spanish, 71 files
-  audio/tzh/<id>.mp3    spoken Tseltal (provisional), 71 files
+  cards.json            82 cards (schema: PLAN.md §10; required ids: PLAN.md §11)
+  audio/es/<id>.mp3     spoken Spanish, 73 files
+  audio/tzh/<id>.mp3    spoken Tseltal (provisional), 73 files
   audio/manifest.json   what text each MP3 says (hash), so make_audio.py only redoes what changed
 ```
 
@@ -29,6 +29,8 @@ Honest note on the Tseltal draft: it was written by an AI model, with vocabulary
 *Tseltal-Spanish multidialectal dictionary* (Dictionaria, CC BY 4.0,
 https://dictionaria.clld.org/contributions/tseltal). The grammar (verb forms, word order, imperatives) is a
 best guess. Tseltal varies a lot between towns; some choices below may sound foreign in a given community.
+The two cards added last (`ui_member_not_registered`, `ui_consent_hub_text`) reuse words from other cards plus
+loanwords (computadora, contraseña); only a few of their words were looked up in the dictionary.
 
 ## How to review and mark a card verified
 
@@ -58,9 +60,9 @@ Checklist for reviewers:
 ## How to add a new language (no model retraining)
 
 1. Add the language to `"languages"`, e.g. `"tzo": "Bats'i k'op (Tsotsil)"`.
-2. Add a `"tzo"` text to every card: **80 cards, about 760 words**. The minimum is the 59 required ids in
+2. Add a `"tzo"` text to every card: **82 cards, about 860 words**. The minimum is the 59 required ids in
    PLAN.md §11. Set `"status": {"tzo": "unverified"}` and `"reviewed_by": {"tzo": null}`.
-3. Audio: record the 71 spoken cards (types `ui`, `diagnosis`, `advice`) with a native speaker, or run
+3. Audio: record the 73 spoken cards (types `ui`, `diagnosis`, `advice`) with a native speaker, or run
    `python3 scripts/make_audio.py` to get provisional synthetic audio first (set `PIPER_VOICE` to a voice for that
    language if one exists).
 4. SMS cards must stay one SMS after filling slots: run `python3 scripts/make_audio.py --check`.
@@ -134,8 +136,8 @@ python3 scripts/make_audio.py --force   # re-render all synthetic audio
 - Piper (`PIPER_BIN`, default `/home/user/tools/piper/piper`) with the first `.onnx` voice in
   `/home/user/tools/voice-es/` (`PIPER_VOICE`). Text is turned into phonemes with espeak-ng **`es-419`**
   (Latin-American Spanish: "c/z" said as "s", as in Mexico) instead of the voice's default Castilian `es`.
-- MP3 mono 22,050 Hz at **24 kbps** (`AUDIO_BITRATE`); long pauses are squeezed with ffmpeg. All 142 files take
-  **about 2.4 MB** (about 13 minutes of speech). At 32 kbps they took 3.2 MB.
+- MP3 mono 22,050 Hz at **24 kbps** (`AUDIO_BITRATE`); long pauses are squeezed with ffmpeg. All 146 files take
+  **about 2.6 MB** (about 14.5 minutes of speech). At 32 kbps the first 142 files took 3.2 MB.
 - For Tseltal the script respells the text only for the voice (drops `'`, `x` → `sh`, drops a word-initial `j`
   before a consonant) so the Spanish voice does not spell letters out. This is a stop-gap, not Tseltal speech.
 - WAV files are temporary and never written to the repo.

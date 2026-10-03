@@ -58,9 +58,10 @@ python model/prepare_data.py \
 python model/train.py --data /home/user/data_proc/cafetal --out model/checkpoints
 
 # 4. export + quantize + calibrate (~3 min) -> app/model/cafetal.onnx, app/model/labels.json
-#    --ortweb = a folder with onnxruntime-web 1.19.2 dist files (ort.node.min.mjs + ort-wasm-*.wasm),
-#    e.g. node_modules/onnxruntime-web/dist after `npm i onnxruntime-web@1.19.2`, or app/vendor/
-python model/export_onnx.py --data /home/user/data_proc/cafetal --ortweb app/vendor
+#    --ortweb = a folder with the onnxruntime-web 1.19.2 Node build (ort.node.min.mjs + ort-wasm-*.wasm).
+#    app/vendor/ will NOT do: it holds only the browser build (ort.wasm.min.js).
+npm i --prefix /tmp/ortweb onnxruntime-web@1.19.2
+python model/export_onnx.py --data /home/user/data_proc/cafetal --ortweb /tmp/ortweb/node_modules/onnxruntime-web/dist
 
 # 5. evaluate (~4 min) -> reports/model_eval.md, reports/model_eval.json, reports/confusion_matrix.png
 python model/evaluate.py --data /home/user/data_proc/cafetal

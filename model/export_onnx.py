@@ -200,6 +200,8 @@ def main():
     report["fp32_vs_keras_max_abs_diff"] = report.pop("fp32_vs_keras_max_abs_diff")
     good = [n for n in ("int8_static", "int8_weights", "fp16_weights", "fp32")
             if cands[n]["ortweb_node"].get("ok") and f1_32 - cands[n]["val_macro_f1"] <= args.max_f1_drop]
+    if not (args.force or good):
+        sys.exit("no candidate ran in onnxruntime-web: check --ortweb (see the ortweb_node errors above)")
     choice = args.force or good[0]
     report["shipped"] = choice
     report["choice_reason"] = (f"forced {args.force}" if args.force else

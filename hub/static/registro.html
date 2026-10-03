@@ -27,9 +27,7 @@
       <h2>Consentimiento</h2>
       <p class="small">Lea en voz alta al socio, en su idioma, lo que hace Cafetal (texto de la app) y lo que guarda la cooperativa:</p>
       <div class="notice small" id="consent-text">Cargando…</div>
-      <p class="small"><b>En el hub de la cooperativa</b> se guardan: nombre, teléfono, comunidad, ubicación aproximada de la parcela,
-        idioma, los reportes que mande (resultado, confianza, fecha, lugar aproximado) y las fotos solo si las comparte por el Wi-Fi de la cooperativa.
-        Solo el personal de la cooperativa y el técnico los ven. Puede pedir que se borren en cualquier momento.</p>
+      <div class="notice small" id="consent-hub-text">Cargando…</div>
       <label class="inline"><input type="checkbox" id="consent"> El socio entendió y está de acuerdo.</label>
       <label for="consent_by">¿Quién le explicó? (personal de la cooperativa)</label>
       <input id="consent_by" required maxlength="80" style="width:100%">
@@ -94,9 +92,11 @@ document.getElementById("f").onsubmit = async (ev) => {
   await initPage();
   try {
     const c = await api("/api/cards");
-    const card = c.cards.find((x) => x.id === "ui_consent_text");
-    document.getElementById("consent-text").innerHTML = card ?
-      `<b>Español</b> ${statusBadge(card.status.es)}<br>${esc(card.es)}<br><br><b>Tseltal</b> ${statusBadge(card.status.tzh)}<br>${esc(card.tzh)}` : "Falta la tarjeta ui_consent_text.";
+    for (const [el, id] of [["consent-text", "ui_consent_text"], ["consent-hub-text", "ui_consent_hub_text"]]) {
+      const card = c.cards.find((x) => x.id === id);
+      document.getElementById(el).innerHTML = card ?
+        `<b>Español</b> ${statusBadge(card.status.es)}<br>${esc(card.es)}<br><br><b>Tseltal</b> ${statusBadge(card.status.tzh)}<br>${esc(card.tzh)}` : `Falta la tarjeta ${id}.`;
+    }
   } catch (e) { document.getElementById("consent-text").textContent = "No se pudo cargar el texto."; }
   load();
 })();

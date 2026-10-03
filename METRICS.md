@@ -297,6 +297,8 @@ Project-defined profiles (not the DevTools presets):
   - the onnxruntime WASM runtime: `app/vendor/ort-wasm-simd-threaded.wasm`, 11,018,731 B on disk;
   - the model: 1.97 MB;
   - 142 MP3 files: about 2.4 MB ([`content/README.md`](content/README.md)).
+  Measured before two cards were added on 2026-10-03 (4 more MP3s, +0.23 MB, now 146 files and 2.64 MB of audio);
+  not re-measured.
   The 10 MB limit is for model files. The model is 1.97 MB. The full bundle is larger, mostly because of the runtime.
 - **How it was measured.** The page fetched the files in the same four groups as the service worker's `precache()`.
   The real service-worker install could not be throttled, because Chromium does not apply CDP throttling to service-worker fetches.
@@ -359,7 +361,7 @@ so SMS cards are written without accents.
 
 **Every SMS card, worst-case slot values** (computed). This fills the slots with the long sample values in
 `scripts/make_audio.py`, for example a 22-letter community name and price "100.50", then counts GSM-7 characters.
-`python3 scripts/make_audio.py --check` reports "80 cards checked, 0 problem(s)".
+`python3 scripts/make_audio.py --check` reports "82 cards checked, 0 problem(s)".
 
 | card | es | tzh |
 |---|---|---|
@@ -397,7 +399,7 @@ From the repo root (`/home/user/7GlobalMex`). The training venv is `/home/user/v
 created by `./run.sh`.
 
 ```bash
-# Hub tests (61 passed, 1 skipped on 2026-10-03)
+# Hub tests (62 passed, 1 skipped on 2026-10-03)
 .venv/bin/python -m pytest tests -q
 
 # SMS card check: ids, slots, GSM-7, <= 160 characters after filling slots
@@ -410,7 +412,8 @@ python model/prepare_data.py --jmuben /home/user/data_raw/arabica/arabica_coffee
   --negatives /home/user/data_raw/imagenette/imagenette2-160 \
   --inat /home/user/data_raw/inatag/mini/coffea_arabica --out /home/user/data_proc/cafetal
 python model/train.py --data /home/user/data_proc/cafetal --out model/checkpoints          # resumable; --max-minutes 9
-python model/export_onnx.py --data /home/user/data_proc/cafetal --ortweb app/vendor       # -> app/model/
+npm i --prefix /tmp/ortweb onnxruntime-web@1.19.2   # the Node build; app/vendor/ holds only the browser build
+python model/export_onnx.py --data /home/user/data_proc/cafetal --ortweb /tmp/ortweb/node_modules/onnxruntime-web/dist  # -> app/model/
 python model/evaluate.py --data /home/user/data_proc/cafetal --inat-field /home/user/data_raw/inat
 #   -> reports/model_eval.md|json, reports/confusion_matrix.png
 

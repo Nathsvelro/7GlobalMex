@@ -44,6 +44,18 @@ def test_delete_member_cascades(client, conn, env):
     assert client.delete(f"/api/members/{m['member_id']}").status_code == 404
 
 
+def test_member_ids_of_deleted_members_are_never_reused(client):
+    register(client)
+    last = register(client, name="Ultima", phone="+529670001001")["member_id"]
+    assert client.delete(f"/api/members/{last}").status_code == 200
+    new = register(client, name="Nueva", phone="+529670001002")["member_id"]
+    assert new != last and int(new[1:]) == int(last[1:]) + 1
+    # The deleted member's phone may still send codes under the old id: they must not land on anyone.
+    sync = client.post("/api/observations/sync", json={"records": [
+        {"obs_id": "OLD1", "member_id": last, "code": "ROYA", "conf": 90, "date": ymd()}]}).json()
+    assert sync["results"][0]["ok"] is False and sync["results"][0]["status"] == 404
+
+
 def test_sync_merges_photo_with_sms_observation(client, conn):
     m = register(client)
     sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA 87 {ymd()} 16.91,-92.11 #K3F9")

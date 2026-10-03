@@ -126,6 +126,10 @@
       "hash": "fc01e5e2597003d0",
       "spoken_text": "No, gracias"
     },
+    "audio/es/ui_consent_hub_text.mp3": {
+      "hash": "6589c3f724f82c87",
+      "spoken_text": "En la computadora de la cooperativa se guardan: su nombre, teléfono, comunidad, el lugar aproximado de su parcela, su idioma y los reportes que mande, resultado, seguridad, fecha y lugar aproximado. Las fotos, solo si usted las manda por el wifi de la cooperativa. Los ven el personal de la cooperativa y el técnico. Por ahora el sistema no tiene contraseña: otras personas conectadas al wifi de la cooperativa también podrían verlos. Puede pedir que se borren en cualquier momento."
+    },
     "audio/es/ui_consent_text.mp3": {
       "hash": "6755ceaa1cbcc0ba",
       "spoken_text": "Cafetal guarda en este teléfono la fecha, el resultado y el lugar aproximado de cada revisión. La foto se queda en este teléfono. Todo se guarda con su número de socio, no con su nombre. No se manda nada si usted no toca Enviar. Si usted quiere, las fotos se mandan a la cooperativa, solo por el wifi de la cooperativa. Puede borrar todo cuando quiera."
@@ -181,6 +185,10 @@
     "audio/es/ui_member_id_prompt.mp3": {
       "hash": "69efe99726316208",
       "spoken_text": "Su número de socio, ejemplo: M0123"
+    },
+    "audio/es/ui_member_not_registered.mp3": {
+      "hash": "332adf7de695017c",
+      "spoken_text": "Este número de socio no está registrado en la cooperativa. Pregunte en la cooperativa."
     },
     "audio/es/ui_new_photo.mp3": {
       "hash": "c993349c4da59fc6",
@@ -410,6 +418,10 @@
       "hash": "ae3880f989fd4033",
       "spoken_text": "Mauk, wokol awal"
     },
+    "audio/tzh/ui_consent_hub_text.mp3": {
+      "hash": "dffb83f5477cf1b2",
+      "spoken_text": "Ta scomputadora cooperativa ya skej abihil, ateléfono, acomunidad, te banti nopol ay akajpetal, akop, sok te areporteik: te bin la sta, te fecha, sok te banti nopol ay. Te lokombaetik ya skej teme la atikun ta swifi cooperativa nash. Ya yilik te personal ta cooperativa sok te técnico. Mayuk to scontraseña: yan krisyanoetik ta swifi cooperativa ya stak yilik ek. Ya stak akan ta cooperativa ya shtup spisil kalal ya akan."
+    },
     "audio/tzh/ui_consent_text.mp3": {
       "hash": "21ff391189c0008d",
       "spoken_text": "Cafetal ya skej ta in teléfono ini te fecha, te bin la sta, sok te banti nopol ay akajpetal. Te lokomba ya shjil ta in teléfono ini. Ya skej sok awajtal ta cooperativa, ma sok abihil. Mayuk bin ya shbaj teme ma anet Enviar. Teme ya akan, te lokombaetik ya shbajik ta cooperativa, ta swifi cooperativa nash. Ya stak atup spisil kalal ya akan."
@@ -465,6 +477,10 @@
     "audio/tzh/ui_member_id_prompt.mp3": {
       "hash": "33e03ee0670ffe6c",
       "spoken_text": "Awajtal ta cooperativa, M0123"
+    },
+    "audio/tzh/ui_member_not_registered.mp3": {
+      "hash": "ba58ab1332c799a4",
+      "spoken_text": "Ma sibabil te awajtal ini ta cooperativa. Jojkoya ta cooperativa."
     },
     "audio/tzh/ui_new_photo.mp3": {
       "hash": "cedbd0d07c8be243",

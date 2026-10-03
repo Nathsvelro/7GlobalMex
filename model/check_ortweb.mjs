@@ -11,6 +11,11 @@ const size = Number(sizeArg || 224);
 const runs = Number(runsArg || 20);
 const entry = ['ort.node.min.mjs', 'ort.wasm.min.mjs', 'ort.min.mjs']
   .map((f) => path.join(distDir, f)).find((f) => fs.existsSync(f));
+if (!entry) {
+  console.log(JSON.stringify({ ok: false, error: `no ort.node.min.mjs / ort.wasm.min.mjs / ort.min.mjs in ${distDir}` +
+    ' (app/vendor holds only the browser build: use node_modules/onnxruntime-web/dist)' }));
+  process.exit(1);
+}
 const ort = await import(pathToFileURL(entry).href);
 ort.env.wasm.numThreads = 1;
 ort.env.wasm.wasmPaths = pathToFileURL(distDir + path.sep).href;

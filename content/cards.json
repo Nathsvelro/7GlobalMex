@@ -103,6 +103,30 @@
       }
     },
     {
+      "id": "ui_consent_hub_text",
+      "type": "ui",
+      "es": "En la computadora de la cooperativa se guardan: su nombre, teléfono, comunidad, el lugar aproximado de su parcela, su idioma y los reportes que mande (resultado, seguridad, fecha y lugar aproximado). Las fotos, solo si usted las manda por el Wi-Fi de la cooperativa. Los ven el personal de la cooperativa y el técnico. Por ahora el sistema no tiene contraseña: otras personas conectadas al Wi-Fi de la cooperativa también podrían verlos. Puede pedir que se borren en cualquier momento.",
+      "tzh": "Ta scomputadora cooperativa ya sk'ej abihil, ateléfono, acomunidad, te banti nopol ay akajpetal, ak'op, sok te areporteik: te bin la sta, te fecha, sok te banti nopol ay. Te lok'ombaetik ya sk'ej teme la atikun ta swifi cooperativa nax. Ya yilik te personal ta cooperativa sok te técnico. Ma'yuk to scontraseña: yan krisyanoetik ta swifi cooperativa ya stak' yilik ek. Ya stak' ak'an ta cooperativa ya xtup' spisil k'alal ya ak'an.",
+      "slots": [],
+      "audio": {
+        "es": "audio/es/ui_consent_hub_text.mp3",
+        "tzh": "audio/tzh/ui_consent_hub_text.mp3"
+      },
+      "audio_source": {
+        "es": "synthetic:piper-es-mls_10246-low",
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+      },
+      "source": "Cafetal privacy design: what the co-op hub stores (hub/db.py) and who can read it (RESPONSIBLE_AI.md section 5: no login yet). Read aloud by co-op staff at registration (hub/static/registro.html). Tseltal: AI draft, built from words already used in other cards, plus loanwords (computadora, contraseña); not yet checked by a native speaker.",
+      "status": {
+        "es": "unverified",
+        "tzh": "unverified"
+      },
+      "reviewed_by": {
+        "es": null,
+        "tzh": null
+      }
+    },
+    {
       "id": "ui_consent_accept",
       "type": "ui",
       "es": "Sí, acepto",
@@ -1149,6 +1173,30 @@
         "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
       },
       "source": "Cafetal UI text, written by the team (plain Mexican Spanish). Tseltal: AI draft, vocabulary checked against Polian (2018) Tseltal-Spanish multidialectal dictionary, CC BY 4.0, https://dictionaria.clld.org/contributions/tseltal",
+      "status": {
+        "es": "unverified",
+        "tzh": "unverified"
+      },
+      "reviewed_by": {
+        "es": null,
+        "tzh": null
+      }
+    },
+    {
+      "id": "ui_member_not_registered",
+      "type": "ui",
+      "es": "Este número de socio no está registrado en la cooperativa. Pregunte en la cooperativa.",
+      "tzh": "Ma ts'ibabil te awajtal ini ta cooperativa. Jojk'oya ta cooperativa.",
+      "slots": [],
+      "audio": {
+        "es": "audio/es/ui_member_not_registered.mp3",
+        "tzh": "audio/tzh/ui_member_not_registered.mp3"
+      },
+      "audio_source": {
+        "es": "synthetic:piper-es-mls_10246-low",
+        "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal"
+      },
+      "source": "Cafetal UI text, written by the team (plain Mexican Spanish): shown when the hub answers that the member ID is not registered (Wi-Fi sync or simulated send). Tseltal: AI draft, built from words already used in other cards, plus loanwords (computadora, contraseña); not yet checked by a native speaker.",
       "status": {
         "es": "unverified",
         "tzh": "unverified"
