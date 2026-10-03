@@ -51,6 +51,7 @@ SWEEP_MD = os.path.join(REPO, "reports", "field_v2_threshold_sweep.md")
 TEST_JSON = os.path.join(REPO, "reports", "field_v2_threshold_test.json")
 FIELD_MD = os.path.join(REPO, "reports", "field_eval.md")
 MARK_A, MARK_B = "<!-- threshold-tradeoff:start -->", "<!-- threshold-tradeoff:end -->"
+SHIP_DECISION = os.path.join(REPO, "model", "ship_decision.json")
 MAX_COFFEA_ALARM, MIN_OTRO_REJECT = 0.05, 0.98
 GRID = [round(0.70 + 0.005 * i, 3) for i in range(60)]  # 0.700 ... 0.995
 MC = "mc:2x2:2"
@@ -286,6 +287,51 @@ def render_sweep_md(res):
     return "\n".join(L) + "\n"
 
 
+# ---------------------------------------------------------------- team decision (human, not computed)
+def team_decision(candidate, path=SHIP_DECISION):
+    """The human ship decision record (model/ship_decision.json) if it is about this candidate, else None."""
+    if not candidate or not os.path.exists(path):
+        return None
+    d = json.load(open(path))
+    return d if d.get("shipped", {}).get("candidate_key") == candidate else None
+
+
+def f2_margin(res):
+    """Exact app-level macro-F1 of baseline and candidate on the JMuBEN test split, drop in points."""
+    fb = res["evaluations"][res["baseline"]]["jmuben_per_class"]["_app_macro_f1_exact"]
+    fc = res["evaluations"][res["candidate"]]["jmuben_per_class"]["_app_macro_f1_exact"]
+    return fb, fc, 100 * (fb - fc)
+
+
+def result_lines(res):
+    """Top of the 'Result' section of reports/field_eval.md when the team shipped the recalibrated candidate."""
+    d = team_decision(res.get("candidate"))
+    if not d:
+        return []
+    ch = res["ship_rule"][res["candidate"]]["checks"]
+    failed = [k for k, v in ch.items() if not v]
+    t = res["chosen_t"]
+    fb, fc, drop = f2_margin(res)
+    ev = res["evaluations"]
+    b, c = ev[res["baseline"]], ev[res["candidate"]]
+    fa_b, fa_c = b["jmuben_otro_test"]["jmuben_macro_f1_argmax"], c["jmuben_otro_test"]["jmuben_macro_f1_argmax"]
+    miss = (f"misses (2) by {drop - 1:.2f} points: the JMuBEN app-level macro-F1 drops {drop:.2f} points "
+            f"({fc:.4f} vs {fb:.4f} for {res['baseline']}; limit 1.00), while the argmax macro-F1 passes "
+            f"({fa_c:.4f} vs {fa_b:.4f})" if failed == ["jmuben_macro_f1_drop<=1pt"] else
+            "fails " + ", ".join(CHECK_NAMES[k] for k in failed))
+    rc, rb, n = (c["field_test"]["roya"]["answer_counts"]["roya"], b["field_test"]["roya"]["answer_counts"]["roya"],
+                 c["field_test"]["roya"]["n"])
+    return [f"**Shipped: `{d['shipped']['model']}` single view at t = {t:.2f} ({d['shipped']['version']}, "
+            f"`{d['shipped']['file']}`), by explicit team decision ({d['date']}) - an exception to the pre-registered "
+            "ship rule.**", "",
+            f"At t = {t:.2f} v2 passes {5 - len(failed)} of the 5 conditions and {miss}. Why the team shipped it anyway: "
+            f"{d['reason']} On the held-out field test it finds rust in {rc} of {n} photos ({res['baseline']}: {rb}); "
+            f"diseased photos called \"sano\": {field_dangerous(c)} in the field test and "
+            f"{c['jmuben_otro_test']['jmuben_diseased_called_sano_n']} in the JMuBEN test ({res['baseline']}: "
+            f"{field_dangerous(b)} and {b['jmuben_otro_test']['jmuben_diseased_called_sano_n']}). The rule text and "
+            "the mechanical outcomes below are unchanged; the decision record is `model/ship_decision.json`.", ""]
+
+
 # ---------------------------------------------------------------- 3. single test evaluation
 def cmd_test(args):
     sw = json.load(open(SWEEP_JSON))
@@ -441,10 +487,14 @@ def render_tradeoff(res, sw):
         "coffea_disease_rate_rise<=5pts": f"{pct(kc_c / n_c)}{ci(cf['coffea sample']['disease_answer_ci95'])} ({kc_c}/{n_c}) "
                                           f"vs {pct(kc_b / n_c)} ({kc_b}/{n_c}): {100 * (kc_c - kc_b) / n_c:+.1f} pts"}
     failed = [k for k, v in ch.items() if not v]
-    L += [f"**Decision: {res['decision']} v2 at t = {t:.2f}.** " + (
+    team = team_decision(res["candidate"])
+    L += [f"**{'Rule outcome' if team else 'Decision'}: {res['decision']} v2 at t = {t:.2f}.** " + (
         "It passes all five ship-rule conditions." if not failed else
         f"It passes {5 - len(failed)} of the 5 conditions and fails " + "; ".join(
-            f"{CHECK_NAMES[k]}: {detail[k]}" for k in failed) + ". The app keeps v1."), "",
+            f"{CHECK_NAMES[k]}: {detail[k]}" for k in failed) + "." + (
+            f" **Team decision ({team['date']}): v2 at t = {t:.2f} is shipped anyway**, as an explicit, documented "
+            "exception to the rule (see \"Result\" above and `model/ship_decision.json`)." if team else
+            " The app keeps v1.")), "",
           "v2's original threshold (0.70) came from Kenyan validation images with no false-alarm constraint. It was "
           "re-chosen on **calibration data that shares no photo and no observer with any test set** "
           f"(`reports/field_v2_threshold_sweep.md`): {sw['rule']}. Calibration sets: a new random sample of "
@@ -511,7 +561,14 @@ def render_tradeoff(res, sw):
             f"photos (v1: {bf['roya']['answer_counts']['roya']}), answers a disease on {dis(c)} of "
             f"{cf['coffea sample']['n']} Coffea plant photos (v1: {dis(b)})"
             + (" and never says \"sano\" to a diseased leaf" if safe else ""))
-    if failed:
+    if failed and team:
+        tail = ("; the price is more \"No estoy seguro\" on Kenyan lab close-ups"
+                + (", which breaks condition (2) by a small margin" if failed == ["jmuben_macro_f1_drop<=1pt"] else "")
+                + f". The pre-registered rule says **do not ship**. **The team shipped v2 at t = {t:.2f} anyway** "
+                f"({team['date']}), as an explicit, documented exception taken by people, not by this script, because "
+                f"{team['reason']} Any further threshold change would now be chosen with test knowledge and is not "
+                "offered here.")
+    elif failed:
         tail = ("; the price is more \"No estoy seguro\" on Kenyan lab close-ups"
                 + (", which breaks condition (2) by a small margin" if failed == ["jmuben_macro_f1_drop<=1pt"] else "")
                 + ". The pre-registered rule says **do not ship**. Shipping v2 anyway would be an explicit, documented "
@@ -535,11 +592,16 @@ def otro_margin(k, n):
 
 
 POINTER = "<!-- threshold-pointer -->"
+RULE_ANCHOR = "<!-- rule-outcome -->"  # line in field_eval.md's "Result" after which the pointer goes
 
 
 def pointer_line(res):
     """One line for the 'Result' paragraph of reports/field_eval.md."""
     t = res["chosen_t"]
+    if t is not None and team_decision(res.get("candidate")):
+        return (f"Rule outcome, v2 with its threshold re-chosen on calibration data (t = {t:.2f}), evaluated once on the "
+                f"same test sets: **{res['decision']}** (see \"Threshold trade-off\" below); shipped anyway by the team "
+                f"decision above. {POINTER}")
     return (f"Update - v2 with its threshold re-chosen on calibration data (t = {t:.2f}), evaluated once on the same "
             f"test sets: **{res['decision']}** (see \"Threshold trade-off\" below). {POINTER}" if t is not None else
             f"Update - no v2 threshold satisfies the calibration constraints: **DO NOT SHIP**. {POINTER}")
@@ -556,7 +618,9 @@ def insert_section(sec, pointer=None, path=FIELD_MD):
     if pointer:
         lines = md.split("\n")
         lines = [x for x in lines if POINTER not in x]
-        i = next((k for k, x in enumerate(lines) if x.startswith("**") and "Shipped: `" in x), None)
+        i = next((k for k, x in enumerate(lines) if RULE_ANCHOR in x), None)
+        if i is None:
+            i = next((k for k, x in enumerate(lines) if x.startswith("**") and "Shipped: `" in x), None)
         if i is not None:
             lines[i + 1:i + 1] = ["", pointer]
             while lines[i + 3] == "" and lines[i + 4] == "":  # keep one blank line after the pointer

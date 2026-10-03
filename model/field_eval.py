@@ -274,14 +274,25 @@ def ship_rule(base, cand):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data", required=True)
-    ap.add_argument("--inat", required=True)
-    ap.add_argument("--model", action="append", required=True,
+    ap.add_argument("--render", action="store_true",
+                    help="only rewrite reports/field_eval.md from reports/field_eval.json (+ the threshold test and "
+                         "model/ship_decision.json); no images or models needed")
+    ap.add_argument("--data")
+    ap.add_argument("--inat")
+    ap.add_argument("--model", action="append",
                     help="name=path.onnx[:labels.json] (repeatable; the FIRST one is the baseline = shipped v1)")
     ap.add_argument("--schemes", default="mc:2x2:2,mc:2x2:3,mc:3x3:2,mc:3x3:3")
     ap.add_argument("--cache", default=os.path.join(REPO, "model", "checkpoints", "field_cache"))
     ap.add_argument("--out", default=os.path.join(REPO, "reports"))
     args = ap.parse_args()
+    if args.render:
+        res = json.load(open(os.path.join(args.out, "field_eval.json")))
+        with open(os.path.join(args.out, "field_eval.md"), "w") as fh:
+            fh.write(render_md(res))
+        print("wrote", os.path.join(args.out, "field_eval.md"))
+        return
+    if not (args.data and args.inat and args.model):
+        ap.error("--data, --inat and --model are required (or use --render)")
     rows = load_rows(args.inat)
     sq = [square_of(r["path"]) for r in rows]
     squares, blur = [s for s, _ in sq], np.array([b for _, b in sq])
@@ -416,8 +427,37 @@ def conclusions(r):
                      f"`{doubt[0]['split']}`) look like brown eye spot (Cercospora) to us; we kept the iNaturalist label "
                      "and did not drop them" + (" - so v2 trained on them as roya, which may add to cercospora being "
                                                "called roya." if doubt[0]["split"] == "field_train" else "."))
-    L += [f"- **Decision**: {r['ship_rule']['fired']}. The app keeps `{r['ship_rule']['shipped']}`: it stays safe "
-          "(DUDA, \"show the leaf to the officer\") rather than giving confident wrong answers.",
+    tt = json.load(open(THRESHOLD_TEST)) if os.path.exists(THRESHOLD_TEST) else None
+    from field_threshold import f2_margin, team_decision
+    team = team_decision(tt.get("candidate")) if tt else None
+    if team:
+        c = tt["evaluations"][tt["candidate"]]
+        f, j = c["field_test"], c["jmuben_otro_test"]
+
+        def k(g, key="correct"):
+            return f"{f[g]['answer_counts'][g.split(' ')[0]] if key == 'correct' else f[g]['answer_counts']['DUDA']} of {f[g]['n']}"
+        dis = sum(f["coffea sample"]["answer_counts"][d] for d in DISEASES)
+        L.append(f"- **v2 at t = {tt['chosen_t']:.2f} (re-chosen on calibration data; the model the app now ships)**: "
+                 f"roya correct & accepted {pct(f['roya']['correct'])}{ci(f['roya']['correct_ci95'])} ({k('roya')}), "
+                 f"screened {pct(f['roya screened']['correct'])} ({k('roya screened')}), Mexico+Guatemala box "
+                 f"{pct(f['roya Mexico+GT box']['correct'])} ({k('roya Mexico+GT box')}), Mexico only {k('roya Mexico')}; "
+                 f"minador {k('minador')}, cercospora {k('cercospora')}; ojo de gallo sent to DUDA "
+                 f"{pct(f['ojo_de_gallo']['DUDA'])} ({k('ojo_de_gallo', 'DUDA')}); disease answers on the Coffea plant "
+                 f"photos {pct(f['coffea sample']['disease_answer'])}{ci(f['coffea sample']['disease_answer_ci95'])} "
+                 f"({dis} of {f['coffea sample']['n']}); non-coffee test images rejected {pct(j['otro_rejected'])}; "
+                 f"diseased called \"sano\": {field_dangerous(c)} (field) and {j['jmuben_diseased_called_sano_n']} (JMuBEN). "
+                 f"The cost: {pct(j['jmuben_coffee_DUDA'])} of Kenyan test close-ups go to DUDA "
+                 f"({pct(tt['evaluations'][tt['baseline']]['jmuben_otro_test']['jmuben_coffee_DUDA'])} for {tt['baseline']}).")
+        fb, fc, drop = f2_margin(tt)
+        L.append(f"- **Decision**: the pre-registered rule kept `{r['ship_rule']['shipped']}` in the first comparison "
+                 f"({r['ship_rule']['fired']}) and says {tt['decision']} for v2 at t = {tt['chosen_t']:.2f}, which misses "
+                 f"condition (2) by {drop - 1:.2f} points (app-level macro-F1 {fc:.4f} vs {fb:.4f}). **The team shipped "
+                 f"v2 at t = {tt['chosen_t']:.2f} anyway** ({team['date']}), as an explicit, documented exception "
+                 f"(see \"Result\"): {team['reason']}")
+    else:
+        L.append(f"- **Decision**: {r['ship_rule']['fired']}. The app keeps `{r['ship_rule']['shipped']}`: it stays safe "
+                 "(DUDA, \"show the leaf to the officer\") rather than giving confident wrong answers.")
+    L += [
           "- **What would fix it**: labelled photos from Chiapas, healthy *and* diseased, taken with the app - exactly "
           "what the officer's confirmations in the hub (`labels` table) collect - then rerun this protocol "
           "(`model/inat_field.py`, `model/train.py --extra`, `model/field_eval.py`). Healthy field leaves labelled by "
@@ -469,13 +509,19 @@ def render_md(r):
          "many different cameras and framings, and many show severe, textbook infections. Labels are the iNaturalist "
          "community identification (\"research\" or \"needs_id\" grade), not an agronomist's diagnosis. Sample sizes "
          "are small, so the intervals are wide.", "",
-         "## Result", "", f"**{sr['fired']}.** Shipped: `{sr['shipped']}`.", ""]
-    tradeoff = None
+         "## Result", ""]
+    tradeoff, tt, team = None, None, []
     if os.path.exists(THRESHOLD_TEST) and os.path.exists(THRESHOLD_SWEEP):  # model/field_threshold.py (v2 recalibration)
-        from field_threshold import pointer_line, render_tradeoff
+        from field_threshold import RULE_ANCHOR, pointer_line, render_tradeoff, result_lines
         tt, sw = json.load(open(THRESHOLD_TEST)), json.load(open(THRESHOLD_SWEEP))
-        L += [pointer_line(tt), ""]
+        team = result_lines(tt)  # the human ship decision (model/ship_decision.json), if it names this candidate
+        L += team
+        L += [(f"Rule outcome, first comparison (each model at its export threshold): **{sr['fired']}.** Rule's choice: "
+               f"`{sr['shipped']}`. {RULE_ANCHOR}") if team else f"**{sr['fired']}.** Shipped: `{sr['shipped']}`.", "",
+              pointer_line(tt), ""]
         tradeoff = render_tradeoff(tt, sw)
+    else:
+        L += [f"**{sr['fired']}.** Shipped: `{sr['shipped']}`.", ""]
     # comparison table on the held-out field test
     cols = [(base, "single"), (base, mc)] + [(n, m) for n in names[1:] for m in ("single", mc)]
     head = ["metric"] + [f"{n} {'single view' if m == 'single' else m.replace('mc:', 'multicrop ')}" for n, m in cols]
@@ -525,8 +571,8 @@ def render_md(r):
         L += ["", tradeoff.rstrip("\n")]
     L += ["", "## Conclusions (plain words)", ""] + conclusions(r) + [""]
     # v1 on all photos
-    L += ["", f"## {base} (shipped before this test) on ALL photos", "",
-          f"`{base}` never saw any of these photos, so every photo counts. Single view (the app as shipped):", ""]
+    L += ["", f"## {base} (the app's model before this test) on ALL photos", "",
+          f"`{base}` never saw any of these photos, so every photo counts. Single view ({base}'s app rule):", ""]
     L += group_table(models[base]["methods"]["single"]["all_photos"])
     L += ["", f"Same photos with multicrop `{mc}`:", ""]
     L += group_table(models[base]["methods"][mc]["all_photos"])
@@ -594,7 +640,9 @@ def render_md(r):
                  + ", ".join(f"{k} {c}" for k, c in sorted(v["licenses"].items())) + " |")
     L += ["", "Models: " + "; ".join(f"`{n}` = `{models[n]['model']}` ({models[n].get('version')}, sha1 "
                                      f"{models[n]['sha1_12']}, threshold {models[n]['threshold']}, blur "
-                                     f"{models[n]['blur_threshold']})" for n in names) + ".", ""]
+                                     f"{models[n]['blur_threshold']})" for n in names) + "."
+          + (f" The app ships the `{tt['candidate'].split('@')[0]}` file as `app/model/cafetal.onnx` with threshold "
+             f"{tt['chosen_t']} (team decision, see \"Result\")." if team else ""), ""]
     return "\n".join(L) + "\n"
 
 
