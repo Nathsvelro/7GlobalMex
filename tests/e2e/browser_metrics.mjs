@@ -178,12 +178,43 @@ async function download(browser, prof) {
   return res;
 }
 
+// The page's own first requests (index.html, JS, CSS, icons, cards.json ...) before the service worker takes over:
+// one unthrottled load with the SW blocked and the HTTP cache off. decoded = body bytes after gzip is undone.
+async function pageLoad(browser) {
+  const ctx = await browser.newContext({ serviceWorkers: 'block' });
+  const page = await ctx.newPage();
+  const cdp = await ctx.newCDPSession(page);
+  await cdp.send('Network.enable');
+  await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
+  const reqs = new Map();
+  cdp.on('Network.requestWillBeSent', (e) => reqs.set(e.requestId, { url: e.request.url, wire: 0, decoded: 0, gzip: false }));
+  cdp.on('Network.responseReceived', (e) => {
+    const r = reqs.get(e.requestId);
+    if (r) r.gzip = (e.response.headers['content-encoding'] || e.response.headers['Content-Encoding'] || '') === 'gzip';
+  });
+  cdp.on('Network.dataReceived', (e) => { const r = reqs.get(e.requestId); if (r) r.decoded += e.dataLength; });
+  cdp.on('Network.loadingFinished', (e) => { const r = reqs.get(e.requestId); if (r) r.wire = e.encodedDataLength; });
+  await page.goto(HUB + '/app/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1500);
+  await ctx.close();
+  const files = [...reqs.values()].filter((r) => r.url.startsWith(HUB) && !r.url.includes('/api/'));
+  return {
+    files: files.length, decoded_bytes: files.reduce((a, r) => a + r.decoded, 0), wire_bytes: files.reduce((a, r) => a + r.wire, 0),
+    gzip_responses: files.filter((r) => r.gzip).length, urls: files.map((r) => new URL(r.url).pathname),
+  };
+}
+
 // ---------- report ----------
 function writeMd(m) {
   const L = [];
   L.push('# Browser metrics (EMULATED: desktop Chromium, not a phone)', '');
   L.push(`Last run ${m.measured_at} by \`node tests/e2e/browser_metrics.mjs\` against the hub at ${m.hub}.`);
-  L.push(`Chromium ${m.env.chromium} headless, Pixel 5 profile, host: ${m.env.cpu} x${m.env.cpus} CPUs, no GPU.`, '');
+  L.push(`Chromium ${m.env.chromium} headless, Pixel 5 profile, host: ${m.env.cpu} x${m.env.cpus} CPUs, no GPU.`);
+  if (m.bundle) {
+    L.push(`Bundle measured: model ${m.bundle.model_version} (${m.bundle.model_bytes} bytes, threshold ${m.bundle.threshold}), ` +
+      `service-worker cache ${m.bundle.sw_version}.`);
+  }
+  L.push('');
   L.push('**Nothing here was measured on a real phone or a real mobile network.** CPU throttling (CDP',
     '`Emulation.setCPUThrottlingRate`) slows this Xeon\'s page thread by the given factor as a rough stand-in for a',
     'low-end Android phone; it does not model a phone\'s memory, thermal limits or WASM performance exactly.', '');
@@ -211,10 +242,14 @@ function writeMd(m) {
     }
     L.push('', 'The bundle is fetched by the page in the same four groups as `precache()` in app/sw.js (app shell incl. the',
       'onnxruntime WASM, then cards/labels/config, then the model, then all audio). The real service worker install',
-      'could not be throttled: Chromium applies CDP throttling to page requests, not to service-worker fetches. The',
-      'page\'s own first requests (13 files: index.html, JS, CSS, icons, cards.json) come on top: 134 KB uncompressed,',
-      '33 KB with gzip (measured once with CDP, unthrottled). Once cached, nothing is downloaded again until a file',
-      'changes.', '');
+      'could not be throttled: Chromium applies CDP throttling to page requests, not to service-worker fetches.');
+    const pl = m.page_load;
+    if (pl) {
+      L.push(`The page's own first requests (${pl.files} files: index.html, JS, CSS, icons, cards.json ...; /api/ calls not`,
+        `counted) come on top: ${(pl.decoded_bytes / 1e3).toFixed(0)} KB decoded, ${(pl.wire_bytes / 1e3).toFixed(0)} KB on the wire ` +
+        `(${pl.gzip_responses} gzip responses; measured with CDP, unthrottled, service worker blocked, ${pl.hub_label}).`);
+    }
+    L.push('Once cached, nothing is downloaded again until a file changes.', '');
   }
   fs.writeFileSync(path.join(ROOT, 'reports/browser_metrics.md'), L.join('\n'));
 }
@@ -232,12 +267,20 @@ const m = {
   measured_at: WHAT === 'report' && prev.measured_at ? prev.measured_at : new Date().toISOString(),
   env: { chromium: browser.version(), cpus: os.cpus().length, cpu: os.cpus()[0].model, headless: true, device: 'Pixel 5 (Playwright)' },
 };
+if (WHAT !== 'report') {
+  const lab = JSON.parse(fs.readFileSync(path.join(ROOT, 'app/model/labels.json'), 'utf8'));
+  const sw = fs.readFileSync(path.join(ROOT, 'app/sw.js'), 'utf8').match(/const VERSION = '([^']+)'/);
+  m.bundle = { model_version: lab.version, model_bytes: lab.size_bytes, threshold: lab.threshold, sw_version: sw && sw[1] };
+}
 try {
   if (WHAT === 'all' || WHAT === 'inference') m.inference = await inference(browser);
   if (WHAT === 'all' || WHAT === 'network') {
     m.network = Array.isArray(prev.network) || !prev.network ? {} : prev.network;
     m.network[LABEL] = [];
     for (const p of PROFILES) m.network[LABEL].push(await download(browser, p));
+    m.page_load = { ...(await pageLoad(browser)), hub_label: LABEL };
+    console.log(`page's own first requests: ${m.page_load.files} files, ${m.page_load.decoded_bytes} B decoded, ` +
+      `${m.page_load.wire_bytes} B on the wire`);
   }
 } finally {
   await browser.close();

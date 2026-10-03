@@ -235,6 +235,19 @@ def otro_by_source(te, y, final, probs, otro):
     return out
 
 
+def otro_accepted(te, y, final, probs, otro, ref_final=None):
+    """The otro test images the app would NOT send to DUDA (false alarms), one row per image view."""
+    raw = os.environ.get("DATA_RAW", "/home/user/data_raw")
+    out = []
+    for i in np.where((y == otro) & (final != "DUDA"))[0]:
+        row = {"image": os.path.relpath(str(te["path"][i]), raw), "view": str(te["view"][i]), "answer": str(final[i]),
+               "top1": round(float(probs[i].max()), 3)}
+        if ref_final is not None:
+            row["reference_answer"] = str(ref_final[i])
+        out.append(row)
+    return out
+
+
 def robustness_row(pd, bd, y, classes, thr, blur_thr):
     otro = classes.index("otro")
     fd = decide(pd, bd, classes, thr, blur_thr)
@@ -342,8 +355,10 @@ def main():
         fref = decide(pref, blur_orig, classes, rthr, rblur)
         rep["reference"]["test"] = {"argmax": metrics(y, pref, classes), "app_decision": app_outcomes(y, fref, classes),
                                     "otro_rejection": otro_by_source(te, y, fref, pref, otro)}
+        rep["reference"]["test"]["otro_accepted"] = otro_accepted(te, y, fref, pref, otro)
         cms.append(rep["reference"]["test"]["argmax"]["confusion_matrix"])
         titles.append(f"reference {rname} ({rlab.get('version')}) - test split (n={len(y)})")
+    rep["test"]["otro_accepted_shipped"] = otro_accepted(te, y, final, psh, otro, fref if ref else None)
     plot_confusion(cms, titles, classes, os.path.join(args.out, "confusion_matrix.png"))
     print("test", {k: rep["test"][k]["accuracy"] for k in ("fp32", "shipped")},
           {k: rep["test"][k]["macro_f1"] for k in ("fp32", "shipped")},
@@ -544,7 +559,9 @@ def render_md(r, classes):
     if ref:
         L.append(f"| reference {ref['name']} ({ref['version']}) | {ref['threshold']} | {pct(ref['test']['argmax']['accuracy'])} | "
                  f"{ref['test']['argmax']['macro_f1']:.4f} | {rs['app_macro_f1_coffee']:.4f} |")
-    L += ["", f"Top-1 agreement fp32 vs shipped on test: {pct(t['shipped_vs_fp32_top1_agreement'])}. The argmax "
+    ag = t["shipped_vs_fp32_top1_agreement"]
+    L += ["", f"Top-1 agreement fp32 vs shipped on test: {100 * ag:.2f}% ({round((1 - ag) * t['n_images'])} of "
+          f"{t['n_images']} images differ). The argmax "
           "columns do not depend on the threshold; the app-level column does (a photo sent to DUDA counts as a miss).", "",
           "Per class (shipped model, argmax before threshold):", "",
           "| class | precision | recall | F1 | test images | distinct source groups |", "|---|---|---|---|---|---|"]
@@ -583,6 +600,24 @@ def render_md(r, classes):
         L += ["| otro source / view | n | rejected (DUDA) | argmax = otro |", "|---|---|---|---|"]
         for k, v in t["otro_rejection_shipped"].items():
             L.append(f"| {k} | {v['n']} | {pct(v['rejected'])} | {pct(v['argmax_otro'])} |")
+    fa = t.get("otro_accepted_shipped")
+    if fa is not None:
+        n_otro = a.get("otro", {}).get("n")
+        journey = any(q["image"].endswith("Apple-Scab-image-02.jpg") for q in fa)
+        L += ["", f"False alarms: the {len(fa)} `otro` test image views (of {n_otro}; {len({q['image'] for q in fa})} "
+              f"distinct photos, view `crop` = a close-up crop of the same photo) that {tag} does NOT send to DUDA. "
+              "Images are not in the repository (PlantDoc / Imagenette terms); paths are under the raw-data folder."
+              + (" `Apple-Scab-image-02.jpg` was the PlantDoc image of the journey test (`tests/e2e/journey.mjs`), "
+                 "which now uses the first PlantDoc test image the shipped model rejects; that check tests the "
+                 "fail-safe path, not the false-alarm rate (that is this table)." if journey else ""), "",
+              "| image | view | shipped answer (top-1) |" + (f" {rtag} answer |" if ref else ""),
+              "|---|---|---|" + ("---|" if ref else "")]
+        for q in fa:
+            L.append(f"| {q['image']} | {q['view']} | {q['answer']} ({q['top1']:.3f}) |"
+                     + (f" {q.get('reference_answer')} |" if ref else ""))
+        if ref and ref["test"].get("otro_accepted") is not None:
+            L += ["", f"{rtag} accepts {len(ref['test']['otro_accepted'])}: " + "; ".join(
+                f"{q['image']} ({q['view']}) -> {q['answer']} ({q['top1']:.3f})" for q in ref["test"]["otro_accepted"]) + "."]
     L += ["", f"## (b) Robustness to phone-like degradations (test split, shipped model {tag})", "",
           "Proxy for the field gap: the same test images degraded. 'fail-safe' = the app says "
           "\"No estoy seguro\" (DUDA) because of the threshold, the blur check or an `otro` prediction. "

@@ -7,9 +7,42 @@
 
 PlantDoc and Imagenette test images are NOT copied into the repo (web-collected / ImageNet terms): journey.mjs
 reads them from $DATA_RAW (default /home/user/data_raw) and skips those two checks when they are missing.
-Run: python tests/e2e/make_journey_fixtures.py [path to the raw JMuBEN rust image]"""
+Run: python tests/e2e/make_journey_fixtures.py [path to the raw JMuBEN rust image]
+
+  python tests/e2e/make_journey_fixtures.py --pick-plantdoc   (needs onnxruntime + the prepared data)
+prints the PlantDoc image journey.mjs uses, by a fixed rule: the FIRST plantdoc test image in manifest order
+(<data>/manifest.csv, split=test, selected=1) that the shipped model (app/model/, decided like the app: blur check,
+top-1 >= threshold, otro -> DUDA) rejects. The first one, Apple Scab Leaf/Apple-Scab-image-02.jpg, is a known v2
+false alarm (roya 0.98 at t = 0.90; one of the 8 of 446 otro test images v2 accepts, reports/model_eval.md (a))."""
 import os
 import sys
+
+if "--pick-plantdoc" in sys.argv:
+    import csv
+    import json
+
+    import numpy as np
+    import onnxruntime as ort
+    from PIL import Image
+    REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    sys.path.insert(0, os.path.join(REPO, 'model'))
+    from blur import center_square, laplacian_variance
+    data = os.environ.get('DATA', '/home/user/data_proc/cafetal')
+    labels = json.load(open(os.path.join(REPO, 'app/model/labels.json')))
+    sess = ort.InferenceSession(os.path.join(REPO, 'app/model', labels['file']), providers=['CPUExecutionProvider'])
+    size, classes = labels['input']['size'], labels['classes']
+    for r in csv.DictReader(open(os.path.join(data, 'manifest.csv'))):
+        if r['source'] != 'plantdoc' or r['split'] != 'test' or r['selected'] != '1':
+            continue
+        im = Image.open(r['path']).convert('RGB')
+        x = np.asarray(center_square(im).resize((size, size), Image.BILINEAR), np.float32)[None]
+        p = sess.run(None, {labels['input']['name']: x})[0][0]
+        k = int(p.argmax())
+        duda = laplacian_variance(im) < labels['blur_threshold'] or classes[k] == 'otro' or p[k] < labels['threshold']
+        print(f"{'DUDA' if duda else classes[k]:10s} top {classes[k]} {p[k]:.3f}  {r['path']}")
+        if duda:
+            break
+    sys.exit(0)
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter

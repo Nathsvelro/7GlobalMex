@@ -391,7 +391,8 @@ def conclusions(r):
         x = models[n]["methods"]["single"]
         f, bt = x["field_test"], b["field_test"]
         jt, bj = x["jmuben_otro_test"], b["jmuben_otro_test"]
-        L.append(f"- **{n} (trained with field photos) finds rust in field photos**: roya correct & accepted "
+        L.append(f"- **{n} (trained with field photos) at its export threshold {models[n]['threshold']} finds rust in field "
+                 f"photos**: roya correct & accepted "
                  f"{pct(f['roya']['correct'])}{ci(f['roya']['correct_ci95'])} on the held-out field test (n={f['roya']['n']}, "
                  f"{pct(bt['roya']['correct'])} for {base}); Mexico+Guatemala box {pct(f['roya Mexico+GT box']['correct'])} "
                  f"(n={f['roya Mexico+GT box']['n']}); Mexico only {f['roya Mexico']['answer_counts']['roya']} of "
@@ -401,7 +402,7 @@ def conclusions(r):
                  f"{jt['jmuben_macro_f1_argmax']:.4f} ({base}: {bj['jmuben_macro_f1_argmax']:.4f}); no diseased leaf "
                  "was called \"sano\"." if field_dangerous(x) == 0 and jt["jmuben_diseased_called_sano_n"] == 0 else
                  f"- **{n}**: roya correct {pct(f['roya']['correct'])}{ci(f['roya']['correct_ci95'])} (n={f['roya']['n']}).")
-        L.append(f"- **But {n} raises false alarms**: disease answers on the Coffea plant photos "
+        L.append(f"- **But {n} at {models[n]['threshold']} raises false alarms**: disease answers on the Coffea plant photos "
                  f"{pct(f['coffea sample']['disease_answer'])}{ci(f['coffea sample']['disease_answer_ci95'])} "
                  f"({base}: {pct(bt['coffea sample']['disease_answer'])}); non-coffee test images rejected "
                  f"{pct(jt['otro_rejected'])} ({base}: {pct(bj['otro_rejected'])}); ojo de gallo sent to DUDA "

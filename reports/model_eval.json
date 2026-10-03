@@ -197,7 +197,15 @@
           "rejected": 1.0,
           "argmax_otro": 1.0
         }
-      }
+      },
+      "otro_accepted": [
+        {
+          "image": "plantdoc/plant_doc_classification/Cherry leaf/canada-red-cherry-leaves.jpg",
+          "view": "crop",
+          "answer": "phoma",
+          "top1": 0.856
+        }
+      ]
     },
     "robustness": {
       "clean": {
@@ -1026,7 +1034,65 @@
         "argmax_otro": 0.9337
       }
     },
-    "shipped_vs_fp32_top1_agreement": 0.9997
+    "shipped_vs_fp32_top1_agreement": 0.9997,
+    "otro_accepted_shipped": [
+      {
+        "image": "plantdoc/plant_doc_classification/Apple Scab Leaf/Apple-Scab-image-02.jpg",
+        "view": "full",
+        "answer": "roya",
+        "top1": 0.981,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Apple rust leaf/buckinghamshire-speen-garden-cedar-apple-rust-on-apple-underside-of-F5D3RD.jpg",
+        "view": "crop",
+        "answer": "roya",
+        "top1": 0.944,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Apple rust leaf/car-apple1.jpg",
+        "view": "full",
+        "answer": "roya",
+        "top1": 0.992,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Apple rust leaf/car-apple1.jpg",
+        "view": "crop",
+        "answer": "roya",
+        "top1": 0.985,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Apple rust leaf/cedar%20apple%20rust%20upper%20leaf%20surface%20S%20ne%20OH%20RA%209-2-16.jpg",
+        "view": "full",
+        "answer": "roya",
+        "top1": 0.901,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Cherry leaf/canada-red-cherry-leaves.jpg",
+        "view": "crop",
+        "answer": "phoma",
+        "top1": 0.935,
+        "reference_answer": "phoma"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Cherry leaf/img_3088.jpg",
+        "view": "crop",
+        "answer": "roya",
+        "top1": 0.944,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Tomato leaf bacterial spot/Bacterial_spots2277.jpg",
+        "view": "crop",
+        "answer": "minador",
+        "top1": 0.915,
+        "reference_answer": "DUDA"
+      }
+    ]
   },
   "robustness": {
     "clean": {
@@ -1630,9 +1696,9 @@
       "reference": 1.97
     },
     "cpu_latency_ms_median_1thread": {
-      "fp32": 2.82,
-      "shipped": 2.82,
-      "reference": 3.12
+      "fp32": 3.18,
+      "shipped": 3.19,
+      "reference": 3.19
     },
     "latency_note": "onnxruntime Python 1.19.2, CPUExecutionProvider, 1 thread, batch 1, median of 50, build server x86 CPU (not a phone)",
     "ortweb_node_wasm_ms_median": {

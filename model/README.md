@@ -2,9 +2,20 @@
 
 Small on-device coffee leaf classifier for the phone app: MobileNetV3-Small (ImageNet weights),
 fine-tuned, exported to ONNX, run in the browser by onnxruntime-web (WASM). Shipped file:
-`app/model/cafetal.onnx`, **1.97 MB, fp16 weights** (arithmetic in float32; predictions identical
-to fp32 on validation and test). The contract with the app is `app/model/labels.json` (PLAN.md
-section 4). Results: `reports/model_eval.md`.
+`app/model/cafetal.onnx` = **cafetal-img-v2 at confidence threshold 0.90**, **1.97 MB (1,972,422 bytes), fp16
+weights** (arithmetic in float32; top-1 agrees with fp32 on 2,945 of 2,946 test images). v2 = the v1 recipe plus 147 screened
+iNaturalist field photos; its threshold 0.90 was chosen on calibration data only
+(`reports/field_v2_threshold_sweep.md`). The contract with the app is `app/model/labels.json` (PLAN.md section 4).
+Results: `reports/model_eval.md` (shipped v2, with v1 as a reference column) and `reports/field_eval.md` (field
+photos, ship rule, decision).
+
+**Shipped by explicit team decision, as an exception to the pre-registered ship rule** (`model/ship_decision.json`).
+v2 at t = 0.90 passes 4 of the 5 conditions and misses condition (2) - JMuBEN test macro-F1 may drop at most 1 point -
+by 0.04 points: the app-level macro-F1 drops 1.04 points (0.9670 vs 0.9774 for v1 at 0.70; argmax macro-F1 0.9850 vs
+0.9845 passes). The team shipped it anyway because the Kenyan close-ups it no longer answers (mostly phoma: correct
+98.4 % -> 86.8 %) go to the fail-safe "No estoy seguro" (DUDA), not to wrong answers, and because v2 is the only
+model that finds rust in field photos (v1: 0 of 53). Rule, numbers and decision: `reports/field_eval.md` ("Result",
+"Threshold trade-off").
 
 **Why not INT8?** Static INT8 post-training quantization (onnxruntime QDQ, per-channel) collapses
 this model to a constant answer (validation accuracy 15 %; tried per-tensor, percentile
@@ -21,11 +32,13 @@ lossless and halve the download. Quantization-aware training would be the next s
 | `blur.py` | the blur check (the app's JavaScript must do exactly the same) |
 | `check_ortweb.mjs` | runs an ONNX model in onnxruntime-web (Node, WASM, 1 thread) |
 | `blur_reference.mjs` | the same blur check in JavaScript, for the app (parity with `blur.py` checked) |
-| `demo_samples.py` | copies a few held-out test images into `demo_samples/` to upload during the demo |
+| `demo_samples.py` | demo images: held-out lab crops (`--data`, venv), field photos (`--field`, plain python3: downloads the CC BY-NC ones, not redistributed), README (`--readme`) |
 | `inat_field.py` | iNaturalist field photos: label mapping, Mexico rule, split by observer, download, attribution CSV, contact sheets, field training views |
 | `multicrop.py` | test-time multi-crop (full view + tiles) and its conservative decision rule (not shipped, see below) |
 | `field_eval.py` | field evaluation of one or more models, single view vs multicrop, ship rule -> `reports/field_eval.{json,md}` |
-| `field_threshold.py` | v2 threshold re-chosen on calibration data only (new Coffea sample + validation `otro`), then one test evaluation with the same ship rule -> `reports/field_v2_threshold_{sweep,test}.*` + "Threshold trade-off" in `reports/field_eval.md` |
+| `field_threshold.py` | v2 threshold re-chosen on calibration data only (new Coffea sample + validation `otro`), then one test evaluation with the same ship rule -> `reports/field_v2_threshold_{sweep,test}.*` + "Threshold trade-off" in `reports/field_eval.md`; `install` copies the decided model into `app/model/` with the calibrated threshold |
+| `ship_decision.json` | the human ship decision (which model, threshold, date, why; the exception to the rule). Scripts only read it when they render reports; they never decide with it |
+| `check_demo_samples.mjs` | checks every demo image in the real app logic (Chromium, `app/infer.js`) -> `reports/model_demo_samples_check.json` |
 
 ## Reproduce (CPU only, ~30 minutes on 4 cores)
 
@@ -58,17 +71,21 @@ python model/prepare_data.py \
 #    Add --max-minutes 9 to stop cleanly before a 10-minute shell limit, then rerun.
 python model/train.py --data /home/user/data_proc/cafetal --out model/checkpoints
 
-# 4. export + quantize + calibrate (~3 min) -> app/model/cafetal.onnx, app/model/labels.json
+# 4. export + quantize + calibrate (~3 min) -> app/model/cafetal.onnx, app/model/labels.json  (this is v1; the
+#    shipped v2 is built and installed by steps 9-11 below)
 #    --ortweb = a folder with the onnxruntime-web 1.19.2 Node build (ort.node.min.mjs + ort-wasm-*.wasm).
 #    app/vendor/ will NOT do: it holds only the browser build (ort.wasm.min.js).
 npm i --prefix /tmp/ortweb onnxruntime-web@1.19.2
 python model/export_onnx.py --data /home/user/data_proc/cafetal --ortweb /tmp/ortweb/node_modules/onnxruntime-web/dist
 
 # 5. evaluate (~4 min) -> reports/model_eval.md, reports/model_eval.json, reports/confusion_matrix.png
+#    (v1 only; for the shipped v2 use step 11)
 python model/evaluate.py --data /home/user/data_proc/cafetal
 
-# 6. optional: demo images (held-out test crops) -> model/demo_samples/
-python model/demo_samples.py --data /home/user/data_proc/cafetal
+# 6. optional: demo images -> model/demo_samples/ (see model/demo_samples/README.md)
+python model/demo_samples.py --data /home/user/data_proc/cafetal   # re-pick held-out lab crops (venv)
+python3 model/demo_samples.py --field                               # demo machine: fetch the CC BY-NC field photos
+node model/check_demo_samples.mjs                                   # every sample, real app logic (Chromium)
 ```
 
 ### Field evaluation on iNaturalist photos (~5 minutes; v2 experiment ~20 minutes more)
@@ -101,6 +118,15 @@ M="--model v2=model/checkpoints/v2/app/cafetal.onnx:model/checkpoints/v2/app/lab
 python model/field_threshold.py sample --inat /home/user/data_raw/inat
 python model/field_threshold.py sweep --data /home/user/data_proc/cafetal --inat /home/user/data_raw/inat $M
 python model/field_threshold.py test  --data /home/user/data_proc/cafetal --inat /home/user/data_raw/inat $M
+# 11. ship v2 at the calibrated t (only because model/ship_decision.json, a human decision, names v2@0.9),
+#     then regenerate the reports for the shipped model (~12 min; v1 = reference column)
+python model/field_threshold.py install --model v2=model/checkpoints/v2/app/cafetal.onnx:model/checkpoints/v2/app/labels.json
+python3 scripts/bump_sw_version.py
+python model/evaluate.py --data /home/user/data_proc/cafetal --inat-field /home/user/data_raw/inat \
+  --fp32 model/checkpoints/v2/cafetal_fp32.onnx --calib reports/field_v2_calibration.json \
+  --ref v1=model/checkpoints/v1/cafetal.onnx:model/checkpoints/v1/labels.json:reports/model_calibration.json
+python model/field_eval.py --render       # field_eval.md from field_eval.json + threshold test + ship_decision.json
+#     (python model/evaluate.py --render rewrites model_eval.md from model_eval.json; no data needed)
 ```
 
 Seeds are fixed (`--seed 42`); TensorFlow on CPU with a parallel input pipeline is not bit-exact,
@@ -130,40 +156,42 @@ minador, phoma / brown leaf spot -> phoma, cercospora -> cercospora, red spider 
   "a whole leaf in the frame") + 700 Imagenette photos.
 - **Preprocessing is inside the model** (Keras `include_preprocessing=True`): the app feeds raw RGB
   0-255 floats, NHWC.
-- **Thresholds are calibrated on validation only**, test is touched once by `evaluate.py`.
-  Confidence threshold: the data-driven value (>= 95 % selective accuracy on clean and on
-  phone-like degraded validation copies) is 0.50; we ship **0.70** (policy floor, PLAN default)
-  because validation is the same Kenyan dataset as training. Blur threshold **4.2** = the 5th
-  percentile of the hazy rust crops; it catches heavy blur on 128 px crops but will rarely fire on
-  sharp high-resolution phone photos.
+- **Thresholds are never chosen on test data.** Export time (`export_onnx.py`, validation only): the data-driven
+  value (>= 95 % selective accuracy on clean and on phone-like degraded validation copies) is 0.50, floored to
+  0.70 (PLAN default) because validation is the same Kenyan dataset as training - v1 shipped with 0.70. The
+  **shipped v2 threshold 0.90** was then re-chosen by `field_threshold.py` on separate calibration data (400 new
+  *Coffea* photos from unseen observers + validation `otro`) as the lowest t with <= 5 % Coffea disease answers and
+  >= 98 % `otro` rejection, fixed before the single test evaluation. Blur threshold **4.2** = the 5th percentile of
+  the hazy rust crops; it catches heavy blur on 128 px crops but will rarely fire on sharp high-resolution phone
+  photos (it fired on 0 of 768 iNaturalist photos).
 
 ## What the model can and cannot do (read before the demo)
 
-- It has only seen **128x128 close-up crops from Kenya**. On 200 real iNaturalist photos of coffee
-  plants (whole plants, flowers, cherries) it answers **DUDA for 100 %**, and still ~90 % DUDA when
-  zoomed to the centre 12 %. Expect "No estoy seguro" for most real photos: safe, not yet useful.
-  Photograph the lesion so it **fills the frame**.
-- **Field test (iNaturalist, labelled by taxon; `reports/field_eval.md`)**: of 219 photos of coffee leaf
-  rust it answers **0** correctly (99.5 % DUDA, nearly all "not a coffee leaf"), also 0 of the 164 where
-  the symptom is clearly visible; 0 of 30 leaf-miner and 0 of 30 Cercospora photos. It never called a
-  diseased photo "sano". iNaturalist photos are a proxy (other countries, cameras, framing), not Chiapas.
-- **Multicrop** (full view + 4 tiles, `multicrop.py`) finds no rust either, so it is not in the app.
-- **v2 experiment** (same recipe + 147 screened iNaturalist field photos, split by observer): roya correct
-  71.7 % [58-82] on the held-out field test (n=53) instead of 0 %, Kenyan test macro-F1 unchanged, but more
-  false alarms: disease answers on 8.0 % of Coffea plant photos (cherries, flowers, healthy leaves; v1 0 %)
-  and 95.7 % rejection of non-coffee test images (v1 99.8 %). It fails the pre-agreed ship rule, so it is
-  **not shipped**; the missing piece is labelled healthy field leaves (officer confirmations from Chiapas).
-- **v2 with a stricter threshold** (`field_threshold.py`): re-chosen on separate calibration data (400 new
-  *Coffea* photos, validation `otro`) as the lowest t with <= 5 % Coffea disease answers and >= 98 % `otro`
-  rejection: **t = 0.90**. One test evaluation: rust found 64.2 % [51-76] (n=53), Coffea disease answers
-  2.5 % [1.4-4.5] (n=399), `otro` rejected 98.2 % (exactly at the limit), no diseased leaf called "sano" - but more Kenyan
-  close-ups go to DUDA and the app-level JMuBEN macro-F1 drops 1.04 points (limit 1.00). Still **not shipped**
-  under the pre-agreed rule; the trade-off is in `reports/field_eval.md` ("Threshold trade-off") for an
-  explicit team decision.
-- `sano` was learned from **7 distinct source photos** (JMuBEN ships 18,983 copies of 14 photos).
-  A real healthy Chiapas leaf will most likely get DUDA, not "sano".
-- Not covered: red spider mite (`acaro_rojo`), broca, nutrient deficiency, Robusta, night/flash
-  photos, other phones and cameras.
+Shipped v2 at t = 0.90, all numbers measured (`reports/model_eval.md`, `reports/field_eval.md`):
+
+- **Field photos (iNaturalist, held-out field test; a proxy for Chiapas, labels = community identification)**:
+  rust correct & accepted **64.2 % [51-76]** (34 of 53; v1: 0 of 53), 81.0 % (34 of 42) when the symptom is clearly
+  visible, 74.2 % (23 of 31) in the Mexico+Guatemala box, **2 of 4 inside Mexico**. Leaf miner 2 of 9, Cercospora
+  **0 of 10** (2 called roya). Ojo de gallo (not a model class) goes to DUDA 91.1 % (82 of 90). No diseased field
+  photo was called "sano".
+- **False alarms**: disease answers on 2.5 % [1.4-4.5] (10 of 399) of *Coffea* plant photos with unknown health
+  (v1: 0 %), 6.5 % of the 200 iNatAg-mini coffee photos (v1: 0 %); non-coffee test images rejected 98.2 % (438 of
+  446; v1 99.8 %) - the 8 accepted test views (7 distinct photos, mostly apple rust/scab leaves answered "roya") are
+  listed in `reports/model_eval.md` (a); one is the PlantDoc apple-scab leaf (roya 0.98) the journey test used, so
+  the journey now uses the first PlantDoc test image v2 rejects.
+- **Kenyan test split (JMuBEN, same dataset as training)**: macro-F1 0.985 (argmax); as the app decides, 93.8 % of
+  coffee close-ups answered, 100.0 % of the answers right, 0 diseased leaves called "sano". The higher threshold
+  sends more close-ups to DUDA than v1 (phoma 13.2 % vs 1.6 %): that is condition (2) above.
+- Photograph the leaf so the lesion **fills the frame**: whole trees and branches get DUDA (the in-repo demo photo
+  `demo_samples/field_whole_tree.jpg` shows this).
+- `sano` was learned from **7 distinct source photos** (JMuBEN ships 18,983 copies of 14 photos) and there are no
+  labelled healthy field leaves: a real healthy Chiapas leaf will most likely get DUDA, not "sano".
+- Not covered: red spider mite (`acaro_rojo`), broca, nutrient deficiency, Robusta, night/flash photos, other
+  phones and cameras. The fix is labelled Chiapas photos, healthy and diseased (officer confirmations in the hub's
+  `labels` table), then rerun steps 9-11.
+- History: v1 (Kenyan crops only, t = 0.70) answered 0 of 219 iNaturalist rust photos (99.5 % DUDA); multicrop did
+  not help it; v2 at its export threshold 0.70 found more rust (71.7 %) but failed the rule on false alarms
+  (8.0 % Coffea disease answers, 95.7 % `otro` rejection). Full story: `reports/field_eval.md`.
 
 ## Dataset licenses
 
@@ -173,9 +201,11 @@ minador, phoma / brown leaf spot -> phoma, cercospora -> cercospora, red spider 
 | PlantDoc (Singh et al., CoDS-COMAD 2020) | CC BY 4.0 (dataset); images were collected from the web, so the copyright of individual images varies | `otro` (other crops); not redistributed |
 | Imagenette (fast.ai) | repo Apache-2.0; images are an ImageNet subset, ImageNet terms (non-commercial research) apply | `otro` (non-plant) |
 | iNatAg-mini `coffea_arabica` (iNaturalist via AgML) | CC BY-NC 4.0 (per AgML) | evaluation only, not trained on, not shipped |
-| iNaturalist field photos (768: rust, leaf miner, Cercospora, ojo de gallo, *Coffea arabica*), per-photo attribution in `reports/field_inat_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | field evaluation; 147 photos trained the experimental v2 only (not shipped); images not redistributed |
+| iNaturalist field photos (768: rust, leaf miner, Cercospora, ojo de gallo, *Coffea arabica*), per-photo attribution in `reports/field_inat_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | field evaluation; 147 screened field-train photos trained v2 (the shipped model); images not redistributed, except one CC BY field-test photo in `demo_samples/` (attributed there) |
 | iNaturalist *Coffea arabica* calibration photos (400, observers not in any other set), per-photo attribution in `reports/field_calib_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | choosing v2's threshold only (not trained on); images not redistributed |
 
 The shipped `cafetal.onnx` contains weights learned from these datasets (and ImageNet-pretrained
 MobileNetV3 weights, Apache-2.0 Keras applications). No dataset images are shipped in the app;
-`model/demo_samples/` holds 11 JMuBEN test crops (CC BY 4.0, attributed in its README).
+`model/demo_samples/` holds 11 JMuBEN files (10 held-out test crops + 1 blurred copy, CC BY 4.0) and 1 CC BY
+iNaturalist field photo, attributed in its README; 2 CC BY-NC field photos are downloaded on the demo machine by
+`python3 model/demo_samples.py --field` and are not redistributed (`model/demo_samples/field/` is gitignored).

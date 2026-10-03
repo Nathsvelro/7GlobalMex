@@ -39,7 +39,11 @@ const FIX = path.join(ROOT, 'tests/e2e/fixtures');
 const SHOTS = path.join(ROOT, 'reports/screenshots');
 const IMG = {
   roya: path.join(FIX, 'journey_roya.jpg'), // first rust image of the model's TEST split (make_journey_fixtures.py)
-  plantdoc: path.join(RAW, 'plantdoc/plant_doc_classification/Apple Scab Leaf/Apple-Scab-image-02.jpg'), // test split
+  // PlantDoc TEST image by a fixed rule: the first plantdoc test image in manifest order that the shipped model
+  // rejects (python tests/e2e/make_journey_fixtures.py --pick-plantdoc). The first one, Apple-Scab-image-02.jpg, was
+  // used until v2 shipped: it is a KNOWN v2 FALSE ALARM (roya 0.98 at t = 0.90; one of the 8 of 446 otro test images
+  // v2 accepts, reports/model_eval.md (a)). This check tests the fail-safe path, not the false-alarm rate.
+  plantdoc: path.join(RAW, 'plantdoc/plant_doc_classification/Apple Scab Leaf/AppleScab.JPG.jpg'),
   imagenette: path.join(RAW, 'imagenette/imagenette2-160/train/n02979186/n02979186_8558.JPEG'), // test split, cassette player
   object: path.join(FIX, 'journey_object.jpg'), // synthetic non-plant photo
   blurred: path.join(FIX, 'journey_blurred.jpg'), // rust image, Gaussian blur r=6
