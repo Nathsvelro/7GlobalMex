@@ -146,7 +146,8 @@ CAF1 M0123 ROYA 87 20261004 16.91,-92.11 #K3F9
 5. Replies to a member who just texted are recorded in the outbox as `sent_simulated`
    (the member asked). **Broadcasts (alerts) are queued as `pending_approval` and go out only when co-op
    staff tap Approve.** Every reply text comes from `content/cards.json` (slots filled with numbers/dates only).
-6. The reply language follows the member's registered language (`es` default, `tzh` if registered so).
+6. The reply language follows the member's registered language (`es` default, `tzh` or `en` if registered so;
+   a card without text in that language is sent in `es`).
 
 ## 8. Outbreak rule (not AI, a transparent rule)
 
@@ -168,22 +169,25 @@ with a true label are saved in a `labels` table as **examples for later retraini
 ```json
 {
   "version": 1,
-  "languages": {"es": "Español", "tzh": "Bats'il k'op (Tseltal)"},
+  "languages": {"es": "Español", "tzh": "Bats'il k'op (Tseltal)", "en": "English"},
   "cards": [
     {
       "id": "diag_roya",
       "type": "ui | diagnosis | advice | sms | alert",
-      "es": "…", "tzh": "…",
+      "es": "…", "tzh": "…", "en": "…",
       "slots": [],
-      "audio": {"es": "audio/es/diag_roya.mp3", "tzh": "audio/tzh/diag_roya.mp3"},
-      "audio_source": {"es": "synthetic:piper-es-mls_10246-low", "tzh": "synthetic-provisional"},
+      "audio": {"es": "audio/es/diag_roya.mp3", "tzh": "audio/tzh/diag_roya.mp3", "en": "audio/en/diag_roya.mp3"},
+      "audio_source": {"es": "synthetic:piper-es-mls_10246-low", "tzh": "synthetic-provisional",
+                       "en": "synthetic:piper-en-us-lessac-medium"},
       "source": "where the content comes from (manual, URL)",
-      "status": {"es": "unverified", "tzh": "unverified"},
-      "reviewed_by": {"es": null, "tzh": null}
+      "status": {"es": "unverified", "tzh": "unverified", "en": "unverified"},
+      "reviewed_by": {"es": null, "tzh": null, "en": null}
     }
   ]
 }
 ```
+- Languages: `es` and `tzh` are the co-op's languages; `en` (English) is for international judges and visitors
+  (AI translation of the Spanish, English synthetic voice).
 - Every card starts `unverified` in every language; a person marks it verified in the hub (name + date).
   The app shows an **UNVERIFIED / SIN VERIFICAR** badge next to unverified text and audio.
 - Slots (e.g. `{precio_cafe}`, `{fecha}`, `{fuente}`) are filled only with numbers, dates and source names.
@@ -193,7 +197,7 @@ with a true label are saved in a `labels` table as **examples for later retraini
 
 UI (`type: ui`): `ui_app_name`, `ui_choose_language`, `ui_consent_title`, `ui_consent_text`, `ui_consent_accept`,
 `ui_consent_decline`, `ui_member_id_prompt`, `ui_pin_optional`, `ui_pin_prompt`, `ui_continue`, `ui_take_photo`,
-`ui_photo_tip_underside`, `ui_analyzing`, `ui_confidence`, `ui_play_tzh`, `ui_play_es`, `ui_send_sms`,
+`ui_photo_tip_underside`, `ui_analyzing`, `ui_confidence`, `ui_play_tzh`, `ui_play_es`, `ui_play_en`, `ui_send_sms`,
 `ui_simulate_send`, `ui_saved`, `ui_history`, `ui_settings`, `ui_delete_all`, `ui_delete_confirm`, `ui_sync_photos`,
 `ui_synced`, `ui_back`, `ui_unverified`, `ui_demo`, `ui_simulated`, `ui_offline_ready`, `ui_limits_note`,
 `ui_language`, `ui_pending_sms`, `ui_sent`, `ui_no_records`.

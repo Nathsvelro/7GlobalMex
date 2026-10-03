@@ -23,6 +23,7 @@ KEYWORDS = {  # exact one-word messages (after removing accents/punctuation); th
     "precio": "precio", "precios": "precio",
     "ayuda": "ayuda",
     "tecnico": "hablar_con_tecnico",
+    "price": "precio", "prices": "precio", "help": "ayuda", "officer": "hablar_con_tecnico",  # English cards
 }
 INTENT_CARD = {"precio": "sms_precio", "reporte": "sms_reporte_instrucciones", "ayuda": "sms_ayuda",
                "hablar_con_tecnico": "sms_pasar_tecnico", "otro": "sms_pasar_tecnico"}

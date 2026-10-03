@@ -149,7 +149,7 @@ class MemberIn(BaseModel):
     community: str = Field(min_length=1, max_length=60)
     lat: float | None = Field(default=None, ge=-90, le=90)
     lon: float | None = Field(default=None, ge=-180, le=180)
-    language: Literal["es", "tzh"] = "es"
+    language: Literal["es", "tzh", "en"] = "es"
     consent: bool
     consent_by: str = Field(min_length=1, max_length=80)
     consent_text_version: str = "v1"

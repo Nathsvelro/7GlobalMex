@@ -16,12 +16,18 @@ Usage:
   python3 scripts/make_audio.py --force    # re-render all synthetic audio
   python3 scripts/make_audio.py --only diag_roya --lang tzh
 
+Voices (one per language):
+  es   Spanish Piper voice, phonemes with espeak-ng es-419
+  tzh  the same Spanish voice reading a respelled Tseltal text (provisional, until native recordings)
+  en   English Piper voice (en-us-lessac-medium), phonemes with the voice's own espeak voice (en-us)
+
 Environment:
   PIPER_BIN      default /home/user/tools/piper/piper
-  PIPER_VOICE    default: first .onnx in /home/user/tools/voice-es/
-  PIPER_ESPEAK   espeak-ng voice used to turn text into phonemes (default es-419,
-                 Latin-American Spanish: "c/z" said as "s", as in Mexico)
-  AUDIO_BITRATE  default 24k (keeps all audio under ~3 MB; the source voice is 16 kHz)
+  PIPER_VOICE    Spanish voice (es, tzh); default: first .onnx in /home/user/tools/voice-es/
+  PIPER_VOICE_EN English voice (en); default: first .onnx in /home/user/tools/voice-en/
+  PIPER_ESPEAK   espeak-ng voice for es/tzh (default es-419, Latin-American Spanish:
+                 "c/z" said as "s", as in Mexico). Not used for English.
+  AUDIO_BITRATE  default 24k (keeps all audio small; the source voices are 16-22 kHz)
 """
 import argparse
 import glob
@@ -44,9 +50,11 @@ TEXT_ONLY_TYPES = ("sms", "alert")
 SOURCE_LABEL = {
     "es": "synthetic:piper-es-mls_10246-low",
     "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
-}
+}  # en: "synthetic:piper-<voice name>", e.g. synthetic:piper-en-us-lessac-medium (see voice_for)
 # Piper settings. noise_w 0.4 gives steadier timing than the default 0.8 with this voice.
 PIPER_ARGS = ["--noise_w", "0.4", "--sentence_silence", "0.3"]
+# The English voice speaks fast (~200+ words/min); length_scale 1.4 gives ~170, about the pace of the Spanish audio.
+LANG_ARGS = {"en": ["--length_scale", "1.4"]}
 # Squeeze long pauses the low-quality voice sometimes inserts; trim leading silence.
 FFMPEG_FILTER = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.05:"
                  "stop_periods=-1:stop_duration=0.35:stop_threshold=-45dB:stop_silence=0.3")
@@ -55,7 +63,7 @@ FFMPEG_FILTER = ("silenceremove=start_periods=1:start_threshold=-45dB:start_sile
 REQUIRED_IDS = """
 ui_app_name ui_choose_language ui_consent_title ui_consent_text ui_consent_accept ui_consent_decline
 ui_member_id_prompt ui_pin_optional ui_pin_prompt ui_continue ui_take_photo ui_photo_tip_underside
-ui_analyzing ui_confidence ui_play_tzh ui_play_es ui_send_sms ui_simulate_send ui_saved ui_history
+ui_analyzing ui_confidence ui_play_tzh ui_play_es ui_play_en ui_send_sms ui_simulate_send ui_saved ui_history
 ui_settings ui_delete_all ui_delete_confirm ui_sync_photos ui_synced ui_back ui_unverified ui_demo
 ui_simulated ui_offline_ready ui_limits_note ui_language ui_pending_sms ui_sent ui_no_records
 diag_sano diag_roya diag_minador diag_phoma diag_cercospora diag_acaro_rojo diag_duda
@@ -68,7 +76,8 @@ REQUIRED_SLOTS = {
     "sms_precio": {"precio_cafe", "unidad_cafe", "precio_maiz", "precio_frijol", "fuente", "fecha"},
     "alert_roya": {"comunidad", "n_reportes"},
 }
-DUDA_ES = "No estoy seguro — muestre la hoja al técnico."
+DUDA = {"es": "No estoy seguro — muestre la hoja al técnico.",
+        "en": "I'm not sure — show the leaf to the extension officer."}
 
 # Worst-case-ish slot values used to check that every SMS fits in one message.
 SAMPLE_SLOTS = {
@@ -145,6 +154,8 @@ def check(doc):
                     problems.append(f"{cid}/{lang}: {n} chars after filling slots (> 160)")
             if c.get("status", {}).get(lang) not in ("unverified", "verified"):
                 problems.append(f"{cid}/{lang}: status must be 'unverified' or 'verified'")
+            if lang not in c.get("reviewed_by", {}):
+                problems.append(f"{cid}/{lang}: reviewed_by has no '{lang}' entry (null until reviewed)")
         if c.get("type") in TEXT_ONLY_TYPES and c.get("audio"):
             problems.append(f"{cid}: text-only card should have \"audio\": {{}}")
     for cid, need in REQUIRED_SLOTS.items():
@@ -152,20 +163,22 @@ def check(doc):
         if card and set(card.get("slots", [])) != need:
             problems.append(f"{cid}: slots must be {sorted(need)}")
     duda = next((c for c in cards if c.get("id") == "diag_duda"), None)
-    if duda and duda.get("es") != DUDA_ES:
-        problems.append(f"diag_duda/es must be exactly: {DUDA_ES}")
+    for lang, want in DUDA.items():
+        if duda and lang in langs and duda.get(lang) != want:
+            problems.append(f"diag_duda/{lang} must be exactly: {want}")
     return problems
 
 
 # ---------------------------------------------------------------- text for the TTS
 SPOKEN_WORDS = {"SMS": "ese eme ese", "PIN": "pin", "Wi-Fi": "wifi", "WiFi": "wifi", "app": "ap"}
+SPOKEN_WORDS_EN = {"SMS": "S M S", "PIN": "pin", "M0123": "M 0 1 2 3"}
 
 
 def tts_text(text, lang):
-    """Turn card text into something the Spanish Piper voice reads well (audio only; the
+    """Turn card text into something the Piper voice reads well (audio only; the
     card text itself is never changed)."""
     t = text
-    for a, b in SPOKEN_WORDS.items():
+    for a, b in (SPOKEN_WORDS_EN if lang == "en" else SPOKEN_WORDS).items():
         t = re.sub(r"(?<!\w)" + re.escape(a) + r"(?!\w)", b, t)
     t = t.replace("PIN", "pin")  # also inside "aPIN" (Tseltal: "your PIN")
     t = re.sub(r"\b([A-ZÁÉÍÓÚÑ]{2,})\b", lambda m: m.group(1).lower(), t)  # DEMO -> demo (not spelled)
@@ -187,35 +200,63 @@ def tts_text(text, lang):
 
 
 # ---------------------------------------------------------------- synthesis
-def find_voice():
-    voice = os.environ.get("PIPER_VOICE")
+def find_voice(env="PIPER_VOICE", folder="/home/user/tools/voice-es"):
+    voice = os.environ.get(env)
     if voice:
         return voice
-    found = sorted(glob.glob("/home/user/tools/voice-es/*.onnx"))
+    found = sorted(glob.glob(os.path.join(folder, "*.onnx")))
     if not found:
-        sys.exit("No Piper voice found: set PIPER_VOICE=/path/to/voice.onnx")
+        sys.exit(f"No Piper voice found in {folder}: set {env}=/path/to/voice.onnx")
     return found[0]
 
 
+def voice_espeak(voice, default):
+    """The espeak-ng voice named in the Piper voice's own config (en-us for the English voice)."""
+    try:
+        with open(voice + ".json", encoding="utf-8") as f:
+            return json.load(f).get("espeak", {}).get("voice") or default
+    except (OSError, ValueError):
+        return default
+
+
+_VOICES = {}
+
+
+def voice_for(lang):
+    """(voice .onnx path, espeak voice, audio_source label) for one language. es and tzh share the Spanish
+    voice (tzh is provisional); en has its own English voice."""
+    key = "en" if lang == "en" else "es"
+    if key not in _VOICES:
+        if key == "en":
+            voice = find_voice("PIPER_VOICE_EN", "/home/user/tools/voice-en")
+            name = os.path.basename(voice)
+            name = name[:-len(".onnx")] if name.endswith(".onnx") else name
+            _VOICES[key] = (voice, voice_espeak(voice, "en-us"), f"synthetic:piper-{name}")
+        else:
+            _VOICES[key] = (find_voice(), os.environ.get("PIPER_ESPEAK", "es-419"), "synthetic:piper")
+    voice, espeak, label = _VOICES[key]
+    return voice, espeak, SOURCE_LABEL.get(lang, label)
+
+
 def piper_config(voice, espeak_voice, tmpdir):
-    """Copy the voice config with another espeak voice (es-419: Mexican-style 's')."""
+    """Copy the voice config with the chosen espeak voice (es-419 for Spanish: Mexican-style 's')."""
     with open(voice + ".json", encoding="utf-8") as f:
         cfg = json.load(f)
     cfg.setdefault("espeak", {})["voice"] = espeak_voice
-    path = os.path.join(tmpdir, "voice.onnx.json")
+    path = os.path.join(tmpdir, os.path.basename(voice) + ".json")
     with open(path, "w", encoding="utf-8") as f:
         json.dump(cfg, f)
     return path
 
 
-def synthesize(jobs, piper_bin, voice, config, bitrate, tmpdir):
+def synthesize(jobs, piper_bin, voice, config, bitrate, tmpdir, piper_args=PIPER_ARGS):
     """jobs: list of (spoken_text, mp3_path). One Piper process for the whole batch."""
     lines = []
     for i, (text, _) in enumerate(jobs):
         lines.append(json.dumps({"text": text, "output_file": os.path.join(tmpdir, f"{i}.wav")},
                                 ensure_ascii=False))
     proc = subprocess.run([piper_bin, "-q", "--model", voice, "--config", config, "--json-input"]
-                          + PIPER_ARGS, input="\n".join(lines) + "\n", text=True,
+                          + list(piper_args), input="\n".join(lines) + "\n", text=True,
                           capture_output=True)
     if proc.returncode != 0:
         sys.exit(f"piper failed: {proc.stderr[-2000:]}")
@@ -250,8 +291,6 @@ def main():
         sys.exit(1 if problems else 0)
 
     piper_bin = os.environ.get("PIPER_BIN", "/home/user/tools/piper/piper")
-    voice = find_voice()
-    espeak_voice = os.environ.get("PIPER_ESPEAK", "es-419")
     bitrate = os.environ.get("AUDIO_BITRATE", "24k")
     for tool in (piper_bin, shutil.which("ffmpeg")):
         if not tool or not os.path.exists(tool):
@@ -264,7 +303,8 @@ def main():
         manifest = {}
     files = manifest.setdefault("files", {})
 
-    jobs, job_meta, kept_native, skipped = [], [], 0, 0
+    jobs = {}  # (voice, espeak voice, piper args) -> [(spoken_text, mp3_path, rel, hash)]
+    kept_native, skipped, voices_used = 0, 0, {}
     for card in doc["cards"]:
         if card["type"] in TEXT_ONLY_TYPES:
             card["audio"], card["audio_source"] = {}, {}
@@ -283,28 +323,33 @@ def main():
                 if not os.path.exists(mp3):
                     print(f"WARNING: native recording missing: {rel}")
                 continue
+            voice, espeak_voice, label = voice_for(lang)
+            piper_args = tuple(PIPER_ARGS + LANG_ARGS.get(lang, []))
+            voices_used[lang] = f"{os.path.basename(voice)} (espeak {espeak_voice}) {' '.join(piper_args)}"
             spoken = tts_text(card[lang], lang)
             h = hashlib.sha256("|".join([spoken, os.path.basename(voice), espeak_voice,
-                                         " ".join(PIPER_ARGS), FFMPEG_FILTER, bitrate]).encode()).hexdigest()[:16]
+                                         " ".join(piper_args), FFMPEG_FILTER, bitrate]).encode()).hexdigest()[:16]
             card["audio"][lang] = rel
-            card["audio_source"][lang] = SOURCE_LABEL.get(lang, "synthetic:piper")
+            card["audio_source"][lang] = label
             if not args.force and files.get(rel, {}).get("hash") == h and os.path.exists(mp3):
                 skipped += 1
                 continue
-            jobs.append((spoken, mp3))
-            job_meta.append((rel, h, spoken))
+            jobs.setdefault((voice, espeak_voice, piper_args), []).append((spoken, mp3, rel, h))
 
-    if jobs:
-        print(f"Synthesising {len(jobs)} clip(s) with {os.path.basename(voice)} (espeak {espeak_voice}) ...")
-        with tempfile.TemporaryDirectory() as tmp:
+    rendered = sum(len(batch) for batch in jobs.values())
+    with tempfile.TemporaryDirectory() as tmp:
+        for (voice, espeak_voice, piper_args), batch in jobs.items():  # one Piper voice at a time
+            print(f"Synthesising {len(batch)} clip(s) with {os.path.basename(voice)} (espeak {espeak_voice}) ...")
             cfg = piper_config(voice, espeak_voice, tmp)
-            for start in range(0, len(jobs), 40):
-                synthesize(jobs[start:start + 40], piper_bin, voice, cfg, bitrate, tmp)
-        for rel, h, spoken in job_meta:
-            files[rel] = {"hash": h, "spoken_text": spoken}
+            for start in range(0, len(batch), 40):
+                synthesize([(t, m) for t, m, _, _ in batch[start:start + 40]], piper_bin, voice, cfg, bitrate, tmp,
+                           piper_args)
+            for spoken, _, rel, h in batch:
+                files[rel] = {"hash": h, "spoken_text": spoken}
 
-    manifest["voice"] = os.path.basename(voice)
-    manifest["espeak_voice"] = espeak_voice
+    manifest.pop("voice", None)
+    manifest.pop("espeak_voice", None)
+    manifest.setdefault("voices", {}).update(voices_used)
     manifest["bitrate"] = bitrate
     manifest["note"] = ("Hash of the text actually spoken per file; make_audio.py skips files whose hash "
                         "is unchanged. Native recordings (audio_source 'native...') are never touched.")
@@ -318,13 +363,15 @@ def main():
         with open(CARDS, "w", encoding="utf-8") as f:
             f.write(new)
 
-    total, count = 0, 0
+    total, count, per_lang = 0, 0, []
     for lang in doc["languages"]:
-        for p in glob.glob(os.path.join(CONTENT, "audio", lang, "*.mp3")):
-            total += os.path.getsize(p)
-            count += 1
-    print(f"rendered {len(jobs)}, unchanged {skipped}, native kept {kept_native}; "
-          f"{count} MP3 files, {total / 1e6:.2f} MB total")
+        paths = glob.glob(os.path.join(CONTENT, "audio", lang, "*.mp3"))
+        size = sum(os.path.getsize(p) for p in paths)
+        per_lang.append(f"{lang}: {len(paths)} files, {size / 1e6:.2f} MB")
+        total += size
+        count += len(paths)
+    print(f"rendered {rendered}, unchanged {skipped}, native kept {kept_native}; "
+          f"{count} MP3 files, {total / 1e6:.2f} MB total ({'; '.join(per_lang)})")
 
 
 if __name__ == "__main__":

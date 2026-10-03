@@ -114,6 +114,35 @@ def test_reply_in_member_language(client):
     assert r["replies"][0]["lang"] == "tzh" and r["replies"][0]["body"] == cards.get("sms_ayuda")["tzh"]
 
 
+def test_reply_in_english_for_en_member(client, env):
+    from hub import cards
+    m = register(client, language="en")
+    assert m["language"] == "en"
+    cases = {"AYUDA": "sms_ayuda", "HELP": "sms_ayuda", "price": "sms_precio", "OFFICER": "sms_pasar_tecnico"}
+    for body, card_id in cases.items():
+        rep = sms(client, m["phone"], body)["replies"][0]
+        assert rep["card_id"] == card_id and rep["lang"] == "en", body
+        assert rep["encoding"] == "GSM-7" and rep["segments"] == 1, rep
+    assert sms(client, m["phone"], "HELP")["replies"][0]["body"] == cards.get("sms_ayuda")["en"]
+    rep = sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA 87 {ymd()} 16.91,-92.11 #EN01")["replies"][0]
+    assert rep["card_id"] == "sms_obs_recibida" and rep["body"] == cards.get("sms_obs_recibida")["en"]
+    # a card without English text falls back to Spanish
+    path = env / "content" / "cards.json"
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    del next(c for c in doc["cards"] if c["id"] == "sms_ayuda")["en"]
+    path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+    rep = sms(client, m["phone"], "HELP")["replies"][0]
+    assert rep["lang"] == "es" and rep["body"] == cards.get("sms_ayuda")["es"]
+
+
+def test_registration_languages(client):
+    for i, lang in enumerate(["es", "tzh", "en"]):
+        assert register(client, phone=f"+52967000800{i}", language=lang)["language"] == lang
+    bad = client.post("/api/members", json={"name": "X", "phone": "+529670008009", "community": "Ondera Alto",
+                                            "language": "fr", "consent": True, "consent_by": "Ana"})
+    assert bad.status_code == 422
+
+
 def test_thread_shows_conversation(client):
     m = register(client)
     sms(client, m["phone"], "PRECIO")

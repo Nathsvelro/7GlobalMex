@@ -1,7 +1,302 @@
 {
   "bitrate": "24k",
-  "espeak_voice": "es-419",
   "files": {
+    "audio/en/advice_acaro_rojo.mp3": {
+      "hash": "c813872d127dd02b",
+      "spoken_text": "Red spider mite grows in dry weather and with dust from the roads. Every week, check the plants at the edge, next to the road. Keep shade and plants that stop the dust. If the leaves look copper-colored, tell the extension officer."
+    },
+    "audio/en/advice_call_officer.mp3": {
+      "hash": "ba9c77b8059c062e",
+      "spoken_text": "Call the extension officer or the co-op if you see orange powder on many plants, if many leaves fall, or if the app is not sure. Keep one leaf in a closed bag to show them."
+    },
+    "audio/en/advice_cercospora.mp3": {
+      "hash": "dd9c7943a14fefa9",
+      "spoken_text": "Brown eye spot comes on weak plants or plants in strong sun. Fertilize your plants and ask the extension officer which fertilizer to use. Keep managed shade and clear the weeds."
+    },
+    "audio/en/advice_minador.mp3": {
+      "hash": "982983ca2e7b223f",
+      "spoken_text": "Leaf miner grows with strong sun and dry weather. Keep even shade in your coffee plot. Check a few leaves every week. If many leaves have dry brown spots, tell the extension officer."
+    },
+    "audio/en/advice_phoma.mp3": {
+      "hash": "7038268d90096d68",
+      "spoken_text": "Phoma gets in through wounds that cold wind makes on the leaves. Care for or plant trees that stop the wind. Fertilize your plants well. If the branch tips dry out, tell the extension officer."
+    },
+    "audio/en/advice_roya.mp3": {
+      "hash": "bf9d091a783081d1",
+      "spoken_text": "Check under the leaves every week, on several plants. Prune and adjust the shade so air and light get in. Clear the weeds and use fertilizer as the extension officer says. Do not carry sick leaves to other plots; if you see a lot of orange powder, tell the extension officer."
+    },
+    "audio/en/advice_sano.mp3": {
+      "hash": "678612794686b601",
+      "spoken_text": "Very good. Keep checking your plants every week, under the leaves. Keep the shade managed, the weeds cleared and good fertilizer."
+    },
+    "audio/en/diag_acaro_rojo.mp3": {
+      "hash": "7512555a44a73f1f",
+      "spoken_text": "It looks like red spider mite."
+    },
+    "audio/en/diag_cercospora.mp3": {
+      "hash": "8520eaa3593e34db",
+      "spoken_text": "It looks like brown eye spot, cercospora."
+    },
+    "audio/en/diag_duda.mp3": {
+      "hash": "16b28b54f9ea392a",
+      "spoken_text": "I'm not sure, show the leaf to the extension officer."
+    },
+    "audio/en/diag_minador.mp3": {
+      "hash": "5c5c148da6d154d5",
+      "spoken_text": "It looks like coffee leaf miner."
+    },
+    "audio/en/diag_phoma.mp3": {
+      "hash": "26c947ea71321f34",
+      "spoken_text": "It looks like phoma, also called leaf burn."
+    },
+    "audio/en/diag_roya.mp3": {
+      "hash": "62eef10c732efa59",
+      "spoken_text": "It looks like coffee leaf rust."
+    },
+    "audio/en/diag_sano.mp3": {
+      "hash": "9881408d9ecb832c",
+      "spoken_text": "The leaf looks healthy."
+    },
+    "audio/en/limits_yield.mp3": {
+      "hash": "53db1e1dcabef11c",
+      "spoken_text": "This app only looks at leaves. It cannot see berry borer, lack of fertilizer, drought, old plants or soil problems. If your harvest went down, talk with the extension officer."
+    },
+    "audio/en/name_acaro_rojo.mp3": {
+      "hash": "ddb4f0dce24c3b94",
+      "spoken_text": "Red spider mite"
+    },
+    "audio/en/name_cercospora.mp3": {
+      "hash": "f0cc01569d021005",
+      "spoken_text": "Brown eye spot"
+    },
+    "audio/en/name_duda.mp3": {
+      "hash": "3e6220853fa8d466",
+      "spoken_text": "Not sure"
+    },
+    "audio/en/name_minador.mp3": {
+      "hash": "aac81f28085fb90d",
+      "spoken_text": "Leaf miner"
+    },
+    "audio/en/name_phoma.mp3": {
+      "hash": "1f804a455ebbdae9",
+      "spoken_text": "Phoma, leaf burn"
+    },
+    "audio/en/name_roya.mp3": {
+      "hash": "c0bd0615bbf3b4f4",
+      "spoken_text": "Leaf rust"
+    },
+    "audio/en/name_sano.mp3": {
+      "hash": "5abedaa0fdb54214",
+      "spoken_text": "Healthy"
+    },
+    "audio/en/ui_analyzing.mp3": {
+      "hash": "a800245b92a13217",
+      "spoken_text": "Checking the leaf."
+    },
+    "audio/en/ui_app_name.mp3": {
+      "hash": "005d15a3ec12b14c",
+      "spoken_text": "Cafetal"
+    },
+    "audio/en/ui_back.mp3": {
+      "hash": "d6c0fa4e3ea48d4f",
+      "spoken_text": "Back"
+    },
+    "audio/en/ui_cancel.mp3": {
+      "hash": "e04bcf5610f55f5b",
+      "spoken_text": "Cancel"
+    },
+    "audio/en/ui_choose_language.mp3": {
+      "hash": "b5fa7fd4521a5755",
+      "spoken_text": "Choose your language"
+    },
+    "audio/en/ui_choose_photo.mp3": {
+      "hash": "2b82011d65088725",
+      "spoken_text": "Choose a photo"
+    },
+    "audio/en/ui_confidence.mp3": {
+      "hash": "1a4935a8e1a9d372",
+      "spoken_text": "How sure"
+    },
+    "audio/en/ui_consent_accept.mp3": {
+      "hash": "4b2c8239871b43fe",
+      "spoken_text": "Yes, I agree"
+    },
+    "audio/en/ui_consent_decline.mp3": {
+      "hash": "9fafee6369b86e2c",
+      "spoken_text": "No, thank you"
+    },
+    "audio/en/ui_consent_hub_text.mp3": {
+      "hash": "c9c306e8f303a072",
+      "spoken_text": "The co-op computer keeps: your name, phone, community, the rough place of your plot, your language and the reports you send, result, confidence, date and rough place. Photos only if you send them over the co-op Wi-Fi. Co-op staff and the extension officer see them. For now the system has no password: other people on the co-op Wi-Fi could also see them. You can ask for them to be deleted at any time."
+    },
+    "audio/en/ui_consent_text.mp3": {
+      "hash": "9b6f155b7eb6d1fa",
+      "spoken_text": "Cafetal saves on this phone the date, the result and the rough place of each check. The photo stays on this phone. Everything is saved with your member number, not your name. Nothing is sent unless you tap Send. If you want, the photos go to the co-op, only over the co-op Wi-Fi. You can delete everything at any time."
+    },
+    "audio/en/ui_consent_title.mp3": {
+      "hash": "27913c6b605725cb",
+      "spoken_text": "Your permission"
+    },
+    "audio/en/ui_continue.mp3": {
+      "hash": "22e24c2ff29d7e76",
+      "spoken_text": "Continue"
+    },
+    "audio/en/ui_delete_all.mp3": {
+      "hash": "9213888c7c15194e",
+      "spoken_text": "Delete all"
+    },
+    "audio/en/ui_delete_confirm.mp3": {
+      "hash": "b572de46a0d024b0",
+      "spoken_text": "Delete all checks and photos from this phone? This cannot be undone."
+    },
+    "audio/en/ui_delete_yes.mp3": {
+      "hash": "afd4fa84cdfdd5b6",
+      "spoken_text": "Yes, delete all"
+    },
+    "audio/en/ui_demo.mp3": {
+      "hash": "ef22f95dd34cf760",
+      "spoken_text": "demo: sample data"
+    },
+    "audio/en/ui_history.mp3": {
+      "hash": "4096fffd3bc265f4",
+      "spoken_text": "My checks"
+    },
+    "audio/en/ui_hub_offline.mp3": {
+      "hash": "fd34665258d7f95c",
+      "spoken_text": "No connection to the co-op."
+    },
+    "audio/en/ui_language.mp3": {
+      "hash": "2fd2c40ca0699a41",
+      "spoken_text": "Language"
+    },
+    "audio/en/ui_limits_note.mp3": {
+      "hash": "447326afe80b04c4",
+      "spoken_text": "It only checks leaves. It does not see berry borer, fertilizer, drought or soil."
+    },
+    "audio/en/ui_lock.mp3": {
+      "hash": "1c80af8413da261a",
+      "spoken_text": "Lock"
+    },
+    "audio/en/ui_member_id_invalid.mp3": {
+      "hash": "a156d0e2e81cfd7a",
+      "spoken_text": "Type M and 4 numbers, for example M 0 1 2 3."
+    },
+    "audio/en/ui_member_id_prompt.mp3": {
+      "hash": "617fb9e3decda0e4",
+      "spoken_text": "Your member number, example: M 0 1 2 3"
+    },
+    "audio/en/ui_member_not_registered.mp3": {
+      "hash": "8b78a55eb3d53107",
+      "spoken_text": "This member number is not registered at the co-op. Ask at the co-op."
+    },
+    "audio/en/ui_new_photo.mp3": {
+      "hash": "b759ce19ee104771",
+      "spoken_text": "Another photo"
+    },
+    "audio/en/ui_no_records.mp3": {
+      "hash": "6969b5b803489ae2",
+      "spoken_text": "No checks yet."
+    },
+    "audio/en/ui_offline_ready.mp3": {
+      "hash": "587dc7cdba56b40f",
+      "spoken_text": "Ready to use without internet"
+    },
+    "audio/en/ui_pending_sms.mp3": {
+      "hash": "817363a3c8425fb6",
+      "spoken_text": "Not sent yet"
+    },
+    "audio/en/ui_photo_tip_underside.mp3": {
+      "hash": "85d99f3f5a27a7ef",
+      "spoken_text": "Take the photo under the leaf, up close: let the spot fill the photo. Use good light."
+    },
+    "audio/en/ui_pin_optional.mp3": {
+      "hash": "0e04c03970163775",
+      "spoken_text": "4-number pin, if you want"
+    },
+    "audio/en/ui_pin_prompt.mp3": {
+      "hash": "9962c9f4fc1a0a9f",
+      "spoken_text": "Type your pin"
+    },
+    "audio/en/ui_pin_wrong.mp3": {
+      "hash": "88f06ae9aa4bc84d",
+      "spoken_text": "Wrong pin. Try again."
+    },
+    "audio/en/ui_play_en.mp3": {
+      "hash": "34fbcdfd454819fe",
+      "spoken_text": "Listen in English"
+    },
+    "audio/en/ui_play_es.mp3": {
+      "hash": "d595b5349f1bc397",
+      "spoken_text": "Listen in Spanish"
+    },
+    "audio/en/ui_play_tzh.mp3": {
+      "hash": "24904af3d5046e1b",
+      "spoken_text": "Listen in Tseltal"
+    },
+    "audio/en/ui_reason_blurry.mp3": {
+      "hash": "92d3ddfd9176ac1d",
+      "spoken_text": "The photo is blurry."
+    },
+    "audio/en/ui_reason_low_conf.mp3": {
+      "hash": "ec86023e354add73",
+      "spoken_text": "The app is not sure."
+    },
+    "audio/en/ui_reason_not_coffee.mp3": {
+      "hash": "d383f8435eba63fc",
+      "spoken_text": "It does not look like a coffee leaf."
+    },
+    "audio/en/ui_saved.mp3": {
+      "hash": "446b6d74b631cfa9",
+      "spoken_text": "Saved on this phone"
+    },
+    "audio/en/ui_send_sms.mp3": {
+      "hash": "45d5f865e6a0275a",
+      "spoken_text": "Send by S M S"
+    },
+    "audio/en/ui_sent.mp3": {
+      "hash": "9fe89207f8560c56",
+      "spoken_text": "Sent"
+    },
+    "audio/en/ui_settings.mp3": {
+      "hash": "3499da6f1741a975",
+      "spoken_text": "Settings"
+    },
+    "audio/en/ui_simulate_send.mp3": {
+      "hash": "51c34cc1d68b4498",
+      "spoken_text": "Send, simulated"
+    },
+    "audio/en/ui_simulated.mp3": {
+      "hash": "25be2a477eb2596e",
+      "spoken_text": "simulated: no real S M S was sent"
+    },
+    "audio/en/ui_sms_preview.mp3": {
+      "hash": "be25241698cee55d",
+      "spoken_text": "This is the message that will be sent:"
+    },
+    "audio/en/ui_sync_photos.mp3": {
+      "hash": "b7e5bfb903d60d6b",
+      "spoken_text": "Send photos to the co-op, Wi-Fi"
+    },
+    "audio/en/ui_synced.mp3": {
+      "hash": "7df58cf4bff775af",
+      "spoken_text": "Photos sent to the co-op"
+    },
+    "audio/en/ui_take_photo.mp3": {
+      "hash": "a634e09daf1f8db0",
+      "spoken_text": "Take photo"
+    },
+    "audio/en/ui_tip_bring_leaf_home.mp3": {
+      "hash": "787922737752e416",
+      "spoken_text": "No phone in the coffee field? Bring a few leaves home and take the photo here."
+    },
+    "audio/en/ui_unverified.mp3": {
+      "hash": "d7da9f9d5e29932a",
+      "spoken_text": "unverified"
+    },
+    "audio/en/ui_what_to_do.mp3": {
+      "hash": "6fe739471b0000ab",
+      "spoken_text": "What to do this week"
+    },
     "audio/es/advice_acaro_rojo.mp3": {
       "hash": "beb461904ec39a7c",
       "spoken_text": "La arañita roja aumenta en tiempo seco y con el polvo de los caminos. Revise cada semana las matas de la orilla, junto al camino. Deje sombra y plantas que detengan el polvo. Si las hojas se ven color cobre, avise al técnico."
@@ -221,6 +516,10 @@
     "audio/es/ui_pin_wrong.mp3": {
       "hash": "72794b54e91e1008",
       "spoken_text": "pin equivocado. Intente otra vez."
+    },
+    "audio/es/ui_play_en.mp3": {
+      "hash": "d7e61da7611b640f",
+      "spoken_text": "Escuchar en inglés"
     },
     "audio/es/ui_play_es.mp3": {
       "hash": "2ec7b29670379aaa",
@@ -514,6 +813,10 @@
       "hash": "11660f3d543a6189",
       "spoken_text": "Ma lekuk te pin. sibaya shan."
     },
+    "audio/tzh/ui_play_en.mp3": {
+      "hash": "0ccae600b6ebd603",
+      "spoken_text": "Aiya ta inglés"
+    },
     "audio/tzh/ui_play_es.mp3": {
       "hash": "65f3de2a1a740594",
       "spoken_text": "Aiya ta kashlan kop"
@@ -588,5 +891,9 @@
     }
   },
   "note": "Hash of the text actually spoken per file; make_audio.py skips files whose hash is unchanged. Native recordings (audio_source 'native...') are never touched.",
-  "voice": "es-mls_10246-low.onnx"
+  "voices": {
+    "en": "en-us-lessac-medium.onnx (espeak en-us) --noise_w 0.4 --sentence_silence 0.3 --length_scale 1.4",
+    "es": "es-mls_10246-low.onnx (espeak es-419) --noise_w 0.4 --sentence_silence 0.3",
+    "tzh": "es-mls_10246-low.onnx (espeak es-419) --noise_w 0.4 --sentence_silence 0.3"
+  }
 }

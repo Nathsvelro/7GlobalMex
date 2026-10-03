@@ -12,7 +12,8 @@
   <h1>Revisión de contenido (tarjetas)</h1>
   <div class="notice">Todo lo que un socio ve o escucha sale de estas tarjetas (<span class="code">content/cards.json</span>). Nada se inventa.
     Cada idioma queda <span class="badge unv">SIN VERIFICAR</span> hasta que una persona lo revisa: un agrónomo o el técnico para los consejos,
-    un hablante nativo de tseltal para el texto y la voz en tseltal. El tseltal actual es un borrador hecho con IA y su audio es una voz sintética provisional.</div>
+    un hablante nativo de tseltal para el texto y la voz en tseltal. El tseltal actual es un borrador hecho con IA y su audio es una voz sintética provisional.
+    El inglés (para visitantes y jueces) es una traducción del español hecha con IA, con voz sintética en inglés: también lo revisa una persona que hable inglés.</div>
   <div class="card row" style="gap:8px 18px;align-items:flex-end">
     <div><label for="reviewer">Quién revisa</label><input id="reviewer" maxlength="80" placeholder="nombre y cargo"></div>
     <div><label for="speaker">Quién graba (voz nativa)</label><input id="speaker" maxlength="80" placeholder="nombre"></div>
@@ -29,7 +30,7 @@
 <script>
 const $ = (id) => document.getElementById(id);
 let data = null, recorder = null, chunks = [], recTarget = null;
-const LANG_NAME = { es: "Español", tzh: "Tseltal" };
+const LANG_NAME = { es: "Español", tzh: "Tseltal", en: "Inglés (English)" };
 function remember(id) { try { const v = localStorage.getItem("cafetal-" + id); if (v) $(id).value = v; } catch (e) {} $(id).addEventListener("change", () => { try { localStorage.setItem("cafetal-" + id, $(id).value); } catch (e) {} }); }
 
 async function load() { data = await api("/api/cards"); render(); }
@@ -46,7 +47,7 @@ function render() {
     <div class="row" style="margin-top:8px">` + langs.map((l) => {
       const audio = c.audio && c.audio[l];
       const src = c.audio_source && c.audio_source[l];
-      return `<div class="grow" style="border-left:3px solid #dcd8cc;padding-left:10px">
+      return `<div class="grow" style="flex-basis:260px;border-left:3px solid #dcd8cc;padding-left:10px">
         <div><b>${LANG_NAME[l] || l}</b> ${statusBadge(c.status[l])} ${c.reviewed_by && c.reviewed_by[l] ? `<span class="small muted">por ${esc(c.reviewed_by[l])}</span>` : ""}</div>
         <p style="margin:6px 0" class="wrap">${esc(c[l] || "(sin texto)")}</p>
         ${audio ? `<audio controls preload="none" src="/content/${esc(audio)}?v=${encodeURIComponent(src || "")}" style="width:100%;max-width:340px;height:34px"></audio>

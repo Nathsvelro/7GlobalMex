@@ -138,6 +138,7 @@ input.bad { color: var(--danger); }
 .play-btn { flex-direction: column; gap: 4px; min-height: 84px; background: var(--leaf-l); border-color: var(--leaf); color: var(--leaf-d); font-size: 16px; }
 .play-btn .i { width: 34px; height: 34px; }
 .play-btn .badge { font-size: 10px; }
+.play-btn.wide { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; min-height: 64px; }
 .sec { display: flex; align-items: center; gap: 8px; margin: 6px 0 0; font-size: 20px; color: var(--coffee); }
 .saved { display: flex; align-items: center; gap: 8px; color: var(--leaf-d); font-weight: 700; }
 .sms-box, .hub-box { display: flex; flex-direction: column; gap: 10px; padding: 12px; border-radius: var(--radius); background: #f3ece4; }

@@ -32,6 +32,6 @@ airplane mode and the SMS location is `-`. Options for the demo phone:
 2. Put `app/` + `content/` on any HTTPS static host (the hub buttons stay hidden there).
 3. Demo only: `chrome://flags/#unsafely-treat-insecure-origin-as-secure` = `http://<hub-ip>:8000` on the phone.
 
-First load downloads about 15.9 MB (onnxruntime WASM 11.0 MB raw / 2.9 MB gzip, model ~2 MB, 146 MP3s 2.6 MB;
-computed: 15.65 MB measured with 142 MP3s, plus the 0.23 MB of 4 MP3s added later),
+First load downloads about 16.8 MB (onnxruntime WASM 11.0 MB raw / 2.9 MB gzip, model ~2 MB, 222 MP3s in Tseltal,
+Spanish and English 3.5 MB; computed from file sizes),
 then nothing more is needed offline.
