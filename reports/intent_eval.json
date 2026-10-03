@@ -2,10 +2,10 @@
  "date": "2026-10-03",
  "data": {
   "file": "data/intent/examples.csv",
-  "n": 545,
+  "n": 575,
   "per_intent": {
    "precio": 54,
-   "reporte": 52,
+   "reporte": 82,
    "ayuda": 49,
    "hablar_con_tecnico": 48,
    "otro": 342
@@ -13,132 +13,132 @@
   "per_source": {
    "MASSIVE": 300,
    "ai-draft-unverified": 16,
-   "team": 229
+   "team": 259
   },
-  "n_train": 436,
-  "n_test": 109,
+  "n_train": 460,
+  "n_test": 115,
   "split": "stratified 80/20, random_state=42"
  },
  "model": {
   "vectorizer": "TF-IDF char_wb (2, 4), sublinear_tf, l2",
   "classifier": "LogisticRegression multinomial, class_weight=balanced",
-  "C": 10.0,
+  "C": 1.0,
   "cv_macro_f1_by_C": {
-   "1.0": 0.854,
-   "3.0": 0.854,
-   "10.0": 0.8565,
-   "30.0": 0.8523
+   "1.0": 0.8769,
+   "3.0": 0.867,
+   "10.0": 0.8615,
+   "30.0": 0.8479
   },
-  "n_features": 4399
+  "n_features": 4457
  },
  "threshold": {
-  "value": 0.65,
+  "value": 0.45,
   "rule": "lowest t with >= 95% precision on auto-answered messages, out-of-fold predictions on the 80% split",
   "sweep_oof_train": [
    {
     "threshold": 0.3,
-    "auto_precision": 0.8904,
-    "auto_coverage": 0.3349,
-    "macro_f1_routed": 0.8565
+    "auto_precision": 0.9176,
+    "auto_coverage": 0.3696,
+    "macro_f1_routed": 0.8768
    },
    {
     "threshold": 0.35,
-    "auto_precision": 0.8904,
-    "auto_coverage": 0.3349,
-    "macro_f1_routed": 0.8565
+    "auto_precision": 0.9172,
+    "auto_coverage": 0.3413,
+    "macro_f1_routed": 0.8364
    },
    {
     "threshold": 0.4,
-    "auto_precision": 0.8944,
-    "auto_coverage": 0.3257,
-    "macro_f1_routed": 0.8477
+    "auto_precision": 0.9301,
+    "auto_coverage": 0.3109,
+    "macro_f1_routed": 0.7994
    },
    {
     "threshold": 0.45,
-    "auto_precision": 0.8986,
-    "auto_coverage": 0.3165,
-    "macro_f1_routed": 0.8384
+    "auto_precision": 0.9609,
+    "auto_coverage": 0.2783,
+    "macro_f1_routed": 0.7762
    },
    {
     "threshold": 0.5,
-    "auto_precision": 0.937,
-    "auto_coverage": 0.2913,
-    "macro_f1_routed": 0.8317
+    "auto_precision": 0.991,
+    "auto_coverage": 0.2413,
+    "macro_f1_routed": 0.7368
    },
    {
     "threshold": 0.55,
-    "auto_precision": 0.9496,
-    "auto_coverage": 0.2729,
-    "macro_f1_routed": 0.8137
+    "auto_precision": 0.9895,
+    "auto_coverage": 0.2065,
+    "macro_f1_routed": 0.6802
    },
    {
     "threshold": 0.6,
-    "auto_precision": 0.9474,
-    "auto_coverage": 0.2615,
-    "macro_f1_routed": 0.7919
+    "auto_precision": 0.9878,
+    "auto_coverage": 0.1783,
+    "macro_f1_routed": 0.6264
    },
    {
     "threshold": 0.65,
-    "auto_precision": 0.9626,
-    "auto_coverage": 0.2454,
-    "macro_f1_routed": 0.7795
+    "auto_precision": 0.9861,
+    "auto_coverage": 0.1565,
+    "macro_f1_routed": 0.5818
    },
    {
     "threshold": 0.7,
-    "auto_precision": 0.9804,
-    "auto_coverage": 0.2339,
-    "macro_f1_routed": 0.7737
+    "auto_precision": 0.9833,
+    "auto_coverage": 0.1304,
+    "macro_f1_routed": 0.5217
    },
    {
     "threshold": 0.75,
-    "auto_precision": 0.9794,
-    "auto_coverage": 0.2225,
-    "macro_f1_routed": 0.7539
+    "auto_precision": 1.0,
+    "auto_coverage": 0.0891,
+    "macro_f1_routed": 0.4364
    },
    {
     "threshold": 0.8,
-    "auto_precision": 0.9886,
-    "auto_coverage": 0.2018,
-    "macro_f1_routed": 0.7207
+    "auto_precision": 1.0,
+    "auto_coverage": 0.0609,
+    "macro_f1_routed": 0.3596
    },
    {
     "threshold": 0.85,
-    "auto_precision": 0.9875,
-    "auto_coverage": 0.1835,
-    "macro_f1_routed": 0.6847
+    "auto_precision": 1.0,
+    "auto_coverage": 0.0326,
+    "macro_f1_routed": 0.2747
    },
    {
     "threshold": 0.9,
     "auto_precision": 1.0,
-    "auto_coverage": 0.1491,
-    "macro_f1_routed": 0.6183
+    "auto_coverage": 0.0174,
+    "macro_f1_routed": 0.2202
    }
   ]
  },
  "test": {
   "argmax": {
-   "n": 109,
-   "accuracy": 0.9174,
+   "n": 115,
+   "accuracy": 0.9217,
    "macro_f1": 0.8973
   },
   "with_threshold": {
-   "n": 109,
-   "accuracy": 0.9174,
-   "macro_f1": 0.8741
+   "n": 115,
+   "accuracy": 0.913,
+   "macro_f1": 0.8659
   },
   "with_threshold_spanish_only": {
-   "n": 105,
-   "accuracy": 0.9238,
-   "macro_f1": 0.8805
+   "n": 111,
+   "accuracy": 0.9189,
+   "macro_f1": 0.8713
   },
   "with_threshold_excluding_massive": {
-   "n": 51,
-   "accuracy": 0.8235,
+   "n": 57,
+   "accuracy": 0.8421,
    "macro_f1": 0.82
   },
-  "auto_answered_precision": 0.9706,
-  "auto_answered_share": 0.3119,
-  "on_topic_answered_right": 0.8049,
+  "auto_answered_precision": 0.9512,
+  "auto_answered_share": 0.3565,
+  "on_topic_answered_right": 0.8298,
   "confusion_with_threshold": {
    "labels": [
     "precio",
@@ -157,7 +157,7 @@
     ],
     [
      0,
-     10,
+     16,
      0,
      0,
      0
@@ -179,9 +179,9 @@
     [
      0,
      0,
-     1,
+     2,
      0,
-     67
+     66
     ]
    ]
   },
@@ -196,12 +196,12 @@
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 10.0
+    "support": 16.0
    },
    "ayuda": {
-    "precision": 0.8,
+    "precision": 0.6666666666666666,
     "recall": 0.4,
-    "f1-score": 0.5333333333333333,
+    "f1-score": 0.5,
     "support": 10.0
    },
    "hablar_con_tecnico": {
@@ -211,23 +211,23 @@
     "support": 10.0
    },
    "otro": {
-    "precision": 0.8933333333333333,
-    "recall": 0.9852941176470589,
-    "f1-score": 0.9370629370629371,
+    "precision": 0.8918918918918919,
+    "recall": 0.9705882352941176,
+    "f1-score": 0.9295774647887324,
     "support": 68.0
    },
-   "accuracy": 0.9174311926605505,
+   "accuracy": 0.9130434782608695,
    "macro avg": {
-    "precision": 0.9386666666666666,
-    "recall": 0.8406951871657753,
-    "f1-score": 0.874079254079254,
-    "support": 109.0
+    "precision": 0.9117117117117116,
+    "recall": 0.8377540106951871,
+    "f1-score": 0.8659154929577465,
+    "support": 115.0
    },
    "weighted avg": {
-    "precision": 0.9151070336391438,
-    "recall": 0.9174311926605505,
-    "f1-score": 0.9078313124184684,
-    "support": 109.0
+    "precision": 0.9070896983940461,
+    "recall": 0.9130434782608695,
+    "f1-score": 0.9053153704837722,
+    "support": 115.0
    }
   }
  },
@@ -235,138 +235,108 @@
   {
    "text": "q precio tiene el cafe",
    "pred": "precio",
-   "conf": 0.957,
+   "conf": 0.8,
    "routed": "precio"
   },
   {
    "text": "cuanto pagan x kilo",
    "pred": "precio",
-   "conf": 0.988,
+   "conf": 0.875,
    "routed": "precio"
   },
   {
    "text": "mi cafe tiene manchas amarillas",
    "pred": "reporte",
-   "conf": 0.976,
+   "conf": 0.838,
    "routed": "reporte"
   },
   {
    "text": "kiero hablar con el ingeniero",
    "pred": "hablar_con_tecnico",
-   "conf": 0.988,
+   "conf": 0.868,
    "routed": "hablar_con_tecnico"
   },
   {
    "text": "como funciona",
    "pred": "ayuda",
-   "conf": 0.975,
+   "conf": 0.846,
    "routed": "ayuda"
   },
   {
    "text": "hola buenas tardes",
    "pred": "otro",
-   "conf": 0.95,
+   "conf": 0.637,
    "routed": "otro"
   },
   {
    "text": "pon musica",
    "pred": "otro",
-   "conf": 0.914,
+   "conf": 0.574,
    "routed": "otro"
   },
   {
    "text": "a como esta el pergamino en la cooperativa",
    "pred": "precio",
-   "conf": 0.477,
+   "conf": 0.332,
    "routed": "otro"
   },
   {
    "text": "las hojas tienen polvo amarillo",
    "pred": "reporte",
-   "conf": 0.958,
+   "conf": 0.831,
    "routed": "reporte"
   },
   {
    "text": "que venga el ingeniero a mi parcela",
    "pred": "hablar_con_tecnico",
-   "conf": 0.956,
+   "conf": 0.73,
    "routed": "hablar_con_tecnico"
+  },
+  {
+   "text": "mis matas tienen polvo naranja",
+   "pred": "reporte",
+   "conf": 0.597,
+   "routed": "reporte"
+  },
+  {
+   "text": "cuanto estan pagando el kilo de cafe",
+   "pred": "precio",
+   "conf": 0.917,
+   "routed": "precio"
+  },
+  {
+   "text": "asdf qwerty",
+   "pred": "otro",
+   "conf": 0.41,
+   "routed": "otro"
+  },
+  {
+   "text": "quiero hablar con el ingeniero",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.915,
+   "routed": "hablar_con_tecnico"
+  },
+  {
+   "text": "hola buenos dias",
+   "pred": "otro",
+   "conf": 0.612,
+   "routed": "otro"
   }
  ],
  "test_predictions": [
   {
-   "text": "mi cafe se esta poniendo amarillo",
-   "true": "reporte",
+   "text": "inge necesito que venga",
+   "true": "hablar_con_tecnico",
    "lang": "es",
    "source": "team",
-   "pred": "reporte",
-   "conf": 0.740179,
+   "pred": "hablar_con_tecnico",
+   "conf": 0.701637,
    "proba": [
-    0.03192154923846896,
-    0.033838720580769296,
-    0.0999320828136654,
-    0.09412904182099267,
-    0.7401786055461037
-   ]
-  },
-  {
-   "text": "quiero hacer una lista y esto debería guardarse automáticamente como un archivo de texto con la lista de títulos",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.864375,
-   "proba": [
-    0.02387108892035447,
-    0.06867963215543775,
-    0.8643748287045808,
-    0.0172027057793199,
-    0.02587174444030706
-   ]
-  },
-  {
-   "text": "tuitear al servicio de atención al cliente que deberían esforzarse por ser más complacientes",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.839323,
-   "proba": [
-    0.09803000434662992,
-    0.02291463386519859,
-    0.8393234563130639,
-    0.01703644158573204,
-    0.02269546388937547
-   ]
-  },
-  {
-   "text": "cuanto cuesta el maiz ahorita",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.677271,
-   "proba": [
-    0.024349981653757968,
-    0.03849083376512714,
-    0.232664002129163,
-    0.6772709857293354,
-    0.02722419672261642
-   ]
-  },
-  {
-   "text": "poner alarma para mañana al mediodía",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.950833,
-   "proba": [
-    0.01791949360011033,
-    0.013260012737826182,
-    0.9508325854927473,
-    0.00909548318312547,
-    0.008892424986190828
+    0.09659168273788227,
+    0.7016365974593037,
+    0.11722488261906558,
+    0.042604913836624715,
+    0.041941923347123856
    ]
   },
   {
@@ -375,598 +345,13 @@
    "lang": "es",
    "source": "MASSIVE",
    "pred": "otro",
-   "conf": 0.91745,
+   "conf": 0.614734,
    "proba": [
-    0.015475251981355638,
-    0.011870105674587735,
-    0.917450498021095,
-    0.005681830373604809,
-    0.04952231394935695
-   ]
-  },
-  {
-   "text": "alexa gran canción para el viaje",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.829991,
-   "proba": [
-    0.0846859587957487,
-    0.03157498928863103,
-    0.8299906786527855,
-    0.03286634440873573,
-    0.020882028854099077
-   ]
-  },
-  {
-   "text": "inge necesito que venga",
-   "true": "hablar_con_tecnico",
-   "lang": "es",
-   "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.939634,
-   "proba": [
-    0.020352187837066625,
-    0.9396344167708138,
-    0.03041309733541638,
-    0.005878016529283077,
-    0.0037222815274200517
-   ]
-  },
-  {
-   "text": "mis plantas se estan secando",
-   "true": "reporte",
-   "lang": "es",
-   "source": "team",
-   "pred": "reporte",
-   "conf": 0.782375,
-   "proba": [
-    0.055247412918975405,
-    0.019115539312124823,
-    0.11601435820620092,
-    0.02724719154798209,
-    0.7823754980147168
-   ]
-  },
-  {
-   "text": "comuniqueme con el tecnico",
-   "true": "hablar_con_tecnico",
-   "lang": "es",
-   "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.957401,
-   "proba": [
-    0.018696998243570725,
-    0.957400676084237,
-    0.014829235039064586,
-    0.005127467980412737,
-    0.003945622652715078
-   ]
-  },
-  {
-   "text": "que tal como estas",
-   "true": "otro",
-   "lang": "es",
-   "source": "team",
-   "pred": "ayuda",
-   "conf": 0.742652,
-   "proba": [
-    0.742652468090677,
-    0.027655907268191664,
-    0.15032343512908233,
-    0.026627056455183828,
-    0.05274113305686521
-   ]
-  },
-  {
-   "text": "cuál es la forma mas fácil y rápida de cocinar un pavo",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.938782,
-   "proba": [
-    0.023809160699958497,
-    0.00711490066662189,
-    0.9387818928518826,
-    0.014838282569915914,
-    0.015455763211621048
-   ]
-  },
-  {
-   "text": "cuentame chistes",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.820657,
-   "proba": [
-    0.07261462456532547,
-    0.04194183408459807,
-    0.8206573616264583,
-    0.027585730620698974,
-    0.037200449102919315
-   ]
-  },
-  {
-   "text": "mancha de hierro en el cafe",
-   "true": "reporte",
-   "lang": "es",
-   "source": "team",
-   "pred": "reporte",
-   "conf": 0.659994,
-   "proba": [
-    0.020210867769146542,
-    0.05100419859133574,
-    0.0780958196224465,
-    0.1906955483036851,
-    0.6599935657133862
-   ]
-  },
-  {
-   "text": "necesito consejo del ingeniero",
-   "true": "hablar_con_tecnico",
-   "lang": "es",
-   "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.957397,
-   "proba": [
-    0.009219697707635229,
-    0.9573969315729095,
-    0.019372610665420873,
-    0.010335465162099355,
-    0.0036752948919350366
-   ]
-  },
-  {
-   "text": "tuitea una queja sobre el mal sistema de drenaje",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.850819,
-   "proba": [
-    0.037130814167237444,
-    0.047114463603809865,
-    0.8508190024224717,
-    0.016805468694627176,
-    0.04813025111185389
-   ]
-  },
-  {
-   "text": "cuanto se paga el maiz blanco",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.828837,
-   "proba": [
-    0.027039940023480577,
-    0.024537069603163143,
-    0.08310642739267551,
-    0.8288369388321666,
-    0.03647962414851407
-   ]
-  },
-  {
-   "text": "quiero una visita a mi parcela",
-   "true": "hablar_con_tecnico",
-   "lang": "es",
-   "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.824601,
-   "proba": [
-    0.012842169431958574,
-    0.8246011214156448,
-    0.0899104945827864,
-    0.01132827138834616,
-    0.06131794318126406
-   ]
-  },
-  {
-   "text": "cúal es una receta fácil para cocinar comida",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.923864,
-   "proba": [
-    0.04120382137300375,
-    0.01125541493390537,
-    0.9238643994404623,
-    0.01653600129406338,
-    0.007140362958565346
-   ]
-  },
-  {
-   "text": "ayudaa",
-   "true": "ayuda",
-   "lang": "es",
-   "source": "team",
-   "pred": "ayuda",
-   "conf": 0.945136,
-   "proba": [
-    0.9451364199680211,
-    0.0066020659748114085,
-    0.027961212071757363,
-    0.0079219812122298,
-    0.012378320773180448
-   ]
-  },
-  {
-   "text": "sale pues",
-   "true": "otro",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.857044,
-   "proba": [
-    0.08274910580607965,
-    0.020603266975309252,
-    0.8570439819425661,
-    0.019261788825848527,
-    0.02034185645019653
-   ]
-  },
-  {
-   "text": "está muy alto por favor puedes bajar la música",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.950117,
-   "proba": [
-    0.009193321146262364,
-    0.018207484957458688,
-    0.9501170979021495,
-    0.011980424426624286,
-    0.010501671567505111
-   ]
-  },
-  {
-   "text": "baja el brillo",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.664878,
-   "proba": [
-    0.09121239924516193,
-    0.04077472765452525,
-    0.6648777199294943,
-    0.11934545293788573,
-    0.08378970023293264
-   ]
-  },
-  {
-   "text": "recuérda me a las seis lo de la reunión a las siete",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.911698,
-   "proba": [
-    0.01351276135968063,
-    0.013294601042514209,
-    0.911697769427588,
-    0.009399433459611611,
-    0.052095434710605716
-   ]
-  },
-  {
-   "text": "k precio tiene el kilo de cafe",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.986851,
-   "proba": [
-    0.003298192734686677,
-    0.0009416488988332303,
-    0.0009768315020473068,
-    0.9868510924135461,
-    0.00793223445088673
-   ]
-  },
-  {
-   "text": "bueno",
-   "true": "otro",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.714103,
-   "proba": [
-    0.1291395544846259,
-    0.06464249374474265,
-    0.7141034696793349,
-    0.0610219953147015,
-    0.03109248677659505
-   ]
-  },
-  {
-   "text": "cuanto vale el frijol negro",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.926105,
-   "proba": [
-    0.00961687370385616,
-    0.016429897083723336,
-    0.04103061565860665,
-    0.9261052254689333,
-    0.00681738808488073
-   ]
-  },
-  {
-   "text": "crea un recordatorio de alarma al calendario",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.892353,
-   "proba": [
-    0.03751119162991676,
-    0.01708807998140709,
-    0.8923532372514155,
-    0.02706080582346529,
-    0.02598668531379531
-   ]
-  },
-  {
-   "text": "limpia el suelo por favor",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.868813,
-   "proba": [
-    0.025376395577177954,
-    0.05100367847311562,
-    0.8688133425148095,
-    0.04386986667004648,
-    0.010936716764850493
-   ]
-  },
-  {
-   "text": "quién es el cantante de la canción que está sonando ahora mismo",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.88859,
-   "proba": [
-    0.0387974204361666,
-    0.02791230356883752,
-    0.8885901428537808,
-    0.022666699109879528,
-    0.022033434031335748
-   ]
-  },
-  {
-   "text": "ir a la lista de favoritos",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.932373,
-   "proba": [
-    0.010839330570721156,
-    0.029104532016117284,
-    0.9323732172293278,
-    0.015723629087771456,
-    0.011959291096062242
-   ]
-  },
-  {
-   "text": "hazme una nueva lista de verificación",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.909488,
-   "proba": [
-    0.027009886177822857,
-    0.037061266755724395,
-    0.9094884499312348,
-    0.011611081920060582,
-    0.014829315215157237
-   ]
-  },
-  {
-   "text": "mis cafetos estan tirando hojas",
-   "true": "reporte",
-   "lang": "es",
-   "source": "team",
-   "pred": "reporte",
-   "conf": 0.952753,
-   "proba": [
-    0.017490291633945818,
-    0.004172025927775073,
-    0.012150636768615755,
-    0.013434415145587207,
-    0.9527526305240761
-   ]
-  },
-  {
-   "text": "búscame una gasolinera cerca",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.933532,
-   "proba": [
-    0.021267186895673213,
-    0.021236982435059996,
-    0.933531861769675,
-    0.010181874277907167,
-    0.013782094621684822
-   ]
-  },
-  {
-   "text": "retire el helado del compra",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.618521,
-   "proba": [
-    0.21744670624140058,
-    0.03515559502735905,
-    0.6185212079138129,
-    0.08708663736402122,
-    0.04178985345340619
-   ]
-  },
-  {
-   "text": "cómo está en tráfico ahora en calle de valldemossa",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.919682,
-   "proba": [
-    0.0213756523351749,
-    0.015620341452454951,
-    0.9196821022002161,
-    0.025494521758384268,
-    0.017827382253769737
-   ]
-  },
-  {
-   "text": "deshabilitar el enchufe wemo",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.795964,
-   "proba": [
-    0.06131408450753642,
-    0.048235212176125135,
-    0.7959644860351055,
-    0.04303276645411599,
-    0.05145345082711701
-   ]
-  },
-  {
-   "text": "como se manda la foto",
-   "true": "ayuda",
-   "lang": "es",
-   "source": "team",
-   "pred": "ayuda",
-   "conf": 0.84379,
-   "proba": [
-    0.843789864261922,
-    0.012188402798818297,
-    0.042830923748274304,
-    0.0373253151798568,
-    0.06386549401112866
-   ]
-  },
-  {
-   "text": "que significa CAF1",
-   "true": "ayuda",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.728178,
-   "proba": [
-    0.14417755486235903,
-    0.05355892402523032,
-    0.7281776521757456,
-    0.03698661919641577,
-    0.03709924974024936
-   ]
-  },
-  {
-   "text": "pon todas las canciones de rock",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.880775,
-   "proba": [
-    0.04900731692527247,
-    0.006243277976411718,
-    0.8807745819837407,
-    0.009090501483938513,
-    0.05488432163063674
-   ]
-  },
-  {
-   "text": "menu",
-   "true": "ayuda",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.437268,
-   "proba": [
-    0.2993818621181501,
-    0.12480563624078954,
-    0.4372678858649187,
-    0.03957075518603914,
-    0.09897386059010232
-   ]
-  },
-  {
-   "text": "las hojas tienen un polvito anaranjado",
-   "true": "reporte",
-   "lang": "es",
-   "source": "team",
-   "pred": "reporte",
-   "conf": 0.924982,
-   "proba": [
-    0.01890340017501033,
-    0.010562503834340715,
-    0.04061006963456503,
-    0.004941941328922097,
-    0.9249820850271617
-   ]
-  },
-  {
-   "text": "a que hora es la junta",
-   "true": "otro",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.906833,
-   "proba": [
-    0.045771898248189405,
-    0.018571626342300203,
-    0.9068326907014891,
-    0.006185084105060659,
-    0.02263870060296065
-   ]
-  },
-  {
-   "text": "donde estas",
-   "true": "otro",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.59023,
-   "proba": [
-    0.2323423285492747,
-    0.026764663769891575,
-    0.5902297461802888,
-    0.041431997314318667,
-    0.10923126418622638
-   ]
-  },
-  {
-   "text": "bit'il ayat",
-   "true": "otro",
-   "lang": "tzh",
-   "source": "ai-draft-unverified",
-   "pred": "ayuda",
-   "conf": 0.42894,
-   "proba": [
-    0.4289398042139625,
-    0.05385294153673026,
-    0.3769212756746231,
-    0.06278890970327566,
-    0.07749706887140843
+    0.09184361015945484,
+    0.06966072920964414,
+    0.6147343126895355,
+    0.04328024129487348,
+    0.18048110664649206
    ]
   },
   {
@@ -975,703 +360,13 @@
    "lang": "es",
    "source": "team",
    "pred": "reporte",
-   "conf": 0.686036,
+   "conf": 0.493653,
    "proba": [
-    0.0334387715353902,
-    0.026675334903340148,
-    0.04024084290245787,
-    0.21360918149565877,
-    0.686035869163153
-   ]
-  },
-  {
-   "text": "que sigue",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.639197,
-   "proba": [
-    0.28043842226548577,
-    0.05517497241424811,
-    0.6391967938506252,
-    0.009981767272262191,
-    0.015208044197378765
-   ]
-  },
-  {
-   "text": "tuve el peor dia de mi vida hoy",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.795097,
-   "proba": [
-    0.023548727331928095,
-    0.04763490084885365,
-    0.7950966630532418,
-    0.07246164421280535,
-    0.06125806455317109
-   ]
-  },
-  {
-   "text": "las hojas tienen polvo naranja abajo",
-   "true": "reporte",
-   "lang": "es",
-   "source": "team",
-   "pred": "reporte",
-   "conf": 0.953243,
-   "proba": [
-    0.012321778351009314,
-    0.005277262927583596,
-    0.023074595153878344,
-    0.006083297081225225,
-    0.9532430664863035
-   ]
-  },
-  {
-   "text": "pasame tu numero",
-   "true": "otro",
-   "lang": "es",
-   "source": "team",
-   "pred": "ayuda",
-   "conf": 0.439679,
-   "proba": [
-    0.43967944335903,
-    0.11900318046390232,
-    0.3593538868957437,
-    0.03641033660344663,
-    0.04555315267787745
-   ]
-  },
-  {
-   "text": "iniciar audiolibro las dos torres",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.845729,
-   "proba": [
-    0.09287502726001585,
-    0.021543327730955384,
-    0.8457286769798045,
-    0.01310973566921366,
-    0.02674323236001056
-   ]
-  },
-  {
-   "text": "jayeb stojol te kajpe",
-   "true": "precio",
-   "lang": "tzh",
-   "source": "ai-draft-unverified",
-   "pred": "precio",
-   "conf": 0.910001,
-   "proba": [
-    0.01068909757193281,
-    0.009191959593240914,
-    0.016034178144256846,
-    0.9100006954543208,
-    0.05408406923624853
-   ]
-  },
-  {
-   "text": "por favor agregue un nuevo artículo a la lista",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.928623,
-   "proba": [
-    0.009416622111331749,
-    0.04032212467839417,
-    0.9286225490320565,
-    0.010475773695132038,
-    0.011162930483085549
-   ]
-  },
-  {
-   "text": "buenas tardes",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.924856,
-   "proba": [
-    0.028906066526416637,
-    0.011235941514884475,
-    0.9248558058878669,
-    0.01049829310549695,
-    0.02450389296533497
-   ]
-  },
-  {
-   "text": "cuanto dan por el pergamino",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.940744,
-   "proba": [
-    0.009482132299040765,
-    0.013563197173716613,
-    0.03072580745562286,
-    0.9407442910936018,
-    0.005484571978017834
-   ]
-  },
-  {
-   "text": "buen dia",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.880962,
-   "proba": [
-    0.04048455157243127,
-    0.025510793186256327,
-    0.8809618595508142,
-    0.03323630337944355,
-    0.019806492311054528
-   ]
-  },
-  {
-   "text": "desactiva el enchufe",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.867897,
-   "proba": [
-    0.03734836039661573,
-    0.024588684730957527,
-    0.8678972899491109,
-    0.038560769132255895,
-    0.031604895791060086
-   ]
-  },
-  {
-   "text": "si es mediodia en madrid que hora es en california",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.932745,
-   "proba": [
-    0.031465577461242185,
-    0.012591604995169179,
-    0.9327446271784798,
-    0.006598061237575172,
-    0.016600129127533655
-   ]
-  },
-  {
-   "text": "por favor espera durante la próxima hora",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.923816,
-   "proba": [
-    0.010644417899284908,
-    0.025346212557264245,
-    0.9238160326035982,
-    0.023465696293388485,
-    0.01672764064646413
-   ]
-  },
-  {
-   "text": "enciende el enchufe de la olla arrocera",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.921067,
-   "proba": [
-    0.019308166963617163,
-    0.015623765969574344,
-    0.9210669358943314,
-    0.01572001771500742,
-    0.028281113457469757
-   ]
-  },
-  {
-   "text": "como mando el codigo",
-   "true": "ayuda",
-   "lang": "es",
-   "source": "team",
-   "pred": "ayuda",
-   "conf": 0.882119,
-   "proba": [
-    0.8821191324451718,
-    0.019480658217399062,
-    0.040911508775510176,
-    0.03345989383357624,
-    0.024028806728342757
-   ]
-  },
-  {
-   "text": "juega conmigo",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.722652,
-   "proba": [
-    0.14900475751386752,
-    0.05517720682528266,
-    0.722652332814326,
-    0.02828866011204738,
-    0.044877042734476444
-   ]
-  },
-  {
-   "text": "quiero hablar con el tecnico",
-   "true": "hablar_con_tecnico",
-   "lang": "es",
-   "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.998736,
-   "proba": [
-    0.00035245333639619884,
-    0.9987363339744418,
-    0.0004228600996460405,
-    0.0002417830376353049,
-    0.00024656955188066614
-   ]
-  },
-  {
-   "text": "no necesito luz",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.637319,
-   "proba": [
-    0.08972872894209903,
-    0.23314479751874542,
-    0.6373194088267372,
-    0.02329205788455554,
-    0.016515006827862846
-   ]
-  },
-  {
-   "text": "quiero que avance rápido el audio y luego reanude",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.525628,
-   "proba": [
-    0.3097707075319601,
-    0.09981610698627155,
-    0.5256276062938849,
-    0.019900606678949433,
-    0.0448849725089339
-   ]
-  },
-  {
-   "text": "bit'il ya jtuntes te app",
-   "true": "ayuda",
-   "lang": "tzh",
-   "source": "ai-draft-unverified",
-   "pred": "ayuda",
-   "conf": 0.589673,
-   "proba": [
-    0.5896731455857753,
-    0.06496682446512196,
-    0.2514893722627279,
-    0.044571983734212076,
-    0.04929867395216271
-   ]
-  },
-  {
-   "text": "cuanto esta el cafe pergamino",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.990756,
-   "proba": [
-    0.0014682785827565376,
-    0.002006055043867411,
-    0.002393793797035513,
-    0.9907555504970881,
-    0.0033763220792525713
-   ]
-  },
-  {
-   "text": "aspirar la cocina",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.909927,
-   "proba": [
-    0.046386764063148754,
-    0.017548463352105484,
-    0.9099273291406027,
-    0.009194449601722268,
-    0.016942993842420876
-   ]
-  },
-  {
-   "text": "hola que puedo hacer aqui",
-   "true": "ayuda",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.629966,
-   "proba": [
-    0.2392298492177809,
-    0.08493159339649585,
-    0.6299655353586547,
-    0.01730934875535635,
-    0.028563673271712116
-   ]
-  },
-  {
-   "text": "cuenta un chiste que me ponga una sonrisa en la cara",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.871104,
-   "proba": [
-    0.025908542219481624,
-    0.06599881269741326,
-    0.871103913061046,
-    0.0074051643280223746,
-    0.02958356769403677
-   ]
-  },
-  {
-   "text": "wokol awal",
-   "true": "otro",
-   "lang": "tzh",
-   "source": "ai-draft-unverified",
-   "pred": "otro",
-   "conf": 0.476994,
-   "proba": [
-    0.33664958132736145,
-    0.05314224213601276,
-    0.4769944414233653,
-    0.08312747197740426,
-    0.050086263135856304
-   ]
-  },
-  {
-   "text": "cancelar mi alarma de las tres de la tarde",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.935223,
-   "proba": [
-    0.006882729349325596,
-    0.00641239241372552,
-    0.9352225579002071,
-    0.004213395906330662,
-    0.04726892443041105
-   ]
-  },
-  {
-   "text": "pon angry bird",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.749667,
-   "proba": [
-    0.12581567417006276,
-    0.048128971485963144,
-    0.7496665575970949,
-    0.036400922581325566,
-    0.03998787416555355
-   ]
-  },
-  {
-   "text": "pasame con el ingeniero",
-   "true": "hablar_con_tecnico",
-   "lang": "es",
-   "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.953548,
-   "proba": [
-    0.010217807668533028,
-    0.9535484928839983,
-    0.021439307460449725,
-    0.010813228642232383,
-    0.003981163344786465
-   ]
-  },
-  {
-   "text": "urge que venga el tecnico",
-   "true": "hablar_con_tecnico",
-   "lang": "es",
-   "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.989867,
-   "proba": [
-    0.0034949479676849985,
-    0.9898674006289881,
-    0.003876097740493793,
-    0.0016635228572684873,
-    0.0010980308055644514
-   ]
-  },
-  {
-   "text": "cambiar la alarma de ajuste",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.932495,
-   "proba": [
-    0.032726814444111414,
-    0.008858489798595303,
-    0.9324947686340233,
-    0.008880417302179564,
-    0.017039509821090402
-   ]
-  },
-  {
-   "text": "necesito un taxi ahora mismo",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.695493,
-   "proba": [
-    0.056808201515617676,
-    0.18117335474125545,
-    0.6954929099437431,
-    0.02141143968604258,
-    0.04511409411334106
-   ]
-  },
-  {
-   "text": "cuanto esta la bolsa de nueva york",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.662105,
-   "proba": [
-    0.04432115201793423,
-    0.01663878914322912,
-    0.6621045509126059,
-    0.2531332345305211,
-    0.02380227339570946
-   ]
-  },
-  {
-   "text": "quitar mis alarmas de las nueve de la mañana",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.945497,
-   "proba": [
-    0.005885253604534643,
-    0.0069616687249754155,
-    0.9454968307491752,
-    0.0027957393696500647,
-    0.03886050755166466
-   ]
-  },
-  {
-   "text": "si",
-   "true": "otro",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.682248,
-   "proba": [
-    0.15471600763467291,
-    0.059522525137117616,
-    0.682248019223952,
-    0.03671158789724374,
-    0.06680186010701383
-   ]
-  },
-  {
-   "text": "quiero reportar roya",
-   "true": "reporte",
-   "lang": "es",
-   "source": "team",
-   "pred": "reporte",
-   "conf": 0.964152,
-   "proba": [
-    0.004342727095988302,
-    0.01374662193313125,
-    0.014596653611582201,
-    0.0031622942167298476,
-    0.9641517031425685
-   ]
-  },
-  {
-   "text": "info",
-   "true": "ayuda",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.34281,
-   "proba": [
-    0.187786471851075,
-    0.12579248559649162,
-    0.3428104592276542,
-    0.2623362658915687,
-    0.08127431743321042
-   ]
-  },
-  {
-   "text": "buenas tardes a como esta el cafe",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.482446,
-   "proba": [
-    0.08823958859658085,
-    0.02061301040422767,
-    0.3215680896891511,
-    0.4824456944345815,
-    0.0871336168754589
-   ]
-  },
-  {
-   "text": "podrías cambiar el volumen",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.916966,
-   "proba": [
-    0.03512334775271799,
-    0.015979586152835425,
-    0.9169660295376182,
-    0.01559611714838548,
-    0.016334919408442863
-   ]
-  },
-  {
-   "text": "empezar a jugar desde donde lo dejé en el cáliz de fuego",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.837795,
-   "proba": [
-    0.07666949079144401,
-    0.024196568245906065,
-    0.8377945714602455,
-    0.039168293270598474,
-    0.022171076231806076
-   ]
-  },
-  {
-   "text": "cual es el precio de referencia",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.653022,
-   "proba": [
-    0.061314931867387554,
-    0.010633361875856333,
-    0.2629684321292063,
-    0.6530218358138684,
-    0.012061438313681453
-   ]
-  },
-  {
-   "text": "el coyote me ofrece 40 el kilo es buen precio",
-   "true": "precio",
-   "lang": "es",
-   "source": "team",
-   "pred": "precio",
-   "conf": 0.944674,
-   "proba": [
-    0.022583336403755393,
-    0.00839157495447756,
-    0.020323833869028144,
-    0.9446735857219468,
-    0.0040276690507922
-   ]
-  },
-  {
-   "text": "enseña receta de pollo al chilindrón",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.879629,
-   "proba": [
-    0.026231950223261375,
-    0.025678629438979098,
-    0.8796289711861961,
-    0.0248066717378444,
-    0.04365377741371883
-   ]
-  },
-  {
-   "text": "como esta el trafico en el centro de la ciudad",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.578104,
-   "proba": [
-    0.2278030707158465,
-    0.047294528857695715,
-    0.5781035914768679,
-    0.09484001744007543,
-    0.051958791509514476
-   ]
-  },
-  {
-   "text": "ok google baja todo el volumen de los altavoces por favor",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.971919,
-   "proba": [
-    0.007042025792508398,
-    0.008403812768852464,
-    0.9719192871949812,
-    0.008259834850491232,
-    0.004375039393166802
-   ]
-  },
-  {
-   "text": "reserva una uber",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.864229,
-   "proba": [
-    0.05755313784837541,
-    0.029059159863453757,
-    0.8642289559348408,
-    0.017677074263372273,
-    0.031481672089957564
-   ]
-  },
-  {
-   "text": "ya cosechamos",
-   "true": "otro",
-   "lang": "es",
-   "source": "team",
-   "pred": "otro",
-   "conf": 0.568609,
-   "proba": [
-    0.13703957291243,
-    0.0541729807328272,
-    0.5686089038127721,
-    0.06367307299102021,
-    0.1765054695509505
+    0.08842588490752766,
+    0.07467334419192087,
+    0.10497621864841594,
+    0.23827182306782785,
+    0.4936527291843076
    ]
   },
   {
@@ -1680,88 +375,88 @@
    "lang": "es",
    "source": "MASSIVE",
    "pred": "otro",
-   "conf": 0.650026,
+   "conf": 0.414456,
    "proba": [
-    0.061267431672704695,
-    0.08098362535508961,
-    0.6500261011083794,
-    0.0860132085501144,
-    0.12170963331371175
+    0.1535519489100113,
+    0.13213124568237125,
+    0.4144558337150017,
+    0.1357537073321061,
+    0.16410726436050965
    ]
   },
   {
-   "text": "como es posible",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "ayuda",
-   "conf": 0.514984,
-   "proba": [
-    0.5149836504864552,
-    0.025009057566128926,
-    0.39886395409570014,
-    0.04067488049715152,
-    0.020468457354564092
-   ]
-  },
-  {
-   "text": "olly baja las luces",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.962643,
-   "proba": [
-    0.00903006723957413,
-    0.0028141324826304326,
-    0.9626434466665,
-    0.004578051787278654,
-    0.020934301824016552
-   ]
-  },
-  {
-   "text": "olly hazme reir",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.822584,
-   "proba": [
-    0.06700728283216187,
-    0.04110245710359885,
-    0.8225842935007082,
-    0.020729190403093716,
-    0.048576776160437415
-   ]
-  },
-  {
-   "text": "me puede llamar el tecnico",
-   "true": "hablar_con_tecnico",
+   "text": "buenas tardes a como esta el cafe",
+   "true": "precio",
    "lang": "es",
    "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.991132,
+   "pred": "precio",
+   "conf": 0.339298,
    "proba": [
-    0.002791187187652993,
-    0.9911315967491536,
-    0.0029068398631556806,
-    0.001778326517960271,
-    0.0013920496820777144
+    0.16179596995545237,
+    0.061480967885759616,
+    0.2506047810612821,
+    0.3392984517339913,
+    0.18681982936351454
    ]
   },
   {
-   "text": "tienes una broma",
+   "text": "deshabilitar el enchufe wemo",
    "true": "otro",
    "lang": "es",
    "source": "MASSIVE",
    "pred": "otro",
-   "conf": 0.513915,
+   "conf": 0.45001,
    "proba": [
-    0.25895906914829514,
-    0.053748747192677734,
-    0.5139154031148526,
-    0.01908024254599432,
-    0.15429653799818036
+    0.16327019683491226,
+    0.12987595360373733,
+    0.45001014248592786,
+    0.11741578731224063,
+    0.13942791976318203
+   ]
+  },
+  {
+   "text": "el coyote me ofrece 40 el kilo es buen precio",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "precio",
+   "conf": 0.722885,
+   "proba": [
+    0.09069092479378366,
+    0.05400124574992291,
+    0.09723998767756344,
+    0.7228847803422768,
+    0.03518306143645334
+   ]
+  },
+  {
+   "text": "que significa CAF1",
+   "true": "ayuda",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.382461,
+   "proba": [
+    0.2555680383352842,
+    0.13616266282628275,
+    0.3824612243463044,
+    0.10142327586152855,
+    0.12438479863060001
+   ]
+  },
+  {
+   "text": "cuenta un chiste que me ponga una sonrisa en la cara",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.553755,
+   "proba": [
+    0.12209974172213227,
+    0.16123776649686933,
+    0.5537551782669448,
+    0.049019681673292535,
+    0.11388763184076102
    ]
   },
   {
@@ -1770,88 +465,43 @@
    "lang": "es",
    "source": "team",
    "pred": "ayuda",
-   "conf": 0.882065,
+   "conf": 0.657341,
    "proba": [
-    0.8820652135948499,
-    0.006799895280887642,
-    0.0896945800956015,
-    0.012866241922047907,
-    0.00857406910661292
+    0.6573405121026091,
+    0.04641642671347921,
+    0.1753382938709263,
+    0.06103171636558688,
+    0.05987305094739834
    ]
   },
   {
-   "text": "me hace favor de mandar al ingeniero",
-   "true": "hablar_con_tecnico",
-   "lang": "es",
-   "source": "team",
-   "pred": "hablar_con_tecnico",
-   "conf": 0.896146,
-   "proba": [
-    0.018004550604962307,
-    0.8961461986751573,
-    0.055708137481258094,
-    0.014367357613072777,
-    0.015773755625549415
-   ]
-  },
-  {
-   "text": "consígueme el currículum del audiolibro más reciente",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.831088,
-   "proba": [
-    0.049465603767631136,
-    0.03691706327267951,
-    0.8310875472114998,
-    0.04771644631902342,
-    0.034813339429165924
-   ]
-  },
-  {
-   "text": "reportar enfermedad cafe",
+   "text": "las hojas tienen un polvito anaranjado",
    "true": "reporte",
    "lang": "es",
    "source": "team",
    "pred": "reporte",
-   "conf": 0.928082,
+   "conf": 0.765389,
    "proba": [
-    0.008978158251382122,
-    0.006344999423909634,
-    0.030062216137894456,
-    0.026532582699537694,
-    0.9280820434872762
+    0.0578289526190604,
+    0.045512241574201674,
+    0.10417494568230255,
+    0.02709439476194607,
+    0.7653894653624894
    ]
   },
   {
-   "text": "añade dale arroba gmail punto com a mis contactos",
+   "text": "quitar mis alarmas de las nueve de la mañana",
    "true": "otro",
    "lang": "es",
    "source": "MASSIVE",
    "pred": "otro",
-   "conf": 0.897304,
+   "conf": 0.700896,
    "proba": [
-    0.041265217074085966,
-    0.013480577555316103,
-    0.8973039977772914,
-    0.022812165881412536,
-    0.025138041711893988
-   ]
-  },
-  {
-   "text": "atasco de tráfico",
-   "true": "otro",
-   "lang": "es",
-   "source": "MASSIVE",
-   "pred": "otro",
-   "conf": 0.794319,
-   "proba": [
-    0.051351949334570164,
-    0.0679389405727943,
-    0.7943185663386063,
-    0.026694770601648307,
-    0.05969577315238086
+    0.05902393799338415,
+    0.06014949982501839,
+    0.7008961562185777,
+    0.031057283452783146,
+    0.14887312251023674
    ]
   },
   {
@@ -1860,58 +510,538 @@
    "lang": "es",
    "source": "MASSIVE",
    "pred": "otro",
-   "conf": 0.583142,
+   "conf": 0.324024,
    "proba": [
-    0.17007900356678238,
-    0.12875551707234803,
-    0.5831416293669045,
-    0.03676311301466781,
-    0.08126073697929737
+    0.2431737829023083,
+    0.21647395455613289,
+    0.32402373212811336,
+    0.08741625770217354,
+    0.128912272711272
    ]
   },
   {
-   "text": "la hoja tiene manchas cafe con orilla amarilla",
-   "true": "reporte",
-   "lang": "es",
-   "source": "team",
-   "pred": "reporte",
-   "conf": 0.971093,
-   "proba": [
-    0.0041022965753755485,
-    0.006070814078726973,
-    0.012274856220990149,
-    0.006459443501623976,
-    0.9710925896232833
-   ]
-  },
-  {
-   "text": "cual es la altura del monte everest",
+   "text": "pon angry bird",
    "true": "otro",
    "lang": "es",
    "source": "MASSIVE",
    "pred": "otro",
-   "conf": 0.938103,
+   "conf": 0.474999,
    "proba": [
-    0.021607557953728214,
-    0.009557389177644192,
-    0.9381033538804958,
-    0.020148822230234027,
-    0.010582876757897593
+    0.20317273793312154,
+    0.114945642877964,
+    0.4749992859818211,
+    0.09217684563270714,
+    0.11470548757438617
    ]
   },
   {
-   "text": "quiero que alguien me explique en persona",
+   "text": "las ojas tienen manchas",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.882337,
+   "proba": [
+    0.02953616042922577,
+    0.020020274312562324,
+    0.05543881445542196,
+    0.012667391018233864,
+    0.8823373597845561
+   ]
+  },
+  {
+   "text": "tuitea una queja sobre el mal sistema de drenaje",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.513706,
+   "proba": [
+    0.14543960975478593,
+    0.14154602593770246,
+    0.5137060839949863,
+    0.07573083433386178,
+    0.12357744597866344
+   ]
+  },
+  {
+   "text": "iniciar audiolibro las dos torres",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.514427,
+   "proba": [
+    0.2085809552187873,
+    0.09696507021011601,
+    0.5144273358380959,
+    0.06452281142363815,
+    0.11550382730936283
+   ]
+  },
+  {
+   "text": "pon todas las canciones de rock",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.548733,
+   "proba": [
+    0.159776738649896,
+    0.04826893215163064,
+    0.5487333990320993,
+    0.05572519308717824,
+    0.1874957370791959
+   ]
+  },
+  {
+   "text": "tuitear al servicio de atención al cliente que deberían esforzarse por ser más complacientes",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.510869,
+   "proba": [
+    0.22693719214826596,
+    0.09461454789400871,
+    0.5108687221622569,
+    0.07600661130991697,
+    0.09157292648555153
+   ]
+  },
+  {
+   "text": "necesito consejo del ingeniero",
    "true": "hablar_con_tecnico",
    "lang": "es",
    "source": "team",
    "pred": "hablar_con_tecnico",
-   "conf": 0.742293,
+   "conf": 0.762885,
    "proba": [
-    0.07775628214827057,
-    0.7422932597510632,
-    0.14921981705900322,
-    0.010200573052049444,
-    0.02053006798961374
+    0.061507959433182685,
+    0.762884557589474,
+    0.08302526964293044,
+    0.05516183349775839,
+    0.03742037983665457
+   ]
+  },
+  {
+   "text": "ok google baja todo el volumen de los altavoces por favor",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.727532,
+   "proba": [
+    0.07311274461713967,
+    0.07562145649178191,
+    0.7275321292928009,
+    0.06312450841216743,
+    0.060609161186110136
+   ]
+  },
+  {
+   "text": "como es posible",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "ayuda",
+   "conf": 0.466587,
+   "proba": [
+    0.4665873609853264,
+    0.0778056334425485,
+    0.26102627089324276,
+    0.10427430838965364,
+    0.09030642628922869
+   ]
+  },
+  {
+   "text": "está muy alto por favor puedes bajar la música",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.671402,
+   "proba": [
+    0.07952804190330846,
+    0.10378887112490777,
+    0.6714021718835843,
+    0.06701337630205045,
+    0.07826753878614895
+   ]
+  },
+  {
+   "text": "k precio tiene el kilo de cafe",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "precio",
+   "conf": 0.886252,
+   "proba": [
+    0.028869457985219553,
+    0.015352998111526968,
+    0.01853918561049712,
+    0.8862522938427408,
+    0.05098606445001537
+   ]
+  },
+  {
+   "text": "cancelar mi alarma de las tres de la tarde",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.656291,
+   "proba": [
+    0.06358377364358288,
+    0.05579805136732363,
+    0.656290580939341,
+    0.04081690262121492,
+    0.1835106914285375
+   ]
+  },
+  {
+   "text": "bit'il ayat",
+   "true": "otro",
+   "lang": "tzh",
+   "source": "ai-draft-unverified",
+   "pred": "ayuda",
+   "conf": 0.334604,
+   "proba": [
+    0.3346042043735026,
+    0.11011021090378849,
+    0.3011847439651504,
+    0.11128764038813316,
+    0.14281320036942527
+   ]
+  },
+  {
+   "text": "info",
+   "true": "ayuda",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.28419,
+   "proba": [
+    0.23989266439860932,
+    0.15916236861241045,
+    0.28418961085215205,
+    0.18795120058569464,
+    0.12880415555113353
+   ]
+  },
+  {
+   "text": "cual es el precio de referencia",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "precio",
+   "conf": 0.561348,
+   "proba": [
+    0.11581987177775638,
+    0.0463765183441504,
+    0.231313393817513,
+    0.5613483946876882,
+    0.045141821372892105
+   ]
+  },
+  {
+   "text": "mi cafe tiene roya que hago",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.713968,
+   "proba": [
+    0.13956576557403738,
+    0.04973614879377139,
+    0.03980428259667284,
+    0.05692611950031044,
+    0.7139676835352079
+   ]
+  },
+  {
+   "text": "como esta el trafico en el centro de la ciudad",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.332225,
+   "proba": [
+    0.2667409039095947,
+    0.11057968041509006,
+    0.3322246468292736,
+    0.14394837313043968,
+    0.1465063957156021
+   ]
+  },
+  {
+   "text": "cuanto esta la bolsa de nueva york",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.439436,
+   "proba": [
+    0.12572283506450574,
+    0.06792421155082944,
+    0.4394359174622111,
+    0.2817244652980543,
+    0.08519257062439944
+   ]
+  },
+  {
+   "text": "empezar a jugar desde donde lo dejé en el cáliz de fuego",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.508578,
+   "proba": [
+    0.1832518802627488,
+    0.09202249156997827,
+    0.5085776599541688,
+    0.11545639669053513,
+    0.10069157152256908
+   ]
+  },
+  {
+   "text": "alexa gran canción para el viaje",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.51431,
+   "proba": [
+    0.19268092494371158,
+    0.09914407134410254,
+    0.5143102651065928,
+    0.1054847100331293,
+    0.08838002857246384
+   ]
+  },
+  {
+   "text": "a que hora es la junta",
+   "true": "otro",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.616166,
+   "proba": [
+    0.1498087859509512,
+    0.08421384894777911,
+    0.6161660812261989,
+    0.04347271327866965,
+    0.10633857059640103
+   ]
+  },
+  {
+   "text": "manchas naranjas debajo de la hoja",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.774018,
+   "proba": [
+    0.041231568333380944,
+    0.029629734139402758,
+    0.11965037209266816,
+    0.03547046705493718,
+    0.774017858379611
+   ]
+  },
+  {
+   "text": "donde estas",
+   "true": "otro",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.41489,
+   "proba": [
+    0.24090383531756304,
+    0.07677281614433182,
+    0.4148900327071329,
+    0.09524638320805988,
+    0.17218693262291235
+   ]
+  },
+  {
+   "text": "mancha de hierro en el cafe",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.473258,
+   "proba": [
+    0.06880533462632915,
+    0.10186211023886962,
+    0.14011676544136456,
+    0.2159579991552235,
+    0.4732577905382132
+   ]
+  },
+  {
+   "text": "ya cosechamos",
+   "true": "otro",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.323719,
+   "proba": [
+    0.21316830033957235,
+    0.112675335925357,
+    0.32371890965546835,
+    0.11432753404748869,
+    0.2361099200321136
+   ]
+  },
+  {
+   "text": "urge que venga el tecnico",
+   "true": "hablar_con_tecnico",
+   "lang": "es",
+   "source": "team",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.884665,
+   "proba": [
+    0.03427662860404917,
+    0.8846652255968465,
+    0.0408958856082932,
+    0.021639928592762682,
+    0.01852233159804877
+   ]
+  },
+  {
+   "text": "quiero una visita a mi parcela",
+   "true": "hablar_con_tecnico",
+   "lang": "es",
+   "source": "team",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.596184,
+   "proba": [
+    0.0686795739256381,
+    0.596184267727165,
+    0.17519228645358012,
+    0.04696747874032168,
+    0.1129763931532951
+   ]
+  },
+  {
+   "text": "consígueme el currículum del audiolibro más reciente",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.488184,
+   "proba": [
+    0.15226260745563522,
+    0.12024727414218804,
+    0.4881842142405898,
+    0.13893667082931896,
+    0.10036923333226805
+   ]
+  },
+  {
+   "text": "búscame una gasolinera cerca",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.610772,
+   "proba": [
+    0.13250890695021483,
+    0.10312368655615703,
+    0.610772239300287,
+    0.06673833029819876,
+    0.08685683689514245
+   ]
+  },
+  {
+   "text": "crea un recordatorio de alarma al calendario",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.573228,
+   "proba": [
+    0.13886255463702235,
+    0.08146515668843245,
+    0.5732276835939343,
+    0.10062002619184514,
+    0.10582457888876566
+   ]
+  },
+  {
+   "text": "aspirar la cocina",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.545131,
+   "proba": [
+    0.19261500541125104,
+    0.09288672145993995,
+    0.5451308803840128,
+    0.06106982960755871,
+    0.1082975631372374
+   ]
+  },
+  {
+   "text": "sale pues",
+   "true": "otro",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.507157,
+   "proba": [
+    0.2201147220003025,
+    0.08935668231545058,
+    0.5071568605452944,
+    0.08108788280092465,
+    0.10228385233802782
+   ]
+  },
+  {
+   "text": "se ve polvo amarillo en las hojas",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.792032,
+   "proba": [
+    0.04144864994493003,
+    0.03314261374519828,
+    0.10637929217751896,
+    0.026997811409825608,
+    0.7920316327225271
+   ]
+  },
+  {
+   "text": "atasco de tráfico",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.445642,
+   "proba": [
+    0.15291608171955476,
+    0.16934999569618553,
+    0.44564154257998156,
+    0.08917530935548036,
+    0.14291707064879772
+   ]
+  },
+  {
+   "text": "si es mediodia en madrid que hora es en california",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.630666,
+   "proba": [
+    0.1420492265016792,
+    0.07529439664983249,
+    0.6306662416005916,
+    0.051264976980988676,
+    0.10072515826690805
    ]
   },
   {
@@ -1920,13 +1050,1003 @@
    "lang": "es",
    "source": "team",
    "pred": "ayuda",
-   "conf": 0.625676,
+   "conf": 0.432549,
    "proba": [
-    0.6256763322519194,
-    0.060550443995606974,
-    0.24531042034671727,
-    0.042839625868997304,
-    0.02562317753675909
+    0.432549369772986,
+    0.11663526544776799,
+    0.29517193160191796,
+    0.08014119098518739,
+    0.07550224219214072
+   ]
+  },
+  {
+   "text": "reserva una uber",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.521019,
+   "proba": [
+    0.1863353002705155,
+    0.11246440940546458,
+    0.5210192079447017,
+    0.0785852825243619,
+    0.10159579985495636
+   ]
+  },
+  {
+   "text": "comuniqueme con el tecnico",
+   "true": "hablar_con_tecnico",
+   "lang": "es",
+   "source": "team",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.79432,
+   "proba": [
+    0.07718296914060742,
+    0.794319847717512,
+    0.06350105356447287,
+    0.03438926520095741,
+    0.030606864376450254
+   ]
+  },
+  {
+   "text": "bit'il ya jtuntes te app",
+   "true": "ayuda",
+   "lang": "tzh",
+   "source": "ai-draft-unverified",
+   "pred": "ayuda",
+   "conf": 0.406852,
+   "proba": [
+    0.40685239476065505,
+    0.1262821320962775,
+    0.25926291477071517,
+    0.09440513509536838,
+    0.11319742327698396
+   ]
+  },
+  {
+   "text": "wokol awal",
+   "true": "otro",
+   "lang": "tzh",
+   "source": "ai-draft-unverified",
+   "pred": "otro",
+   "conf": 0.329401,
+   "proba": [
+    0.3114624343155331,
+    0.11194436144661993,
+    0.32940102901507196,
+    0.13417571006696002,
+    0.11301646515581487
+   ]
+  },
+  {
+   "text": "tienes una broma",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.357002,
+   "proba": [
+    0.2679463229933661,
+    0.11467355930525369,
+    0.3570022724661669,
+    0.06029180258506088,
+    0.20008604265015256
+   ]
+  },
+  {
+   "text": "limpia el suelo por favor",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.57933,
+   "proba": [
+    0.10366259155424219,
+    0.1367402193662612,
+    0.57933049095049,
+    0.11514759250498345,
+    0.06511910562402314
+   ]
+  },
+  {
+   "text": "como mando el codigo",
+   "true": "ayuda",
+   "lang": "es",
+   "source": "team",
+   "pred": "ayuda",
+   "conf": 0.613674,
+   "proba": [
+    0.6136737415307153,
+    0.07437935482044697,
+    0.11279070020477817,
+    0.10122189591919876,
+    0.09793430752486083
+   ]
+  },
+  {
+   "text": "pasame tu numero",
+   "true": "otro",
+   "lang": "es",
+   "source": "team",
+   "pred": "ayuda",
+   "conf": 0.382863,
+   "proba": [
+    0.38286271352361273,
+    0.17278325321806146,
+    0.2734937519122905,
+    0.07952722368817376,
+    0.09133305765786161
+   ]
+  },
+  {
+   "text": "bueno",
+   "true": "otro",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.431621,
+   "proba": [
+    0.23143834936546895,
+    0.12608440886775496,
+    0.43162066442808394,
+    0.1195736907702056,
+    0.09128288656848665
+   ]
+  },
+  {
+   "text": "tuve el peor dia de mi vida hoy",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.485765,
+   "proba": [
+    0.10624927961108517,
+    0.12135698084227985,
+    0.48576530445673693,
+    0.14676906311519824,
+    0.13985937197469986
+   ]
+  },
+  {
+   "text": "cómo está en tráfico ahora en calle de valldemossa",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.534374,
+   "proba": [
+    0.14193575060447108,
+    0.0909174243102916,
+    0.5343736164332867,
+    0.11062479702210806,
+    0.1221484116298425
+   ]
+  },
+  {
+   "text": "olly hazme reir",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.486816,
+   "proba": [
+    0.18287406479233914,
+    0.11577659869748315,
+    0.4868156474800267,
+    0.07583163257036021,
+    0.13870205645979075
+   ]
+  },
+  {
+   "text": "que tal como estas",
+   "true": "otro",
+   "lang": "es",
+   "source": "team",
+   "pred": "ayuda",
+   "conf": 0.54183,
+   "proba": [
+    0.5418302860109842,
+    0.08120565640312273,
+    0.16442780392770337,
+    0.08211459558142328,
+    0.13042165807676656
+   ]
+  },
+  {
+   "text": "cuanto dan por el pergamino",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "precio",
+   "conf": 0.710531,
+   "proba": [
+    0.058009388997528916,
+    0.06794589546684139,
+    0.11693797972478435,
+    0.7105311672783073,
+    0.046575568532538025
+   ]
+  },
+  {
+   "text": "que sigue",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.391526,
+   "proba": [
+    0.3422421329096818,
+    0.1407658424679218,
+    0.3915259508267773,
+    0.05312562004219434,
+    0.07234045375342486
+   ]
+  },
+  {
+   "text": "cúal es una receta fácil para cocinar comida",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.550281,
+   "proba": [
+    0.20025257971131094,
+    0.08128052118616667,
+    0.5502811481516084,
+    0.10032116260502982,
+    0.0678645883458842
+   ]
+  },
+  {
+   "text": "quiero que alguien me explique en persona",
+   "true": "hablar_con_tecnico",
+   "lang": "es",
+   "source": "team",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.477117,
+   "proba": [
+    0.1779048075864431,
+    0.47711742101222,
+    0.21880470698305637,
+    0.05051877579922304,
+    0.07565428861905758
+   ]
+  },
+  {
+   "text": "podrías cambiar el volumen",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.618509,
+   "proba": [
+    0.13189263223574124,
+    0.0801181565731013,
+    0.6185088497379808,
+    0.07877513193168084,
+    0.09070522952149565
+   ]
+  },
+  {
+   "text": "hola que puedo hacer aqui",
+   "true": "ayuda",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.37833,
+   "proba": [
+    0.3013096051877065,
+    0.16002372624168928,
+    0.3783300906635558,
+    0.06187091447976966,
+    0.09846566342727887
+   ]
+  },
+  {
+   "text": "ayudaa",
+   "true": "ayuda",
+   "lang": "es",
+   "source": "team",
+   "pred": "ayuda",
+   "conf": 0.722947,
+   "proba": [
+    0.7229474440661535,
+    0.047894932516615925,
+    0.11299801830370765,
+    0.047761163483724,
+    0.06839844162979906
+   ]
+  },
+  {
+   "text": "cuanto se paga el maiz blanco",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "precio",
+   "conf": 0.570534,
+   "proba": [
+    0.09378454129697127,
+    0.0852327149331111,
+    0.14907934309291213,
+    0.5705335065066006,
+    0.10136989417040497
+   ]
+  },
+  {
+   "text": "baja el brillo",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.391087,
+   "proba": [
+    0.1688339271600018,
+    0.10179032728131343,
+    0.3910867798803575,
+    0.16606120460652793,
+    0.17222776107179927
+   ]
+  },
+  {
+   "text": "necesito un taxi ahora mismo",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.420774,
+   "proba": [
+    0.15060377255993543,
+    0.24343754113043453,
+    0.42077361655742374,
+    0.070567902449237,
+    0.1146171673029693
+   ]
+  },
+  {
+   "text": "hazme una nueva lista de verificación",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.615689,
+   "proba": [
+    0.13993253096763397,
+    0.1190272679139749,
+    0.6156887188127157,
+    0.060161344330661976,
+    0.0651901379750135
+   ]
+  },
+  {
+   "text": "cuentame chistes",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.490671,
+   "proba": [
+    0.18417071382215336,
+    0.11723090275972188,
+    0.4906712918059908,
+    0.09350761948164887,
+    0.11441947213048526
+   ]
+  },
+  {
+   "text": "quiero hacer una lista y esto debería guardarse automáticamente como un archivo de texto con la lista de títulos",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.511641,
+   "proba": [
+    0.12167322774018018,
+    0.17916034145490192,
+    0.5116407882021786,
+    0.07401521475066926,
+    0.1135104278520701
+   ]
+  },
+  {
+   "text": "las matas nuevas se estan muriendo",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.490933,
+   "proba": [
+    0.11223533601290775,
+    0.05433193172060439,
+    0.2998831719853365,
+    0.04261671241746776,
+    0.4909328478636836
+   ]
+  },
+  {
+   "text": "juega conmigo",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.396146,
+   "proba": [
+    0.26132402106735986,
+    0.12999708124923112,
+    0.3961457351333129,
+    0.08780756612143148,
+    0.1247255964286646
+   ]
+  },
+  {
+   "text": "poner alarma para mañana al mediodía",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.672772,
+   "proba": [
+    0.11141960401286934,
+    0.08363601088846234,
+    0.6727720743242308,
+    0.06180802941613894,
+    0.07036428135829857
+   ]
+  },
+  {
+   "text": "ir a la lista de favoritos",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.660708,
+   "proba": [
+    0.07523001308292793,
+    0.10441327060906357,
+    0.6607077330424806,
+    0.06707302727713663,
+    0.0925759559883912
+   ]
+  },
+  {
+   "text": "buenas tardes",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.613147,
+   "proba": [
+    0.13158972970064634,
+    0.07311492551640686,
+    0.6131474772014446,
+    0.06406562849314147,
+    0.11808223908836095
+   ]
+  },
+  {
+   "text": "retire el helado del compra",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.359573,
+   "proba": [
+    0.2626617961250899,
+    0.0967822101911809,
+    0.3595725443127677,
+    0.16446558683459855,
+    0.116517862536363
+   ]
+  },
+  {
+   "text": "mis matas de cafe estan enfermas",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.590464,
+   "proba": [
+    0.054644001064679676,
+    0.04224521263869567,
+    0.19178519771572686,
+    0.1208615025226055,
+    0.5904640860582923
+   ]
+  },
+  {
+   "text": "si",
+   "true": "otro",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.399122,
+   "proba": [
+    0.24132396388605037,
+    0.12739432264817677,
+    0.3991216459879928,
+    0.0926730656034312,
+    0.1394870018743487
+   ]
+  },
+  {
+   "text": "la hoja tiene manchas cafe con orilla amarilla",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.860425,
+   "proba": [
+    0.02903791657524017,
+    0.030481365568831693,
+    0.050399690689821995,
+    0.0296555850329187,
+    0.8604254421331875
+   ]
+  },
+  {
+   "text": "mis cafetos estan tirando hojas",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.7916,
+   "proba": [
+    0.05845502189318147,
+    0.028455521700514363,
+    0.0688746158075123,
+    0.052614648397660016,
+    0.791600192201132
+   ]
+  },
+  {
+   "text": "cuanto esta el cafe pergamino",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "precio",
+   "conf": 0.874648,
+   "proba": [
+    0.023480500668743045,
+    0.02565681959635234,
+    0.0338738568257,
+    0.8746477259910954,
+    0.04234109691810925
+   ]
+  },
+  {
+   "text": "como se manda la foto",
+   "true": "ayuda",
+   "lang": "es",
+   "source": "team",
+   "pred": "ayuda",
+   "conf": 0.574954,
+   "proba": [
+    0.5749540339486184,
+    0.05545494485623218,
+    0.1256584172484033,
+    0.09123051413309029,
+    0.15270208981365568
+   ]
+  },
+  {
+   "text": "por favor espera durante la próxima hora",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.639641,
+   "proba": [
+    0.07431745020344914,
+    0.10605092087733874,
+    0.6396414818002926,
+    0.08870075431322798,
+    0.09128939280569157
+   ]
+  },
+  {
+   "text": "menu",
+   "true": "ayuda",
+   "lang": "es",
+   "source": "team",
+   "pred": "otro",
+   "conf": 0.338216,
+   "proba": [
+    0.2850809797846424,
+    0.15567501785559074,
+    0.3382160580114421,
+    0.08454987368446523,
+    0.1364780706638596
+   ]
+  },
+  {
+   "text": "cuál es la forma mas fácil y rápida de cocinar un pavo",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.615832,
+   "proba": [
+    0.13471441654590993,
+    0.06305065081256739,
+    0.6158318618397796,
+    0.08731001572464377,
+    0.09909305507709953
+   ]
+  },
+  {
+   "text": "cuanto cuesta el maiz ahorita",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "precio",
+   "conf": 0.474101,
+   "proba": [
+    0.08873790915960156,
+    0.09865134175436562,
+    0.25612878365040537,
+    0.47410142330066274,
+    0.08238054213496464
+   ]
+  },
+  {
+   "text": "mi cafe se esta poniendo amarillo",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.501604,
+   "proba": [
+    0.09830967970659878,
+    0.08262327811800348,
+    0.16749463615273733,
+    0.14996796137408544,
+    0.501604444648575
+   ]
+  },
+  {
+   "text": "las hojas tienen polvo naranja abajo",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.825789,
+   "proba": [
+    0.0435160922258209,
+    0.029080140263896465,
+    0.07444878458968825,
+    0.027165724638921362,
+    0.825789258281673
+   ]
+  },
+  {
+   "text": "recuérda me a las seis lo de la reunión a las siete",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.587546,
+   "proba": [
+    0.09337511975619675,
+    0.07863392802681614,
+    0.5875457930006841,
+    0.05821268733760869,
+    0.18223247187869424
+   ]
+  },
+  {
+   "text": "enseña receta de pollo al chilindrón",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.533817,
+   "proba": [
+    0.12019748504125052,
+    0.1026992942029074,
+    0.5338173044895235,
+    0.09429097803825316,
+    0.14899493822806545
+   ]
+  },
+  {
+   "text": "quién es el cantante de la canción que está sonando ahora mismo",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.540514,
+   "proba": [
+    0.1488322296623122,
+    0.10384169803948479,
+    0.5405135704029018,
+    0.09013803097197491,
+    0.11667447092332618
+   ]
+  },
+  {
+   "text": "se le caen las hojas a las matas",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.85909,
+   "proba": [
+    0.028232899696430235,
+    0.017330650233351855,
+    0.0784151897438402,
+    0.016931710067142353,
+    0.8590895502592354
+   ]
+  },
+  {
+   "text": "me hace favor de mandar al ingeniero",
+   "true": "hablar_con_tecnico",
+   "lang": "es",
+   "source": "team",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.627949,
+   "proba": [
+    0.07862965734021954,
+    0.6279492618145425,
+    0.17105353970442183,
+    0.05335793814339086,
+    0.06900960299742534
+   ]
+  },
+  {
+   "text": "no necesito luz",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.35786,
+   "proba": [
+    0.208724902045688,
+    0.2920176232416158,
+    0.35786028445126133,
+    0.07361982161132179,
+    0.0677773686501132
+   ]
+  },
+  {
+   "text": "mis plantas se estan secando",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.538409,
+   "proba": [
+    0.12413077808238503,
+    0.06346420563688351,
+    0.19617445076644865,
+    0.0778213126779363,
+    0.5384092528363464
+   ]
+  },
+  {
+   "text": "me puede llamar el tecnico",
+   "true": "hablar_con_tecnico",
+   "lang": "es",
+   "source": "team",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.869579,
+   "proba": [
+    0.0371544355189488,
+    0.8695789263503254,
+    0.04570116533450395,
+    0.024217720998630225,
+    0.023347751797591715
+   ]
+  },
+  {
+   "text": "añade dale arroba gmail punto com a mis contactos",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.558734,
+   "proba": [
+    0.15410609841797218,
+    0.07531830536624357,
+    0.5587335433110654,
+    0.09821087686699144,
+    0.1136311760377275
+   ]
+  },
+  {
+   "text": "por favor agregue un nuevo artículo a la lista",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.658237,
+   "proba": [
+    0.07597392367287624,
+    0.13273060414965887,
+    0.6582369088367882,
+    0.05855037766570719,
+    0.07450818567496932
+   ]
+  },
+  {
+   "text": "jayeb stojol te kajpe",
+   "true": "precio",
+   "lang": "tzh",
+   "source": "ai-draft-unverified",
+   "pred": "precio",
+   "conf": 0.555316,
+   "proba": [
+    0.09064003912499245,
+    0.07437089495710877,
+    0.11460895998430418,
+    0.5553160326636358,
+    0.1650640732699587
+   ]
+  },
+  {
+   "text": "olly baja las luces",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.697672,
+   "proba": [
+    0.08062546822811517,
+    0.03895363197560343,
+    0.697672435463552,
+    0.043453154937903624,
+    0.13929530939482593
+   ]
+  },
+  {
+   "text": "buen dia",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.567714,
+   "proba": [
+    0.14729845399922314,
+    0.09269950873233805,
+    0.5677137908344531,
+    0.1019078180777267,
+    0.09038042835625909
+   ]
+  },
+  {
+   "text": "desactiva el enchufe",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.512016,
+   "proba": [
+    0.14567546064921988,
+    0.10155070360299591,
+    0.5120158454671552,
+    0.12633338758291152,
+    0.11442460269771754
+   ]
+  },
+  {
+   "text": "pasame con el ingeniero",
+   "true": "hablar_con_tecnico",
+   "lang": "es",
+   "source": "team",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.742638,
+   "proba": [
+    0.06856937645498681,
+    0.7426381317395992,
+    0.09214700292338554,
+    0.05634404545141705,
+    0.04030144343061129
+   ]
+  },
+  {
+   "text": "tiene como caminitos las hojas",
+   "true": "reporte",
+   "lang": "es",
+   "source": "team",
+   "pred": "reporte",
+   "conf": 0.79888,
+   "proba": [
+    0.07968003181864337,
+    0.029762996360947792,
+    0.05665997466100073,
+    0.03501687571238153,
+    0.7988801214470266
+   ]
+  },
+  {
+   "text": "enciende el enchufe de la olla arrocera",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.614105,
+   "proba": [
+    0.10416902656214096,
+    0.0792077480015975,
+    0.6141054562165704,
+    0.07757103218045433,
+    0.12494673703923673
+   ]
+  },
+  {
+   "text": "cambiar la alarma de ajuste",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.633252,
+   "proba": [
+    0.1386012732595881,
+    0.06592566036599155,
+    0.6332523451619162,
+    0.05982335007803013,
+    0.10239737113447415
+   ]
+  },
+  {
+   "text": "cual es la altura del monte everest",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.599897,
+   "proba": [
+    0.12135104145629821,
+    0.08031605771603206,
+    0.5998968988028874,
+    0.11884041681813189,
+    0.07959558520665043
+   ]
+  },
+  {
+   "text": "quiero hablar con el tecnico",
+   "true": "hablar_con_tecnico",
+   "lang": "es",
+   "source": "team",
+   "pred": "hablar_con_tecnico",
+   "conf": 0.967586,
+   "proba": [
+    0.00913441771838874,
+    0.967585594360542,
+    0.010020270780904663,
+    0.0062734522574237886,
+    0.0069862648827405
+   ]
+  },
+  {
+   "text": "cuanto vale el frijol negro",
+   "true": "precio",
+   "lang": "es",
+   "source": "team",
+   "pred": "precio",
+   "conf": 0.680649,
+   "proba": [
+    0.06818698036050043,
+    0.0779946845192913,
+    0.1207937497667309,
+    0.6806492578337122,
+    0.0523753275197652
+   ]
+  },
+  {
+   "text": "quiero que avance rápido el audio y luego reanude",
+   "true": "otro",
+   "lang": "es",
+   "source": "MASSIVE",
+   "pred": "otro",
+   "conf": 0.330049,
+   "proba": [
+    0.2954676390117175,
+    0.18841268249011292,
+    0.3300485642568494,
+    0.07563307232017016,
+    0.11043804192115002
    ]
   }
  ]

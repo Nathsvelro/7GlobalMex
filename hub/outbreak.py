@@ -16,6 +16,9 @@ MIN_MEMBERS = 3
 
 WORKLIST_DAYS = 30
 WEIGHTS = {"ROYA": 3, "DUDA": 2, "OTRO": 2, "CERC": 2, "PHOM": 2, "MINA": 2, "ACAR": 2, "SANO": 0}
+# Which report of a farm counts (worklist row and map colour): ROYA > DUDA/OTRO (a person must look) >
+# CERC/PHOM/MINA/ACAR > SANO; then higher score, then most recent.
+SEVERITY = {"ROYA": 3, "DUDA": 2, "OTRO": 2, "CERC": 1, "PHOM": 1, "MINA": 1, "ACAR": 1, "SANO": 0}
 ALERT_BONUS = 2
 CODE_NAMES_ES = {"ROYA": "Roya", "MINA": "Minador", "PHOM": "Phoma", "CERC": "Cercospora", "ACAR": "Ácaro rojo",
                  "SANO": "Sano", "OTRO": "No es hoja de café", "DUDA": "Duda (la app no está segura)"}
@@ -29,8 +32,22 @@ def params() -> dict:
                      "min_conf": round(db.model_threshold() * 100), "one_alert_per_area_days": WINDOW_DAYS,
                      "note": "Decisiones de diseño para la demo, no umbrales agronómicos."},
         "worklist": {"days": WORKLIST_DAYS, "weights": WEIGHTS, "alert_bonus": ALERT_BONUS,
-                     "formula": "weight x conf/100 (1.0 for DUDA/OTRO) + 2 if inside an active alert area"},
+                     "formula": "weight x conf/100 (1.0 for DUDA/OTRO) + 2 if inside an active alert area",
+                     "severity": SEVERITY,
+                     "per_farm": "most serious report in the last 30 days (ROYA > DUDA/OTRO > CERC/PHOM/MINA/ACAR"
+                                 " > SANO; then score, then most recent)"},
     }
+
+
+def base_score(o: dict) -> float:
+    """Worklist score of one report without the alert bonus: weight x conf/100 (1.0 for DUDA/OTRO)."""
+    factor = 1.0 if o["code"] in ("DUDA", "OTRO") else o["conf"] / 100
+    return WEIGHTS.get(o["code"], 0) * factor
+
+
+def seriousness(o: dict) -> tuple:
+    """Sort key: the farm's report with the largest key is its most serious one (worklist and map)."""
+    return (SEVERITY.get(o["code"], 0), base_score(o), o["date"], o.get("received_at") or "")
 
 
 def km(lat1, lon1, lat2, lon2) -> float:
@@ -150,14 +167,10 @@ def worklist(conn) -> list[dict]:
         last = actions.get(o["uid"])
         if last and last["action"] in ("confirmed", "not_confirmed"):
             continue
-        w = WEIGHTS.get(o["code"], 0)
-        factor = 1.0 if o["code"] in ("DUDA", "OTRO") else o["conf"] / 100
-        base = w * factor
         f = farms.setdefault(o["member_id"], {"reports_30d": 0, "best": None, "best_base": -1})
         f["reports_30d"] += 1
-        key = (base, o["date"], o["received_at"])
-        if f["best"] is None or key > (f["best_base"], f["best"]["date"], f["best"]["received_at"]):
-            f["best"], f["best_base"] = o, base
+        if f["best"] is None or seriousness(o) > seriousness(f["best"]):
+            f["best"], f["best_base"] = o, base_score(o)
             f["last_action"] = last
     out = []
     for member_id, f in farms.items():

@@ -10,7 +10,7 @@ Static files, no build step. Vanilla JS modules:
 | `infer.js` | blur check (PLAN §4, same maths as `model/blur.py`) + onnxruntime-web, lazy-loaded |
 | `sms.js` | observation SMS code v1 (PLAN §5) |
 | `store.js` | settings (localStorage), observations + photos (IndexedDB), PIN hash (SHA-256) |
-| `sw.js` | offline cache. **Bump `VERSION` in `sw.js` whenever an app file changes**, or phones keep the old copy |
+| `sw.js` | offline cache. `VERSION` is a hash of every precached file, set by `scripts/bump_sw_version.py` (`run.sh` runs it; run it by hand before copying `app/` to a static host), so phones never keep an old copy |
 | `config.json` | SMS gateway number used in the `sms:` link (`DEMO` label shows a DEMO badge) |
 | `vendor/` | onnxruntime-web 1.19.2 (MIT), see `vendor/README.md` |
 | `model/` | `cafetal.onnx` + `labels.json` (owned by `model/`) |

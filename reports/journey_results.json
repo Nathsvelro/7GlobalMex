@@ -1,10 +1,10 @@
 {
   "hub": "http://localhost:8000",
-  "started": "2026-10-03T19:18:15.916Z",
+  "started": "2026-10-03T19:32:10.075Z",
   "checks": [
     {
       "ok": true,
-      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1425 ms (unthrottled, localhost)"
+      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1983 ms (unthrottled, localhost)"
     },
     {
       "ok": true,
@@ -40,7 +40,7 @@
     },
     {
       "ok": true,
-      "msg": "es advice audio plays offline (currentTime 1.21 s)"
+      "msg": "es advice audio plays offline (currentTime 1.20 s)"
     },
     {
       "ok": true,
@@ -48,7 +48,7 @@
     },
     {
       "ok": true,
-      "msg": "SMS code valid, 46 chars: CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #7W94"
+      "msg": "SMS code valid, 46 chars: CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #WO6V"
     },
     {
       "ok": true,
@@ -56,7 +56,7 @@
     },
     {
       "ok": true,
-      "msg": "\"Enviar por SMS\" link: sms:+520000000000?body=CAF1%20M0123%20ROYA%2099%2020261003%2016.91%2C-92.11%20%237W94"
+      "msg": "\"Enviar por SMS\" link: sms:+520000000000?body=CAF1%20M0123%20ROYA%2099%2020261003%2016.91%2C-92.11%20%23WO6V"
     },
     {
       "ok": true,
@@ -116,11 +116,11 @@
     },
     {
       "ok": true,
-      "msg": "hub stored the observation M0123-7W94 (ROYA 99%) from the SMS"
+      "msg": "hub stored the observation M0123-WO6V (ROYA 99%) from the SMS"
     },
     {
       "ok": true,
-      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-03T19:18:35\",\"community\":\"Ondera Alto\",\"lat\":16.91,\"lon\":-92.11,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-7W94\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
+      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-03T19:32:30\",\"community\":\"Ondera Alto\",\"lat\":16.91,\"lon\":-92.11,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-WO6V\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
     },
     {
       "ok": true,
@@ -136,7 +136,7 @@
     },
     {
       "ok": true,
-      "msg": "photo attached to M0123-7W94: /api/photos/M0123-7W94"
+      "msg": "photo attached to M0123-WO6V: /api/photos/M0123-WO6V"
     },
     {
       "ok": true,
@@ -152,15 +152,15 @@
     },
     {
       "ok": true,
-      "msg": "\"cuanto estan pagando el kilo de cafe\" -> precio (0.9951) -> sms_precio"
+      "msg": "\"cuanto estan pagando el kilo de cafe\" -> precio (0.9172) -> sms_precio"
     },
     {
       "ok": true,
-      "msg": "\"mis matas tienen polvo naranja\" -> reporte (0.6526) -> sms_reporte_instrucciones"
+      "msg": "\"mis matas tienen polvo naranja\" -> reporte (0.597) -> sms_reporte_instrucciones"
     },
     {
       "ok": true,
-      "msg": "\"asdf qwerty\" -> otro (0.6938) -> sms_pasar_tecnico, forwarded to officer: true"
+      "msg": "\"asdf qwerty\" -> otro (0.4096) -> sms_pasar_tecnico, forwarded to officer: true"
     },
     {
       "ok": true,
@@ -176,16 +176,16 @@
     }
   ],
   "results": {
-    "first_load_ready_ms": 1425,
+    "first_load_ready_ms": 1983,
     "roya": {
-      "obs_id": "7W94",
+      "obs_id": "WO6V",
       "label": "roya",
       "code": "ROYA",
       "top": "roya",
       "conf": 99,
       "reason": null,
       "blur": 51.69,
-      "ms": 637,
+      "ms": 660,
       "probs": {
         "sano": 0,
         "roya": 1,
@@ -194,19 +194,19 @@
         "cercospora": 0,
         "otro": 0
       },
-      "sms_code": "CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #7W94",
+      "sms_code": "CAF1 M0123 ROYA 99 20261003 16.91,-92.11 #WO6V",
       "model_version": "cafetal-img-v1",
       "diag_text": "Parece roya del cafeto."
     },
     "plantdoc": {
-      "obs_id": "51C1",
+      "obs_id": "WC6U",
       "label": "otro",
       "code": "OTRO",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 1583.54,
-      "ms": 25,
+      "ms": 22,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -215,19 +215,19 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #51C1",
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #WC6U",
       "model_version": "cafetal-img-v1",
       "diag_text": "No estoy seguro — muestre la hoja al técnico."
     },
     "imagenette": {
-      "obs_id": "3JYJ",
+      "obs_id": "NJI3",
       "label": "otro",
       "code": "OTRO",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 1032.66,
-      "ms": 26,
+      "ms": 18,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -236,19 +236,19 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #3JYJ",
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #NJI3",
       "model_version": "cafetal-img-v1",
       "diag_text": "No estoy seguro — muestre la hoja al técnico."
     },
     "object": {
-      "obs_id": "EOVB",
+      "obs_id": "11MC",
       "label": "otro",
       "code": "OTRO",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 145.58,
-      "ms": 23,
+      "ms": 18,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -257,21 +257,21 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #EOVB",
+      "sms_code": "CAF1 M0123 OTRO 99 20261003 16.91,-92.11 #11MC",
       "model_version": "cafetal-img-v1",
       "diag_text": "No estoy seguro — muestre la hoja al técnico."
     },
     "blurred": {
-      "obs_id": "GOG4",
+      "obs_id": "YCYH",
       "label": "duda",
       "code": "DUDA",
       "top": null,
       "conf": 0,
       "reason": "blurry",
       "blur": 2.35,
-      "ms": 2,
+      "ms": 3,
       "probs": null,
-      "sms_code": "CAF1 M0123 DUDA 0 20261003 16.91,-92.11 #GOG4",
+      "sms_code": "CAF1 M0123 DUDA 0 20261003 16.91,-92.11 #YCYH",
       "model_version": "cafetal-img-v1",
       "diag_text": "No estoy seguro — muestre la hoja al técnico."
     },
@@ -294,7 +294,7 @@
     "alerts": [
       {
         "id": 1,
-        "created_at": "2026-10-03T19:18:35",
+        "created_at": "2026-10-03T19:32:30",
         "community": "Ondera Alto",
         "lat": 16.91,
         "lon": -92.11,
@@ -305,7 +305,7 @@
           "M0123"
         ],
         "obs_uids": [
-          "M0123-7W94",
+          "M0123-WO6V",
           "M0105-A1R2",
           "M0108-B7K4"
         ],
@@ -322,8 +322,8 @@
       "name": "Noor (DEMO)",
       "community": "Ondera Alto",
       "phone": "+529670000123",
-      "obs_uid": "M0123-7W94",
-      "obs_id": "7W94",
+      "obs_uid": "M0123-WO6V",
+      "obs_id": "WO6V",
       "code": "ROYA",
       "conf": 99,
       "date": "2026-10-03",
@@ -382,9 +382,9 @@
           {
             "type": "intent",
             "intent": "precio",
-            "conf": 0.9951,
+            "conf": 0.9172,
             "accepted": true,
-            "threshold": 0.65,
+            "threshold": 0.45,
             "method": "classifier"
           }
         ]
@@ -407,9 +407,9 @@
           {
             "type": "intent",
             "intent": "reporte",
-            "conf": 0.6526,
+            "conf": 0.597,
             "accepted": true,
-            "threshold": 0.65,
+            "threshold": 0.45,
             "method": "classifier"
           }
         ]
@@ -432,9 +432,9 @@
           {
             "type": "intent",
             "intent": "otro",
-            "conf": 0.6938,
-            "accepted": true,
-            "threshold": 0.65,
+            "conf": 0.4096,
+            "accepted": false,
+            "threshold": 0.45,
             "method": "classifier"
           },
           {
@@ -525,6 +525,6 @@
     ],
     "notFromCards": []
   },
-  "finished": "2026-10-03T19:18:48.667Z",
+  "finished": "2026-10-03T19:32:43.743Z",
   "failures": 0
 }

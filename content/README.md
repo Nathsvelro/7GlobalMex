@@ -108,6 +108,8 @@ Spelling follows the common practical alphabet (INALI-style): `j` = h sound, `'`
 | kajpe, kajpetal | coffee, coffee plot | dictionary: *kahpe / kajpe* |
 | yabenal | its leaf | varies: *ya'malel* (Yajalón), *wamal* (central towns) |
 | ta yanil | underneath | *yanil* "below" (central dialects) |
+| ta nopol | near, close up | used in `alert_roya` and `ui_photo_tip_underside` |
+| ya snojes | it fills it | *noj* "full" + causative *-es*; used in `ui_photo_tip_underside` |
 | chamel | disease | |
 | ila / lok'taya / tikuna / tup'a | look at it / photograph it / send it / erase it | imperatives (-a) |
 | ik'a te técnico | call the técnico | *ik'* "call, invite" |

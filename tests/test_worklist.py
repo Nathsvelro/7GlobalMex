@@ -62,3 +62,29 @@ def test_officer_actions_and_training_labels(client, conn):
                                                                "true_label": "minador"}).status_code == 400
     assert client.post(f"/api/worklist/{uid_c}/action", json={"action": "delete"}).status_code == 422
     assert client.post("/api/worklist/M9999-ZZZZ/action", json={"action": "confirmed"}).status_code == 404
+
+
+def test_map_colours_farm_by_most_serious_report(client):
+    """A later DUDA or SANO must not hide an earlier ROYA; map and worklist pick the same report."""
+    a = register(client, name="Roya luego duda", phone="+529670006001", lat=16.91, lon=-92.11)
+    b = register(client, name="Cerc luego duda", phone="+529670006002", lat=16.97, lon=-92.20)
+    c = register(client, name="Mina luego sana", phone="+529670006003", lat=16.87, lon=-92.04)
+    d = register(client, name="Roya vieja", phone="+529670006004", lat=16.98, lon=-92.05)
+    sms(client, a["phone"], f"CAF1 {a['member_id']} ROYA 75 {ymd(5)} 16.91,-92.11 #Y001")
+    sms(client, a["phone"], f"CAF1 {a['member_id']} DUDA 30 {ymd(2)} 16.91,-92.11 #Y002")
+    sms(client, a["phone"], f"CAF1 {a['member_id']} SANO 95 {ymd(0)} 16.91,-92.11 #Y003")
+    sms(client, b["phone"], f"CAF1 {b['member_id']} CERC 95 {ymd(1)} 16.97,-92.20 #Y004")
+    sms(client, b["phone"], f"CAF1 {b['member_id']} DUDA 40 {ymd(4)} 16.97,-92.20 #Y005")
+    sms(client, c["phone"], f"CAF1 {c['member_id']} MINA 80 {ymd(3)} 16.87,-92.04 #Y006")
+    sms(client, c["phone"], f"CAF1 {c['member_id']} SANO 90 {ymd(1)} 16.87,-92.04 #Y007")
+    sms(client, d["phone"], f"CAF1 {d['member_id']} ROYA 95 {ymd(40)} 16.98,-92.05 #Y008")  # older than 30 days
+    sms(client, d["phone"], f"CAF1 {d['member_id']} SANO 90 {ymd(1)} 16.98,-92.05 #Y009")
+    members = {m["member_id"]: m for m in client.get("/api/map").json()["members"]}
+    assert members[a["member_id"]]["worst"]["code"] == "ROYA" and members[a["member_id"]]["reports_30d"] == 3
+    assert members[b["member_id"]]["worst"]["code"] == "DUDA"
+    assert members[c["member_id"]]["worst"]["code"] == "MINA"
+    assert members[d["member_id"]]["worst"]["code"] == "SANO"
+    farms = {f["member_id"]: f for f in client.get("/api/worklist").json()["farms"]}
+    for m in (a, b, c):
+        assert farms[m["member_id"]]["obs_uid"] == members[m["member_id"]]["worst"]["uid"]
+    assert d["member_id"] not in farms

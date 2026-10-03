@@ -39,7 +39,8 @@ THRESHOLDS = [round(x, 2) for x in np.arange(0.30, 0.91, 0.05)]
 PROBES = ["q precio tiene el cafe", "cuanto pagan x kilo", "mi cafe tiene manchas amarillas",
           "kiero hablar con el ingeniero", "como funciona", "hola buenas tardes", "pon musica",
           "a como esta el pergamino en la cooperativa", "las hojas tienen polvo amarillo",
-          "que venga el ingeniero a mi parcela"]
+          "que venga el ingeniero a mi parcela", "mis matas tienen polvo naranja",
+          "cuanto estan pagando el kilo de cafe", "asdf qwerty", "quiero hablar con el ingeniero", "hola buenos dias"]
 
 
 def make_model(C):

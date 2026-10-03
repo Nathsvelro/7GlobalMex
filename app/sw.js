@@ -3,8 +3,9 @@
 //  - cards.json / labels.json / config.json: served from cache, refreshed in the background when online;
 //    a refresh also downloads audio whose file or source changed (e.g. a new native recording) and a new model
 //  - /api/*: network only (never cached, so "hub reachable" is never faked)
-// Bump VERSION when app files change.
-const VERSION = 'cafetal-v1';
+// VERSION = hash of every precached file, written by scripts/bump_sw_version.py (run.sh runs it before starting the
+// hub; run it by hand before copying app/ to a static host). A new VERSION makes phones re-download everything.
+const VERSION = 'cafetal-0db9626f54';
 const SHELL = [
   './', 'index.html', 'style.css', 'app.js', 'content.js', 'store.js', 'infer.js', 'sms.js',
   'manifest.webmanifest',

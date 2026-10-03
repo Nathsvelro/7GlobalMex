@@ -495,14 +495,19 @@ def map_data():
     c = conn()
     since = (db.now().date() - timedelta(days=outbreak.WORKLIST_DAYS - 1)).isoformat()
     members = db.rows(c.execute("SELECT member_id, name, community, lat, lon, language, demo FROM members"))
-    latest = {}
-    for o in db.rows(c.execute("SELECT uid, member_id, code, conf, date, lat, lon FROM observations WHERE date >= ?"
-                               " ORDER BY date, received_at", (since,))):
-        latest[o["member_id"]] = o
+    obs = db.rows(c.execute("SELECT uid, member_id, code, conf, date, lat, lon, received_at FROM observations"
+                            " WHERE date >= ?", (since,)))
+    # Each farm is coloured by its most serious report (same choice as the worklist), so a later DUDA
+    # or SANO does not hide an earlier ROYA.
+    worst, count = {}, {}
+    for o in obs:
+        mid = o["member_id"]
+        count[mid] = count.get(mid, 0) + 1
+        if mid not in worst or outbreak.seriousness(o) > outbreak.seriousness(worst[mid]):
+            worst[mid] = o
     for m in members:
-        m["latest"] = latest.get(m["member_id"])
-    obs = db.rows(c.execute("SELECT uid, member_id, code, conf, date, lat, lon FROM observations WHERE date >= ?",
-                            (since,)))
+        m["worst"] = worst.get(m["member_id"])
+        m["reports_30d"] = count.get(m["member_id"], 0)
     return {"members": members, "observations": obs, "alerts": _alerts_out(c), "params": outbreak.params()}
 
 

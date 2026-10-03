@@ -19,6 +19,9 @@ if [ ! -f "$STAMP" ] || [ "$(cat "$STAMP")" != "$WANT" ]; then
   echo "$WANT" > "$STAMP"
 fi
 
+# Phone app cache version = hash of the files the phone caches offline, so phones never keep an old copy.
+.venv/bin/python scripts/bump_sw_version.py
+
 # Load the DEMO data the first time (when the database file does not exist yet).
 .venv/bin/python -m hub.seed --if-missing
 

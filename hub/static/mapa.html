@@ -10,7 +10,7 @@
 <body>
 <main>
   <h1>Mapa de parcelas y avisos</h1>
-  <p class="muted small">Cada punto es la parcela de un socio, con el color de su último resultado (30 días). Los círculos rojos son zonas de aviso de roya (radio de 5 km).
+  <p class="muted small">Cada punto es la parcela de un socio, con el color de su reporte más grave de los últimos 30 días (roya &gt; duda &gt; otras manchas o plagas &gt; sana), como en la lista del técnico. Los círculos rojos son zonas de aviso de roya (radio de 5 km).
     Mapa simple sin internet (sin calles ni relieve). Ubicaciones aproximadas.</p>
   <div class="map-wrap" id="map"></div>
   <p class="legend small" id="legend"></p>
@@ -58,11 +58,11 @@ function render(d) {
   }
   // plots
   for (const m of pts) {
-    const l = m.latest, info = l ? CODE_INFO[l.code] : null;
+    const l = m.worst, info = l ? CODE_INFO[l.code] : null;
     const col = info ? info.color : "#b8b8b0";
     const isNoor = m.member_id === "M0123";
     s += `<g><circle cx="${X(m.lon)}" cy="${Y(m.lat)}" r="${isNoor ? 9 : 7}" fill="${col}" stroke="${isNoor ? "#111" : "#fff"}" stroke-width="${isNoor ? 3 : 2}"/>
-      <title>${esc(m.member_id)} ${esc(m.name)} — ${l ? esc(info.name) + (["DUDA", "OTRO"].includes(l.code) ? "" : " " + l.conf + "%") + " · " + l.date : "sin reportes en 30 días"}</title></g>`;
+      <title>${esc(m.member_id)} ${esc(m.name)} — ${l ? "más grave: " + esc(info.name) + (["DUDA", "OTRO"].includes(l.code) ? "" : " " + l.conf + "%") + " · " + l.date + " (" + m.reports_30d + (m.reports_30d === 1 ? " reporte" : " reportes") + " en 30 días)" : "sin reportes en 30 días"}</title></g>`;
     if (isNoor) s += `<text x="${X(m.lon) + 12}" y="${Y(m.lat) + 4}" font-size="12" font-weight="700" fill="#111">Noor</text>`;
   }
   // scale bar
@@ -74,7 +74,8 @@ function render(d) {
   await initPage();
   const d = await api("/api/map");
   render(d);
-  document.getElementById("legend").innerHTML = Object.entries(CODE_INFO).map(([k, v]) => `<span><span class="dot" style="background:${v.color}"></span>${v.name}</span>`).join("") +
+  document.getElementById("legend").innerHTML = '<span><b>Color = reporte más grave (30 días), de más a menos grave:</b></span>' +
+    ["ROYA", "DUDA", "OTRO", "CERC", "PHOM", "MINA", "ACAR", "SANO"].map((k) => `<span><span class="dot" style="background:${CODE_INFO[k].color}"></span>${CODE_INFO[k].name}</span>`).join("") +
     '<span><span class="dot" style="background:#b8b8b0"></span>Sin reportes (30 días)</span><span><span class="dot" style="background:#fff;border:3px solid #111"></span>Noor</span>' +
     '<span style="color:#b3361f">◯ zona de aviso activa (5 km)</span>';
   document.getElementById("alerts").innerHTML = d.alerts.length ? d.alerts.map((a) =>

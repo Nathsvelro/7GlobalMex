@@ -273,8 +273,8 @@
     {
       "id": "ui_photo_tip_underside",
       "type": "ui",
-      "es": "Tome la foto por debajo de la hoja, con buena luz.",
-      "tzh": "Lok'taya te yanil yabenal kajpe, ta lek lus.",
+      "es": "Tome la foto por debajo de la hoja, de cerca: que la mancha llene la foto. Con buena luz.",
+      "tzh": "Lok'taya te yanil yabenal kajpe ta nopol, yu'un ya snojes te lok'omba te smancha. Ta lek lus.",
       "slots": [],
       "audio": {
         "es": "audio/es/ui_photo_tip_underside.mp3",
