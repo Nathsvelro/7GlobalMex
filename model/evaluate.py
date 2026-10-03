@@ -2,6 +2,13 @@
 
   python model/evaluate.py --data /home/user/data_proc/cafetal
 
+The shipped model (cafetal-img-v2 at threshold 0.90) with the previous app model (v1) as a reference column:
+
+  python model/evaluate.py --data /home/user/data_proc/cafetal --inat-field /home/user/data_raw/inat \
+      --fp32 model/checkpoints/v2/cafetal_fp32.onnx --calib reports/field_v2_calibration.json \
+      --ref v1=model/checkpoints/v1/cafetal.onnx:model/checkpoints/v1/labels.json:reports/model_calibration.json
+
+Every model is decided with ITS OWN threshold from its labels.json (shipped: app/model/labels.json).
 (a) held-out TEST split (split by near-duplicate group): fp32 and shipped model; app decision
     (threshold + blur check + "otro" -> DUDA); "otro" rejection.
 (b) robustness under phone-like degradations (proxy for the field gap) + fail-safe rate.
@@ -93,6 +100,11 @@ def app_outcomes(y, final, classes):
         "coffee_selective_accuracy": round(float((final[acc_mask] == np.array(classes)[y[acc_mask]]).mean()), 4)
         if acc_mask.any() else None,
         "diseased_called_sano": round(float((final[diseased] == "sano").mean()), 4) if diseased.any() else None,
+        "diseased_called_sano_n": int((final[diseased] == "sano").sum()),
+        # app-level macro-F1 over the coffee classes, DUDA counts as a miss (same as model/field_eval.py)
+        "app_macro_f1_coffee": round(float(f1_score(np.array(classes)[y[coffee]], final[coffee],
+                                                    labels=[c for c in classes if c != "otro"], average="macro",
+                                                    zero_division=0)), 4) if coffee.any() else None,
     }
     return res
 
@@ -198,73 +210,148 @@ def latency(path, size, n=50):
     return round(float(np.median(t)), 2)
 
 
+def file_sha1_12(path):
+    import hashlib
+    return hashlib.sha1(open(path, "rb").read()).hexdigest()[:12]
+
+
+def parse_ref(spec):
+    """name=model.onnx:labels.json[:calibration.json]"""
+    name, rest = spec.split("=", 1)
+    parts = rest.split(":")
+    labels = json.load(open(parts[1]))
+    calib = json.load(open(parts[2])) if len(parts) > 2 and parts[2] else {}
+    return name, parts[0], labels, calib
+
+
+def otro_by_source(te, y, final, probs, otro):
+    om = y == otro
+    out = {}
+    for src in sorted(set(te["source"][om])):
+        for view in sorted(set(te["view"][om & (te["source"] == src)])):
+            m = om & (te["source"] == src) & (te["view"] == view)
+            out[f"{src}/{view}"] = {"n": int(m.sum()), "rejected": round(float((final[m] == "DUDA").mean()), 4),
+                                    "argmax_otro": round(float((probs[m].argmax(1) == otro).mean()), 4)}
+    return out
+
+
+def robustness_row(pd, bd, y, classes, thr, blur_thr):
+    otro = classes.index("otro")
+    fd = decide(pd, bd, classes, thr, blur_thr)
+    coffee = y != otro
+    acc_m = coffee & (fd != "DUDA")
+    return {
+        "accuracy_argmax": round(float((pd.argmax(1) == y).mean()), 4),
+        "macro_f1_argmax": round(float(f1_score(y, pd.argmax(1), average="macro")), 4),
+        "coffee_failsafe_rate": round(float((fd[coffee] == "DUDA").mean()), 4),
+        "coffee_failsafe_by_blur": round(float((bd[coffee] < blur_thr).mean()), 4),
+        "coffee_selective_accuracy": round(float((fd[acc_m] == np.array(classes)[y[acc_m]]).mean()), 4)
+        if acc_m.any() else None,
+        "coffee_wrong_accepted": round(float(((fd != "DUDA") & (fd != np.array(classes)[y]))[coffee].mean()), 4),
+        "otro_rejected": round(float((fd[~coffee] == "DUDA").mean()), 4),
+    }
+
+
+def inatag_eval(sess, ia, crops, classes, thr, blur_thr):
+    pi = run(sess, ia["x"])
+    fi = decide(pi, ia["blur"], classes, thr, blur_thr)
+    vals, cnts = np.unique(fi, return_counts=True)
+    zoom = {}
+    for key, (xs, bs) in crops.items():
+        fz = decide(run(sess, xs), bs, classes, thr, blur_thr)
+        zoom[key] = {str(v): int(c) for v, c in zip(*np.unique(fz, return_counts=True))}
+    return {"n_images": int(len(fi)), "app_decision_share": {str(v): round(int(c) / len(fi), 4) for v, c in zip(vals, cnts)},
+            "argmax_share": {classes[k]: round(float((pi.argmax(1) == k).mean()), 4) for k in range(len(classes))},
+            "app_decision_counts_centre_crops": zoom}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", required=True)
-    ap.add_argument("--fp32", default=os.path.join(REPO, "model", "checkpoints", "cafetal_fp32.onnx"))
+    ap.add_argument("--fp32", default=os.path.join(REPO, "model", "checkpoints", "cafetal_fp32.onnx"),
+                    help="float32 export of the SAME weights as the shipped model (v2: model/checkpoints/v2/cafetal_fp32.onnx)")
     ap.add_argument("--shipped", default=os.path.join(REPO, "app", "model", "cafetal.onnx"))
     ap.add_argument("--labels", default=os.path.join(REPO, "app", "model", "labels.json"))
+    ap.add_argument("--calib", default=os.path.join(REPO, "reports", "model_calibration.json"),
+                    help="export-time calibration record of the shipped model (model/export_onnx.py --calib-out); "
+                         "v2: reports/field_v2_calibration.json")
+    ap.add_argument("--ref", help="name=model.onnx:labels.json[:calibration.json] - reference model (e.g. the previous "
+                                  "app model), decided with its own threshold and shown next to the shipped model")
+    ap.add_argument("--decision", default=os.path.join(REPO, "model", "ship_decision.json"),
+                    help="human ship-decision record; shown in the header when it names the shipped model file")
     ap.add_argument("--field", default=os.path.join(REPO, "data", "field_test"))
     ap.add_argument("--out", default=os.path.join(REPO, "reports"))
     ap.add_argument("--inat-field", help="iNaturalist field photo folder from model/inat_field.py (adds section g)")
+    ap.add_argument("--cache", default=os.path.join(REPO, "model", "checkpoints", "field_cache"),
+                    help="prediction cache for section (g), keyed by model file hash")
     args = ap.parse_args()
     labels = json.load(open(args.labels))
     classes, size = labels["classes"], labels["input"]["size"]
     thr, blur_thr = labels["threshold"], labels["blur_threshold"]
-    calib = json.load(open(os.path.join(args.out, "model_calibration.json")))
+    calib = json.load(open(args.calib))
     split = json.load(open(os.path.join(args.out, "model_data_split.json")))
     shipped_kind = calib.get("shipped", "?")
+    sha = file_sha1_12(args.shipped)
+    decision = json.load(open(args.decision)) if args.decision and os.path.exists(args.decision) else None
+    if decision and decision.get("shipped", {}).get("file_sha1_12") != sha:
+        decision = None  # the record is about another model file
+    ref = parse_ref(args.ref) if args.ref else None
+    rep = {"model": {"version": labels.get("version"), "file": os.path.relpath(args.shipped, REPO), "sha1_12": sha,
+                     "classes": classes, "size": size, "threshold": thr, "threshold_note": labels.get("threshold_note"),
+                     "blur_threshold": blur_thr, "shipped": shipped_kind,
+                     "fp32_file": os.path.relpath(args.fp32, REPO), "calibration_file": os.path.relpath(args.calib, REPO)},
+           "ship_decision": decision}
+    if ref:
+        rname, rpath, rlab, rcalib = ref
+        assert rlab["classes"] == classes, "reference model has a different class order"
+        rthr, rblur = rlab["threshold"], rlab["blur_threshold"]
+        sref = session(rpath)
+        rep["reference"] = {"name": rname, "version": rlab.get("version"), "file": os.path.relpath(rpath, REPO),
+                            "sha1_12": file_sha1_12(rpath), "threshold": rthr, "blur_threshold": rblur,
+                            "note": "the app's previous model, evaluated on the same images, decided with its own threshold"}
     te = np.load(os.path.join(args.data, "test.npz"))
     x, y = te["x"], te["y"]
     s32, ssh = session(args.fp32), session(args.shipped)
-    rep = {"model": {"classes": classes, "size": size, "threshold": thr, "blur_threshold": blur_thr,
-                     "shipped": shipped_kind}}
+    otro = classes.index("otro")
 
     # ---- (a) test split
     p32, psh = run(s32, x), run(ssh, x)
     blur_orig = np.where(np.isnan(te["blur"]), blur_scores(x), te["blur"])  # crop views: score the crop
     final = decide(psh, blur_orig, classes, thr, blur_thr)
     groups = {c: len({g for g, yy in zip(te["group"], y) if yy == k}) for k, c in enumerate(classes)}
-    otro = classes.index("otro")
-    om = y == otro
-    otro_rej = {}
-    for src in sorted(set(te["source"][om])):
-        for view in sorted(set(te["view"][om & (te["source"] == src)])):
-            m = om & (te["source"] == src) & (te["view"] == view)
-            otro_rej[f"{src}/{view}"] = {"n": int(m.sum()), "rejected": round(float((final[m] == "DUDA").mean()), 4),
-                                         "argmax_otro": round(float((psh[m].argmax(1) == otro).mean()), 4)}
     rep["test"] = {"n_images": int(len(y)), "distinct_groups_per_class": groups,
                    "fp32": metrics(y, p32, classes), "shipped": metrics(y, psh, classes),
                    "app_decision_shipped": app_outcomes(y, final, classes),
-                   "otro_rejection_shipped": otro_rej,
+                   "otro_rejection_shipped": otro_by_source(te, y, final, psh, otro),
                    "shipped_vs_fp32_top1_agreement": round(float((p32.argmax(1) == psh.argmax(1)).mean()), 4)}
-    plot_confusion([rep["test"]["fp32"]["confusion_matrix"], rep["test"]["shipped"]["confusion_matrix"]],
-                   [f"fp32 - test split (n={len(y)})", f"shipped {shipped_kind} - test split (n={len(y)})"],
-                   classes, os.path.join(args.out, "confusion_matrix.png"))
+    cms = [rep["test"]["fp32"]["confusion_matrix"], rep["test"]["shipped"]["confusion_matrix"]]
+    titles = [f"{labels.get('version')} fp32 - test split (n={len(y)})",
+              f"shipped {labels.get('version')} {shipped_kind} - test split (n={len(y)})"]
+    if ref:
+        pref = run(sref, x)
+        fref = decide(pref, blur_orig, classes, rthr, rblur)
+        rep["reference"]["test"] = {"argmax": metrics(y, pref, classes), "app_decision": app_outcomes(y, fref, classes),
+                                    "otro_rejection": otro_by_source(te, y, fref, pref, otro)}
+        cms.append(rep["reference"]["test"]["argmax"]["confusion_matrix"])
+        titles.append(f"reference {rname} ({rlab.get('version')}) - test split (n={len(y)})")
+    plot_confusion(cms, titles, classes, os.path.join(args.out, "confusion_matrix.png"))
     print("test", {k: rep["test"][k]["accuracy"] for k in ("fp32", "shipped")},
-          {k: rep["test"][k]["macro_f1"] for k in ("fp32", "shipped")})
+          {k: rep["test"][k]["macro_f1"] for k in ("fp32", "shipped")},
+          "app F1", rep["test"]["app_decision_shipped"]["_summary"]["app_macro_f1_coffee"],
+          "ref app F1", rep["reference"]["test"]["app_decision"]["_summary"]["app_macro_f1_coffee"] if ref else None)
 
-    # ---- (b) robustness (shipped model; blur check on the degraded SxS view resized to 128)
-    rob = {}
+    # ---- (b) robustness (blur check on the degraded SxS view resized to 128)
+    rob, rob_ref = {}, {}
     for name, fn in DEGRADATIONS.items():
         xd = np.stack([fn(a) for a in x]).astype(np.uint8)
-        pd = run(ssh, xd)
         bd = blur_scores(xd)
-        fd = decide(pd, bd, classes, thr, blur_thr)
-        coffee = y != otro
-        acc_m = coffee & (fd != "DUDA")
-        rob[name] = {
-            "accuracy_argmax": round(float((pd.argmax(1) == y).mean()), 4),
-            "macro_f1_argmax": round(float(f1_score(y, pd.argmax(1), average="macro")), 4),
-            "coffee_failsafe_rate": round(float((fd[coffee] == "DUDA").mean()), 4),
-            "coffee_failsafe_by_blur": round(float((bd[coffee] < blur_thr).mean()), 4),
-            "coffee_selective_accuracy": round(float((fd[acc_m] == np.array(classes)[y[acc_m]]).mean()), 4)
-            if acc_m.any() else None,
-            "coffee_wrong_accepted": round(float(((fd != "DUDA") & (fd != np.array(classes)[y]))[coffee].mean()), 4),
-            "otro_rejected": round(float((fd[~coffee] == "DUDA").mean()), 4),
-        }
+        rob[name] = robustness_row(run(ssh, xd), bd, y, classes, thr, blur_thr)
+        if ref:
+            rob_ref[name] = robustness_row(run(sref, xd), bd, y, classes, rthr, rblur)
         print("robustness", name, rob[name], flush=True)
     rep["robustness"] = rob
+    if ref:
+        rep["reference"]["robustness"] = rob_ref
 
     # ---- (c) field test photos
     fx, fy, fb, fp = load_field(args.field, size)
@@ -287,7 +374,7 @@ def main():
                              "app_correct_overall": round(sum(q["correct"] for q in rows) / len(rows), 4),
                              "images": rows,
                              "note": "app_correct: coffee classes must get their own label; acaro_rojo and otro "
-                                     "must get DUDA (acaro_rojo is not in model v1)"}
+                                     "must get DUDA (acaro_rojo is not a model class)"}
     else:
         rep["field_test"] = {"n_images": 0, "note": "0 images - not yet collected (put photos in "
                                                     "data/field_test/<label>/ and rerun)"}
@@ -308,10 +395,7 @@ def main():
     inat_path = os.path.join(args.data, "extra_inat.npz")
     if os.path.exists(inat_path):
         ia = np.load(inat_path)
-        pi = run(ssh, ia["x"])
-        fi = decide(pi, ia["blur"], classes, thr, blur_thr)
-        vals, cnts = np.unique(fi, return_counts=True)
-        zoom = {}
+        crops = {}
         for frac in (0.5, 0.25, 0.12):  # centre crops: does a closer framing change the answer?
             xs = []
             for pth in ia["path"]:
@@ -320,44 +404,54 @@ def main():
                 o = (im.size[0] - c) // 2
                 xs.append(np.asarray(im.crop((o, o, o + c, o + c)).resize((size, size), Image.BILINEAR), np.uint8))
             xs = np.stack(xs)
-            fz = decide(run(ssh, xs), blur_scores(xs), classes, thr, blur_thr)
-            zoom[f"centre_{int(frac * 100)}pct"] = {str(v): int(c) for v, c in zip(*np.unique(fz, return_counts=True))}
-        rep["inat_coffee_photos"] = {
-            "n_images": int(len(fi)), "app_decision_share": {str(v): round(int(c) / len(fi), 4) for v, c in zip(vals, cnts)},
-            "argmax_share": {classes[k]: round(float((pi.argmax(1) == k).mean()), 4) for k in range(len(classes))},
-            "app_decision_counts_centre_crops": zoom,
-            "note": "iNatAg-mini/coffea_arabica (iNaturalist, CC BY-NC 4.0): whole plants, flowers, cherries; "
-                    "disease status unknown. Not used for training. Desired behaviour: mostly DUDA."}
+            crops[f"centre_{int(frac * 100)}pct"] = (xs, blur_scores(xs))
+        rep["inat_coffee_photos"] = dict(inatag_eval(ssh, ia, crops, classes, thr, blur_thr), note=(
+            "iNatAg-mini/coffea_arabica (iNaturalist, CC BY-NC 4.0): whole plants, flowers, cherries; disease status "
+            "unknown. Not used for training (neither v1 nor v2). Desired behaviour: mostly DUDA."))
+        if ref:
+            rep["reference"]["inat_coffee_photos"] = inatag_eval(sref, ia, crops, classes, rthr, rblur)
 
     # ---- (g) iNaturalist field photos (held-out field test)
     if args.inat_field:
         from field_eval import evaluate_model, load_rows, square_of
         rows = load_rows(args.inat_field)
         sq = [square_of(r["path"]) for r in rows]
+        squares, blur = [s for s, _ in sq], np.array([b for _, b in sq])
         mcfg = labels.get("inference", {}).get("multicrop")
         methods = ["single"] + ([f"mc:{mcfg['scheme']}:{mcfg['min_votes']}"] if mcfg else [])
-        out, _, _ = evaluate_model(args.shipped, labels, rows, [s for s, _ in sq], np.array([b for _, b in sq]), None,
-                                   None, methods)
+        out, _, _ = evaluate_model(args.shipped, labels, rows, squares, blur, None, args.cache, methods)
         rep["inat_field"] = {"n_photos": len(rows), "app_method": methods[-1],
                              "field_test": {m: out["methods"][m]["field_test"] for m in methods},
                              "note": "held-out field test only (observers never used in training); iNaturalist photos "
-                                     "are a proxy for Chiapas photos; details and v1/v2 comparison in "
+                                     "are a proxy for Chiapas photos; details, ship rule and v1/v2 comparison in "
                                      "reports/field_eval.md"}
         print("inat field", {m: rep["inat_field"]["field_test"][m]["roya"]["correct"] for m in methods})
+        if ref:
+            ro, _, _ = evaluate_model(rpath, rlab, rows, squares, blur, None, args.cache, ["single"])
+            rep["reference"]["inat_field"] = {"app_method": "single", "field_test": {"single": ro["methods"]["single"]["field_test"]}}
 
     # ---- (d) size / latency / download
     sizes = {"fp32": os.path.getsize(args.fp32), "shipped": os.path.getsize(args.shipped)}
+    lat = {"fp32": latency(args.fp32, size), "shipped": latency(args.shipped, size)}
+    web_ck = calib.get("ortweb_node_check", {})
+    web = {"fp32": web_ck.get("fp32", {}).get("ms_median"), "shipped": web_ck.get(shipped_kind, {}).get("ms_median")}
+    if ref:
+        sizes["reference"] = os.path.getsize(rpath)
+        lat["reference"] = latency(rpath, size)
+        web["reference"] = rcalib.get("ortweb_node_check", {}).get(rcalib.get("shipped"), {}).get("ms_median")
     rep["size_latency"] = {
         "size_bytes": sizes,
         "size_mb": {k: round(v / 1e6, 2) for k, v in sizes.items()},
-        "cpu_latency_ms_median_1thread": {"fp32": latency(args.fp32, size), "shipped": latency(args.shipped, size)},
+        "cpu_latency_ms_median_1thread": lat,
         "latency_note": "onnxruntime Python 1.19.2, CPUExecutionProvider, 1 thread, batch 1, median of 50, "
                         "build server x86 CPU (not a phone)",
-        "ortweb_node_wasm_ms_median": {k: v.get("ms_median") for k, v in calib.get("ortweb_node_check", {}).items()},
-        "ortweb_note": "onnxruntime-web 1.19.2 WASM backend, 1 thread, Node.js on the build server (not a phone)",
+        "ortweb_node_wasm_ms_median": web,
+        "ortweb_note": "onnxruntime-web 1.19.2 WASM backend, 1 thread, Node.js on the build server (not a phone), "
+                       "measured at export time (model/export_onnx.py, calibration record)",
         "download_seconds_computed": {
             k: {"3G_384kbps": round(v * 8 / 384e3, 1), "3G_1Mbps": round(v * 8 / 1e6, 1)} for k, v in sizes.items()},
-        "download_note": "computed = bytes*8/bitrate, no protocol overhead; measure in a throttled browser for METRICS.md",
+        "download_note": "computed = bytes*8/bitrate, no protocol overhead; throttled-browser measurements are in "
+                         "reports/browser_metrics.md (emulated)",
     }
     rep["data_split"] = split
     rep["calibration"] = {k: calib[k] for k in ("threshold", "blur_threshold", "val_macro_f1", "val_accuracy",
@@ -375,58 +469,116 @@ def pct(v):
     return "n/a" if v is None else f"{100 * v:.1f}%"
 
 
+def rob_table(rows):
+    L = ["| degradation | accuracy (argmax) | macro-F1 | coffee fail-safe | of which blur check | "
+         "selective acc. | wrong & accepted | otro rejected |", "|---|---|---|---|---|---|---|---|"]
+    for k, v in rows.items():
+        L.append(f"| {k} | {pct(v['accuracy_argmax'])} | {v['macro_f1_argmax']:.3f} | {pct(v['coffee_failsafe_rate'])} | "
+                 f"{pct(v['coffee_failsafe_by_blur'])} | {pct(v['coffee_selective_accuracy'])} | "
+                 f"{pct(v['coffee_wrong_accepted'])} | {pct(v['otro_rejected'])} |")
+    return L
+
+
+def inatag_lines(i):
+    return ["App decision share: " + ", ".join(f"{k} {pct(v)}" for k, v in i["app_decision_share"].items()) + ".", "",
+            "Same photos cropped to the centre (closer framing), app decision counts: " +
+            "; ".join(f"{k}: " + ", ".join(f"{a} {b}" for a, b in v.items())
+                      for k, v in i.get("app_decision_counts_centre_crops", {}).items()) + "."]
+
+
 def render_md(r, classes):
     t, m = r["test"], r["model"]
+    ref = r.get("reference")
+    tag = f"{m.get('version') or 'shipped'}@{m['threshold']}"
+    rtag = f"{ref['name']}@{ref['threshold']}" if ref else None
+    a, s = t["app_decision_shipped"], t["app_decision_shipped"]["_summary"]
+    ra = ref["test"]["app_decision"] if ref else None
+    rs = ra["_summary"] if ref else None
     L = ["# Cafetal image model - evaluation report", "",
-         f"Generated by `model/evaluate.py`. Shipped model: **{m['shipped']}** "
-         f"(`app/model/cafetal.onnx`), input {m['size']}x{m['size']}, threshold {m['threshold']}, "
-         f"blur threshold {m['blur_threshold']}. All numbers below are **measured** unless marked *computed*.", "",
-         "> Read this first: the test split comes from the same Kenyan dataset as training (JMuBEN), split by "
-         "near-duplicate group. It is NOT a field test. The `sano` class has only "
-         f"{t['distinct_groups_per_class'].get('sano')} distinct source photos in test "
-         "(and 7 in train) - see 'Data' below. Field accuracy on Chiapas photos is unknown until "
-         "`data/field_test/` is filled." + (
-             f" On held-out iNaturalist field photos of leaf rust (a proxy, section (g)) the shipped model answers "
-             f"{pct(r['inat_field']['field_test'][r['inat_field']['app_method']]['roya']['correct'])} correctly "
-             f"(n={r['inat_field']['field_test'][r['inat_field']['app_method']]['roya']['n']})."
-             if "inat_field" in r else ""), "",
-         "## (a) Held-out test split (group split, 70/15/15)", "",
-         "| model | accuracy | macro-F1 |", "|---|---|---|",
-         f"| fp32 | {pct(t['fp32']['accuracy'])} | {t['fp32']['macro_f1']:.3f} |",
-         f"| shipped ({m['shipped']}) | {pct(t['shipped']['accuracy'])} | {t['shipped']['macro_f1']:.3f} |", "",
-         f"Top-1 agreement fp32 vs shipped on test: {pct(t['shipped_vs_fp32_top1_agreement'])}.", "",
-         "Per class (shipped model, argmax before threshold):", "",
-         "| class | precision | recall | F1 | test images | distinct source groups |", "|---|---|---|---|---|---|"]
+         f"Generated by `model/evaluate.py`. Shipped model: **{m.get('version')}** (`{m.get('file', 'app/model/cafetal.onnx')}`, "
+         f"{m['shipped']}, sha1 {m.get('sha1_12')}), input {m['size']}x{m['size']}, **threshold {m['threshold']}**"
+         + (f" ({m['threshold_note']})" if m.get("threshold_note") else "") + f", blur threshold {m['blur_threshold']}."
+         + (f" Reference column: **{ref['name']}** ({ref['version']}, threshold {ref['threshold']}), {ref['note']}."
+            if ref else "") + " All numbers below are **measured** unless marked *computed*.", ""]
+    d = r.get("ship_decision")
+    if d:
+        f1s, f1r = s.get("app_macro_f1_coffee"), (rs or {}).get("app_macro_f1_coffee")
+        drop = f" it drops {100 * (f1r - f1s):.2f} points ({f1s:.4f} vs {f1r:.4f} for {rtag}, section (a))" \
+            if ref and f1s is not None and f1r is not None else ""
+        L += [f"> **Shipped by explicit team decision, as an exception to the pre-registered ship rule** ({d['date']}, "
+              f"`model/ship_decision.json`). {d['rule_outcome']}: condition {d['exception']};{drop}. "
+              f"Why the team shipped it anyway: {d['reason']} Full rule, numbers and decision: `reports/field_eval.md` "
+              "(\"Result\", \"Threshold trade-off\").", ""]
+    fld = r.get("inat_field")
+    fline = ""
+    if fld:
+        fr = fld["field_test"][fld["app_method"]]["roya"]
+        fline = (f" On held-out iNaturalist field photos of leaf rust (a proxy, section (g)) the shipped model answers "
+                 f"{pct(fr['correct'])} correctly (n={fr['n']})")
+        if ref and "inat_field" in ref:
+            fline += f"; {ref['name']}: {pct(ref['inat_field']['field_test']['single']['roya']['correct'])}"
+        fline += "."
+    L += ["> Read this first: the test split comes from the same Kenyan dataset as training (JMuBEN), split by "
+          "near-duplicate group. It is NOT a field test. The `sano` class has only "
+          f"{t['distinct_groups_per_class'].get('sano')} distinct source photos in test "
+          "(and 7 in train) - see 'Data' below. Field accuracy on Chiapas photos is unknown until "
+          "`data/field_test/` is filled." + fline, "",
+          "## (a) Held-out test split (group split, 70/15/15)", "",
+          "| model | threshold | accuracy (argmax) | macro-F1 (argmax, 6 classes) | app-level macro-F1 (5 coffee classes, DUDA = miss) |",
+          "|---|---|---|---|---|",
+          f"| {m.get('version')} fp32 (same weights, float32) | - | {pct(t['fp32']['accuracy'])} | {t['fp32']['macro_f1']:.4f} | - |",
+          f"| **shipped {m.get('version')}** ({m['shipped']}) | {m['threshold']} | {pct(t['shipped']['accuracy'])} | "
+          f"{t['shipped']['macro_f1']:.4f} | {s['app_macro_f1_coffee']:.4f} |"]
+    if ref:
+        L.append(f"| reference {ref['name']} ({ref['version']}) | {ref['threshold']} | {pct(ref['test']['argmax']['accuracy'])} | "
+                 f"{ref['test']['argmax']['macro_f1']:.4f} | {rs['app_macro_f1_coffee']:.4f} |")
+    L += ["", f"Top-1 agreement fp32 vs shipped on test: {pct(t['shipped_vs_fp32_top1_agreement'])}. The argmax "
+          "columns do not depend on the threshold; the app-level column does (a photo sent to DUDA counts as a miss).", "",
+          "Per class (shipped model, argmax before threshold):", "",
+          "| class | precision | recall | F1 | test images | distinct source groups |", "|---|---|---|---|---|---|"]
     for c in classes:
         pc = t["shipped"]["per_class"][c]
         L.append(f"| {c} | {pct(pc['precision'])} | {pct(pc['recall'])} | {pc['f1']:.3f} | {pc['support']} | "
                  f"{t['distinct_groups_per_class'][c]} |")
-    a = t["app_decision_shipped"]
-    s = a["_summary"]
     L += ["", "![confusion matrix](confusion_matrix.png)", "",
-          "### What the app would do (threshold + blur check; `otro` -> DUDA)", "",
-          "| true class | correct | wrong (accepted) | DUDA (fail-safe) |", "|---|---|---|---|"]
+          "### What the app would do (threshold + blur check; `otro` -> DUDA)", ""]
+    if ref:
+        L += [f"| true class | {tag} correct | {tag} wrong (accepted) | {tag} DUDA (fail-safe) | {rtag} correct | "
+              f"{rtag} wrong (accepted) | {rtag} DUDA |", "|---|---|---|---|---|---|---|"]
+    else:
+        L += ["| true class | correct | wrong (accepted) | DUDA (fail-safe) |", "|---|---|---|---|"]
     for c in classes:
         if c in a and c != "otro":
-            L.append(f"| {c} | {pct(a[c]['correct'])} | {pct(a[c]['wrong'])} | {pct(a[c]['DUDA'])} |")
-    L += ["", f"- Coffee images answered (coverage): **{pct(s['coffee_coverage'])}**; accuracy of the answered ones "
-              f"(selective accuracy): **{pct(s['coffee_selective_accuracy'])}**.",
-          f"- Diseased leaves told 'sano' (the dangerous error): **{pct(s['diseased_called_sano'])}**.",
-          f"- `otro` test images sent to DUDA: **{pct(a.get('otro', {}).get('rejected_to_DUDA'))}**. By source:", ""]
-    L += ["| otro source / view | n | rejected (DUDA) | argmax = otro |", "|---|---|---|---|"]
-    for k, v in t["otro_rejection_shipped"].items():
-        L.append(f"| {k} | {v['n']} | {pct(v['rejected'])} | {pct(v['argmax_otro'])} |")
-    L += ["", "## (b) Robustness to phone-like degradations (test split, shipped model)", "",
+            row = f"| {c} | {pct(a[c]['correct'])} | {pct(a[c]['wrong'])} | {pct(a[c]['DUDA'])} |"
+            if ref:
+                row += f" {pct(ra[c]['correct'])} | {pct(ra[c]['wrong'])} | {pct(ra[c]['DUDA'])} |"
+            L.append(row)
+
+    def both(key, fmt=pct):
+        return f"**{fmt(s[key])}**" + (f" ({rtag}: {fmt(rs[key])})" if ref else "")
+    L += ["", f"- Coffee images answered (coverage): {both('coffee_coverage')}; accuracy of the answered ones "
+              f"(selective accuracy): {both('coffee_selective_accuracy')}.",
+          f"- Diseased leaves told 'sano' (the dangerous error): {both('diseased_called_sano')}.",
+          f"- `otro` test images sent to DUDA: **{pct(a.get('otro', {}).get('rejected_to_DUDA'))}**"
+          + (f" ({rtag}: {pct(ra.get('otro', {}).get('rejected_to_DUDA'))})" if ref else "") + ". By source:", ""]
+    if ref:
+        L += [f"| otro source / view | n | {tag} rejected (DUDA) | {tag} argmax = otro | {rtag} rejected (DUDA) |",
+              "|---|---|---|---|---|"]
+        for k, v in t["otro_rejection_shipped"].items():
+            L.append(f"| {k} | {v['n']} | {pct(v['rejected'])} | {pct(v['argmax_otro'])} | "
+                     f"{pct(ref['test']['otro_rejection'][k]['rejected'])} |")
+    else:
+        L += ["| otro source / view | n | rejected (DUDA) | argmax = otro |", "|---|---|---|---|"]
+        for k, v in t["otro_rejection_shipped"].items():
+            L.append(f"| {k} | {v['n']} | {pct(v['rejected'])} | {pct(v['argmax_otro'])} |")
+    L += ["", f"## (b) Robustness to phone-like degradations (test split, shipped model {tag})", "",
           "Proxy for the field gap: the same test images degraded. 'fail-safe' = the app says "
           "\"No estoy seguro\" (DUDA) because of the threshold, the blur check or an `otro` prediction. "
           "Here the blur check runs on the cached 224 px view resized to 128 px (also for 'clean'), so its "
-          "rejections are a little higher than in (a), which scores the original files.", "",
-          "| degradation | accuracy (argmax) | macro-F1 | coffee fail-safe | of which blur check | "
-          "selective acc. | wrong & accepted | otro rejected |", "|---|---|---|---|---|---|---|---|"]
-    for k, v in r["robustness"].items():
-        L.append(f"| {k} | {pct(v['accuracy_argmax'])} | {v['macro_f1_argmax']:.3f} | {pct(v['coffee_failsafe_rate'])} | "
-                 f"{pct(v['coffee_failsafe_by_blur'])} | {pct(v['coffee_selective_accuracy'])} | "
-                 f"{pct(v['coffee_wrong_accepted'])} | {pct(v['otro_rejected'])} |")
+          "rejections are a little higher than in (a), which scores the original files.", ""]
+    L += rob_table(r["robustness"])
+    if ref and "robustness" in ref:
+        L += ["", f"Reference {rtag} on the same degraded images:", ""] + rob_table(ref["robustness"])
     f = r["field_test"]
     L += ["", "## (c) Field test - the team's own photos (`data/field_test/`)", ""]
     if f["n_images"] == 0:
@@ -443,20 +595,21 @@ def render_md(r, classes):
     if "inat_coffee_photos" in r:
         i = r["inat_coffee_photos"]
         L += ["", "## (e) Real phone photos of coffee plants (iNaturalist, unlabeled)", "",
-              f"{i['n_images']} photos. {i['note']}", "",
-              "App decision share: " + ", ".join(f"{k} {pct(v)}" for k, v in i["app_decision_share"].items()) + ".", "",
-              "Same photos cropped to the centre (closer framing), app decision counts: " +
-              "; ".join(f"{k}: " + ", ".join(f"{a} {b}" for a, b in v.items())
-                        for k, v in i.get("app_decision_counts_centre_crops", {}).items()) + ".", "",
-              "Meaning: the model only answers for close-ups that look like the JMuBEN training crops. Field-style "
-              "photos of coffee get the fail-safe, which is safe but not yet useful - Chiapas photos are needed."]
+              f"{i['n_images']} photos. {i['note']}", "", f"Shipped {tag}:", ""] + inatag_lines(i)
+        if ref and "inat_coffee_photos" in ref:
+            L += ["", f"Reference {rtag}:", ""] + inatag_lines(ref["inat_coffee_photos"])
+        L += ["", "Meaning: these are mostly whole plants, flowers and cherries, not leaf close-ups; the desired answer "
+              "is the fail-safe. Disease answers here are false alarms or real symptoms we cannot check (health is "
+              "unknown). Labelled Chiapas photos are needed."]
     if "inat_field" in r:
         from field_eval import group_table
         g = r["inat_field"]
         L += ["", "## (g) Labelled field photos (iNaturalist, held-out field test)", "",
               f"{g['note'][0].upper() + g['note'][1:]}. Decided like the app (`{g['app_method']}`).", ""]
         for meth, res in g["field_test"].items():
-            L += [f"App rule `{meth}`:", ""] + group_table(res) + [""]
+            L += [f"Shipped {tag}, app rule `{meth}`:", ""] + group_table(res) + [""]
+        if ref and "inat_field" in ref:
+            L += [f"Reference {rtag}, app rule `single`:", ""] + group_table(ref["inat_field"]["field_test"]["single"]) + [""]
     if "leakage_check" in r:
         lk = r["leakage_check"]
         L += ["", "## (f) Why we split by group: leakage check", "",
@@ -468,15 +621,17 @@ def render_md(r, classes):
           "| model | size | CPU latency, 1 thread (ORT Python) | onnxruntime-web WASM, 1 thread (Node) | "
           "3G 384 kbps (*computed*) | 1 Mbps (*computed*) |", "|---|---|---|---|---|---|"]
     web = z["ortweb_node_wasm_ms_median"]
-    for k in ("fp32", "shipped"):
-        wk = web.get(m["shipped"] if k == "shipped" else "fp32")
-        L.append(f"| {k} | {z['size_mb'][k]} MB ({z['size_bytes'][k]} B) | {z['cpu_latency_ms_median_1thread'][k]} ms | "
+    names = {"fp32": f"{m.get('version')} fp32", "shipped": f"shipped {m.get('version')} ({m['shipped']})",
+             "reference": f"reference {ref['name']} ({ref['version']})" if ref else "reference"}
+    for k in z["size_bytes"]:
+        wk = web.get(k)
+        L.append(f"| {names[k]} | {z['size_mb'][k]} MB ({z['size_bytes'][k]} B) | {z['cpu_latency_ms_median_1thread'][k]} ms | "
                  f"{'n/a' if wk is None else f'{wk:.1f} ms'} | {z['download_seconds_computed'][k]['3G_384kbps']} s | "
                  f"{z['download_seconds_computed'][k]['3G_1Mbps']} s |")
     L += ["", f"Latency: {z['latency_note']}. Web: {z['ortweb_note']}. Download: {z['download_note']}.", ""]
     c = r["calibration"]
     th = c["threshold"]
-    L += ["## Calibration (validation split)", "",
+    L += [f"## Calibration (validation split, export of {m.get('version')}; record `{m.get('calibration_file', '')}`)", "",
           f"- Shipped: **{c.get('shipped')}** - {c.get('choice_reason')}. "
           f"fp32 ONNX vs Keras max |diff| on 20 images: {c['fp32_vs_keras_max_abs_diff']:.2e}.", "",
           "| candidate | size | val accuracy | val macro-F1 | top-1 agreement with fp32 | runs in onnxruntime-web |",
@@ -484,8 +639,15 @@ def render_md(r, classes):
     for k, v in c.get("candidates", {}).items():
         L.append(f"| {k} | {v['size_bytes'] / 1e6:.2f} MB | {pct(v['val_accuracy'])} | {v['val_macro_f1']:.3f} | "
                  f"{pct(v['top1_agreement_with_fp32'])} | {'yes' if v['ortweb_node'].get('ok') else 'NO'} |")
-    L += ["",
-          f"- Confidence threshold **{th['value']}** (data-driven value {th.get('data_driven_value')}: {th['rule']}; "
+    L += [""]
+    if abs(th["value"] - m["threshold"]) > 1e-9:
+        L += [f"- Confidence threshold **shipped: {m['threshold']}** (from `app/model/labels.json`"
+              + (f": {m['threshold_note']}" if m.get("threshold_note") else "") + "). It was re-chosen after export "
+              "with a false-alarm constraint on separate calibration data (`model/field_threshold.py`: lowest t with "
+              "<= 5 % disease answers on 400 new *Coffea* photos and >= 98 % `otro` rejection on validation). "
+              f"The export-time value below ({th['value']}) came from Kenyan validation images only and is kept for "
+              "the record."]
+    L += [f"- Export-time confidence threshold **{th['value']}** (data-driven value {th.get('data_driven_value')}: {th['rule']}; "
           f"policy floor {th.get('policy_floor')}: {th.get('floor_reason', '')}).", "",
           "| threshold | coverage (clean val) | selective accuracy (clean val) | coverage (clean + degraded val) | "
           "selective accuracy (clean + degraded val) |", "|---|---|---|---|---|"]
@@ -500,18 +662,20 @@ def render_md(r, classes):
     for k, v in b["per_class"].items():
         L.append(f"| {k} | {v['n']} | {v['real_median']} | {v['real_p5']} | {pct(v['real_rejected'])} | "
                  f"{v['blur_r3_median']} | {pct(v['blur_r3_rejected'])} | {pct(v['blur_r4_rejected'])} |")
-    d = r["data_split"]
+    dsp = r["data_split"]
     L += ["", "## Data: near-duplicate grouping and split", "",
-          f"Grouping: {d['hash']}. Split 70/15/15 by group within each source/label.", "",
+          f"Grouping: {dsp['hash']}. Split 70/15/15 by group within each source/label.", "",
           "| source/label | images | exact-duplicate groups | near-duplicate groups | largest group | "
           "groups train/val/test |", "|---|---|---|---|---|---|"]
-    for k, v in d["strata"].items():
+    for k, v in dsp["strata"].items():
         g = v["groups_per_split"]
         L.append(f"| {k} | {v['images']} | {v['exact_dup_groups']} | {v['groups']} | {v['largest_group']} | "
                  f"{g.get('train', 0)}/{g.get('val', 0)}/{g.get('test', 0)} |")
-    sel = d["selected"]
+    sel = dsp["selected"]
     L += ["", "Images actually used (round-robin over groups, capped): " +
-          "; ".join(f"{s}: " + ", ".join(f"{c} {sel[s][c]}" for c in classes) for s in ("train", "val", "test")) + ".", ""]
+          "; ".join(f"{sp}: " + ", ".join(f"{c} {sel[sp][c]}" for c in classes) for sp in ("train", "val", "test")) + ".",
+          "v2 adds field training views of 147 screened iNaturalist photos to train (see `reports/field_eval.md`, "
+          "Protocol); validation and test are unchanged." if (m.get("version") or "").endswith("v2") else "", ""]
     return "\n".join(L) + "\n"
 
 

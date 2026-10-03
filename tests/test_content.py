@@ -28,7 +28,7 @@ def test_every_outbound_message_is_a_card_template(client, conn):
         sms(client, tz["phone"], body)
         sms(client, en["phone"], body)
     sms(client, "+529990000003", "hola")
-    sms(client, "+529670000123", f"CAF1 M0123 ROYA 87 {ymd()} 16.91,-92.11 #K3F9")   # triggers the alert
+    sms(client, "+529670000123", f"CAF1 M0123 ROYA 96 {ymd()} 16.91,-92.11 #K3F9")   # triggers the alert
     out = [dict(r) for r in conn.execute("SELECT * FROM messages WHERE direction = 'out'")]
     assert len(out) > 40 and any(m["card_id"] == "alert_roya" for m in out)
     assert {m["lang"] for m in out} == {"es", "tzh", "en"}
@@ -153,7 +153,7 @@ def test_accented_community_keeps_alert_in_one_gsm_sms(client):
     ms = [register(client, name=f"R{i}", phone=f"+52967000600{i}", community="Ondera Río", lat=lat, lon=lon)
           for i, (lat, lon) in enumerate([(16.96, -92.21), (16.97, -92.20), (16.96, -92.20)])]
     for i, m in enumerate(ms):
-        sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA 85 {ymd()} {m['lat']},{m['lon']} #RI0{i}")
+        sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA 92 {ymd()} {m['lat']},{m['lon']} #RI0{i}")
     out = client.get("/api/outbox", params={"status": "pending_approval"}).json()["messages"]
     assert len(out) == 3
     for m in out:

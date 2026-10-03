@@ -1,0 +1,18 @@
+{
+  "what": "Human ship decision for the phone app's image model. The ship rule itself is computed by model/field_eval.py and model/field_threshold.py; this file only records what the team decided and why. Read by model/evaluate.py, model/field_eval.py and model/field_threshold.py when they render reports.",
+  "shipped": {
+    "model": "v2",
+    "version": "cafetal-img-v2",
+    "file": "app/model/cafetal.onnx",
+    "file_sha1_12": "1ab8db2a32b8",
+    "threshold": 0.9,
+    "method": "single",
+    "candidate_key": "v2@0.9"
+  },
+  "decided_by": "the Cafetal team (an explicit human decision, not the output of the ship-rule script)",
+  "date": "2026-10-03",
+  "rule_outcome": "The pre-registered ship rule says DO NOT SHIP: v2 at t = 0.90 passes 4 of its 5 conditions and misses one (reports/field_v2_threshold_test.json)",
+  "exception": "(2), JMuBEN test macro-F1 (argmax and app-level) may drop at most 1 point",
+  "exception_check": "jmuben_macro_f1_drop<=1pt",
+  "reason": "the Kenyan close-ups it no longer answers go to the fail-safe \"No estoy seguro\" (DUDA: show the leaf to the officer), not to wrong answers, and it never called a diseased leaf \"sano\" on either test set; and v2 is the only model that finds rust in field photos (v1 finds none on the held-out field test)."
+}

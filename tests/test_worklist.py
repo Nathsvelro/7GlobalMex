@@ -34,10 +34,10 @@ def test_alert_area_bonus(client):
     far = register(client, name="Lejos", phone="+529670005009", lat=16.97, lon=-92.20)
     sms(client, far["phone"], f"CAF1 {far['member_id']} ROYA 95 {ymd()} 16.97,-92.20 #X009")
     for i, m in enumerate(ms):
-        sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA 80 {ymd()} {m['lat']:.2f},{m['lon']:.2f} #X00{i}")
+        sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA 92 {ymd()} {m['lat']:.2f},{m['lon']:.2f} #X00{i}")
     farms = client.get("/api/worklist").json()["farms"]
     assert farms[-1]["member_id"] == far["member_id"] and not farms[-1]["in_alert"]
-    assert all(f["in_alert"] and f["score"] == 4.4 and "zona de alerta" in f["reason"] for f in farms[:3])
+    assert all(f["in_alert"] and f["score"] == 4.76 and "zona de alerta" in f["reason"] for f in farms[:3])
 
 
 def test_officer_actions_and_training_labels(client, conn):

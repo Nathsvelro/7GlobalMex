@@ -48,32 +48,35 @@ MEMBERS = [
 ]
 
 # member number, code, conf, days ago, obs id, location ("-" = plot), how it arrived
+# conf: the app (model cafetal-img-v2, threshold 0.90 in app/model/labels.json) only sends SANO/ROYA/MINA/PHOM/CERC
+# with conf >= 90; DUDA carries the model's top-1 below the threshold (0 = no model run). The outbreak rule counts
+# ROYA only at conf >= the threshold (hub/outbreak.py), so the two reports near Noor must be >= 90.
 OBSERVATIONS = [
     # Ondera Alto: exactly two recent ROYA reports near Noor (the demo trigger needs Noor's as the 3rd)
-    (105, "ROYA", 84, 2, "A1R2", (16.92, -92.12), "sms"),
-    (108, "ROYA", 79, 4, "B7K4", (16.90, -92.10), "sms"),
+    (105, "ROYA", 92, 2, "A1R2", (16.92, -92.12), "sms"),
+    (108, "ROYA", 91, 4, "B7K4", (16.90, -92.10), "sms"),
     (101, "SANO", 91, 6, "C2M8", (16.90, -92.12), "sms"),
-    (112, "MINA", 76, 9, "D5P1", "-", "sms"),
-    (116, "ROYA", 81, 12, "E3T6", (16.92, -92.10), "sms"),   # too old for the 7-day window
-    (123, "SANO", 88, 18, "F9N3", (16.91, -92.11), "sms"),   # Noor's earlier check
+    (112, "MINA", 92, 9, "D5P1", "-", "sms"),
+    (116, "ROYA", 93, 12, "E3T6", (16.92, -92.10), "sms"),   # too old for the 7-day window
+    (123, "SANO", 96, 18, "F9N3", (16.91, -92.11), "sms"),   # Noor's earlier check
     # Ondera Bajo
     (102, "DUDA", 52, 3, "G4W7", (16.87, -92.05), "sms"),
-    (106, "CERC", 77, 5, "H8Q2", (16.87, -92.03), "sms"),
+    (106, "CERC", 92, 5, "H8Q2", (16.87, -92.03), "sms"),
     (109, "SANO", 93, 8, "J1V5", "-", "sync"),
-    (113, "PHOM", 74, 14, "K6X9", (16.88, -92.05), "sms"),
+    (113, "PHOM", 91, 14, "K6X9", (16.88, -92.05), "sms"),
     (120, "OTRO", 86, 10, "L2Z4", (16.86, -92.05), "sms"),
     # Ondera Río: one recent ROYA, alone and far away (no alert)
-    (103, "ROYA", 88, 3, "M7B1", (16.96, -92.21), "sms"),
-    (107, "ROYA", 72, 16, "N3C8", (16.97, -92.19), "sms"),
-    (110, "MINA", 81, 6, "P5D2", (16.96, -92.21), "sms"),
+    (103, "ROYA", 95, 3, "M7B1", (16.96, -92.21), "sms"),
+    (107, "ROYA", 90, 16, "N3C8", (16.97, -92.19), "sms"),
+    (110, "MINA", 94, 6, "P5D2", (16.96, -92.21), "sms"),
     (114, "SANO", 90, 11, "Q9F6", "-", "sms"),
     (118, "DUDA", 40, 1, "R4G3", (16.95, -92.20), "sms"),
     # Ondera Loma
     (104, "SANO", 95, 2, "S8H7", (16.97, -92.06), "sms"),
-    (111, "CERC", 83, 7, "T2J5", (16.98, -92.04), "sms"),
-    (115, "MINA", 71, 13, "U6K1", (16.97, -92.04), "sync"),
+    (111, "CERC", 94, 7, "T2J5", (16.98, -92.04), "sms"),
+    (115, "MINA", 90, 13, "U6K1", (16.97, -92.04), "sync"),
     (119, "DUDA", 0, 5, "V1L9", "-", "sms"),
-    (122, "SANO", 89, 19, "W5M4", (16.98, -92.07), "sms"),
+    (122, "SANO", 97, 19, "W5M4", (16.98, -92.07), "sms"),
 ]
 
 # member number, text, days ago, intent label shown to the officer, confidence (free text forwarded to officer)
@@ -112,7 +115,7 @@ def seed(conn) -> dict:
             rec = {"member_id": mid, "obs_id": obs_id, "code": code, "conf": conf, "date": d.isoformat(),
                    "lat": None if loc == "-" else loc[0], "lon": None if loc == "-" else loc[1],
                    "received_at": at(days, 18, now),
-                   "model_version": "cafetal-img-v1" if code != "DUDA" or conf else None}
+                   "model_version": "cafetal-img-v2" if code != "DUDA" or conf else None}
             sms.save_observation(conn, rec, source, raw_sms=raw if source == "sms" else None, demo=1)
             if source == "sms":
                 m = members[mid]

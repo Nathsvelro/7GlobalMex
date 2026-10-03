@@ -14,7 +14,9 @@ def three_members(client, locs=NEAR, extra=0):
     return ms
 
 
-def roya(client, m, loc, days_ago=0, conf=85, obs="R001"):
+# Reports count only at conf >= the image-model threshold in app/model/labels.json (0.90 -> 90); the app itself
+# only sends ROYA with conf >= that threshold.
+def roya(client, m, loc, days_ago=0, conf=92, obs="R001"):
     return sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA {conf} {ymd(days_ago)} {loc[0]},{loc[1]} #{obs}")
 
 
@@ -71,7 +73,7 @@ def test_old_reports_do_not_trigger(client):
 
 def test_low_confidence_does_not_count(client):
     ms = three_members(client)
-    roya(client, ms[0], NEAR[0], conf=60, obs="E001")
+    roya(client, ms[0], NEAR[0], conf=89, obs="E001")   # just below the 90 threshold
     roya(client, ms[1], NEAR[1], obs="E002")
     assert not alert_actions(roya(client, ms[2], NEAR[2], obs="E003"))
 
@@ -104,7 +106,7 @@ def test_demo_story_noor_is_the_third_report(client):
     """With the DEMO seed, Noor's ROYA code triggers the alert (two neighbours reported in the last 7 days)."""
     assert client.post("/api/demo/reset").status_code == 200
     assert client.get("/api/alerts").json()["alerts"] == []
-    r = sms(client, "+529670000123", f"CAF1 M0123 ROYA 87 {ymd()} 16.91,-92.11 #K3F9")
+    r = sms(client, "+529670000123", f"CAF1 M0123 ROYA 96 {ymd()} 16.91,-92.11 #K3F9")
     a = alert_actions(r)
     assert len(a) == 1 and a[0]["n_reports"] == 3
     assert a[0]["queued_pending_approval"] == 24
