@@ -25,6 +25,7 @@ lossless and halve the download. Quantization-aware training would be the next s
 | `inat_field.py` | iNaturalist field photos: label mapping, Mexico rule, split by observer, download, attribution CSV, contact sheets, field training views |
 | `multicrop.py` | test-time multi-crop (full view + tiles) and its conservative decision rule (not shipped, see below) |
 | `field_eval.py` | field evaluation of one or more models, single view vs multicrop, ship rule -> `reports/field_eval.{json,md}` |
+| `field_threshold.py` | v2 threshold re-chosen on calibration data only (new Coffea sample + validation `otro`), then one test evaluation with the same ship rule -> `reports/field_v2_threshold_{sweep,test}.*` + "Threshold trade-off" in `reports/field_eval.md` |
 
 ## Reproduce (CPU only, ~30 minutes on 4 cores)
 
@@ -94,6 +95,12 @@ mkdir -p model/checkpoints/v1 && cp app/model/cafetal.onnx app/model/labels.json
 python model/field_eval.py --data /home/user/data_proc/cafetal --inat /home/user/data_raw/inat \
   --model v1=model/checkpoints/v1/cafetal.onnx:model/checkpoints/v1/labels.json \
   --model v2=model/checkpoints/v2/app/cafetal.onnx:model/checkpoints/v2/app/labels.json
+# 10. v2 threshold on calibration data (~3 min): new Coffea sample from unused observers (~400 photos, ~60 MB,
+#     <inat>/photos_calib/, attribution reports/field_calib_attribution.csv), sweep, then ONE test evaluation
+M="--model v2=model/checkpoints/v2/app/cafetal.onnx:model/checkpoints/v2/app/labels.json --ref v1=model/checkpoints/v1/cafetal.onnx:model/checkpoints/v1/labels.json"
+python model/field_threshold.py sample --inat /home/user/data_raw/inat
+python model/field_threshold.py sweep --data /home/user/data_proc/cafetal --inat /home/user/data_raw/inat $M
+python model/field_threshold.py test  --data /home/user/data_proc/cafetal --inat /home/user/data_raw/inat $M
 ```
 
 Seeds are fixed (`--seed 42`); TensorFlow on CPU with a parallel input pipeline is not bit-exact,
@@ -146,6 +153,13 @@ minador, phoma / brown leaf spot -> phoma, cercospora -> cercospora, red spider 
   false alarms: disease answers on 8.0 % of Coffea plant photos (cherries, flowers, healthy leaves; v1 0 %)
   and 95.7 % rejection of non-coffee test images (v1 99.8 %). It fails the pre-agreed ship rule, so it is
   **not shipped**; the missing piece is labelled healthy field leaves (officer confirmations from Chiapas).
+- **v2 with a stricter threshold** (`field_threshold.py`): re-chosen on separate calibration data (400 new
+  *Coffea* photos, validation `otro`) as the lowest t with <= 5 % Coffea disease answers and >= 98 % `otro`
+  rejection: **t = 0.90**. One test evaluation: rust found 64.2 % [51-76] (n=53), Coffea disease answers
+  2.5 % [1.4-4.5] (n=399), `otro` rejected 98.2 % (exactly at the limit), no diseased leaf called "sano" - but more Kenyan
+  close-ups go to DUDA and the app-level JMuBEN macro-F1 drops 1.04 points (limit 1.00). Still **not shipped**
+  under the pre-agreed rule; the trade-off is in `reports/field_eval.md` ("Threshold trade-off") for an
+  explicit team decision.
 - `sano` was learned from **7 distinct source photos** (JMuBEN ships 18,983 copies of 14 photos).
   A real healthy Chiapas leaf will most likely get DUDA, not "sano".
 - Not covered: red spider mite (`acaro_rojo`), broca, nutrient deficiency, Robusta, night/flash
@@ -160,6 +174,7 @@ minador, phoma / brown leaf spot -> phoma, cercospora -> cercospora, red spider 
 | Imagenette (fast.ai) | repo Apache-2.0; images are an ImageNet subset, ImageNet terms (non-commercial research) apply | `otro` (non-plant) |
 | iNatAg-mini `coffea_arabica` (iNaturalist via AgML) | CC BY-NC 4.0 (per AgML) | evaluation only, not trained on, not shipped |
 | iNaturalist field photos (768: rust, leaf miner, Cercospora, ojo de gallo, *Coffea arabica*), per-photo attribution in `reports/field_inat_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | field evaluation; 147 photos trained the experimental v2 only (not shipped); images not redistributed |
+| iNaturalist *Coffea arabica* calibration photos (400, observers not in any other set), per-photo attribution in `reports/field_calib_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | choosing v2's threshold only (not trained on); images not redistributed |
 
 The shipped `cafetal.onnx` contains weights learned from these datasets (and ImageNet-pretrained
 MobileNetV3 weights, Apache-2.0 Keras applications). No dataset images are shipped in the app;
