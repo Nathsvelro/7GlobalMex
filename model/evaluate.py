@@ -8,6 +8,8 @@
 (c) data/field_test/<label>/*.jpg - the team's own photos (evaluated automatically when present).
 (d) size, single-thread CPU latency (onnxruntime Python), computed 3G download time.
 (e) iNatAg-mini coffee photos (whole plants / flowers / cherries, disease unknown): what the app would say.
+(g) --inat-field DIR: labelled iNaturalist field photos (model/inat_field.py), held-out field test, app decision
+    (single view, plus multicrop if labels.json enables it). Full comparison: model/field_eval.py.
 """
 import argparse
 import io
@@ -204,6 +206,7 @@ def main():
     ap.add_argument("--labels", default=os.path.join(REPO, "app", "model", "labels.json"))
     ap.add_argument("--field", default=os.path.join(REPO, "data", "field_test"))
     ap.add_argument("--out", default=os.path.join(REPO, "reports"))
+    ap.add_argument("--inat-field", help="iNaturalist field photo folder from model/inat_field.py (adds section g)")
     args = ap.parse_args()
     labels = json.load(open(args.labels))
     classes, size = labels["classes"], labels["input"]["size"]
@@ -326,6 +329,22 @@ def main():
             "note": "iNatAg-mini/coffea_arabica (iNaturalist, CC BY-NC 4.0): whole plants, flowers, cherries; "
                     "disease status unknown. Not used for training. Desired behaviour: mostly DUDA."}
 
+    # ---- (g) iNaturalist field photos (held-out field test)
+    if args.inat_field:
+        from field_eval import evaluate_model, load_rows, square_of
+        rows = load_rows(args.inat_field)
+        sq = [square_of(r["path"]) for r in rows]
+        mcfg = labels.get("inference", {}).get("multicrop")
+        methods = ["single"] + ([f"mc:{mcfg['scheme']}:{mcfg['min_votes']}"] if mcfg else [])
+        out, _, _ = evaluate_model(args.shipped, labels, rows, [s for s, _ in sq], np.array([b for _, b in sq]), None,
+                                   None, methods)
+        rep["inat_field"] = {"n_photos": len(rows), "app_method": methods[-1],
+                             "field_test": {m: out["methods"][m]["field_test"] for m in methods},
+                             "note": "held-out field test only (observers never used in training); iNaturalist photos "
+                                     "are a proxy for Chiapas photos; details and v1/v2 comparison in "
+                                     "reports/field_eval.md"}
+        print("inat field", {m: rep["inat_field"]["field_test"][m]["roya"]["correct"] for m in methods})
+
     # ---- (d) size / latency / download
     sizes = {"fp32": os.path.getsize(args.fp32), "shipped": os.path.getsize(args.shipped)}
     rep["size_latency"] = {
@@ -366,7 +385,11 @@ def render_md(r, classes):
          "near-duplicate group. It is NOT a field test. The `sano` class has only "
          f"{t['distinct_groups_per_class'].get('sano')} distinct source photos in test "
          "(and 7 in train) - see 'Data' below. Field accuracy on Chiapas photos is unknown until "
-         "`data/field_test/` is filled.", "",
+         "`data/field_test/` is filled." + (
+             f" On held-out iNaturalist field photos of leaf rust (a proxy, section (g)) the shipped model answers "
+             f"{pct(r['inat_field']['field_test'][r['inat_field']['app_method']]['roya']['correct'])} correctly "
+             f"(n={r['inat_field']['field_test'][r['inat_field']['app_method']]['roya']['n']})."
+             if "inat_field" in r else ""), "",
          "## (a) Held-out test split (group split, 70/15/15)", "",
          "| model | accuracy | macro-F1 |", "|---|---|---|",
          f"| fp32 | {pct(t['fp32']['accuracy'])} | {t['fp32']['macro_f1']:.3f} |",
@@ -427,6 +450,13 @@ def render_md(r, classes):
                         for k, v in i.get("app_decision_counts_centre_crops", {}).items()) + ".", "",
               "Meaning: the model only answers for close-ups that look like the JMuBEN training crops. Field-style "
               "photos of coffee get the fail-safe, which is safe but not yet useful - Chiapas photos are needed."]
+    if "inat_field" in r:
+        from field_eval import group_table
+        g = r["inat_field"]
+        L += ["", "## (g) Labelled field photos (iNaturalist, held-out field test)", "",
+              f"{g['note'][0].upper() + g['note'][1:]}. Decided like the app (`{g['app_method']}`).", ""]
+        for meth, res in g["field_test"].items():
+            L += [f"App rule `{meth}`:", ""] + group_table(res) + [""]
     if "leakage_check" in r:
         lk = r["leakage_check"]
         L += ["", "## (f) Why we split by group: leakage check", "",

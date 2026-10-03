@@ -1,0 +1,370 @@
+photo_id,label,split,visible_leaf_symptom,note
+576602937,cercospora,field_test,no,microscope
+655088613,cercospora,field_test,no,leaf in hand; lesion barely visible
+655088698,cercospora,field_test,no,leaves in hand; lesion barely visible
+665411647,cercospora,field_test,yes,leaf with a large brown necrotic lesion and yellowing
+665411864,cercospora,field_test,yes,leaves with necrotic lesions and yellow halo
+665411896,cercospora,field_test,yes,leaves with necrotic lesions
+703414364,cercospora,field_test,yes,leaf with small brown spots
+720496419,cercospora,field_test,yes,leaves with brown eye spots
+720496449,cercospora,field_test,yes,leaves on a branch with lesions
+720496476,cercospora,field_test,no,whole plant
+125562239,cercospora,field_train,no,branch view; lesions small
+182734061,cercospora,field_train,yes,leaf with yellowing and lesions at medium distance
+182734077,cercospora,field_train,yes,leaf in hand with small spots
+182734092,cercospora,field_train,yes,leaf in hand with diffuse chlorosis and spots
+213845454,cercospora,field_train,yes,leaf with a brown eye spot
+251365245,cercospora,field_train,yes,close-up of a brown eye spot
+251365266,cercospora,field_train,yes,leaf with brown eye spots
+251365291,cercospora,field_train,yes,leaf with brown eye spots
+258748352,cercospora,field_train,yes,leaf on black background with spots
+258748358,cercospora,field_train,yes,leaf on black background with spots
+258748401,cercospora,field_train,no,macro of fungal growth
+258748429,cercospora,field_train,no,macro of fungal growth
+258748431,cercospora,field_train,no,microscope
+258748486,cercospora,field_train,no,microscope
+258748530,cercospora,field_train,no,microscope
+258748560,cercospora,field_train,no,petri dish culture
+258748564,cercospora,field_train,no,petri dish culture
+259114541,cercospora,field_train,no,microscope
+259114577,cercospora,field_train,yes,leaf on black background with a lesion
+358880371,cercospora,field_train,no,branch view
+200336723,minador,field_test,yes,heavily damaged leaf with necrotic mines
+200336753,minador,field_test,yes,blotch mine with larva
+200336782,minador,field_test,yes,blotch mine with larva
+345723577,minador,field_test,yes,leaves with brown mines
+478391764,minador,field_test,yes,leaves with small mines at medium distance
+486854676,minador,field_test,yes,leaf with one mine
+676729980,minador,field_test,yes,mine close-up
+676731056,minador,field_test,yes,mine close-up
+703417039,minador,field_test,yes,leaf with one dark lesion (mine)
+257137585,minador,field_train,no,leaf partly hidden; mine not clear
+257137659,minador,field_train,no,whole plants
+458036556,minador,field_train,yes,serpentine mine (not the typical Leucoptera blotch)
+458036571,minador,field_train,no,leaf in hand; mine not visible
+458036591,minador,field_train,yes,serpentine mine (not the typical Leucoptera blotch)
+540148654,minador,field_train,yes,backlit blotch mine
+540148658,minador,field_train,yes,backlit blotch mine
+540148660,minador,field_train,yes,backlit blotch mine
+540148661,minador,field_train,yes,leaf with a blotch mine
+540148663,minador,field_train,yes,leaf with a small mine
+540148664,minador,field_train,no,branch view
+696157440,minador,field_train,yes,mine with larva
+712306017,minador,field_train,yes,blotch mine
+712306062,minador,field_train,yes,blotch mine
+712306107,minador,field_train,no,whole plant
+712306183,minador,field_train,yes,leaf with a large brown mine at medium distance
+716044612,minador,field_train,yes,blotch mine
+716044941,minador,field_train,yes,blotch mine
+716045002,minador,field_train,yes,blotch mine
+716045208,minador,field_train,yes,blotch mine
+716045256,minador,field_train,no,branch view; mines small
+8969789,ojo_de_gallo,field_test,no,fruiting bodies (tiny mushrooms) on a dead leaf
+8969790,ojo_de_gallo,field_test,no,fruiting bodies on a dead leaf
+8969791,ojo_de_gallo,field_test,no,fruiting bodies with a scale bar
+8969792,ojo_de_gallo,field_test,no,fruiting bodies
+8969793,ojo_de_gallo,field_test,no,fruiting body close-up
+9078389,ojo_de_gallo,field_test,no,night flash photo; lesion small
+9078468,ojo_de_gallo,field_test,no,fruiting bodies on a leaf
+86094823,ojo_de_gallo,field_test,no,fruiting bodies on a dead leaf
+86094983,ojo_de_gallo,field_test,no,fruiting bodies on a dead leaf
+97212670,ojo_de_gallo,field_test,yes,leaf close-up with round spots
+97212723,ojo_de_gallo,field_test,yes,leaf close-up with round spots
+97212799,ojo_de_gallo,field_test,yes,leaf close-up with round spots
+97212866,ojo_de_gallo,field_test,yes,close-up of one round spot
+97212919,ojo_de_gallo,field_test,yes,close-up of one round spot
+97212986,ojo_de_gallo,field_test,yes,close-up of one round spot
+104569395,ojo_de_gallo,field_test,yes,leaves in hand with round spots
+105967946,ojo_de_gallo,field_test,yes,leaves on a branch with round spots
+118933054,ojo_de_gallo,field_test,yes,leaf with many round spots at medium distance
+216881981,ojo_de_gallo,field_test,yes,leaf with round spots
+233467215,ojo_de_gallo,field_test,yes,leaf close-up with round spots
+233467219,ojo_de_gallo,field_test,yes,leaf close-up with round spots
+233467413,ojo_de_gallo,field_test,yes,leaf close-up with round spots
+241044132,ojo_de_gallo,field_test,no,plant view
+259063073,ojo_de_gallo,field_test,no,fruiting body
+259063086,ojo_de_gallo,field_test,no,fruiting body
+354758281,ojo_de_gallo,field_test,yes,round lesion next to a pen
+354758319,ojo_de_gallo,field_test,yes,leaf in hand with round spots
+399603570,ojo_de_gallo,field_test,yes,round spots seen through a hand lens
+399603608,ojo_de_gallo,field_test,no,through a hand lens; unclear
+399603659,ojo_de_gallo,field_test,no,through a hand lens; unclear
+399603696,ojo_de_gallo,field_test,yes,elongated lesions seen through a hand lens
+399603734,ojo_de_gallo,field_test,yes,elongated lesions seen through a hand lens
+399603768,ojo_de_gallo,field_test,yes,one brown lesion seen through a hand lens
+399603809,ojo_de_gallo,field_test,no,folded leaf through a hand lens
+466954329,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+466954342,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+466954350,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+466954469,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+469144587,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+469144623,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+469144775,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470100427,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470100432,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470100437,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470100438,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470647024,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470647045,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470647064,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470652650,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470652672,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+470795952,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or wood
+476623304,ojo_de_gallo,field_test,no,leaf seen edge-on; spots barely visible
+476623332,ojo_de_gallo,field_test,no,leaf seen edge-on; spots barely visible
+476623345,ojo_de_gallo,field_test,yes,leaf on stone with round spots
+476623355,ojo_de_gallo,field_test,yes,leaf close-up with lesions (oblique)
+476623368,ojo_de_gallo,field_test,no,leaf edge-on and out of focus
+476623389,ojo_de_gallo,field_test,yes,leaf close-up with lesions (oblique)
+476623400,ojo_de_gallo,field_test,yes,leaf close-up with lesions (oblique)
+522147988,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies)
+522148032,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on a dead leaf
+522148067,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+522148102,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+540851216,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+540852788,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593410461,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593410464,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593412749,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593412753,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593413346,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593413415,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593419871,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593419880,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593419892,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593419899,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593461837,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593461843,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593461847,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+593461850,ojo_de_gallo,field_test,no,mushrooms (fruiting bodies) on dead leaves or forest floor
+620275381,ojo_de_gallo,field_test,yes,leaf with holes and spots on a desk (plant not clearly coffee)
+620275427,ojo_de_gallo,field_test,yes,leaf with holes and spots on a desk (plant not clearly coffee)
+620275457,ojo_de_gallo,field_test,no,damaged leaf edge on paper; unclear
+620275489,ojo_de_gallo,field_test,no,damaged leaf edge on paper; unclear
+620275529,ojo_de_gallo,field_test,no,damaged leaf edge on paper; unclear
+620275568,ojo_de_gallo,field_test,no,damaged leaf edge on paper; unclear
+620275609,ojo_de_gallo,field_test,no,damaged leaf edge on paper; unclear
+620276760,ojo_de_gallo,field_test,no,dark photo of a red leaf
+703420917,ojo_de_gallo,field_test,yes,coffee leaf with one small spot
+706993793,ojo_de_gallo,field_test,no,mushroom (fruiting body)
+706993845,ojo_de_gallo,field_test,no,mushroom (fruiting body)
+706993893,ojo_de_gallo,field_test,no,mushroom (fruiting body)
+30714952,roya,field_test,yes,underside close-up with orange pustules
+30714987,roya,field_test,yes,close-up of one sporulating pustule
+31642233,roya,field_test,yes,single leaf with chlorotic spots in the frame centre
+65767577,roya,field_test,yes,leaf in hand with one orange lesion
+65767858,roya,field_test,yes,leaf with one small orange lesion
+65767997,roya,field_test,yes,leaf with one orange lesion
+183623228,roya,field_test,yes,four leaves with spots on paper
+216470200,roya,field_test,yes,leaf in hand with faint pale spots
+248015836,roya,field_test,no,branch view; one lesion far away
+250771674,roya,field_test,no,whole plants
+250771694,roya,field_test,yes,leaf in hand with yellow spots
+306884526,roya,field_test,yes,leaf held up with many yellow spots
+346712103,roya,field_test,no,whole bush
+346712105,roya,field_test,yes,leaf in hand with pale spots
+354757796,roya,field_test,yes,close-up of one pustule
+354760564,roya,field_test,yes,underside close-up with orange patch
+354760598,roya,field_test,yes,underside with faint orange patch
+381962883,roya,field_test,yes,leaf with one brown necrotic lesion (rust not obvious)
+454833561,roya,field_test,no,whole bush
+454833566,roya,field_test,yes,leaf with yellow spots
+461152049,roya,field_test,yes,leaf in hand with pale spots
+461152050,roya,field_test,yes,underside close-up with orange pustules
+471418047,roya,field_test,yes,leaf with many orange spots
+471418065,roya,field_test,yes,leaf in hand with many orange spots
+471418077,roya,field_test,yes,leaf close-up with orange lesions
+471418091,roya,field_test,yes,leaf close-up with orange lesions
+471418101,roya,field_test,yes,leaf close-up with orange lesions
+471418122,roya,field_test,yes,leaf close-up with orange lesions
+471418136,roya,field_test,yes,leaf with many orange spots
+471418152,roya,field_test,yes,yellowed leaf in hand with spots and necrosis
+471418162,roya,field_test,no,whole plant
+474590285,roya,field_test,yes,leaf in hand with spots
+476252193,roya,field_test,yes,leaf with pale spots at medium distance
+479010652,roya,field_test,yes,single leaf with many pale spots
+516559550,roya,field_test,no,branch view; small spots
+516559609,roya,field_test,no,whole tree
+516559737,roya,field_test,no,whole tree
+516559788,roya,field_test,no,branch view; small lesions
+530486640,roya,field_test,yes,leaf in hand with spots
+576602944,roya,field_test,no,microscope
+601035608,roya,field_test,yes,leaf with many rust spots
+601035638,roya,field_test,yes,leaf with many rust spots
+601035687,roya,field_test,yes,leaf in hand with many spots
+601035706,roya,field_test,yes,close-up of sporulating lesion
+601035734,roya,field_test,yes,close-up of rust lesions
+601035747,roya,field_test,yes,leaf in hand with many spots
+601035759,roya,field_test,yes,leaf with many rust spots
+601035782,roya,field_test,yes,leaves with yellow-orange spots
+603172289,roya,field_test,yes,leaf in hand with many spots
+603172333,roya,field_test,yes,underside close-up with lesions
+603172380,roya,field_test,yes,underside close-up with pustules
+655088126,roya,field_test,yes,leaf in hand with a large brown necrotic lesion (rust not obvious)
+655088551,roya,field_test,no,branch held in hand; yellowing but no clear lesion
+4909890,roya,field_train,yes,two leaves with spots on the ground
+32032269,roya,field_train,no,microscope (spores)
+32032270,roya,field_train,yes,leaf with orange spots
+32032271,roya,field_train,yes,close-up of pustules
+44355319,roya,field_train,no,leaf seen edge-on; lesion not visible
+44355324,roya,field_train,yes,close-up of orange lesions
+104570333,roya,field_train,yes,leaf with yellow spots
+104975182,roya,field_train,no,whole plant
+104975184,roya,field_train,yes,three leaves with rust on the ground
+134263530,roya,field_train,yes,leaf close-up with brown lesions next to a ruler
+134263562,roya,field_train,yes,stacked leaves with spots
+134263593,roya,field_train,yes,close-up of one orange lesion with a ruler
+134263618,roya,field_train,yes,close-up of one orange lesion
+134263657,roya,field_train,yes,leaf on white background with lesions
+134263707,roya,field_train,yes,leaf on white background with lesions
+173251464,roya,field_train,yes,close-up of an orange lesion (half in shadow)
+173251474,roya,field_train,no,forest view
+173251486,roya,field_train,yes,close-up of a lesion with necrosis and orange sporulation
+175897569,roya,field_train,no,microscope
+180743469,roya,field_train,no,whole plants
+180743481,roya,field_train,no,whole plant
+188694479,roya,field_train,yes,leaf in hand with spots
+190572386,roya,field_train,no,branch view; small spots
+216799586,roya,field_train,no,bush view; spots small
+216972628,roya,field_train,no,branch view; no clear lesion
+216972668,roya,field_train,yes,leaf in hand with orange spots
+216972708,roya,field_train,no,avocado fruit (not coffee)
+216972739,roya,field_train,no,avocado fruit (not coffee)
+216972763,roya,field_train,yes,leaf in hand with orange spots
+237042597,roya,field_train,yes,leaf with yellow spots at medium distance
+251902009,roya,field_train,yes,leaf with yellow spots
+251902020,roya,field_train,yes,close-up of lesions
+251902038,roya,field_train,yes,close-up of pustules
+251902059,roya,field_train,yes,close-up of pustules
+252039716,roya,field_train,yes,leaf in hand with spots
+254762609,roya,field_train,yes,leaf in hand with a brown necrotic lesion (rust not obvious)
+254762615,roya,field_train,yes,leaf in hand with a brown necrotic lesion (rust not obvious)
+254762622,roya,field_train,no,leaf in hand; no clear lesion
+255227928,roya,field_train,yes,leaves with many spots
+258261898,roya,field_train,yes,leaf with orange spots and necrosis
+262422509,roya,field_train,yes,leaf with an orange spot seen through a hand lens
+263102033,roya,field_train,yes,leaf with lesions
+270387641,roya,field_train,no,branch view
+270387660,roya,field_train,yes,leaf with lesion and necrosis
+270387685,roya,field_train,yes,close-up of sporulation
+270388081,roya,field_train,no,microscope
+300262213,roya,field_train,no,branch view
+300262230,roya,field_train,no,microscope
+300262249,roya,field_train,no,microscope
+300262278,roya,field_train,yes,leaf close-up with yellow spots
+314826659,roya,field_train,yes,leaf on the ground with pale spots
+314826667,roya,field_train,yes,underside close-up with orange patch
+314826669,roya,field_train,yes,underside close-up with orange patch
+327578400,roya,field_train,yes,leaf with an orange lesion
+327578403,roya,field_train,yes,leaf with spots
+334436569,roya,field_train,yes,underside close-up with orange patches
+340914743,roya,field_train,yes,underside close-up with orange patches
+340914744,roya,field_train,yes,leaf with spots
+353220551,roya,field_train,yes,close-up of yellow lesions
+353220572,roya,field_train,no,branch view
+353220585,roya,field_train,yes,leaves on a branch with lesions
+353220599,roya,field_train,yes,leaves on a branch with lesions
+353220614,roya,field_train,yes,leaves on a branch with yellow spots
+353220637,roya,field_train,yes,leaves on a branch with lesions
+367778031,roya,field_train,yes,leaf in gloved hand with small spots
+431105343,roya,field_train,yes,close-up of heavy sporulation
+466457490,roya,field_train,no,leaf in hand; lesion faint
+468315325,roya,field_train,no,branch view next to a trunk
+468318038,roya,field_train,no,branch view
+468318057,roya,field_train,yes,leaves in hand with spots
+469204597,roya,field_train,no,branch view; lesions small
+472842634,roya,field_train,yes,leaf with yellow spots at medium distance
+518829549,roya,field_train,yes,leaf with pale spots (cherries above)
+518829605,roya,field_train,yes,leaf with pale spots
+518829649,roya,field_train,yes,leaves with spot lesions
+518829706,roya,field_train,yes,leaf with spots
+518830136,roya,field_train,yes,leaf with spots
+518830204,roya,field_train,no,branch view; lesions small
+518830262,roya,field_train,yes,leaf with spots
+518924644,roya,field_train,yes,leaf on the ground with orange spots
+518924696,roya,field_train,yes,leaf on the ground with orange spots
+518924749,roya,field_train,yes,leaf with spots on the plant
+520999806,roya,field_train,yes,close-up of a lesion with dark centre (looks like brown eye spot; iNat label may be wrong)
+520999809,roya,field_train,yes,lesions with dark centres (looks like brown eye spot; iNat label may be wrong)
+520999810,roya,field_train,yes,leaves with lesions
+520999812,roya,field_train,yes,lesion with dark centre and yellow halo (looks like brown eye spot; iNat label may be wrong)
+520999824,roya,field_train,yes,lesions with dark centres (looks like brown eye spot; iNat label may be wrong)
+520999832,roya,field_train,yes,lesions with dark centres (looks like brown eye spot; iNat label may be wrong)
+520999841,roya,field_train,yes,lesions with dark centres (looks like brown eye spot; iNat label may be wrong)
+520999845,roya,field_train,yes,lesions with dark centres (looks like brown eye spot; iNat label may be wrong)
+520999858,roya,field_train,yes,lesions with dark centres (looks like brown eye spot; iNat label may be wrong)
+524734866,roya,field_train,yes,leaf in hand with faint spots
+539932035,roya,field_train,yes,leaf in hand with many spots
+539932090,roya,field_train,yes,leaf in hand with many spots
+539932121,roya,field_train,yes,leaf in hand with many spots
+542290431,roya,field_train,yes,leaf close-up with pale spots
+542290482,roya,field_train,yes,leaf with pale spots
+542290529,roya,field_train,yes,leaf on the ground with pale spots
+546406202,roya,field_train,yes,leaf in hand with spots
+546406274,roya,field_train,yes,leaf in hand with lesions
+546406325,roya,field_train,no,branch with cherries
+547575183,roya,field_train,yes,leaf with small lesions
+547575187,roya,field_train,yes,close-up of orange lesions
+559600961,roya,field_train,yes,leaves with late-stage necrosis (no pustules visible)
+559601002,roya,field_train,yes,leaves with late-stage necrosis (no pustules visible)
+559601049,roya,field_train,yes,leaves with late-stage necrosis (no pustules visible)
+574025799,roya,field_train,no,branch view; yellowed leaf far away
+579916212,roya,field_train,yes,leaves in hand with small spots
+586284078,roya,field_train,no,microscope
+586284089,roya,field_train,no,microscope
+586284102,roya,field_train,no,microscope
+586284863,roya,field_train,yes,leaf with spots at medium distance
+586284873,roya,field_train,yes,leaves on a branch with spots
+586525323,roya,field_train,yes,close-up of pustules
+586525333,roya,field_train,yes,close-up of pustules
+586525369,roya,field_train,yes,close-up of pustules
+587617247,roya,field_train,yes,leaves with small lesions
+587617303,roya,field_train,yes,leaves with small lesions
+591224328,roya,field_train,yes,branch with many spotted leaves
+605513518,roya,field_train,yes,leaves with yellow spots
+608817434,roya,field_train,yes,leaf on dark background with spots
+608817463,roya,field_train,yes,close-up of rust spots
+610563051,roya,field_train,yes,leaf in hand with a lesion
+610563052,roya,field_train,yes,leaf with one small lesion
+610563068,roya,field_train,yes,leaf in hand with one small lesion
+616360121,roya,field_train,no,branch view
+616360143,roya,field_train,no,yellowed leaf at a distance
+616875934,roya,field_train,yes,leaf close-up with dark necrotic spots
+616875952,roya,field_train,yes,leaf close-up with dark necrotic spots
+616875964,roya,field_train,yes,leaf with yellow spots at medium distance
+616875983,roya,field_train,yes,leaf with dark necrotic spots
+616875995,roya,field_train,yes,leaf with dark necrotic spots
+616876001,roya,field_train,yes,leaf with yellow spots
+616904001,roya,field_train,yes,yellowed leaf with spots and necrosis
+616904041,roya,field_train,yes,yellowed leaf with a large necrotic area
+620285065,roya,field_train,no,whole plant
+620285078,roya,field_train,no,forest view
+620701348,roya,field_train,yes,leaf with small yellow spots
+620710020,roya,field_train,yes,leaf with small yellow spots
+637442851,roya,field_train,no,whole plant
+637442874,roya,field_train,no,whole plant
+637442880,roya,field_train,no,whole plant
+667713357,roya,field_train,no,microscope
+667713359,roya,field_train,no,microscope
+667713360,roya,field_train,no,microscope
+667714027,roya,field_train,yes,close-up of pustules
+667714028,roya,field_train,yes,close-up of pustules
+667714034,roya,field_train,yes,close-up of one pustule
+667714329,roya,field_train,yes,two leaves on black background with spots
+667714332,roya,field_train,yes,two leaves on black background with spots
+694980238,roya,field_train,yes,leaf with orange spots on a branch
+698556116,roya,field_train,no,two leaves held at a distance; spots small
+699226377,roya,field_train,no,two leaves held at a distance; spots small
+703776761,roya,field_train,yes,leaf in hand with many spots
+713760558,roya,field_train,yes,leaf with orange spots at medium distance
+713760688,roya,field_train,no,whole plant
+725570084,roya,field_train,yes,leaf in hand with pale spots
+736874219,roya,field_train,yes,underside close-up with orange patches
+736874235,roya,field_train,yes,leaf in hand with small spots
+736874250,roya,field_train,yes,leaf with small spots among foliage
+736874269,roya,field_train,no,foliage view; lesions not visible
+736874290,roya,field_train,yes,underside close-up with orange patches
+736874316,roya,field_train,yes,leaf in hand with a small spot
+736874337,roya,field_train,no,branch view
+736874366,roya,field_train,yes,leaves with small spots
+738164353,roya,field_train,yes,leaf in hand with spots

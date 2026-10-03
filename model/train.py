@@ -148,6 +148,9 @@ def main():
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--max-minutes", type=float, default=0, help="0 = no limit")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--extra", help="extra training views (.npz with x, y), e.g. field photos from model/inat_field.py")
+    ap.add_argument("--extra-repeat", type=int, default=1, help="oversample the extra views this many times")
+    ap.add_argument("--log", default=os.path.join(REPO, "reports", "model_training_log.csv"))
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     tf.keras.utils.set_random_seed(args.seed)
@@ -159,6 +162,11 @@ def main():
     va = np.load(os.path.join(args.data, "val.npz"))
     xtr, ytr = tr["x"], tr["y"]
     xva, yva = va["x"], va["y"]
+    if args.extra:
+        ex = np.load(args.extra)
+        xtr = np.concatenate([xtr] + [ex["x"]] * args.extra_repeat)
+        ytr = np.concatenate([ytr] + [ex["y"]] * args.extra_repeat)
+        print("extra views", len(ex["y"]), "x", args.extra_repeat, "->", len(ytr), "training images")
     counts = np.bincount(ytr, minlength=len(classes))
     class_weight = {i: float(len(ytr) / (len(classes) * max(c, 1))) for i, c in enumerate(counts)}
     print("train counts", dict(zip(classes, counts.tolist())), "val", len(yva), "class_weight", class_weight)
@@ -170,7 +178,7 @@ def main():
     if os.path.exists(os.path.join(args.out, "last.weights.h5")):
         model.load_weights(os.path.join(args.out, "last.weights.h5"))
         print("resumed", state)
-    log_path = os.path.join(REPO, "reports", "model_training_log.csv")
+    log_path = args.log
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
     new_log = not os.path.exists(log_path) or state["stage"] == 1 and state["epoch"] == 0
 

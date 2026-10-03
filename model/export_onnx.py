@@ -120,6 +120,11 @@ def main():
     ap.add_argument("--force", choices=["int8_static", "int8_weights", "fp16_weights", "fp32"],
                     help="override the automatic choice")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--app-dir", default=os.path.join(REPO, "app", "model"), help="where cafetal.onnx + labels.json go")
+    ap.add_argument("--calib-out", default=os.path.join(REPO, "reports", "model_calibration.json"))
+    ap.add_argument("--version", default="cafetal-img-v1")
+    ap.add_argument("--trained-on", default="JMuBEN/JMuBEN2 (Kenya, Arabica) + PlantDoc and Imagenette as 'otro'; "
+                                            "see DATA_CARD.md")
     args = ap.parse_args()
     rng = np.random.default_rng(args.seed)
     meta = json.load(open(os.path.join(args.data, "meta.json")))
@@ -277,13 +282,13 @@ def main():
           next(c for c in curve_all if c["threshold"] == thr))
 
     # ---- 6. write app files
-    app_dir = os.path.join(REPO, "app", "model")
+    app_dir = args.app_dir
     os.makedirs(app_dir, exist_ok=True)
     dst = os.path.join(app_dir, "cafetal.onnx")
     shutil.copyfile(ship_path, dst)
     sess = ort_session(dst)
     labels = {
-        "version": "cafetal-img-v1",
+        "version": args.version,
         "classes": classes,
         "input": {"name": sess.get_inputs()[0].name, "size": size, "layout": "NHWC", "dtype": "float32",
                   "range": "0-255 RGB, no normalisation (preprocessing is inside the model)"},
@@ -292,13 +297,13 @@ def main():
         "blur_threshold": blur_thr,
         "file": "cafetal.onnx",
         "size_bytes": os.path.getsize(dst),
-        "trained_on": "JMuBEN/JMuBEN2 (Kenya, Arabica) + PlantDoc and Imagenette as 'otro'; see DATA_CARD.md",
+        "trained_on": args.trained_on,
     }
     with open(os.path.join(app_dir, "labels.json"), "w") as fh:
         json.dump(labels, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
-    os.makedirs(os.path.join(REPO, "reports"), exist_ok=True)
-    with open(os.path.join(REPO, "reports", "model_calibration.json"), "w") as fh:
+    os.makedirs(os.path.dirname(args.calib_out), exist_ok=True)
+    with open(args.calib_out, "w") as fh:
         json.dump(report, fh, indent=2)
     print(json.dumps(labels, indent=2))
 

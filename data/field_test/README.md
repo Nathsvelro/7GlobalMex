@@ -7,6 +7,13 @@ evaluates every image here automatically and reports it separately from the held
 
 Status: **0 images - not yet collected.**
 
+Meanwhile a **proxy field test** uses 768 labelled iNaturalist photos (leaf rust, leaf miner,
+Cercospora, ojo de gallo, coffee plants; only 4 rust photos are from Mexico). Those images are NOT in
+this folder (CC BY-NC / ND licenses; attribution in `reports/field_inat_attribution.csv`); see
+`reports/field_eval.md` and `model/README.md` to rebuild them. Result for the shipped model: 0 of 219
+rust photos answered correctly (it says DUDA). Photos taken here, in Chiapas, with the app, remain the
+real test.
+
 ## How to add photos
 
 1. Take the photo as a farmer would with the app: the leaf (underside for rust) filling most of the

@@ -382,6 +382,476 @@
     },
     "note": "iNatAg-mini/coffea_arabica (iNaturalist, CC BY-NC 4.0): whole plants, flowers, cherries; disease status unknown. Not used for training. Desired behaviour: mostly DUDA."
   },
+  "inat_field": {
+    "n_photos": 768,
+    "app_method": "single",
+    "field_test": {
+      "single": {
+        "roya": {
+          "n": 53,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 1,
+            "cercospora": 0,
+            "DUDA": 52
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 51,
+            "low_conf": 1
+          },
+          "DUDA": 0.9811,
+          "DUDA_ci95": [
+            0.9006,
+            0.9967
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.0676
+          ],
+          "wrong_accepted": 0.0189,
+          "wrong_accepted_ci95": [
+            0.0033,
+            0.0994
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.0676
+          ]
+        },
+        "roya screened": {
+          "n": 42,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 1,
+            "cercospora": 0,
+            "DUDA": 41
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 40,
+            "low_conf": 1
+          },
+          "DUDA": 0.9762,
+          "DUDA_ci95": [
+            0.8768,
+            0.9958
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.0838
+          ],
+          "wrong_accepted": 0.0238,
+          "wrong_accepted_ci95": [
+            0.0042,
+            0.1232
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.0838
+          ]
+        },
+        "roya Mexico+GT box": {
+          "n": 31,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 1,
+            "cercospora": 0,
+            "DUDA": 30
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 30,
+            "low_conf": 0
+          },
+          "DUDA": 0.9677,
+          "DUDA_ci95": [
+            0.8381,
+            0.9943
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.1103
+          ],
+          "wrong_accepted": 0.0323,
+          "wrong_accepted_ci95": [
+            0.0057,
+            0.1619
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.1103
+          ]
+        },
+        "roya Mexico": {
+          "n": 4,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 4
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 4,
+            "low_conf": 0
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.5101,
+            1.0
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.4899
+          ],
+          "wrong_accepted": 0.0,
+          "wrong_accepted_ci95": [
+            0.0,
+            0.4899
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.4899
+          ]
+        },
+        "minador": {
+          "n": 9,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 9
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 9,
+            "low_conf": 0
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.7008,
+            1.0
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.2992
+          ],
+          "wrong_accepted": 0.0,
+          "wrong_accepted_ci95": [
+            0.0,
+            0.2992
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.2992
+          ]
+        },
+        "minador screened": {
+          "n": 9,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 9
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 9,
+            "low_conf": 0
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.7008,
+            1.0
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.2992
+          ],
+          "wrong_accepted": 0.0,
+          "wrong_accepted_ci95": [
+            0.0,
+            0.2992
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.2992
+          ]
+        },
+        "cercospora": {
+          "n": 10,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 1,
+            "cercospora": 0,
+            "DUDA": 9
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 9,
+            "low_conf": 0
+          },
+          "DUDA": 0.9,
+          "DUDA_ci95": [
+            0.5958,
+            0.9821
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.2775
+          ],
+          "wrong_accepted": 0.1,
+          "wrong_accepted_ci95": [
+            0.0179,
+            0.4042
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.2775
+          ]
+        },
+        "cercospora screened": {
+          "n": 6,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 1,
+            "cercospora": 0,
+            "DUDA": 5
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 5,
+            "low_conf": 0
+          },
+          "DUDA": 0.8333,
+          "DUDA_ci95": [
+            0.4365,
+            0.9699
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.3903
+          ],
+          "wrong_accepted": 0.1667,
+          "wrong_accepted_ci95": [
+            0.0301,
+            0.5635
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.3903
+          ]
+        },
+        "ojo_de_gallo": {
+          "n": 90,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 4,
+            "phoma": 2,
+            "cercospora": 0,
+            "DUDA": 84
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 84,
+            "low_conf": 0
+          },
+          "DUDA": 0.9333,
+          "DUDA_ci95": [
+            0.8621,
+            0.9691
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.0409
+          ],
+          "wrong_accepted": 0.0667,
+          "wrong_accepted_ci95": [
+            0.0309,
+            0.1379
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.0409
+          ]
+        },
+        "ojo_de_gallo screened": {
+          "n": 26,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 4,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 22
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 22,
+            "low_conf": 0
+          },
+          "DUDA": 0.8462,
+          "DUDA_ci95": [
+            0.6647,
+            0.9385
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.1287
+          ],
+          "wrong_accepted": 0.1538,
+          "wrong_accepted_ci95": [
+            0.0615,
+            0.3353
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.1287
+          ]
+        },
+        "minador Mexico": {
+          "n": 2,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 2
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 2,
+            "low_conf": 0
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.3424,
+            1.0
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.6576
+          ],
+          "wrong_accepted": 0.0,
+          "wrong_accepted_ci95": [
+            0.0,
+            0.6576
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.6576
+          ]
+        },
+        "coffea sample": {
+          "n": 399,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 399
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 399,
+            "low_conf": 0
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.9905,
+            1.0
+          ],
+          "disease_answer": 0.0,
+          "disease_answer_ci95": [
+            0.0,
+            0.0095
+          ],
+          "sano_answer": 0.0
+        },
+        "coffea sample Mexico": {
+          "n": 37,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 37
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 37,
+            "low_conf": 0
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.9059,
+            1.0
+          ],
+          "disease_answer": 0.0,
+          "disease_answer_ci95": [
+            0.0,
+            0.0941
+          ],
+          "sano_answer": 0.0
+        }
+      }
+    },
+    "note": "held-out field test only (observers never used in training); iNaturalist photos are a proxy for Chiapas photos; details and v1/v2 comparison in reports/field_eval.md"
+  },
   "size_latency": {
     "size_bytes": {
       "fp32": 3782909,
@@ -392,8 +862,8 @@
       "shipped": 1.97
     },
     "cpu_latency_ms_median_1thread": {
-      "fp32": 3.22,
-      "shipped": 3.18
+      "fp32": 2.84,
+      "shipped": 2.83
     },
     "latency_note": "onnxruntime Python 1.19.2, CPUExecutionProvider, 1 thread, batch 1, median of 50, build server x86 CPU (not a phone)",
     "ortweb_node_wasm_ms_median": {

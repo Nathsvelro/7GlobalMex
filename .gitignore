@@ -10,3 +10,4 @@ model/*.h5
 *.log
 node_modules/
 .DS_Store
+.claude/worktrees/
