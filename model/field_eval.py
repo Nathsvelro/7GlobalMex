@@ -434,17 +434,27 @@ def conclusions(r):
         c = tt["evaluations"][tt["candidate"]]
         f, j = c["field_test"], c["jmuben_otro_test"]
 
+        from field_threshold import ci as ci1
+
+        def n_of(g, key="correct"):
+            a = f[g]["answer_counts"]
+            return (a["DUDA"] if key == "DUDA" else sum(a[d] for d in DISEASES) if key == "disease_answer"
+                    else a[g.split(" ")[0]]), f[g]["n"]
+
         def k(g, key="correct"):
-            return f"{f[g]['answer_counts'][g.split(' ')[0]] if key == 'correct' else f[g]['answer_counts']['DUDA']} of {f[g]['n']}"
-        dis = sum(f["coffea sample"]["answer_counts"][d] for d in DISEASES)
+            return "{} of {}".format(*n_of(g, key))
+
+        def rate(g, key="correct", with_ci=False):  # from exact counts (the stored rates are rounded)
+            x, n = n_of(g, key)
+            return pct(x / n) + (ci1(f[g][key + "_ci95"]) if with_ci else "")
         L.append(f"- **v2 at t = {tt['chosen_t']:.2f} (re-chosen on calibration data; the model the app now ships)**: "
-                 f"roya correct & accepted {pct(f['roya']['correct'])}{ci(f['roya']['correct_ci95'])} ({k('roya')}), "
-                 f"screened {pct(f['roya screened']['correct'])} ({k('roya screened')}), Mexico+Guatemala box "
-                 f"{pct(f['roya Mexico+GT box']['correct'])} ({k('roya Mexico+GT box')}), Mexico only {k('roya Mexico')}; "
+                 f"roya correct & accepted {rate('roya', with_ci=True)} ({k('roya')}), "
+                 f"screened {rate('roya screened')} ({k('roya screened')}), Mexico+Guatemala box "
+                 f"{rate('roya Mexico+GT box')} ({k('roya Mexico+GT box')}), Mexico only {k('roya Mexico')}; "
                  f"minador {k('minador')}, cercospora {k('cercospora')}; ojo de gallo sent to DUDA "
-                 f"{pct(f['ojo_de_gallo']['DUDA'])} ({k('ojo_de_gallo', 'DUDA')}); disease answers on the Coffea plant "
-                 f"photos {pct(f['coffea sample']['disease_answer'])}{ci(f['coffea sample']['disease_answer_ci95'])} "
-                 f"({dis} of {f['coffea sample']['n']}); non-coffee test images rejected {pct(j['otro_rejected'])}; "
+                 f"{rate('ojo_de_gallo', 'DUDA')} ({k('ojo_de_gallo', 'DUDA')}); disease answers on the Coffea plant "
+                 f"photos {rate('coffea sample', 'disease_answer', True)} ({k('coffea sample', 'disease_answer')}); "
+                 f"non-coffee test images rejected {pct(j['otro_rejected'])}; "
                  f"diseased called \"sano\": {field_dangerous(c)} (field) and {j['jmuben_diseased_called_sano_n']} (JMuBEN). "
                  f"The cost: {pct(j['jmuben_coffee_DUDA'])} of Kenyan test close-ups go to DUDA "
                  f"({pct(tt['evaluations'][tt['baseline']]['jmuben_otro_test']['jmuben_coffee_DUDA'])} for {tt['baseline']}).")
@@ -471,6 +481,17 @@ GROUP_ORDER = ["roya", "roya screened", "roya Mexico+GT box", "roya Mexico", "mi
                "coffea sample", "coffea sample Mexico"]
 
 
+def exact_rate(st, group, key):
+    """Rate from the exact answer counts (the stored rates are rounded to 4 decimals; re-rounding them can be off by
+    0.1 point). key: correct | DUDA | wrong_accepted | disease_answer | sano_answer."""
+    a, n = st["answer_counts"], st["n"]
+    lab = group.split(" ")[0]
+    k = {"correct": a.get(lab, 0) if lab in DISEASES else 0, "DUDA": a["DUDA"],
+         "disease_answer": sum(a[d] for d in DISEASES), "sano_answer": a["sano"]}
+    k["wrong_accepted"] = n - a["DUDA"] - k["correct"]
+    return k[key] / n if n else None
+
+
 def group_table(scope_res):
     L = ["| group (true label) | n | correct & accepted [95% CI] | wrong but accepted | of which \"sano\" (dangerous) | "
          "DUDA [95% CI] | answers: sano / roya / minador / phoma / cercospora / DUDA |", "|---|---|---|---|---|---|---|"]
@@ -480,16 +501,17 @@ def group_table(scope_res):
         st = scope_res[g]
         a = st["answer_counts"]
         cnt = " / ".join(str(a[k]) for k in ANSWERS)
+        r = lambda key: pct(exact_rate(st, g, key))  # noqa: E731
         if g.startswith("coffea"):
-            L.append(f"| {g} (health unknown) | {st['n']} | n/a - disease answers: {pct(st['disease_answer'])}"
-                     f"{ci(st['disease_answer_ci95'])} | n/a | sano answers: {pct(st['sano_answer'])} | "
-                     f"{pct(st['DUDA'])}{ci(st['DUDA_ci95'])} | {cnt} |")
+            L.append(f"| {g} (health unknown) | {st['n']} | n/a - disease answers: {r('disease_answer')}"
+                     f"{ci(st['disease_answer_ci95'])} | n/a | sano answers: {r('sano_answer')} | "
+                     f"{r('DUDA')}{ci(st['DUDA_ci95'])} | {cnt} |")
         elif g.startswith("ojo"):
-            L.append(f"| {g} (desired: DUDA) | {st['n']} | (no correct class) | {pct(st['wrong_accepted'])}"
-                     f"{ci(st['wrong_accepted_ci95'])} | {st['dangerous_sano']} | **{pct(st['DUDA'])}**{ci(st['DUDA_ci95'])} | {cnt} |")
+            L.append(f"| {g} (desired: DUDA) | {st['n']} | (no correct class) | {r('wrong_accepted')}"
+                     f"{ci(st['wrong_accepted_ci95'])} | {st['dangerous_sano']} | **{r('DUDA')}**{ci(st['DUDA_ci95'])} | {cnt} |")
         else:
-            L.append(f"| {g} | {st['n']} | **{pct(st['correct'])}**{ci(st['correct_ci95'])} | {pct(st['wrong_accepted'])} | "
-                     f"{st['dangerous_sano']} | {pct(st['DUDA'])}{ci(st['DUDA_ci95'])} | {cnt} |")
+            L.append(f"| {g} | {st['n']} | **{r('correct')}**{ci(st['correct_ci95'])} | {r('wrong_accepted')} | "
+                     f"{st['dangerous_sano']} | {r('DUDA')}{ci(st['DUDA_ci95'])} | {cnt} |")
     return L
 
 
@@ -537,7 +559,7 @@ def render_md(r):
                 vals.append("n/a")
         L.append(f"| {label} | " + " | ".join(vals) + " |")
 
-    ft = lambda g, k="correct": (lambda x: f"{pct(x['field_test'][g][k])}{ci(x['field_test'][g][k + '_ci95'])} (n={x['field_test'][g]['n']})")  # noqa: E731
+    ft = lambda g, k="correct": (lambda x: f"{pct(exact_rate(x['field_test'][g], g, k))}{ci(x['field_test'][g][k + '_ci95'])} (n={x['field_test'][g]['n']})")  # noqa: E731
     row("roya: correct & accepted, all field-test photos", ft("roya"))
     row("roya: correct & accepted, screened (leaf symptom visible)", ft("roya screened"))
     row("roya: correct & accepted, Mexico+Guatemala box", ft("roya Mexico+GT box"))

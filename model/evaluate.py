@@ -267,7 +267,9 @@ def inatag_eval(sess, ia, crops, classes, thr, blur_thr):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data", required=True)
+    ap.add_argument("--render", action="store_true",
+                    help="only rewrite model_eval.md from model_eval.json (no data or models needed)")
+    ap.add_argument("--data")
     ap.add_argument("--fp32", default=os.path.join(REPO, "model", "checkpoints", "cafetal_fp32.onnx"),
                     help="float32 export of the SAME weights as the shipped model (v2: model/checkpoints/v2/cafetal_fp32.onnx)")
     ap.add_argument("--shipped", default=os.path.join(REPO, "app", "model", "cafetal.onnx"))
@@ -285,6 +287,14 @@ def main():
     ap.add_argument("--cache", default=os.path.join(REPO, "model", "checkpoints", "field_cache"),
                     help="prediction cache for section (g), keyed by model file hash")
     args = ap.parse_args()
+    if args.render:
+        rep = json.load(open(os.path.join(args.out, "model_eval.json")))
+        with open(os.path.join(args.out, "model_eval.md"), "w") as fh:
+            fh.write(render_md(rep, rep["model"]["classes"]))
+        print("wrote", os.path.join(args.out, "model_eval.md"))
+        return
+    if not args.data:
+        ap.error("--data is required (or use --render)")
     labels = json.load(open(args.labels))
     classes, size = labels["classes"], labels["input"]["size"]
     thr, blur_thr = labels["threshold"], labels["blur_threshold"]
@@ -512,11 +522,13 @@ def render_md(r, classes):
     fld = r.get("inat_field")
     fline = ""
     if fld:
+        from field_eval import exact_rate
         fr = fld["field_test"][fld["app_method"]]["roya"]
         fline = (f" On held-out iNaturalist field photos of leaf rust (a proxy, section (g)) the shipped model answers "
-                 f"{pct(fr['correct'])} correctly (n={fr['n']})")
+                 f"{pct(exact_rate(fr, 'roya', 'correct'))} correctly ({fr['answer_counts']['roya']} of {fr['n']})")
         if ref and "inat_field" in ref:
-            fline += f"; {ref['name']}: {pct(ref['inat_field']['field_test']['single']['roya']['correct'])}"
+            rr = ref["inat_field"]["field_test"]["single"]["roya"]
+            fline += f"; {ref['name']}: {pct(exact_rate(rr, 'roya', 'correct'))} ({rr['answer_counts']['roya']} of {rr['n']})"
         fline += "."
     L += ["> Read this first: the test split comes from the same Kenyan dataset as training (JMuBEN), split by "
           "near-duplicate group. It is NOT a field test. The `sano` class has only "

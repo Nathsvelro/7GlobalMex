@@ -15,6 +15,9 @@ rule is applied once on the held-out test sets.
   #    "Threshold trade-off" section in reports/field_eval.md
   python model/field_threshold.py test --data /home/user/data_proc/cafetal --inat /home/user/data_raw/inat \
       --model v2=... --ref v1=...
+  # 4. only after a human ship decision naming this candidate (model/ship_decision.json): copy the model into
+  #    app/model/ and write app/model/labels.json with the calibrated threshold
+  python model/field_threshold.py install --model v2=model/checkpoints/v2/app/cafetal.onnx:model/checkpoints/v2/app/labels.json
 
 Calibration sets (never used to choose anything in the test sets):
   coffea   reports/field_calib_attribution.csv: one photo (first of the observation) per observer, observers
@@ -630,10 +633,33 @@ def insert_section(sec, pointer=None, path=FIELD_MD):
         fh.write(md)
 
 
+def cmd_install(args):
+    """Install the calibrated candidate in the app - only if model/ship_decision.json names it (a human decision)."""
+    import shutil
+    sw = json.load(open(SWEEP_JSON))
+    name, mpath, labels = parse_model(args.model)
+    t = sw["chosen"]["t"]
+    d = team_decision(f"{name}@{t}")
+    if not d:
+        sys.exit(f"model/ship_decision.json does not name {name}@{t}: nothing installed")
+    h = file_hash(mpath)
+    assert h == sw["model"]["sha1_12"] == d["shipped"]["file_sha1_12"], "model differs from the one calibrated/decided"
+    app = os.path.join(REPO, "app", "model")
+    dst = os.path.join(app, labels["file"])
+    shutil.copyfile(mpath, dst)
+    out = dict(labels, threshold=t, size_bytes=os.path.getsize(dst),
+               threshold_note=f"{t:.2f} chosen on calibration data only; see reports/field_v2_threshold_sweep.md")
+    with open(os.path.join(app, "labels.json"), "w") as fh:
+        json.dump(out, fh, indent=2, ensure_ascii=False)
+        fh.write("\n")
+    print(f"installed {os.path.relpath(mpath, REPO)} (sha1 {h}) as {os.path.relpath(dst, REPO)}, threshold {t}; "
+          "now run: python3 scripts/bump_sw_version.py")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["sample", "sweep", "test"])
-    ap.add_argument("--inat", required=True)
+    ap.add_argument("cmd", choices=["sample", "sweep", "test", "install"])
+    ap.add_argument("--inat", help="required for sample, sweep, test")
     ap.add_argument("--data")
     ap.add_argument("--photos-calib", help="default <inat>/photos_calib")
     ap.add_argument("--n", type=int, default=400)
@@ -642,6 +668,10 @@ def main():
     ap.add_argument("--ref", help="name=path.onnx:labels.json (the shipped baseline)")
     ap.add_argument("--cache", default=os.path.join(REPO, "model", "checkpoints", "field_cache"))
     args = ap.parse_args()
+    if args.cmd == "install":
+        return cmd_install(args)
+    if not args.inat:
+        ap.error("--inat is required")
     args.photos_calib = args.photos_calib or os.path.join(args.inat, "photos_calib")
     if args.cmd == "sample":
         build_calib_sample(args.inat, args.photos_calib, args.n, args.seed)
