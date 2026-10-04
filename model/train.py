@@ -3,6 +3,8 @@
 Stage 1: frozen backbone, train the head.  Stage 2: unfreeze the top blocks (BatchNorm stays
 frozen) with a low, cosine-decayed learning rate. A checkpoint is written after every epoch and
 the script resumes from it, so it can run in chunks (--max-minutes) or in the background.
+The model is compiled once per stage, so Adam's moments and step counter carry across epochs; only the
+weights are checkpointed, so a resume starts a fresh Adam (moments and step counter restart).
 
   python model/train.py --data /home/user/data_proc/cafetal --out model/checkpoints
   python model/train.py ... --max-minutes 9      # stop before an epoch would pass 9 minutes; rerun to resume
@@ -182,6 +184,7 @@ def main():
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
     new_log = not os.path.exists(log_path) or state["stage"] == 1 and state["epoch"] == 0
 
+    compiled_stage = None
     while state["stage"] <= 2:
         stage, n_ep = state["stage"], (args.stage1_epochs if state["stage"] == 1 else args.stage2_epochs)
         if state["epoch"] >= n_ep:
@@ -191,11 +194,15 @@ def main():
             if (time.time() - t_start + state["epoch_seconds"] * (2.0 if stage == 2 else 1.0)) / 60 > args.max_minutes:
                 print("time budget reached; rerun to resume", state)
                 break
-        set_trainable(base, stage, args.unfreeze_from)
         e = state["epoch"]
         lr = args.lr1 if stage == 1 else args.lr2 * 0.5 * (1 + math.cos(math.pi * e / n_ep))
-        model.compile(optimizer=tf.keras.optimizers.Adam(lr), loss="sparse_categorical_crossentropy",
-                      metrics=["accuracy"])
+        if compiled_stage != stage:  # compile once per stage (and once after a resume) so Adam keeps its state
+            set_trainable(base, stage, args.unfreeze_from)
+            model.compile(optimizer=tf.keras.optimizers.Adam(lr), loss="sparse_categorical_crossentropy",
+                          metrics=["accuracy"])
+            compiled_stage = stage
+        else:
+            model.optimizer.learning_rate.assign(lr)
         t0 = time.time()
         hist = model.fit(make_train_ds(xtr, ytr, size, args.batch, args.seed + 100 * stage + e),
                          epochs=1, class_weight=class_weight, verbose=2)

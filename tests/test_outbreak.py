@@ -93,6 +93,23 @@ def test_every_pair_must_be_within_radius(client):
     assert not alert_actions(roya(client, ms[1], locs[1], obs="G003"))
 
 
+def test_cluster_found_when_nearest_report_does_not_fit(client):
+    # Along one meridian (0.009 deg lat ~ 1 km): new report at 0 km, others at +2, -3.5 and -4 km. The +2 km
+    # report is nearest but 5.5-6 km from both western ones; new + the two western ones are a valid cluster.
+    lat0, lon = 16.91, -92.11
+    locs = {"east": (lat0 + 0.018, lon), "west1": (lat0 - 0.0315, lon), "west2": (lat0 - 0.036, lon),
+            "new": (lat0, lon)}
+    ms = {k: register(client, name=f"Socio {k}", phone=f"+52967000400{i}", lat=lt, lon=ln)
+          for i, (k, (lt, ln)) in enumerate(locs.items())}
+    for i, k in enumerate(["east", "west1", "west2"]):
+        assert not alert_actions(roya(client, ms[k], locs[k], obs=f"J00{i}"))
+    a = alert_actions(roya(client, ms["new"], locs["new"], obs="J009"))
+    assert len(a) == 1 and a[0]["n_reports"] == 3
+    alert = client.get("/api/alerts").json()["alerts"][0]
+    assert set(alert["member_ids"]) == {ms[k]["member_id"] for k in ("new", "west1", "west2")}
+    assert alert["lat"] < lat0          # centred on the western cluster, not pulled east
+
+
 def test_one_alert_per_area_per_week(client):
     ms = three_members(client)
     for i in range(3):

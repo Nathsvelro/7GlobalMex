@@ -4,6 +4,7 @@ Outbreak: ROYA reports (confidence >= model threshold) from >= MIN_MEMBERS diffe
 RADIUS_KM, observation date within the last WINDOW_DAYS days -> one alert (at most one per WINDOW_DAYS per area)
 and card `alert_roya` queued for every consenting member as `pending_approval`.
 """
+import itertools
 import json
 import math
 from datetime import date, timedelta
@@ -103,13 +104,26 @@ def check(conn, new_obs: dict) -> dict | None:
         d = km(lat0, lon0, o["lat"], o["lon"])
         if d <= RADIUS_KM and (o["member_id"] not in best or d < best[o["member_id"]][0]):
             best[o["member_id"]] = (d, o)
-    # Greedy cluster: add members (closest first) only if within RADIUS_KM of everyone already in it.
-    cluster = [dict(new_obs)]
-    for d, o in sorted(best.values(), key=lambda t: t[0]):
-        if all(km(o["lat"], o["lon"], c["lat"], c["lon"]) <= RADIUS_KM for c in cluster):
-            cluster.append(o)
-    if len(cluster) < MIN_MEMBERS:
+    # Exact search (not greedy: the nearest report may not fit with the others): MIN_MEMBERS-1 other members
+    # that are, with the new report, pairwise within RADIUS_KM. Several qualify -> the tightest (smallest largest
+    # pairwise distance), then lowest member ids, so the choice is deterministic.
+    cands = sorted(best.values(), key=lambda t: (t[0], t[1]["member_id"]))
+    seed = None
+    for combo in itertools.combinations(cands, MIN_MEMBERS - 1):
+        pts = [o for _, o in combo]
+        pair = [km(a["lat"], a["lon"], b["lat"], b["lon"]) for a, b in itertools.combinations(pts, 2)]
+        if all(p <= RADIUS_KM for p in pair):
+            key = (max([d for d, _ in combo] + pair, default=0.0), [o["member_id"] for o in pts])
+            if seed is None or key < seed[0]:
+                seed = (key, pts)
+    if seed is None:
         return None
+    # n_reports counts every member of the found cluster: add others (closest first) within RADIUS_KM of all of it.
+    cluster = [dict(new_obs)] + seed[1]
+    for d, o in cands:
+        if o["member_id"] not in {c["member_id"] for c in cluster} and all(
+                km(o["lat"], o["lon"], c["lat"], c["lon"]) <= RADIUS_KM for c in cluster):
+            cluster.append(o)
     # At most one alert per area per WINDOW_DAYS.
     for a in active_alerts(conn):
         if km(lat0, lon0, a["lat"], a["lon"]) <= RADIUS_KM:

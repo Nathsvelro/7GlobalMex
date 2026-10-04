@@ -150,6 +150,10 @@ minador, phoma / brown leaf spot -> phoma, cercospora -> cercospora, red spider 
   `reports/model_eval.md` section (f) shows how much a random split would have inflated the score.
 - **Round-robin subsampling**: up to 1,500 training images per coffee class (one per group per round),
   class-weighted loss.
+- **Optimizer state (training note)**: the shipped v2 (and v1) were trained by an earlier `train.py` that re-compiled
+  every epoch, so Adam's moments and step counter reset each epoch. `train.py` now compiles once per stage and only
+  updates the learning rate between epochs. This applies to future runs; the shipped models were not retrained. A
+  resume still starts a fresh Adam, because only the weights are checkpointed.
 - **Strong photometric augmentation on every class** (brightness, contrast, saturation, hue, haze,
   auto-contrast, blur, down/up-scaling, JPEG, noise, crops, flips, 90-degree rotations), because rust
   crops are often hazy and the model could otherwise learn "haze = rust".
