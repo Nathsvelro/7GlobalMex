@@ -20,9 +20,9 @@ Built for the World Bank × Hack-Nation "Small AI for Development" hackathon, Ag
 [docs/concept-note.pdf](docs/concept-note.pdf)). The project was first set in another country; on 2026-10-04 the
 team moved it to Kenya. Earlier versions are in git history.
 
-**Try it online (DEMO data, SIMULATED SMS):** the phone app at https://7globalmex-app.vercel.app/ and the co-op hub at
-https://cafetal-hub-demo.onrender.com/ (the phone app is also served there, at `/app/`). The hub is on a free plan: the
-first visit after a quiet spell takes up to a minute. To run everything on your own computer, see the Quick start.
+**Try it online with one link: https://7globalmex-app.vercel.app/** (DEMO data, SIMULATED SMS). The phone app opens
+first, and its "Co-op hub (DEMO)" button opens the co-op hub; what to tap is in
+[Try it online: one link](#try-it-online-one-link).
 
 **The one decision we improve:** *"Is something attacking my coffee, and what do I do this week: handle it myself,
 or get the extension officer to come?"*
@@ -54,6 +54,41 @@ The "we know because" part has two kinds of evidence (codes from [docs/evidence.
 
 ---
 
+## Try it online: one link
+
+**https://7globalmex-app.vercel.app/** opens the whole demo: the phone app and, from it, the co-op hub. Everything in
+it is DEMO data, and no real SMS is sent.
+
+1. **The phone app** opens first: what Noor's daughter uses. Choose a language, accept the consent, and type the
+   member number **0123** (Noor, in the DEMO data).
+2. **Check a leaf.** On the Home screen, tap a **DEMO sample photo** (or take or choose a photo). The image model runs on
+   the phone, and the result, the advice and the voice appear. The check is saved on the phone.
+3. **Send it to the co-op.** Under the result, tap **"Send (SIMULATED)"**. The hub answers *"Cafetal: we got your
+   report…"*. Noor's rust report is the third one near Ondera Juu this week, so the hub drafts an outbreak alert.
+4. **Open the co-op hub.** The **"Co-op hub (DEMO)"** button sits under the app's top bar on every screen, the first
+   one included. It opens the hub in a new tab:
+   - **Outbox:** the alert waits until staff approve it.
+   - **Map:** the reports and the 5 km alert area.
+   - **Officer worklist:** the farms ranked for a visit, Noor's first.
+   - **SMS simulator:** text `PRICE` or a question in your own words, as Noor would from her basic phone.
+
+   The hub's **"Phone app"** menu item leads back to the app.
+
+**How the link works.** The app is a static site on Vercel. It opens at once and works offline after the first load.
+The hub runs on Render's free plan at https://cafetal-hub-demo.onrender.com/, which also serves the app at `/app/`.
+The app finds the hub in two ways:
+- the button opens the hub address set as `hub_url` in [app/config.json](app/config.json);
+- "Send (SIMULATED)" reaches the hub because [vercel.json](vercel.json) passes the app's `/api/*` calls on to it.
+
+**Before you share it:**
+- **Free plan:** after 15 minutes without visits the hub sleeps. The first visit then takes up to a minute (the app
+  wakes it when it opens), and each start reloads fresh DEMO data.
+- **Public:** anyone with the link can see and change the DEMO data. Do not type real names or phone numbers.
+- **Real co-op:** the hub runs on the co-op's own computer, and `hub_url` stays empty, so farmers never see the button.
+
+Setup and checks: [docs/DEPLOY_VERCEL.md](docs/DEPLOY_VERCEL.md) and
+[docs/DEPLOY_HUB_RENDER.md](docs/DEPLOY_HUB_RENDER.md).
+
 ## How it works: three parts, on devices people already have
 
 ```
@@ -77,7 +112,7 @@ The "we know because" part has two kinds of evidence (codes from [docs/evidence.
 ```
 
 1. **Phone app** ([app/](app/)): plain HTML/JS, no build step. After one online load it works in airplane mode:
-   app, model, the 83 cards and their audio (222 MP3s in English, Kiswahili and Gĩkũyũ, 2.95 MB) are cached.
+   app, model, the 84 cards and their audio (225 MP3s in English, Kiswahili and Gĩkũyũ, 2.97 MB) are cached.
    Diagnosis runs on the phone with onnxruntime-web (WASM). Records are stored in the phone's browser (IndexedDB)
    under a member ID, with an optional PIN and a "Delete all" button.
 2. **SMS** ([app/sms.js](app/sms.js), [hub/sms.py](hub/sms.py)): the app builds a one-SMS code (at most 160
@@ -272,7 +307,7 @@ previous model (threshold 0.70), on the same images, for comparison.
 | Diagnosis time, *emulated* phone: desktop Chromium with a Pixel 5 profile, CPU slowed 4x | **61.9 ms** median per photo once loaded (64 ms for a 12 MP photo, not counting JPEG decoding); first photo **3.7 s** (runtime + model load; a single cold run, so noisy) | [browser_metrics.md](reports/browser_metrics.md) |
 | Download over *emulated* 3G (750 kbps down, 100 ms latency) | model alone **21.2 s**; whole offline bundle **87.6 s** (1.5 min; 251 files, 7.98 MB on the wire with gzip, 16.21 MB unpacked). Slow 3G: 39.9 s and 165.7 s. | [browser_metrics.md](reports/browser_metrics.md) |
 | Free-text SMS sorter, held-out 20% (n = 175) | accuracy **0.954**, macro-F1 **0.950** with the threshold. English only (n = 82): 1.000 / 1.000. Kiswahili only (n = 89): 0.921 / 0.917. Without the off-topic MASSIVE examples (n = 98): 0.918 / 0.918. Gĩkũyũ: 4 test messages, too few to measure. | [intent_eval.md](reports/intent_eval.md) |
-| Cards checked by a person | **0 of 83**, in all three languages | [content/cards.json](content/cards.json) |
+| Cards checked by a person | **0 of 84**, in all three languages | [content/cards.json](content/cards.json) |
 
 **v2 was shipped as an exception to our own ship rule.** Before scoring v2's field results we fixed five
 conditions a new model had to meet against v1. v2 added 147 screened iNaturalist field photos (rust, leaf miner,

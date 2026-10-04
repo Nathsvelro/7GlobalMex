@@ -878,6 +878,35 @@
       }
     },
     {
+      "id": "ui_open_hub",
+      "type": "ui",
+      "en": "Co-op hub (DEMO)",
+      "sw": "Kituo cha chama (DEMO)",
+      "kik": "Ofici ya sosaiti (DEMO)",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_open_hub.mp3",
+        "sw": "audio/sw/ui_open_hub.mp3",
+        "kik": "audio/kik/ui_open_hub.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
       "id": "ui_simulated",
       "type": "ui",
       "en": "SIMULATED: no real SMS was sent",

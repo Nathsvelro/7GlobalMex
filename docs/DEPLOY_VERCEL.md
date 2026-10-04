@@ -41,6 +41,9 @@ protected by Vercel Authentication (Settings → Deployment Protection), so shar
   model on the phone, and its result says "DEMO: sample data" with the photo's credit. For a real co-op, set it to
   `false`, then run `python3 scripts/bump_sw_version.py` and commit `app/sw.js` too.
 - **iPhone:** use "Add to Home Screen". Safari can clear a website's offline storage after about 7 days without use.
+- **One link for judges.** `"hub_url"` in `app/config.json` (the Render hub) shows a "Co-op hub (DEMO)" button under
+  the top bar on every screen, onboarding included, so the Vercel link alone reaches the hub too. For a real co-op,
+  leave `hub_url` empty.
 - **Hub buttons.** "Send (SIMULATED)" and "Send photos to the co-op (Wi-Fi)" appear only when a co-op hub answers. On the
   Vercel copy, `/api/*` goes to the public DEMO hub on Render, so they appear once that hub is awake: it sleeps after 15
   minutes without visits and takes up to a minute to wake (the app pings it when it opens). Check after a deploy:

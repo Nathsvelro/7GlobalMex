@@ -455,7 +455,8 @@ Project-defined profiles (not the DevTools presets):
   (about 3.5 MB before, 2.95 MB now).
 - **DEMO sample photos, added after this run.** With `"demo_samples": true` in `app/config.json` (this build), the
   service worker also saves `app/demo/`: 8 files, 0.23 MB (7 CC BY sample photos and their list). On the 3G profile
-  that is about 2.5 s more (computed from the size, not measured). They are not in the numbers above.
+  that is about 2.5 s more (computed from the size, not measured). They are not in the numbers above, and neither are
+  the 3 voice clips of the later "Co-op hub (DEMO)" card (20 KB; 225 MP3s now).
 - **How it was measured.** The page fetched the files in the same four groups as the service worker's `precache()`.
   The real service-worker install could not be throttled, because Chromium does not apply CDP throttling to service-worker fetches.
   The page's own first 13 requests come on top: 173 KB decoded, 39 KB with gzip (measured, unthrottled).
@@ -543,7 +544,7 @@ DEMO county 25/26, KAMIS. Not the price at your factory."* All prices are DEMO (
 `scripts/make_audio.py` (coffee 157.40 KES/kg cherry, maize 105.50, beans 180.00, date "2026-09-30", the 40-character
 community name "Ondera Kilima Upper Ward, by the factory", 120 reports, and the `sms_fuente` text from
 `data/prices.json`), then counts GSM-7 characters. The community name is the longest registration allows; the other
-values are long, **not the worst case**. `python3 scripts/make_audio.py --check` reports "83 cards checked, 0
+values are long, **not the worst case**. `python3 scripts/make_audio.py --check` reports "84 cards checked, 0
 problem(s)".
 
 | card | en | sw | kik |

@@ -9,7 +9,7 @@ const APP_VERSION = 'app-v1';
 const $ = (id) => document.getElementById(id);
 const st = {
   settings: null, // {lang, member_id, consent_at, pin_hash, geo}
-  config: { gateway_number: '', gateway_label: 'DEMO', demo_samples: false },
+  config: { gateway_number: '', gateway_label: 'DEMO', demo_samples: false, hub_url: '' },
   onboarding: null,
   obs: null, // observation on the result screen
   seq: [], // cards played on the result screen
@@ -418,6 +418,20 @@ async function markSent(via) {
   renderSms();
 }
 
+// "Co-op hub (DEMO)" link in the status strip (config.json "hub_url", DEMO builds only): one link for judges and the
+// video reaches both the app and the hub. Served by a hub itself (./run.sh, the online DEMO hub) -> that hub.
+async function showHubLink() {
+  if (!st.config.hub_url) return;
+  let href = st.config.hub_url;
+  try {
+    if ((await fetch('../hub/outbox.html', { method: 'HEAD', cache: 'no-store' })).ok) href = '../';
+  } catch {
+    // offline: keep hub_url, it opens once there is a connection
+  }
+  $('pill-hub').href = href;
+  $('pill-hub').hidden = false;
+}
+
 // ---------- hub (co-op Wi-Fi): only when reachable, only on tap ----------
 // A sleeping online demo hub on free hosting takes up to a minute to start. Asking once at boot means it is awake by
 // the time someone looks for the hub buttons. No answer is fine (e.g. offline).
@@ -682,6 +696,7 @@ async function boot() {
     console.error('cards.json could not be loaded', e); // texts will show as [card_id]
   }
   bind();
+  showHubLink();
   st.settings = S.getSettings();
   if (!st.settings) return startOnboarding();
   C.setLang(st.settings.lang); // falls back to English if cards.json does not list it

@@ -116,6 +116,14 @@ async function phaseOffline(browser) {
   await page.reload();
   await page.waitForSelector('#s-lang:not([hidden])');
   check(await page.isVisible('#pill-demo'), 'DEMO badge visible (config gateway_label = DEMO)');
+  const hubUrl = JSON.parse(fs.readFileSync(path.join(ROOT, 'app/config.json'), 'utf8')).hub_url;
+  await page.waitForSelector('#pill-hub:not([hidden])');
+  const hubLink = await page.evaluate(() => {
+    const a = document.getElementById('pill-hub');
+    return { href: a.getAttribute('href'), target: a.target, text: a.textContent.trim() };
+  });
+  check(hubUrl && hubLink.href === hubUrl && hubLink.target === '_blank' && hubLink.text === T('ui_open_hub'),
+    `"${T('ui_open_hub')}" link on the first screen, offline -> hub_url (${JSON.stringify(hubLink)})`);
   const langBtns = await page.$$eval('#lang-list .lang-btn', (bs) => bs.map((b) => [b.dataset.lang, b.textContent.trim()]));
   check(JSON.stringify(langBtns) === JSON.stringify(LANGS) && JSON.stringify(Object.entries(cards.languages)) === JSON.stringify(LANGS),
     `language choice: English, Kiswahili, Gĩkũyũ (${JSON.stringify(langBtns)})`);
@@ -516,6 +524,9 @@ async function phaseRealHub(browser) {
     await page.goto(hubUrl + '/app/');
     await page.waitForSelector('body[data-offline="ready"]', { timeout: 120000 });
     check(true, 'real hub: app served at /app/ and cached by the service worker');
+    await page.waitForSelector('#pill-hub:not([hidden])');
+    const hubHref = await page.evaluate(() => document.getElementById('pill-hub').href);
+    check(hubHref === hubUrl + '/', `real hub: the "Co-op hub" link opens the hub that serves the app (${hubHref})`);
     await page.click('.lang-btn[data-lang="en"]');
     await page.click('#lang-next');
     await page.click('#consent-yes');

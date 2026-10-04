@@ -2,7 +2,7 @@
 const PAGES = [
   ["/", "Home"], ["/hub/register.html", "Registration"], ["/hub/simulator.html", "SMS simulator"],
   ["/hub/outbox.html", "Outbox"], ["/hub/map.html", "Map"], ["/hub/officer.html", "Officer worklist"],
-  ["/hub/content.html", "Content"],
+  ["/hub/content.html", "Content"], ["/app/", "Phone app"],
 ];
 
 const CODE_INFO = {

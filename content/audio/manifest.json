@@ -201,6 +201,10 @@
       "hash": "587dc7cdba56b40f",
       "spoken_text": "Ready to use without internet"
     },
+    "audio/en/ui_open_hub.mp3": {
+      "hash": "29fdb92b366ee303",
+      "spoken_text": "Co-op hub, demo"
+    },
     "audio/en/ui_pending_sms.mp3": {
       "hash": "817363a3c8425fb6",
       "spoken_text": "Not sent yet"
@@ -497,6 +501,10 @@
       "hash": "79d3709cd0de9ee6",
       "spoken_text": "Ne ehaarerie kohotherwo hatare intaneti"
     },
+    "audio/kik/ui_open_hub.mp3": {
+      "hash": "7af982fac9f46d01",
+      "spoken_text": "Ofici ya sosaiti, demo"
+    },
     "audio/kik/ui_pending_sms.mp3": {
       "hash": "2a162cd772622a37",
       "spoken_text": "Ndere yatomwo"
@@ -792,6 +800,10 @@
     "audio/sw/ui_offline_ready.mp3": {
       "hash": "72db1d10013356c7",
       "spoken_text": "Tayari kutumika bila intaneti"
+    },
+    "audio/sw/ui_open_hub.mp3": {
+      "hash": "f045fa3634d614bc",
+      "spoken_text": "Kituo cha chama, demo"
     },
     "audio/sw/ui_pending_sms.mp3": {
       "hash": "70781b04405a6358",
