@@ -9,16 +9,21 @@ The repository already contains the configuration:
 
 | File | What it does |
 |---|---|
-| `vercel.json` | Build: copy `app/` and `content/` into `public/` (they must stay side by side: the app loads `../content/cards.json`). Serves `public/`. Redirects `/` to `/app/`. Adds trailing slashes so `/app` becomes `/app/` (relative paths need it). `app/sw.js` is never cached, so phones see new versions. |
-| `.vercelignore` | Uploads only `app/`, `content/` and `vercel.json` (not the hub, model training, reports or tests). |
+| `vercel.json` | Build: runs `scripts/vercel_build.sh`. Serves `public/`. Redirects `/` to `/app/`. Adds trailing slashes so `/app` becomes `/app/` (relative paths need it). `app/sw.js` is never cached, so phones see new versions. |
+| `scripts/vercel_build.sh` | Copies `app/` and `content/` into `public/` (they must stay side by side: the app loads `../content/cards.json`). Only these two folders are served. It prints the folder it runs in, and stops with a plain message if `app/` and `content/` are not there. |
 
 ## Steps in the Vercel dashboard
 
 1. **Add New… → Project → Import** the GitHub repository `Nathsvelro/7GlobalMex`.
-2. **Framework Preset:** Other. Leave Build Command, Output Directory and Install Command empty: `vercel.json` sets them.
-3. **Deploy.**
-4. Open `https://<your-project>.vercel.app/` (it redirects to `/app/`). Wait for **"Ready to use without internet"**,
+2. **Root Directory:** leave it empty (the repository root). Not `app`: the app needs `content/` next to it.
+3. **Framework Preset:** Other. Leave Build Command, Output Directory and Install Command empty, with their override
+   switches off: `vercel.json` sets them.
+4. **Deploy.**
+5. Open `https://<your-project>.vercel.app/` (it redirects to `/app/`). Wait for **"Ready to use without internet"**,
    then try airplane mode.
+
+If the build log says `ERROR: app/ and content/ are not in this folder`, the Root Directory is wrong (step 2). Change it,
+then **Redeploy** the newest deployment.
 
 The production URL is built from the **production branch** (`main` by default). Preview URLs for other branches can be
 protected by Vercel Authentication (Settings → Deployment Protection), so share the production URL with judges.

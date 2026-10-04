@@ -1,5 +1,0 @@
-# Vercel serves only the phone app (app/ + content/); the co-op hub runs on the co-op computer (./run.sh).
-/*
-!/app
-!/content
-!/vercel.json
