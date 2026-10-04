@@ -96,26 +96,28 @@ def check(conn, new_obs: dict) -> dict | None:
     recent = db.rows(conn.execute(
         "SELECT uid, member_id, lat, lon, date, conf FROM observations WHERE code = 'ROYA' AND conf >= ?"
         " AND date >= ? AND lat IS NOT NULL", (min_conf, start)))
-    # Nearest report of each other member, within RADIUS_KM of the new one.
-    best = {}
+    # Every report of each other member within RADIUS_KM of the new one (not only the nearest: a member's nearest
+    # report may not fit with the others while another of their reports does).
+    by_member = {}
     for o in recent:
         if o["member_id"] == new_obs["member_id"]:
             continue
         d = km(lat0, lon0, o["lat"], o["lon"])
-        if d <= RADIUS_KM and (o["member_id"] not in best or d < best[o["member_id"]][0]):
-            best[o["member_id"]] = (d, o)
-    # Exact search (not greedy: the nearest report may not fit with the others): MIN_MEMBERS-1 other members
-    # that are, with the new report, pairwise within RADIUS_KM. Several qualify -> the tightest (smallest largest
-    # pairwise distance), then lowest member ids, so the choice is deterministic.
-    cands = sorted(best.values(), key=lambda t: (t[0], t[1]["member_id"]))
+        if d <= RADIUS_KM:
+            by_member.setdefault(o["member_id"], []).append((d, o))
+    # Exact search (not greedy): MIN_MEMBERS-1 other members, one report each, that are, with the new report,
+    # pairwise within RADIUS_KM. Several qualify -> the tightest (smallest largest pairwise distance), then lowest
+    # member ids, so the choice is deterministic.
     seed = None
-    for combo in itertools.combinations(cands, MIN_MEMBERS - 1):
-        pts = [o for _, o in combo]
-        pair = [km(a["lat"], a["lon"], b["lat"], b["lon"]) for a, b in itertools.combinations(pts, 2)]
-        if all(p <= RADIUS_KM for p in pair):
-            key = (max([d for d, _ in combo] + pair, default=0.0), [o["member_id"] for o in pts])
-            if seed is None or key < seed[0]:
-                seed = (key, pts)
+    for members in itertools.combinations(sorted(by_member), MIN_MEMBERS - 1):
+        for combo in itertools.product(*(by_member[m] for m in members)):
+            pts = [o for _, o in combo]
+            pair = [km(a["lat"], a["lon"], b["lat"], b["lon"]) for a, b in itertools.combinations(pts, 2)]
+            if all(p <= RADIUS_KM for p in pair):
+                key = (max([d for d, _ in combo] + pair, default=0.0), list(members))
+                if seed is None or key < seed[0]:
+                    seed = (key, pts)
+    cands = sorted((t for reports in by_member.values() for t in reports), key=lambda t: (t[0], t[1]["member_id"]))
     if seed is None:
         return None
     # n_reports counts every member of the found cluster: add others (closest first) within RADIUS_KM of all of it.

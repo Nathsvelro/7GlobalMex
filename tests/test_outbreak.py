@@ -110,6 +110,20 @@ def test_cluster_found_when_nearest_report_does_not_fit(client):
     assert alert["lat"] < lat0          # centred on the western cluster, not pulled east
 
 
+def test_cluster_uses_any_of_a_members_reports(client):
+    # Member A reported twice (+1 km and -3 km), member B once (-4.5 km); new report at 0 km. Using only A's
+    # nearest report (+1 km, 5.5 km from B) misses the valid cluster {new, A at -3 km, B at -4.5 km}.
+    lat0, lon = 16.91, -92.11
+    locs = {"a": (lat0 + 0.009, lon), "b": (lat0 - 0.0405, lon), "new": (lat0, lon)}
+    ms = {k: register(client, name=f"Socio {k}", phone=f"+52967000500{i}", lat=lt, lon=ln)
+          for i, (k, (lt, ln)) in enumerate(locs.items())}
+    assert not alert_actions(roya(client, ms["a"], (lat0 + 0.009, lon), obs="K001"))
+    assert not alert_actions(roya(client, ms["a"], (lat0 - 0.027, lon), obs="K002"))
+    assert not alert_actions(roya(client, ms["b"], locs["b"], obs="K003"))
+    a = alert_actions(roya(client, ms["new"], locs["new"], obs="K009"))
+    assert len(a) == 1 and a[0]["n_reports"] == 3
+
+
 def test_one_alert_per_area_per_week(client):
     ms = three_members(client)
     for i in range(3):

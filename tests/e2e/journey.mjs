@@ -301,7 +301,9 @@ async function phone(browser) {
   await page.waitForSelector('#r-sim-reply .bubble, #r-sim-reply .say', { timeout: 15000 });
   const reply = (await page.textContent('#r-sim-reply')).trim();
   check(!!matchTemplate(reply, 'sms_obs_recibida', 'es'), `"Simular envío" -> hub reply (card sms_obs_recibida): "${reply}"`);
-  check(await page.isVisible('#r-sim-chip'), 'SIMULATED label shown on the phone');
+  // The chip appears after the app records the send (await markSent), a moment after the reply bubbles.
+  const chip = await page.waitForSelector('#r-sim-chip:not([hidden])', { timeout: 5000 }).then(() => true, () => false);
+  check(chip, 'SIMULATED label shown on the phone');
   await page.evaluate(() => document.querySelectorAll('audio').forEach((a) => a.pause()));
   await shot(page, 'journey_12_simulated_send.png', '#r-sim-reply');
 
