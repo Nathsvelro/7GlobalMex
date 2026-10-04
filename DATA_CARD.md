@@ -311,10 +311,11 @@ There is no East African field photo of a coffee disease to use instead (section
   | dry maize | 51.11 KES/kg | KAMIS **wholesale** price, Kirinyaga; market and date not shown in the summary |
   | beans (Rosecoco) | 111.11 KES/kg | KAMIS **wholesale** price, Kirinyaga; market and date not shown in the summary |
 
-  The PRICE / BEI SMS names the source as "DEMO county 25/26, KAMIS" and the date as "10/2026", the month the table
-  was put together (`sms_fuente`, `sms_fecha`); "25/26" marks the coffee figure as the 2025/26 season average. The coffee item also records an **auction** reference, which the SMS does not send: Nairobi Coffee
-  Exchange Sale 42 (2026-09-29), KES 38,140 per 50-kg bag of **clean** coffee; one other summary said about KES 47,000
-  for the same sale, so the NCE report must be checked.
+  The PRICE / BEI SMS names the source as "DEMO county 25/26, KAMIS" and the date as "10/2026", the month the table was
+  put together (`sms_fuente`, `sms_fecha`); "25/26" marks the coffee figure as the 2025/26 season average. The coffee
+  item also records an **auction** reference, which the SMS does not send: Nairobi Coffee Exchange Sale 42 (2026-09-29),
+  KES 38,140 per 50-kg bag of **clean** coffee; one other summary said about KES 47,000 for the same sale, so the NCE
+  report must be checked.
 - **Reference, never farm-gate:** each factory pays its own rate per kg of cherry, months after delivery and after
   milling, marketing and society costs; maize and beans are wholesale, not what a trader pays at the farm. Auction
   prices are per bag of clean coffee, not cherry, and we do not convert one into the other. The SMS says "Reference
@@ -382,9 +383,10 @@ There is no East African field photo of a coffee disease to use instead (section
   language keeps apart. The app's screens and audio keep ĩ and ũ. There are no Gĩkũyũ SMS keywords; the Gĩkũyũ cards
   advertise the English and Kiswahili ones.
 - **Status:** **83 of 83 cards `unverified`** in both languages, marked as AI drafts in
-  [`content/README.md`](content/README.md). The app shows *HAIJAHAKIKIWA* (Kiswahili) or *NDĨRATHUTHURIO* (Gĩkũyũ),
-  the drafts of "UNVERIFIED", next to them, each followed by the English word UNVERIFIED in case the draft is wrong. A native speaker can verify a card or record it on the hub's Content page;
-  a native recording is never overwritten by the audio script.
+  [`content/README.md`](content/README.md). The app shows *HAIJAHAKIKIWA* (Kiswahili) or *NDĨRATHUTHURIO* (Gĩkũyũ), the
+  drafts of "UNVERIFIED", next to them, each followed by the English word UNVERIFIED in case the draft is wrong. A
+  native speaker can verify a card or record it on the hub's Content page; a native recording is never overwritten by
+  the audio script.
 - **What it does NOT cover:**
   - review by native speakers, ideally from Kirinyaga;
   - whether the words are the ones farmers there really use (loanwords such as *afisa*, *sosaiti*, *kiwanda*, *kutu*

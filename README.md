@@ -118,8 +118,8 @@ farmer sees or hears comes from [content/cards.json](content/cards.json).
 - **The officer decides** who to visit.
 - **UNVERIFIED badges:** every text and audio that no person has checked shows **UNVERIFIED** in the app (on the
   Kiswahili and Gĩkũyũ screens next to the drafted word: *HAIJAHAKIKIWA · UNVERIFIED*, *NDĨRATHUTHURIO · UNVERIFIED*)
-  and on the hub pages. SMS sent to basic phones cannot carry a
-  badge, so the 9 SMS and alert cards are unverified text that members receive as-is (the outbox shows UNVERIFIED).
+  and on the hub pages. SMS sent to basic phones cannot carry a badge, so the 9 SMS and alert cards are unverified text
+  that members receive as-is (the outbox shows UNVERIFIED).
 
 Details: [RESPONSIBLE_AI.md](RESPONSIBLE_AI.md).
 

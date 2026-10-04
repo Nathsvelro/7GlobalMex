@@ -370,9 +370,10 @@ to do after a data breach. The consent text and the hub should then be changed t
 - **SMS sorter** (held-out test, team-written messages): English 100.0 % (n = 82), Kiswahili 92.1 % (n = 89), Gĩkũyũ
   3 of 4 (too few to mean anything) ([intent_eval.md](reports/intent_eval.md)).
 - **Everything is marked UNVERIFIED** (*HAIJAHAKIKIWA · UNVERIFIED* in Kiswahili, *NDĨRATHUTHURIO · UNVERIFIED* in
-  Gĩkũyũ: the drafted word plus the English one, so the label holds even if the draft is wrong), in all three languages: on the phone, in the outbox and on the content page. **SMS on a basic phone carry no badge:** the 9
-  SMS and alert cards (all unverified, including the AI-draft Kiswahili and Gĩkũyũ) reach members as plain text; only
-  the hub outbox shows UNVERIFIED.
+  Gĩkũyũ: the drafted word plus the English one, so the label holds even if the draft is wrong), in all three languages:
+  on the phone, in the outbox and on the content page. **SMS on a basic phone carry no badge:** the 9 SMS and alert
+  cards (all unverified, including the AI-draft Kiswahili and Gĩkũyũ) reach members as plain text; only the hub outbox
+  shows UNVERIFIED.
 - **How it gets fixed:** on the hub's "Content review" page a native speaker records each card ("● Record" or "Upload
   file"), and a reviewer marks it verified with name and date ("Mark verified"). Phones download the new audio the
   next time they are online at the co-op ([app/sw.js](app/sw.js)). The audio script never overwrites a native
