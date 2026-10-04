@@ -9,8 +9,8 @@ The shipped model (cafetal-img-v2 at threshold 0.90) with the previous app model
       --ref v1=model/checkpoints/v1/cafetal.onnx:model/checkpoints/v1/labels.json:reports/model_calibration.json
 
 Every model is decided with ITS OWN threshold from its labels.json (shipped: app/model/labels.json).
-(a) held-out TEST split (split by near-duplicate group): fp32 and shipped model; app decision
-    (threshold + blur check + "otro" -> DUDA); "otro" rejection.
+(a) held-out TEST split (split by near-duplicate group; JMuBEN, Mutira plantation, Kirinyaga, Kenya): fp32 and
+    shipped model; app decision (threshold + blur check + "otro" -> fail-safe UNSR, internally "DUDA"); "otro" rejection.
 (b) robustness under phone-like degradations (proxy for the field gap) + fail-safe rate.
 (c) data/field_test/<label>/*.jpg - the team's own photos (evaluated automatically when present).
 (d) size, single-thread CPU latency (onnxruntime Python), computed 3G download time.
@@ -448,9 +448,9 @@ def main():
         rep["inat_field"] = {"n_photos": len(rows), "app_method": methods[-1],
                              "field_test": {m: out["methods"][m]["field_test"] for m in methods},
                              "note": "held-out field test only (observers not used in training, except the observer of 1 ojo de gallo "
-                                     "photo); iNaturalist photos "
-                                     "are a proxy for Chiapas photos; details, ship rule and v1/v2 comparison in "
-                                     "reports/field_eval.md"}
+                                     "photo); iNaturalist photos are a proxy for field photos from Kirinyaga, and none "
+                                     "of the labelled disease photos is from East Africa; details, ship rule and v1/v2 "
+                                     "comparison in reports/field_eval.md"}
         print("inat field", {m: rep["inat_field"]["field_test"][m]["roya"]["correct"] for m in methods})
         if ref:
             ro, _, _ = evaluate_model(rpath, rlab, rows, squares, blur, None, args.cache, ["single"])
@@ -546,10 +546,14 @@ def render_md(r, classes):
             rr = ref["inat_field"]["field_test"]["single"]["roya"]
             fline += f"; {ref['name']}: {pct(exact_rate(rr, 'roya', 'correct'))} ({rr['answer_counts']['roya']} of {rr['n']})"
         fline += "."
-    L += ["> Read this first: the test split comes from the same Kenyan dataset as training (JMuBEN), split by "
-          "near-duplicate group. It is NOT a field test. The `sano` class has only "
-          f"{t['distinct_groups_per_class'].get('sano')} distinct source photos in test "
-          "(and 7 in train) - see 'Data' below. Field accuracy on Chiapas photos is unknown until "
+    from field_eval import WORDS
+    L += [WORDS, "",
+          "> Read this first: the test split comes from the same Kenyan dataset as training - JMuBEN, photographed in "
+          "the Mutira coffee plantation, Kirinyaga County (Jepkoech et al. 2021), the same county as our users - split "
+          "by near-duplicate group. It is the closest thing to a local test we have, but it is NOT a field test: one "
+          "plantation, one camera, 128 px close-up crops, many augmented copies of each photo, and the `sano` class has "
+          f"only {t['distinct_groups_per_class'].get('sano')} distinct source photos in test "
+          "(and 7 in train) - see 'Data' below. Accuracy on field photos from Kirinyaga farms is unknown until "
           "`data/field_test/` is filled." + fline, "",
           "## (a) Held-out test split (group split, 70/15/15)", "",
           "| model | threshold | accuracy (argmax) | macro-F1 (argmax, 6 classes) | app-level macro-F1 (5 coffee classes, DUDA = miss) |",
@@ -621,7 +625,7 @@ def render_md(r, classes):
                 f"{q['image']} ({q['view']}) -> {q['answer']} ({q['top1']:.3f})" for q in ref["test"]["otro_accepted"]) + "."]
     L += ["", f"## (b) Robustness to phone-like degradations (test split, shipped model {tag})", "",
           "Proxy for the field gap: the same test images degraded. 'fail-safe' = the app says "
-          "\"No estoy seguro\" (DUDA) because of the threshold, the blur check or an `otro` prediction. "
+          "\"I'm not sure\" (UNSR) because of the threshold, the blur check or an `otro` prediction. "
           "Here the blur check runs on the cached 224 px view resized to 128 px (also for 'clean'), so its "
           "rejections are a little higher than in (a), which scores the original files.", ""]
     L += rob_table(r["robustness"])
@@ -648,7 +652,7 @@ def render_md(r, classes):
             L += ["", f"Reference {rtag}:", ""] + inatag_lines(ref["inat_coffee_photos"])
         L += ["", "Meaning: these are mostly whole plants, flowers and cherries, not leaf close-ups; the desired answer "
               "is the fail-safe. Disease answers here are false alarms or real symptoms we cannot check (health is "
-              "unknown). Labelled Chiapas photos are needed."]
+              "unknown). Labelled photos from Kirinyaga farms are needed."]
     if "inat_field" in r:
         from field_eval import group_table
         g = r["inat_field"]
@@ -695,8 +699,9 @@ def render_md(r, classes):
               "<= 5 % disease answers on 400 new *Coffea* photos and >= 98 % `otro` rejection on validation). "
               f"The export-time value below ({th['value']}) came from Kenyan validation images only and is kept for "
               "the record."]
+    floor_reason = th.get("floor_reason", "").replace("real Chiapas photos", "real field photos")  # export-time wording
     L += [f"- Export-time confidence threshold **{th['value']}** (data-driven value {th.get('data_driven_value')}: {th['rule']}; "
-          f"policy floor {th.get('policy_floor')}: {th.get('floor_reason', '')}).", "",
+          f"policy floor {th.get('policy_floor')}: {floor_reason}).", "",
           "| threshold | coverage (clean val) | selective accuracy (clean val) | coverage (clean + degraded val) | "
           "selective accuracy (clean + degraded val) |", "|---|---|---|---|---|"]
     for row, row2 in zip(th["curve"], th.get("curve_with_degradations", th["curve"])):
@@ -724,7 +729,8 @@ def render_md(r, classes):
           "; ".join(f"{sp}: " + ", ".join(f"{c} {sel[sp][c]}" for c in classes) for sp in ("train", "val", "test")) + ".",
           "v2 adds field training views of 147 screened iNaturalist photos to train (see `reports/field_eval.md`, "
           "Protocol); validation and test are unchanged." if (m.get("version") or "").endswith("v2") else "", ""]
-    return "\n".join(L) + "\n"
+    from field_eval import english  # the fail-safe is called UNSR / "I'm not sure" in the app (JSON keys keep "DUDA")
+    return english("\n".join(L) + "\n")
 
 
 if __name__ == "__main__":

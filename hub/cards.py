@@ -15,15 +15,19 @@ from . import db
 _lock = threading.Lock()
 _cache = {"mtime": None, "data": None}
 
-# Letters (incl. Spanish accents), digits, space and . , / : - ( ) % ' — enough for "94.00", "sept 2026",
-# "DEMO ICE/Banxico/SNIIM", "Ondera Alto". No braces, so a value can never inject another slot.
-SLOT_VALUE_RE = re.compile(r"^[0-9A-Za-zÁÉÍÓÚÜÑáéíóúüñ .,/:\-()%']{1,40}$")
+# Letters (incl. accented letters such as the Gikuyu i/u with tilde), digits, space and . , / : - ( ) % ' — enough for
+# "139.00", "KES/kg cherry", "DEMO county 25/26, KAMIS", "Ondera Juu". No braces, so a value can never inject
+# another slot. In SMS cards accented letters are sent without the accent (gsm_safe).
+SLOT_VALUE_RE = re.compile(r"^[0-9A-Za-zÁÉÍÓÚÜÑáéíóúüñĨŨĩũ .,/:\-()%']{1,40}$")
 
 # GSM 03.38 basic alphabet (1 unit each) and extension table (2 units each).
 GSM_BASIC = set(
     "@£$¥èéùìòÇ\nØø\rÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ !\"#¤%&'()*+,-./0123456789:;<=>?"
     "¡ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÑÜ§¿abcdefghijklmnopqrstuvwxyzäöñüà")
 GSM_EXT = set("^{}\\[~]|€\f")
+
+
+DEFAULT_LANG = "en"   # main language; used when a card has no text in the member's language
 
 
 class CardError(Exception):
@@ -53,12 +57,12 @@ def get(card_id: str) -> dict | None:
 
 
 def languages() -> list[str]:
-    return list(load().get("languages", {"es": "Español"}).keys())
+    return list(load().get("languages", {DEFAULT_LANG: "English"}).keys())
 
 
 def gsm_safe(value: str) -> str:
-    """Replace characters outside the GSM-7 alphabet by their unaccented letter (Río -> Rio), so one accent in a
-    slot value does not turn the SMS into UCS-2 (70 characters per SMS)."""
+    """Replace characters outside the GSM-7 alphabet by their unaccented letter (Kĩrĩnyaga -> Kirinyaga), so one
+    accent in a slot value does not turn the SMS into UCS-2 (70 characters per SMS)."""
     out = []
     for ch in value:
         if ch in GSM_BASIC or ch in GSM_EXT:
@@ -69,14 +73,14 @@ def gsm_safe(value: str) -> str:
     return "".join(out)
 
 
-def render(card_id: str, lang: str = "es", **slots) -> tuple[str, str]:
-    """Return (text, lang_used). Falls back to Spanish if the card has no text in `lang`.
+def render(card_id: str, lang: str = DEFAULT_LANG, **slots) -> tuple[str, str]:
+    """Return (text, lang_used). Falls back to English if the card has no text in `lang`.
     For SMS cards (type sms/alert) slot values are made GSM-7 safe."""
     card = get(card_id)
     if card is None:
         raise CardError(f"card '{card_id}' is missing from cards.json")
     if not card.get(lang):
-        lang = "es"
+        lang = DEFAULT_LANG
     text = card[lang]
     declared = set(card.get("slots") or [])
     for name, value in slots.items():

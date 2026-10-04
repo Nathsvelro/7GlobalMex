@@ -14,20 +14,29 @@ Usage:
   python3 scripts/make_audio.py            # render what changed
   python3 scripts/make_audio.py --check    # only validate cards.json (ids, slots, SMS length)
   python3 scripts/make_audio.py --force    # re-render all synthetic audio
-  python3 scripts/make_audio.py --only diag_roya --lang tzh
+  python3 scripts/make_audio.py --only diag_roya --lang kik
 
 Voices (one per language):
-  es   Spanish Piper voice, phonemes with espeak-ng es-419
-  tzh  the same Spanish voice reading a respelled Tseltal text (provisional, until native recordings)
-  en   English Piper voice (en-us-lessac-medium), phonemes with the voice's own espeak voice (en-us)
+  en   English Piper voice (en-us-lessac-medium), phonemes with its own espeak voice (en-us).
+       audio_source "synthetic:piper-en-us-lessac-medium".
+  sw   PROVISIONAL: a Piper voice trained on another language (default: the English voice en-us-lessac-medium)
+       fed Kiswahili phonemes from espeak-ng "sw" (the voice config is copied with "espeak": {"voice": "sw"}),
+       length_scale 1.25. audio_source "synthetic-provisional:piper-<voice>-espeak-sw".
+       The Spanish voice (es-mls_10246-low) was tried too and came out slow and choppy (see content/README.md).
+  kik  PROVISIONAL: the same voice and espeak "sw" phonemes reading the Gikuyu text respelled for the voice
+       (i-tilde -> e, u-tilde -> o: in Gikuyu spelling i-tilde is [e] and u-tilde is [o]).
+       audio_source "synthetic-provisional:piper-<voice>-espeak-sw-reading-gikuyu".
+  No Piper voice for Kiswahili or Gikuyu exists in this build environment; sw and kik audio is a stop-gap
+  until native speakers record the cards (hub content page).
+  Audio whose audio_source starts with "native" is a person's recording and is never overwritten.
 
 Environment:
-  PIPER_BIN      default /home/user/tools/piper/piper
-  PIPER_VOICE    Spanish voice (es, tzh); default: first .onnx in /home/user/tools/voice-es/
-  PIPER_VOICE_EN English voice (en); default: first .onnx in /home/user/tools/voice-en/
-  PIPER_ESPEAK   espeak-ng voice for es/tzh (default es-419, Latin-American Spanish:
-                 "c/z" said as "s", as in Mexico). Not used for English.
-  AUDIO_BITRATE  default 24k (keeps all audio small; the source voices are 16-22 kHz)
+  PIPER_BIN        default /home/user/tools/piper/piper
+  PIPER_VOICE_EN   English voice (en); default: first .onnx in /home/user/tools/voice-en/
+  PIPER_VOICE_SW   voice used for sw and kik; default: the English voice (PIPER_VOICE_EN, else the first .onnx in
+                   /home/user/tools/voice-en/). Set it to /home/user/tools/voice-es/es-mls_10246-low.onnx to compare.
+  PIPER_ESPEAK_SW  espeak-ng voice for sw and kik (default sw)
+  AUDIO_BITRATE    default 24k (keeps all audio small; the source voices are 16 kHz)
 """
 import argparse
 import glob
@@ -47,14 +56,13 @@ MANIFEST = os.path.join(CONTENT, "audio", "manifest.json")
 
 AUDIO_TYPES = ("ui", "diagnosis", "advice")
 TEXT_ONLY_TYPES = ("sms", "alert")
-SOURCE_LABEL = {
-    "es": "synthetic:piper-es-mls_10246-low",
-    "tzh": "synthetic-provisional:piper-es-voice-reading-tseltal",
-}  # en: "synthetic:piper-<voice name>", e.g. synthetic:piper-en-us-lessac-medium (see voice_for)
-# Piper settings. noise_w 0.4 gives steadier timing than the default 0.8 with this voice.
+MAIN_LANG = "en"
+# Piper settings. noise_w 0.4 gives steadier timing than the default 0.8.
 PIPER_ARGS = ["--noise_w", "0.4", "--sentence_silence", "0.3"]
-# The English voice speaks fast (~200+ words/min); length_scale 1.4 gives ~170, about the pace of the Spanish audio.
-LANG_ARGS = {"en": ["--length_scale", "1.4"]}
+# The English voice speaks fast (~200+ words/min); length_scale 1.4 gives ~170 words/min.
+# Read with Kiswahili phonemes it speaks about 5-6 vowel groups per second (computed estimate); 1.25 slows that to
+# roughly 4-5, easier to follow for a voice with a foreign accent.
+LANG_ARGS = {"en": ["--length_scale", "1.4"], "sw": ["--length_scale", "1.25"], "kik": ["--length_scale", "1.25"]}
 # Squeeze long pauses the low-quality voice sometimes inserts; trim leading silence.
 FFMPEG_FILTER = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.05:"
                  "stop_periods=-1:stop_duration=0.35:stop_threshold=-45dB:stop_silence=0.3")
@@ -63,7 +71,7 @@ FFMPEG_FILTER = ("silenceremove=start_periods=1:start_threshold=-45dB:start_sile
 REQUIRED_IDS = """
 ui_app_name ui_choose_language ui_consent_title ui_consent_text ui_consent_accept ui_consent_decline
 ui_member_id_prompt ui_pin_optional ui_pin_prompt ui_continue ui_take_photo ui_photo_tip_underside
-ui_analyzing ui_confidence ui_play_tzh ui_play_es ui_play_en ui_send_sms ui_simulate_send ui_saved ui_history
+ui_analyzing ui_confidence ui_play_kik ui_play_sw ui_play_en ui_send_sms ui_simulate_send ui_saved ui_history
 ui_settings ui_delete_all ui_delete_confirm ui_sync_photos ui_synced ui_back ui_unverified ui_demo
 ui_simulated ui_offline_ready ui_limits_note ui_language ui_pending_sms ui_sent ui_no_records
 diag_sano diag_roya diag_minador diag_phoma diag_cercospora diag_acaro_rojo diag_duda
@@ -76,13 +84,14 @@ REQUIRED_SLOTS = {
     "sms_precio": {"precio_cafe", "unidad_cafe", "precio_maiz", "precio_frijol", "fuente", "fecha"},
     "alert_roya": {"comunidad", "n_reportes"},
 }
-DUDA = {"es": "No estoy seguro — muestre la hoja al técnico.",
-        "en": "I'm not sure — show the leaf to the extension officer."}
+DUDA = {"en": "I'm not sure — show the leaf to the extension officer."}
+# Fields of a card that are not language texts; any other key must be a language from "languages".
+CARD_FIELDS = {"id", "type", "slots", "audio", "audio_source", "source", "status", "reviewed_by"}
 
-# Worst-case-ish slot values used to check that every SMS fits in one message.
+# Worst-case-ish slot values used to check that every SMS fits in one message (KES, Kirinyaga).
 SAMPLE_SLOTS = {
-    "precio_cafe": "100.50", "unidad_cafe": "MXN/kg", "precio_maiz": "10.25",
-    "precio_frijol": "25.50", "fecha": "2026-09-30", "comunidad": "San Juan Cancuc Centro",
+    "precio_cafe": "157.40", "unidad_cafe": "KES/kg cherry", "precio_maiz": "105.50",
+    "precio_frijol": "180.00", "fecha": "2026-09-30", "comunidad": "Ondera Kilima Upper Ward",
     "n_reportes": "12",
 }
 # GSM 03.38 basic alphabet (one SMS = 160 of these). Anything else forces UCS-2 (70 chars).
@@ -108,15 +117,17 @@ def load_prices_fuente():
     """Source string the hub puts in {fuente}: data/prices.json 'sms_fuente' if present."""
     try:
         with open(os.path.join(ROOT, "data", "prices.json"), encoding="utf-8") as f:
-            return json.load(f).get("sms_fuente") or "SNIIM; ICE NY + Banxico"
+            return json.load(f).get("sms_fuente") or "DEMO county 25/26, KAMIS"
     except (OSError, ValueError):
-        return "SNIIM; ICE NY + Banxico"
+        return "DEMO county 25/26, KAMIS"
 
 
 # ---------------------------------------------------------------- validation
 def check(doc):
     problems = []
     langs = list(doc.get("languages", {}))
+    if MAIN_LANG not in langs:
+        problems.append(f"languages must include the main language '{MAIN_LANG}'")
     cards = doc.get("cards", [])
     ids = [c.get("id") for c in cards]
     for rid in REQUIRED_IDS:
@@ -133,6 +144,12 @@ def check(doc):
                 problems.append(f"{cid}: missing field '{key}'")
         if c.get("type") not in AUDIO_TYPES + TEXT_ONLY_TYPES:
             problems.append(f"{cid}: unknown type {c.get('type')!r}")
+        # Leftovers of a removed language (text, audio, status or reviewer for a language not in "languages").
+        extra = sorted(k for k in c if k not in CARD_FIELDS and k not in langs)
+        for key in ("audio", "audio_source", "status", "reviewed_by"):
+            extra += [f"{key}.{k}" for k in (c.get(key) or {}) if k not in langs]
+        if extra:
+            problems.append(f"{cid}: keys for languages not in \"languages\": {extra}")
         for lang in langs:
             text = c.get(lang)
             if not text:
@@ -170,27 +187,31 @@ def check(doc):
 
 
 # ---------------------------------------------------------------- text for the TTS
-SPOKEN_WORDS = {"SMS": "ese eme ese", "PIN": "pin", "Wi-Fi": "wifi", "WiFi": "wifi", "app": "ap"}
-SPOKEN_WORDS_EN = {"SMS": "S M S", "PIN": "pin", "M0123": "M 0 1 2 3"}
+SPOKEN_WORDS = {  # per language; whole words only
+    "en": {"SMS": "S M S", "PIN": "pin", "M0123": "M 0 1 2 3", "Gĩkũyũ": "Gikuyu"},
+    # sw and kik are read with espeak "sw" phonemes: Swahili letter names and spellings.
+    "sw": {"SMS": "es em es", "PIN": "pin", "Wi-Fi": "waifai", "WiFi": "waifai", "app": "ap", "App": "ap",
+           "CBD": "si bi di", "M0123": "M 0 1 2 3", "DEMO": "demo"},
+}
+SPOKEN_WORDS["kik"] = SPOKEN_WORDS["sw"]
 
 
 def tts_text(text, lang):
     """Turn card text into something the Piper voice reads well (audio only; the
     card text itself is never changed)."""
     t = text
-    for a, b in (SPOKEN_WORDS_EN if lang == "en" else SPOKEN_WORDS).items():
+    if lang == "kik":
+        # Gikuyu spelling: i-tilde is [e], u-tilde is [o]. espeak "sw" knows neither letter.
+        t = t.replace("ĩ", "e").replace("ũ", "o").replace("Ĩ", "E").replace("Ũ", "O")
+    for a, b in SPOKEN_WORDS.get(lang, SPOKEN_WORDS["sw"]).items():
         t = re.sub(r"(?<!\w)" + re.escape(a) + r"(?!\w)", b, t)
-    t = t.replace("PIN", "pin")  # also inside "aPIN" (Tseltal: "your PIN")
-    t = re.sub(r"\b([A-ZÁÉÍÓÚÑ]{2,})\b", lambda m: m.group(1).lower(), t)  # DEMO -> demo (not spelled)
+    t = re.sub(r"\b([A-Z]{2,})\b", lambda m: m.group(1).lower(), t)  # UNVERIFIED -> unverified (not spelled)
     t = t.replace("—", ", ").replace("–", ", ").replace("…", ".")
     t = re.sub(r"[«»\"“”]", "", t)
     t = re.sub(r"[()]", ", ", t).replace("/", " ")
-    if lang == "tzh":
-        # Rough respelling so a Spanish voice can say Tseltal (provisional audio only):
-        t = t.replace("'", "").replace("’", "")       # glottal stop: not in Spanish
-        t = t.replace("x", "sh")                       # Tseltal x = "sh"
-        t = re.sub(r"(?<![\wáéíóú])j(?=[bcdfgklmnpqrstvwyz])", "", t, flags=re.I)  # initial j+consonant
-        t = re.sub(r"(?<![\wáéíóú])ts(?=[aeiouáéíóú])", "s", t, flags=re.I)          # initial ts
+    if lang in ("sw", "kik"):
+        # espeak "sw" turns j into a phoneme neither Piper voice was trained on; "dy" comes out as d + y.
+        t = t.replace("j", "dy").replace("J", "Dy")
     t = re.sub(r"\s+([,.;:?!])", r"\1", t)
     t = re.sub(r",(\s*,)+", ",", t)
     t = re.sub(r",\s*([.;:?!])", r"\1", t)
@@ -200,7 +221,7 @@ def tts_text(text, lang):
 
 
 # ---------------------------------------------------------------- synthesis
-def find_voice(env="PIPER_VOICE", folder="/home/user/tools/voice-es"):
+def find_voice(env, folder):
     voice = os.environ.get(env)
     if voice:
         return voice
@@ -219,31 +240,40 @@ def voice_espeak(voice, default):
         return default
 
 
+def voice_name(voice):
+    name = os.path.basename(voice)
+    return name[:-len(".onnx")] if name.endswith(".onnx") else name
+
+
 _VOICES = {}
 
 
 def voice_for(lang):
-    """(voice .onnx path, espeak voice, audio_source label) for one language. es and tzh share the Spanish
-    voice (tzh is provisional); en has its own English voice."""
-    key = "en" if lang == "en" else "es"
-    if key not in _VOICES:
-        if key == "en":
+    """(voice .onnx path, espeak voice, audio_source label) for one language.
+    en: the English voice. sw and kik (and any other language): a provisional voice, by default the same English
+    Piper voice fed espeak-ng "sw" phonemes."""
+    if lang not in _VOICES:
+        if lang == "en":
             voice = find_voice("PIPER_VOICE_EN", "/home/user/tools/voice-en")
-            name = os.path.basename(voice)
-            name = name[:-len(".onnx")] if name.endswith(".onnx") else name
-            _VOICES[key] = (voice, voice_espeak(voice, "en-us"), f"synthetic:piper-{name}")
+            _VOICES[lang] = (voice, voice_espeak(voice, "en-us"), f"synthetic:piper-{voice_name(voice)}")
         else:
-            _VOICES[key] = (find_voice(), os.environ.get("PIPER_ESPEAK", "es-419"), "synthetic:piper")
-    voice, espeak, label = _VOICES[key]
-    return voice, espeak, SOURCE_LABEL.get(lang, label)
+            voice = os.environ.get("PIPER_VOICE_SW") or find_voice("PIPER_VOICE_EN", "/home/user/tools/voice-en")
+            espeak = os.environ.get("PIPER_ESPEAK_SW", "sw")
+            label = f"synthetic-provisional:piper-{voice_name(voice)}-espeak-{espeak}"
+            if lang == "kik":
+                label += "-reading-gikuyu"
+            elif lang != "sw":
+                label += f"-reading-{lang}"
+            _VOICES[lang] = (voice, espeak, label)
+    return _VOICES[lang]
 
 
 def piper_config(voice, espeak_voice, tmpdir):
-    """Copy the voice config with the chosen espeak voice (es-419 for Spanish: Mexican-style 's')."""
+    """Copy the voice config with the chosen espeak voice ("sw" to give the English voice Kiswahili phonemes)."""
     with open(voice + ".json", encoding="utf-8") as f:
         cfg = json.load(f)
     cfg.setdefault("espeak", {})["voice"] = espeak_voice
-    path = os.path.join(tmpdir, os.path.basename(voice) + ".json")
+    path = os.path.join(tmpdir, f"{os.path.basename(voice)}.{espeak_voice}.json")
     with open(path, "w", encoding="utf-8") as f:
         json.dump(cfg, f)
     return path
@@ -347,9 +377,16 @@ def main():
             for spoken, _, rel, h in batch:
                 files[rel] = {"hash": h, "spoken_text": spoken}
 
+    # Forget files of languages no longer in cards.json, and files that are gone.
+    for rel in list(files):
+        parts = rel.split("/")
+        if len(parts) < 3 or parts[1] not in doc["languages"] or not os.path.exists(os.path.join(CONTENT, rel)):
+            del files[rel]
     manifest.pop("voice", None)
     manifest.pop("espeak_voice", None)
-    manifest.setdefault("voices", {}).update(voices_used)
+    voices = {k: v for k, v in manifest.get("voices", {}).items() if k in doc["languages"]}
+    voices.update(voices_used)
+    manifest["voices"] = voices
     manifest["bitrate"] = bitrate
     manifest["note"] = ("Hash of the text actually spoken per file; make_audio.py skips files whose hash "
                         "is unchanged. Native recordings (audio_source 'native...') are never touched.")

@@ -1,5 +1,7 @@
 # Cafetal — Coffee Crop Doctor for Noor's Cooperative
 
+> **2026-10-04, team decision: the setting was changed to Kenya** (Kirinyaga County; English main, Kiswahili national, Gĩkũyũ local); this brief was updated to match, and the earlier version is in git history.
+
 *Working name. Hack-Nation × World Bank, "Small AI for Development," **Agriculture track (Annex B)**. Updated after reviewing the official concept note.*
 
 ---
@@ -26,6 +28,8 @@
 - The extension officer (the government farm advisor) visits her area twice a year at best.
 - At harvest she sells her parchment coffee to whichever middleman drives up the valley, at whatever price he names.
 
+*(Scenario as the brief writes it. In Kenya, about 71% of coffee comes through co-operative societies, whose factories pay members per kg of cherry after the sales; search-snippet figures, `docs/evidence.md` §3 and §9. So our price reply gives the Kirinyaga cherry payout as the reference.)*
+
 **What the brief says about the problem:**
 - Farmers lack timely, local advice and independent price information.
 - Extension services are short-staffed and rely on manual data and late alerts.
@@ -46,28 +50,33 @@
 | Out on the slope most of the day, phone left at the house | Don't assume a phone in the field: she can bring affected leaves home and photograph them |
 | Literacy and screen literacy are constraints (Annex B) | Voice first, icons, very little text |
 
-**Setting:** Ondera is fictional. We localize it to the **coffee highlands of Chiapas, Mexico**:
-- **Spanish** is the national language.
-- **Tseltal** is the local language.
+**Setting:** Ondera is fictional. We localize it to **Kirinyaga County, central Kenya**, on the coffee slopes of Mount Kenya:
+- **English** is the app's main language (an official language of Kenya).
+- **Kiswahili** is the national language.
+- **Gĩkũyũ** is the local language: Noor speaks it at home.
+- Her co-op is the fictional **Ondera Farmers' Co-operative Society**, with its own coffee factory (wet mill), as Kenyan coffee co-ops are organised. Its communities are Ondera Juu, Ondera Chini, Ondera Mto and Ondera Kilima (all fictional).
+- Our training data (JMuBEN) was photographed in Kirinyaga too (Jepkoech et al. 2021; place seen in a search summary, see `docs/evidence.md` §3b).
 
-The team can change this, but the brief requires us to *name* the language.
+The team chose this setting on 2026-10-04; the brief requires us to *name* the language.
 
 ## 3. The one decision we improve
 
 **"Is something attacking my coffee, and what do I do this week: handle it myself, or get the extension officer to come?"**
 
-There is also a secondary, **non-AI** module: an independent reference price for parchment coffee at harvest.
+There is also a secondary, **non-AI** module: an independent reference price for coffee at harvest (in Kenya: what co-ops paid per kg of cherry, and the Nairobi Coffee Exchange auction price), in Kenyan shillings (KES).
 
 **Problem statement for the video** (using the brief's template; fill in the evidence):
-> Because of Cafetal, **Noor** will **know whether leaf rust or another leaf problem is hurting her coffee and get onto the extension officer's visit list** by **the same weekend she notices it**, which she would otherwise only discover **at harvest, after the yield is already lost**. We know because **[cite: extension visits twice a year (concept note, Annex B); impact of coffee rust on yields in Mexico (source + year); FAOSTAT coffee yield trend for Mexico]**.
+> Because of Cafetal, **Noor** will **know whether leaf rust or another leaf problem is hurting her coffee and get onto the extension officer's visit list** by **the same weekend she notices it**, which she would otherwise only discover **at harvest, after the yield is already lost**. We know because **[cite: extension visits twice a year (concept note, Annex B); impact of coffee leaf rust on yields in Kenya (source + year); FAOSTAT coffee yield trend for Kenya]**.
+
+*(This is the pre-build draft. The final statement, worded to promise only what was built, is in `docs/evidence.md` and `VIDEO_SCRIPT.md`.)*
 
 ## 4. The solution: three parts, all on devices people already have
 
 ### 1. On the daughter's smartphone (weekends, fully offline)
 - Photograph the **underside** of a leaf, where rust shows as orange powder.
 - An on-device image model (≤10 MB) identifies the problem.
-- The phone plays spoken advice in **Tseltal or Spanish**. The advice comes from a **fixed set of advice cards** that people have checked.
-- If the model isn't confident, or the photo isn't a coffee leaf → **"No estoy seguro — muestre la hoja al técnico"** ("I'm not sure, show the leaf to the extension officer").
+- The phone plays spoken advice in **Gĩkũyũ, Kiswahili or English**. The advice comes from a **fixed set of advice cards** that people have checked.
+- If the model isn't confident, or the photo isn't a coffee leaf → **"I'm not sure — show the leaf to the extension officer."**
 - Every diagnosis is saved as a **field observation**: date, rough location, result, confidence, and the photo (kept on the phone).
 
 ### 2. Save now, send later by SMS
@@ -81,15 +90,15 @@ There is also a secondary, **non-AI** module: an independent reference price for
 - Receives the observation texts through a gateway phone.
 - **Outbreak map and alert:** when several rust reports come in nearby in one week, an alert goes by SMS to every member's basic phone.
 - **Extension officer's worklist:** farms ranked by severity and clustering, with photos when available. **The officer decides** who to visit.
-- **Price check:** a member texts "PRECIO" and gets the latest reference price for parchment coffee (plus maize and beans). The reply shows the source and date. This part is not AI, and we say so.
-- **Text understanding:** a small model sorts free-text SMS in Spanish or Tseltal into a fixed list of intents (price, report, help, talk to the officer). Replies come **only from the checked answers**.
+- **Price check:** a member texts "PRICE" (or "BEI" in Kiswahili) and gets the latest reference price for coffee (plus maize and beans) in KES. The reply shows the source and date. This part is not AI, and we say so.
+- **Text understanding:** a small model sorts free-text SMS in English or Kiswahili (and Gĩkũyũ, as far as examples allow) into a fixed list of intents (price, report, help, talk to the officer). Replies come **only from the checked answers**.
 - *Stretch goal:* a small LLM drafts a weekly summary for the extension officer, and a person reviews it before it's sent.
 
 ## 5. Why AI, and not just SMS, a spreadsheet or a search
 
 - Telling rust from leaf miner, phoma or cercospora in a photo is **pattern recognition**. Noor, an SMS menu and a web search can't do it. This is the same kind of AI as the Wadhwani AI example in the brief.
 - **Voice in a local language** gets past literacy barriers.
-- **Understanding free-text SMS** in two languages, so members don't have to memorize codes.
+- **Understanding free-text SMS** in English and Kiswahili, so members don't have to memorize codes.
 - **Not AI, and we say so:** the price lookup, the alert routing and the registry. They're simple, useful, and they make the AI part actually reach people.
 
 ## 6. How we meet the rules
@@ -99,8 +108,8 @@ There is also a secondary, **non-AI** module: an independent reference price for
 | Runs on a device the user already has | Daughter's Android phone, Noor's basic phone, the co-op's computer |
 | Core feature works offline | Model, advice and audio all run on the phone with no signal |
 | Model files small enough to side-load or send over a weak connection | Target ≤10 MB. We measure the download time over 3G. It can also be shared by Bluetooth or SD card |
-| At least one local-language interaction, named | Tseltal voice advice, plus Spanish |
-| "How would it fare in a less-supported language?" | Advice is a fixed set of cards. Adding a language means translating about 30 cards and recording them with a native speaker; no model retraining |
+| At least one local-language interaction, named | Gĩkũyũ voice advice, plus Kiswahili and English |
+| "How would it fare in a less-supported language?" | Advice is a fixed set of cards. Adding a language means translating about 30 cards and recording them with a native speaker; no model retraining. Gĩkũyũ is itself such a language: Mozilla Common Voice has no Gĩkũyũ data at all (`docs/evidence.md` §8) |
 | A person makes the final call | The tool informs and flags uncertainty. Farmers and the officer decide. Nothing is sent without a tap |
 | Avoid hallucinations | Farmers only ever see a **fixed list of checked answers**; no free-form generated text |
 
@@ -117,41 +126,42 @@ There is also a secondary, **non-AI** module: an independent reference price for
   - Optional PIN and a "delete everything" button.
   - No financial data is ever stored on the phone.
 - **Bias:**
-  - The training images come from Brazil (Arabica) and Ecuador (Robusta), not Mexico.
+  - The planned training images (BRACOL, RoCoLe) come from Brazil (Arabica) and Ecuador (Robusta), not Kenya. (As built: JMuBEN, Kenyan Arabica photographed in Kirinyaga, but close-ups from one plantation; see `DATA_CARD.md`.)
   - Accuracy may drop with local varieties, lighting and cheap cameras.
   - We say this openly, test on local photos, and use a confidence threshold.
-- **Language content:** machine-translated Tseltal is marked **UNVERIFIED** until a native speaker reviews it.
+- **Language content:** machine-translated Kiswahili and Gĩkũyũ are marked **UNVERIFIED** until a native speaker reviews them.
 
 ## 8. Data (worth 15% for data grounding; the gaps are scored too)
 
 ### 8.1 Evidence the problem is real (cite source, year and country)
-- **GSMA Mobile Gender Gap Report:** smartphone vs. basic phone ownership among women in Mexico or Latin America.
-- **Global Findex (World Bank):** account and mobile money use by gender in Mexico.
-- **OpenCelliD:** actual cell coverage in the Chiapas highlands.
-- **FAOSTAT:** Mexico's coffee yield and production trend.
+- **GSMA Mobile Gender Gap Report:** smartphone vs. basic phone ownership among women in Kenya or Sub-Saharan Africa (plus the CA/KNBS ICT survey 2023/24 for Kenya's rural women).
+- **Global Findex (World Bank):** account and mobile money use by gender in Kenya.
+- **OpenCelliD:** actual cell coverage in Kirinyaga, on the slopes of Mount Kenya.
+- **FAOSTAT:** Kenya's coffee yield and production trend.
 - *Optional:* World Bank Data360 / World Development Indicators for the rural population and agricultural jobs.
 - Pull the exact figures with their year. If a figure comes from a model rather than a measurement, say so.
 
 ### 8.2 Data we build with (check every license)
 | Dataset | Source | What it is | Use |
 |---|---|---|---|
+| **JMuBEN / JMuBEN2** (found during the build) | AgML public bucket; Jepkoech et al. 2021, *Data in Brief* 36:107142 | Arabica, Kenya (Mutira, Kirinyaga, per the dataset paper); 58,549 images; rust, leaf miner, phoma, cercospora, healthy; CC BY 4.0 | The training set as built (BRACOL and RoCoLe could not be downloaded) |
 | **BRACOL** (listed in Annex B) | Mendeley Data, doi:10.17632/yy2k5y8mxg.1 | Arabica, Brazil; 1,747 images; rust, leaf miner, phoma, cercospora, healthy | Main training set |
 | **RoCoLe** | Mendeley Data, doi:10.17632/c5yvn32dzg.2 | Robusta, Ecuador; 1,560 images; healthy, red spider mite, rust levels 1–4 | Extra rust examples; severity |
 | **PlantDoc** (listed in Annex B) | Annex B link | About 2,600 field-condition images of other crops | "Not a coffee leaf" examples, so the model can say "not sure" |
 | **Our own photos** | Taken by the team, labeled, with permission | Local test set | Shows how it performs in real conditions |
-| Coffee price | InfoAserca coffee price tables (Mexico); ICO composite price (international) | Reference prices | "PRECIO" replies |
-| Maize and beans prices | SNIIM grains (Mexico); WFP food prices via HDX (check whether Mexico is covered) | Reference prices | "PRECIO" replies |
+| Coffee price | Co-operative cherry payouts (Kirinyaga); Nairobi Coffee Exchange auction results; ICO composite price (international) | Reference prices | "PRICE" / "BEI" replies |
+| Maize and beans prices | KAMIS (Ministry of Agriculture market information, Kenya); WFP food prices via HDX (Kenya covered, but only to March 2025) | Reference prices | "PRICE" / "BEI" replies |
 | Weather | **NASA POWER** (no registration, by coordinates); **CHIRPS** (rainfall history) | Rain and temperature | *Stretch:* weather-based rust risk and spray timing |
 | Map | **OpenStreetMap** offline extract | Base map | Outbreak map |
-| Language | **MMS** (Meta): check Tseltal (`tzh`) support; Common Voice; NLLB-200 | Speech and translation | Voice output; otherwise native-speaker recordings |
+| Language | **MMS** (Meta): check Gĩkũyũ (`kik`) and Kiswahili (`swh`) support; Common Voice; NLLB-200; MASSIVE `sw-KE` | Speech, translation and SMS examples | Voice output; otherwise native-speaker recordings |
 
 ### 8.3 What our data does NOT cover (this is scored, so state it plainly)
-- **No images from Mexico.** Only Brazilian Arabica and Ecuadorian Robusta. Local varieties aren't represented.
+- **Few images like Noor's.** The planned sets are Brazilian Arabica and Ecuadorian Robusta, so local varieties aren't represented. (As built, JMuBEN is Kenyan and from Kirinyaga, but lab-like close-ups from one plantation, not phone photos from smallholder farms.)
 - **Field conditions are untested:** messy backgrounds, shadows, wet leaves, cheap cameras. We test on our own photos and report the gap.
-- **The model only sees leaf symptoms.** It can't detect coffee berry borer (*broca*), nutrient deficiency, drought, aging trees or soil problems, any of which could explain Noor's lower yields. The app says this and points her to the officer.
+- **The model only sees leaf symptoms.** It can't detect coffee berry disease (CBD, one of Kenya's two major coffee diseases, on the berries), coffee berry borer, antestia bugs, nutrient deficiency, drought, aging trees or soil problems, any of which could explain Noor's lower yields. The app says this and points her to the officer.
 - Rust severity labels exist only in RoCoLe (Robusta).
-- **Tseltal** has little or no speech data. Advice audio is recorded or checked by people, not freely generated.
-- **Prices** are national or wholesale reference prices, not the farm-gate price in Noor's valley. They're labeled "reference price."
+- **Gĩkũyũ** has little speech data (none in Common Voice); Kiswahili has more. Advice audio is recorded or checked by people, not freely generated.
+- **Prices** are county, auction or wholesale reference prices, not the price at Noor's factory or farm gate. They're labeled "reference price."
 - All sample data is labeled **DEMO**.
 
 ## 9. Architecture
@@ -159,7 +169,7 @@ There is also a secondary, **non-AI** module: an independent reference price for
 ```
 [Daughter's smartphone — offline web app]
   leaf photo → on-device model (≤10 MB) → result + confidence
-  → checked advice card, spoken in Tseltal / Spanish
+  → checked advice card, spoken in Gĩkũyũ / Kiswahili / English
   → field observation saved on the phone
         │ user taps "Send" → 1 SMS (works on 2G, no data)
         ▼
@@ -167,7 +177,7 @@ There is also a secondary, **non-AI** module: an independent reference price for
   • member registry with consent
   • SMS inbox → observations → outbreak map → SMS alert to all members
   • extension officer's worklist (the officer decides)
-  • "PRECIO" → reference price reply (source + date)
+  • "PRICE" / "BEI" → reference price reply (source + date)
   • free-text SMS → small model picks a fixed intent → checked reply
         │ once a day, whenever internet is available
         ▼
@@ -180,7 +190,7 @@ There is also a secondary, **non-AI** module: an independent reference price for
 
 **Build for real**
 - Image model with an evaluation report.
-- Offline phone app with the advice cards and Spanish audio, plus at least a few Tseltal recordings.
+- Offline phone app with the advice cards and English audio, plus Kiswahili and at least a few Gĩkũyũ recordings.
 - The observation SMS format.
 - Hub with:
   - registry
@@ -209,9 +219,9 @@ There is also a secondary, **non-AI** module: an independent reference price for
    - why SMS, a spreadsheet or a search can't do this
    - the guardrails
 3. **Demo of the whole journey:**
-   - Saturday: photograph a leaf with the phone in airplane mode → spoken diagnosis in Tseltal.
+   - Saturday: photograph a leaf with the phone in airplane mode → spoken diagnosis in Gĩkũyũ (and Kiswahili).
    - The observation goes out as an SMS → the co-op map and alert → the officer's worklist.
-   - At harvest: Noor texts "PRECIO" from her basic phone.
+   - At harvest: Noor texts "PRICE" (or "BEI") from her basic phone.
 4. **Where it fits in Noor's day,** plus the tech stack.
 5. **Our take:** what localizing AI means to us. The team should write this in their own words: her language, her co-op, the phones she already has, and data that admits its gaps.
 
@@ -223,13 +233,13 @@ There is also a secondary, **non-AI** module: an independent reference price for
 | Development relevance and impact | 20% | Taken directly from the Annex B scenario: diagnosis, extension officer, price |
 | Data grounding | 15% | Evidence table, data card and honest gaps (section 8) |
 | Evidence it works | 15% | Results on the held-out test set **and** on our own field photos, showing the gap |
-| Clarity, design, inclusivity, value of AI | 15% | Voice first, Tseltal, works with a basic phone, a clear "why AI" |
+| Clarity, design, inclusivity, value of AI | 15% | Voice first, Gĩkũyũ and Kiswahili, works with a basic phone, a clear "why AI" |
 | Scalability, replicability, what's next | 10% | Any crop with a leaf dataset, any co-op, any language by adding cards; connects to co-op registries and national programs |
 | Responsible AI, data and safety | Pass/fail | Section 7 |
 
 ## 13. Open questions
 
-- Confirm the region and local language (default: Chiapas + Tseltal). Do we have a native speaker to record or review the advice?
+- Region and local language: Kirinyaga + Gĩkũyũ (with Kiswahili and English), decided on 2026-10-04. Do we have a native Gĩkũyũ and Kiswahili speaker to record or review the advice?
 - Hardware: an Android phone for the demo, a laptop as the co-op hub, and a spare phone as the SMS gateway?
 - The exact submission time and platform.
 - Can we get real coffee leaves, or field photos, for a local test set?

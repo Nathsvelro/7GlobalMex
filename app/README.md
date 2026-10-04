@@ -6,12 +6,12 @@ Static files, no build step. Vanilla JS modules:
 |---|---|
 | `index.html`, `style.css` | screens (language, consent, member ID/PIN, lock, home, result, history, settings) |
 | `app.js` | screen flow, saving, SMS link, hub buttons |
-| `content.js` | every visible/audible word comes from `../content/cards.json` (missing card -> `[card_id]`) |
+| `content.js` | every visible/audible word comes from `../content/cards.json` (missing card -> `[card_id]`); default language English (`en`), the others are whatever cards.json `languages` lists (now Kiswahili `sw`, Gĩkũyũ `kik`) |
 | `infer.js` | blur check (PLAN §4, same maths as `model/blur.py`) + onnxruntime-web, lazy-loaded |
-| `sms.js` | observation SMS code v1 (PLAN §5) |
+| `sms.js` | observation SMS code v1 (PLAN §5), English result codes: `HLTH RUST MINR PHOM CERC MITE OTHR UNSR` |
 | `store.js` | settings (localStorage), observations + photos (IndexedDB), PIN hash (SHA-256) |
 | `sw.js` | offline cache. `VERSION` is a hash of every precached file, set by `scripts/bump_sw_version.py` (`run.sh` runs it; run it by hand before copying `app/` to a static host), so phones never keep an old copy |
-| `config.json` | SMS gateway number used in the `sms:` link (`DEMO` label shows a DEMO badge) |
+| `config.json` | SMS gateway number used in the `sms:` link (now the placeholder `+254700000000`; the `DEMO` label shows a DEMO badge) |
 | `vendor/` | onnxruntime-web 1.19.2 (MIT), see `vendor/README.md` |
 | `model/` | `cafetal.onnx` + `labels.json` (owned by `model/`) |
 
@@ -32,6 +32,6 @@ airplane mode and the SMS location is `-`. Options for the demo phone:
 2. Put `app/` + `content/` on any HTTPS static host (the hub buttons stay hidden there).
 3. Demo only: `chrome://flags/#unsafely-treat-insecure-origin-as-secure` = `http://<hub-ip>:8000` on the phone.
 
-First load downloads about 16.8 MB (onnxruntime WASM 11.0 MB raw / 2.9 MB gzip, model ~2 MB, 222 MP3s in Tseltal,
-Spanish and English 3.5 MB; computed from file sizes),
+First load downloads about 16.2 MB (onnxruntime WASM 11.0 MB raw / 2.9 MB gzip, model ~2 MB, 222 MP3s in English,
+Kiswahili and Gĩkũyũ 2.9 MB; computed from file sizes),
 then nothing more is needed offline.

@@ -30,10 +30,12 @@ const cards0 = fs.readFileSync(path.join(ROOT, 'content/cards.json'), 'utf8');
 const L = JSON.parse(labels0);
 const C = JSON.parse(cards0);
 const MODEL_P = '/app/model/' + L.file;
-const audioCards = C.cards.filter((c) => c.audio && c.audio.es);
-const MISSING_P = '/content/' + audioCards[0].audio.es; // never served: missing since install
+// Gikuyu: its audio is the provisional synthetic voice, so it is the first a native speaker would re-record.
+const LANG = 'kik';
+const audioCards = C.cards.filter((c) => c.audio && c.audio[LANG]);
+const MISSING_P = '/content/' + audioCards[0].audio[LANG]; // never served: missing since install
 const CHANGED = audioCards[1]; // gets a "new native recording" in the update
-const CHANGED_P = '/content/' + CHANGED.audio.es;
+const CHANGED_P = '/content/' + CHANGED.audio[LANG];
 
 const overrides = new Map(); // path -> {status, body, type}
 const hits = new Map();
@@ -145,7 +147,7 @@ try {
   // 5. new cards.json with a changed audio file whose download fails -> old cards.json stays
   const upd = JSON.parse(cards0);
   const card = upd.cards.find((c) => c.id === CHANGED.id);
-  card.audio_source = { ...card.audio_source, es: 'native:test-recording' };
+  card.audio_source = { ...card.audio_source, [LANG]: 'native:test-recording' };
   const cards5 = JSON.stringify(upd);
   overrides.set(CARDS_P, { status: 200, body: cards5 });
   overrides.set(CHANGED_P, fail500);

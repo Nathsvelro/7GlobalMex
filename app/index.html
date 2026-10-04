@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -26,9 +26,8 @@
 <main>
   <!-- 1a. language -->
   <section class="screen" id="s-lang" hidden>
-    <img src="icons/logo.svg" alt="" class="hero-logo">
-    <div class="say center" data-card="ui_choose_language" data-lang="tzh"></div>
-    <div class="say center" data-card="ui_choose_language" data-lang="es"></div>
+    <!-- "Choose your language" once in every language of cards.json, in its order (filled by app.js) -->
+    <div class="lang-prompts" id="lang-prompts"></div>
     <div class="lang-list" id="lang-list"></div>
     <button type="button" class="btn primary big" id="lang-next" disabled><svg class="i"><use href="icons/icons.svg#arrow"/></svg><span data-card="ui_continue"></span></button>
   </section>
@@ -97,15 +96,9 @@
       <div class="say big" id="r-diag"></div>
       <div class="say reason" id="r-reason" hidden></div>
       <div class="conf"><span data-card="ui_confidence"></span><div class="bar"><i id="r-bar"></i></div><b id="r-conf"></b></div>
-      <div class="row2 play">
-        <button type="button" class="btn play-btn" id="r-play-tzh"><svg class="i"><use href="icons/icons.svg#speaker"/></svg><span data-card="ui_play_tzh"></span><span class="badge unverified" id="r-badge-tzh" data-card="ui_unverified"></span></button>
-        <button type="button" class="btn play-btn" id="r-play-es"><svg class="i"><use href="icons/icons.svg#speaker"/></svg><span data-card="ui_play_es"></span><span class="badge unverified" id="r-badge-es" data-card="ui_unverified"></span></button>
-        <!-- English (visitors, judges): shown only when the UI language is English, so the two main buttons stay big -->
-        <button type="button" class="btn play-btn wide" id="r-play-en" hidden><svg class="i"><use href="icons/icons.svg#speaker"/></svg><span data-card="ui_play_en"></span><span class="badge unverified" id="r-badge-en" data-card="ui_unverified"></span></button>
-      </div>
-      <audio id="audio-tzh" preload="auto"></audio>
-      <audio id="audio-es" preload="auto"></audio>
-      <audio id="audio-en" preload="auto"></audio>
+      <!-- one play button + <audio> per language of cards.json, the UI language first (filled by app.js) -->
+      <div class="play-grid" id="r-play"></div>
+      <div id="r-audio" hidden></div>
       <h3 class="sec"><svg class="i"><use href="icons/icons.svg#leaf"/></svg><span data-card="ui_what_to_do"></span></h3>
       <div class="say card-box" id="r-advice"></div>
       <div class="say card-box warn" id="r-advice2" hidden></div>

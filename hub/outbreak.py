@@ -1,8 +1,8 @@
 """Outbreak rule (PLAN.md section 8) and officer worklist (section 9). Plain rules, not AI.
 
-Outbreak: ROYA reports (confidence >= model threshold) from >= MIN_MEMBERS different members, every pair within
-RADIUS_KM, observation date within the last WINDOW_DAYS days -> one alert (at most one per WINDOW_DAYS per area)
-and card `alert_roya` queued for every consenting member as `pending_approval`.
+Outbreak: RUST (leaf rust) reports (confidence >= model threshold) from >= MIN_MEMBERS different members, every
+pair within RADIUS_KM, observation date within the last WINDOW_DAYS days -> one alert (at most one per WINDOW_DAYS
+per area) and card `alert_roya` queued for every consenting member as `pending_approval`.
 """
 import itertools
 import json
@@ -16,33 +16,35 @@ WINDOW_DAYS = 7
 MIN_MEMBERS = 3
 
 WORKLIST_DAYS = 30
-WEIGHTS = {"ROYA": 3, "DUDA": 2, "OTRO": 2, "CERC": 2, "PHOM": 2, "MINA": 2, "ACAR": 2, "SANO": 0}
-# Which report of a farm counts (worklist row and map colour): ROYA > DUDA/OTRO (a person must look) >
-# CERC/PHOM/MINA/ACAR > SANO; then higher score, then most recent.
-SEVERITY = {"ROYA": 3, "DUDA": 2, "OTRO": 2, "CERC": 1, "PHOM": 1, "MINA": 1, "ACAR": 1, "SANO": 0}
+WEIGHTS = {"RUST": 3, "UNSR": 2, "OTHR": 2, "CERC": 2, "PHOM": 2, "MINR": 2, "MITE": 2, "HLTH": 0}
+# Which report of a farm counts (worklist row and map colour): RUST > UNSR/OTHR (a person must look) >
+# CERC/PHOM/MINR/MITE > HLTH; then higher score, then most recent.
+SEVERITY = {"RUST": 3, "UNSR": 2, "OTHR": 2, "CERC": 1, "PHOM": 1, "MINR": 1, "MITE": 1, "HLTH": 0}
+NEEDS_PERSON = ("UNSR", "OTHR")   # fail-safe codes: confidence factor 1.0, a person must look
 ALERT_BONUS = 2
-CODE_NAMES_ES = {"ROYA": "Roya", "MINA": "Minador", "PHOM": "Phoma", "CERC": "Cercospora", "ACAR": "Ácaro rojo",
-                 "SANO": "Sano", "OTRO": "No es hoja de café", "DUDA": "Duda (la app no está segura)"}
-CODE_TO_LABEL = {"SANO": "sano", "ROYA": "roya", "MINA": "minador", "PHOM": "phoma", "CERC": "cercospora",
-                 "ACAR": "acaro_rojo", "OTRO": "otro", "DUDA": None}
+CODE_NAMES = {"RUST": "Rust", "MINR": "Leaf miner", "PHOM": "Phoma", "CERC": "Cercospora", "MITE": "Red spider mite",
+              "HLTH": "Healthy", "OTHR": "Not a coffee leaf", "UNSR": "Unsure (the app was not sure)"}
+# SMS code -> internal model class label (app/model/labels.json; acaro_rojo is not in the model)
+CODE_TO_LABEL = {"HLTH": "sano", "RUST": "roya", "MINR": "minador", "PHOM": "phoma", "CERC": "cercospora",
+                 "MITE": "acaro_rojo", "OTHR": "otro", "UNSR": None}
 
 
 def params() -> dict:
     return {
-        "outbreak": {"code": "ROYA", "min_members": MIN_MEMBERS, "radius_km": RADIUS_KM, "window_days": WINDOW_DAYS,
+        "outbreak": {"code": "RUST", "min_members": MIN_MEMBERS, "radius_km": RADIUS_KM, "window_days": WINDOW_DAYS,
                      "min_conf": round(db.model_threshold() * 100), "one_alert_per_area_days": WINDOW_DAYS,
-                     "note": "Decisiones de diseño para la demo, no umbrales agronómicos."},
+                     "note": "Design choices for the demo, not agronomic thresholds."},
         "worklist": {"days": WORKLIST_DAYS, "weights": WEIGHTS, "alert_bonus": ALERT_BONUS,
-                     "formula": "weight x conf/100 (1.0 for DUDA/OTRO) + 2 if inside an active alert area",
+                     "formula": "weight x conf/100 (1.0 for UNSR/OTHR) + 2 if inside an active alert area",
                      "severity": SEVERITY,
-                     "per_farm": "most serious report in the last 30 days (ROYA > DUDA/OTRO > CERC/PHOM/MINA/ACAR"
-                                 " > SANO; then score, then most recent)"},
+                     "per_farm": "most serious report in the last 30 days (RUST > UNSR/OTHR > CERC/PHOM/MINR/MITE"
+                                 " > HLTH; then score, then most recent)"},
     }
 
 
 def base_score(o: dict) -> float:
-    """Worklist score of one report without the alert bonus: weight x conf/100 (1.0 for DUDA/OTRO)."""
-    factor = 1.0 if o["code"] in ("DUDA", "OTRO") else o["conf"] / 100
+    """Worklist score of one report without the alert bonus: weight x conf/100 (1.0 for UNSR/OTHR)."""
+    factor = 1.0 if o["code"] in NEEDS_PERSON else o["conf"] / 100
     return WEIGHTS.get(o["code"], 0) * factor
 
 
@@ -84,7 +86,7 @@ def check(conn, new_obs: dict) -> dict | None:
 
     Must be called inside a transaction (db.Tx)."""
     min_conf = round(db.model_threshold() * 100)
-    if new_obs["code"] != "ROYA" or new_obs["conf"] < min_conf or new_obs["lat"] is None:
+    if new_obs["code"] != "RUST" or new_obs["conf"] < min_conf or new_obs["lat"] is None:
         return None
     today = _today()
     start = (today - timedelta(days=WINDOW_DAYS - 1)).isoformat()   # last 7 days incl. today
@@ -94,7 +96,7 @@ def check(conn, new_obs: dict) -> dict | None:
     lat0, lon0 = new_obs["lat"], new_obs["lon"]
 
     recent = db.rows(conn.execute(
-        "SELECT uid, member_id, lat, lon, date, conf FROM observations WHERE code = 'ROYA' AND conf >= ?"
+        "SELECT uid, member_id, lat, lon, date, conf FROM observations WHERE code = 'RUST' AND conf >= ?"
         " AND date >= ? AND lat IS NOT NULL", (min_conf, start)))
     # Every report of each other member within RADIUS_KM of the new one (not only the nearest: a member's nearest
     # report may not fit with the others while another of their reports does).
@@ -199,16 +201,16 @@ def worklist(conn) -> list[dict]:
         lon = o["lon"] if o["lon"] is not None else o["plot_lon"]
         alert = in_alert_area(lat, lon, alerts)
         score = round(f["best_base"] + (ALERT_BONUS if alert else 0), 2)
-        if o["code"] in ("DUDA", "OTRO"):
-            reason = [CODE_NAMES_ES[o["code"]]]
+        if o["code"] in NEEDS_PERSON:
+            reason = [CODE_NAMES[o["code"]]]
         else:
-            reason = [f"{CODE_NAMES_ES.get(o['code'], o['code'])} {o['conf']}%"]
+            reason = [f"{CODE_NAMES.get(o['code'], o['code'])} {o['conf']}%"]
         if alert:
-            reason.append("zona de alerta")
+            reason.append("alert area")
         if f["reports_30d"] > 1:
-            reason.append(f"{f['reports_30d']} reportes en {WORKLIST_DAYS} días")
+            reason.append(f"{f['reports_30d']} reports in {WORKLIST_DAYS} days")
         if o["photo_path"]:
-            reason.append("con foto")
+            reason.append("with photo")
         last = f.get("last_action")
         out.append({
             "member_id": member_id, "name": o["name"], "community": o["community"], "phone": o["phone"],

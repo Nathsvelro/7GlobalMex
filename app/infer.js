@@ -16,7 +16,7 @@ let labelsPromise = null;
 let sessionPromise = null;
 
 // Fail closed: if labels.json (threshold, blur threshold) did not load, `loaded` is false and diagnose() answers
-// DUDA; the failed fetch is not cached, so the next photo tries again.
+// the fail-safe 'duda' (code UNSR); the failed fetch is not cached, so the next photo tries again.
 export function getLabels() {
   if (!labelsPromise) {
     labelsPromise = fetch('model/labels.json')
@@ -111,11 +111,11 @@ export async function diagnose(img) {
   const blur = blurScore(img);
   const base = { blur: Math.round(blur * 100) / 100, model_version: L.version, probs: null, top: null };
   if (!L.loaded) {
-    return { ...base, label: 'duda', code: 'DUDA', conf: 0, reason: 'model_error', model_version: 'none',
+    return { ...base, label: 'duda', code: CODES.duda, conf: 0, reason: 'model_error', model_version: 'none',
       ms: Math.round(performance.now() - t0) };
   }
   if (blur < L.blur_threshold) {
-    return { ...base, label: 'duda', code: 'DUDA', conf: 0, reason: 'blurry', ms: Math.round(performance.now() - t0) };
+    return { ...base, label: 'duda', code: CODES.duda, conf: 0, reason: 'blurry', ms: Math.round(performance.now() - t0) };
   }
   let p;
   try {
@@ -140,14 +140,14 @@ export async function diagnose(img) {
     }
   } catch (e) {
     console.error('model failed', e);
-    return { ...base, label: 'duda', code: 'DUDA', conf: 0, reason: 'model_error', model_version: 'none',
+    return { ...base, label: 'duda', code: CODES.duda, conf: 0, reason: 'model_error', model_version: 'none',
       ms: Math.round(performance.now() - t0) };
   }
   const k = p.indexOf(Math.max(...p));
   const top = L.classes[k];
   const probs = Object.fromEntries(L.classes.map((c, i) => [c, Math.round(p[i] * 1000) / 1000]));
   const r = { ...base, probs, top, conf: pct(p[k]), ms: Math.round(performance.now() - t0) };
-  if (top === 'otro') return { ...r, label: 'otro', code: 'OTRO', reason: 'not_coffee' };
-  if (p[k] < L.threshold || !CODES[top]) return { ...r, label: 'duda', code: 'DUDA', reason: 'low_conf' };
+  if (top === 'otro') return { ...r, label: 'otro', code: CODES.otro, reason: 'not_coffee' };
+  if (p[k] < L.threshold || !CODES[top]) return { ...r, label: 'duda', code: CODES.duda, reason: 'low_conf' };
   return { ...r, label: top, code: CODES[top], reason: null };
 }

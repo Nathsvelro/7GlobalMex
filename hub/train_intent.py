@@ -36,11 +36,12 @@ GRID_C = [1.0, 3.0, 10.0, 30.0]
 THRESHOLDS = [round(x, 2) for x in np.arange(0.30, 0.91, 0.05)]
 
 # Fixed probe messages (not in the data) shown in the report as a sanity check.
-PROBES = ["q precio tiene el cafe", "cuanto pagan x kilo", "mi cafe tiene manchas amarillas",
-          "kiero hablar con el ingeniero", "como funciona", "hola buenas tardes", "pon musica",
-          "a como esta el pergamino en la cooperativa", "las hojas tienen polvo amarillo",
-          "que venga el ingeniero a mi parcela", "mis matas tienen polvo naranja",
-          "cuanto estan pagando el kilo de cafe", "asdf qwerty", "quiero hablar con el ingeniero", "hola buenos dias"]
+PROBES = ["how much are you paying for a kilo of cherry", "bei ya kahawa ni ngapi",
+          "my coffee leaves have orange powder", "majani ya kahawa yana unga wa rangi ya machungwa",
+          "I want to talk to the extension officer", "asdf qwerty",
+          "wat r u paying for maize", "kahawa yangu ina madoa ya kahawia", "nataka kuongea na afisa ugani",
+          "how do i send my report code", "msaada tafadhali nifanye aje", "good afternoon", "habari za asubuhi",
+          "play some music", "weka muziki"]
 
 
 def make_model(C):
@@ -51,18 +52,18 @@ def make_model(C):
 
 
 def routed(proba, classes, t):
-    """Label after the threshold: below it, the message goes to the officer ('otro')."""
+    """Label after the threshold: below it, the message goes to the officer ('other')."""
     idx = proba.argmax(1)
     conf = proba.max(1)
-    return np.array([classes[i] if c >= t else "otro" for i, c in zip(idx, conf)])
+    return np.array([classes[i] if c >= t else "other" for i, c in zip(idx, conf)])
 
 
 def auto_precision(proba, classes, y, t):
-    """Among messages answered automatically (predicted intent != otro and conf >= t), share answered right."""
+    """Among messages answered automatically (predicted intent != other and conf >= t), share answered right."""
     idx = proba.argmax(1)
     conf = proba.max(1)
     pred = np.array([classes[i] for i in idx])
-    mask = (conf >= t) & (pred != "otro")
+    mask = (conf >= t) & (pred != "other")
     if mask.sum() == 0:
         return 1.0, 0.0
     return float((pred[mask] == y[mask]).mean()), float(mask.mean())
@@ -104,7 +105,7 @@ def main():
     pred_routed = routed(proba, classes, threshold)
     labels = INTENTS
     test_auto_p, test_auto_cov = auto_precision(proba, classes, y[te], threshold)
-    on_topic = y[te] != "otro"
+    on_topic = y[te] != "other"
     on_topic_auto = float((pred_routed[on_topic] == y[te][on_topic]).mean())
 
     def metrics(pred, mask=None):
@@ -114,12 +115,12 @@ def main():
         return {"n": int(m.sum()), "accuracy": round(accuracy_score(y[te][m], pred[m]), 4),
                 "macro_f1": round(f1_score(y[te][m], pred[m], average="macro", labels=sorted(set(y[te][m]))), 4)}
 
-    es_mask = lang[te] == "es"
     real_mask = src[te] != "MASSIVE"
     report = {
         "date": date.today().isoformat(),
         "data": {"file": "data/intent/examples.csv", "n": len(rows),
                  "per_intent": {c: int((y == c).sum()) for c in labels},
+                 "per_language": {g: int((lang == g).sum()) for g in sorted(set(lang))},
                  "per_source": {s: int((src == s).sum()) for s in sorted(set(src))},
                  "n_train": len(tr), "n_test": len(te), "split": f"stratified 80/20, random_state={SEED}"},
         "model": {"vectorizer": f"TF-IDF char_wb {NGRAM}, sublinear_tf, l2", "classifier":
@@ -131,7 +132,9 @@ def main():
         "test": {
             "argmax": metrics(pred_raw),
             "with_threshold": metrics(pred_routed),
-            "with_threshold_spanish_only": metrics(pred_routed, es_mask),
+            "with_threshold_english_only": metrics(pred_routed, lang[te] == "en"),
+            "with_threshold_swahili_only": metrics(pred_routed, lang[te] == "sw"),
+            "with_threshold_kikuyu_only": metrics(pred_routed, lang[te] == "kik"),
             "with_threshold_excluding_massive": metrics(pred_routed, real_mask),
             "auto_answered_precision": round(test_auto_p, 4),
             "auto_answered_share": round(test_auto_cov, 4),
@@ -150,11 +153,11 @@ def main():
     for text in PROBES:
         p = model.predict_proba(np.array([text], dtype=object))[0]
         report["probes"].append({"text": text, "pred": classes[int(p.argmax())], "conf": round(float(p.max()), 3),
-                                 "routed": classes[int(p.argmax())] if p.max() >= threshold else "otro"})
+                                 "routed": classes[int(p.argmax())] if p.max() >= threshold else "other"})
 
     vocab = {k: int(v) for k, v in vec.vocabulary_.items()}
     export = {
-        "name": "cafetal-intent-v1",
+        "name": "cafetal-intent-v2",
         "trained": date.today().isoformat(),
         "classes": classes,
         "preprocessing": "hub.intent.normalize: lowercase, strip accents (NFKD), keep [a-z0-9'] and spaces, "
@@ -169,7 +172,7 @@ def main():
         "intercept": [float(v) for v in clf.intercept_],
         "C": best_c,
         "threshold": threshold,
-        "below_threshold": "otro (forward to the extension officer)",
+        "below_threshold": "other (forward to the extension officer)",
         "data": report["data"],
         "test": {k: report["test"][k] for k in ("argmax", "with_threshold")},
     }
@@ -178,7 +181,8 @@ def main():
     (REPORTS / "intent_eval.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
     write_md(report)
     print(json.dumps({"C": best_c, "threshold": threshold, "test": {k: report["test"][k] for k in (
-        "argmax", "with_threshold", "with_threshold_spanish_only", "with_threshold_excluding_massive",
+        "argmax", "with_threshold", "with_threshold_english_only", "with_threshold_swahili_only",
+        "with_threshold_excluding_massive",
         "auto_answered_precision", "auto_answered_share", "on_topic_answered_right")}, "model_bytes": MODEL_OUT.stat().st_size}, indent=1))
 
 
@@ -190,11 +194,14 @@ def write_md(r):
         f"Date: {r['date']}. Produced by `hub/train_intent.py`; raw numbers in `reports/intent_eval.json`.", "",
         "## Data", "",
         f"- `{r['data']['file']}`: {r['data']['n']} messages. Per intent: "
-        + ", ".join(f"{k} {v}" for k, v in r["data"]["per_intent"].items()) + ".",
+        + ", ".join(f"{k} {v}" for k, v in r["data"]["per_intent"].items()) + ". Per language: "
+        + ", ".join(f"{k} {v}" for k, v in r["data"]["per_language"].items()) + ".",
         "- Sources: " + ", ".join(f"{k} {v}" for k, v in r["data"]["per_source"].items())
-        + ". `team` = written by the team (Mexican rural SMS style, typos, no accents); `ai-draft-unverified` = "
-          "Tseltal drafts nobody has checked; `MASSIVE` = Amazon MASSIVE 1.1 es-ES utterances (CC BY 4.0) used only "
-          "as 'otro' (off-topic) examples, after removing intents/words that overlap ours.",
+        + ". `team` = written by the build team (which includes AI agents) in Kenyan SMS style: English and "
+          "Kiswahili with sheng, typos, no diacritics; none of it was checked by a native Kiswahili speaker or "
+          "taken from real members. `ai-draft-unverified` = a few Gikuyu drafts nobody has checked; `MASSIVE` = "
+          "Amazon MASSIVE 1.1 en-US and sw-KE utterances (CC BY 4.0) used only as 'other' (off-topic) examples, "
+          "after removing intents/words that overlap ours.",
         f"- Split: {r['data']['split']} -> {r['data']['n_train']} train / {r['data']['n_test']} test.", "",
         "## Model", "",
         f"- {r['model']['vectorizer']} + {r['model']['classifier']}, C={r['model']['C']} "
@@ -207,14 +214,16 @@ def write_md(r):
         "| | n | accuracy | macro-F1 |", "|---|---|---|---|",
     ]
     for k, name in [("argmax", "argmax (no threshold)"), ("with_threshold", "with threshold (as deployed)"),
-                    ("with_threshold_spanish_only", "with threshold, Spanish only"),
+                    ("with_threshold_english_only", "with threshold, English only"),
+                    ("with_threshold_swahili_only", "with threshold, Kiswahili only"),
+                    ("with_threshold_kikuyu_only", "with threshold, Gikuyu only (too few to mean anything)"),
                     ("with_threshold_excluding_massive", "with threshold, excluding MASSIVE")]:
         m = t[k]
         if m:
             lines.append(f"| {name} | {m['n']} | {m['accuracy']:.3f} | {m['macro_f1']:.3f} |")
     lines += ["",
               f"Auto-answered share: {t['auto_answered_share']:.1%} of test messages; precision of those answers: "
-              f"{t['auto_answered_precision']:.1%}. On-topic test messages (true intent is not 'otro') answered "
+              f"{t['auto_answered_precision']:.1%}. On-topic test messages (true intent is not 'other') answered "
               f"with the right card automatically: {t['on_topic_answered_right']:.1%}; the rest go to the officer.", "",
               "Confusion matrix (with threshold; rows = true, columns = predicted):", "",
               "| true \\ pred | " + " | ".join(cm["labels"]) + " |",
@@ -236,10 +245,13 @@ def write_md(r):
     lines += ["", "## Limits", "",
               "- Small, team-written data: the test split comes from the same writers, so real member SMS will "
               "score lower. Collect real (consented) messages and relabel.",
-              "- The Tseltal examples are unverified AI drafts and too few to measure; Tseltal free text will mostly "
+              "- The Kiswahili and sheng examples were not checked by a native speaker; real messages will use "
+              "words and spellings we did not think of.",
+              "- The Gikuyu examples are unverified AI drafts and too few to measure; Gikuyu free text will mostly "
               "fall below the threshold and go to the officer (safe, not smart).",
-              "- MASSIVE is Spain Spanish about smart-speaker commands; it only teaches what is off-topic.",
-              "- PRECIO, AYUDA and TECNICO (and in English PRICE, HELP, OFFICER) are also matched as exact keywords before the classifier runs.", ""]
+              "- MASSIVE is US English and Kenyan Kiswahili smart-speaker commands; it only teaches what is off-topic.",
+              "- PRICE/PRICES, HELP and OFFICER (English) and BEI, MSAADA and AFISA (Kiswahili) are also matched as "
+              "exact keywords before the classifier runs.", ""]
     (REPORTS / "intent_eval.md").write_text("\n".join(lines), encoding="utf-8")
 
 

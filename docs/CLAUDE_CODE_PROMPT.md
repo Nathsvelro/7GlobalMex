@@ -1,5 +1,11 @@
 # Prompt for Claude Code
 
+> **Note (2026-10-04):** this is the original prompt, kept as it was written. The setting has since changed by team
+> decision: Noor's co-op is now in **Kirinyaga County, Kenya**, and the languages are **English** (main),
+> **Kiswahili** (national) and **Gĩkũyũ** (local). The fail-safe now reads "I'm not sure — show the leaf to the
+> extension officer.", the price keywords are PRICE and BEI, and prices are in KES. See [PLAN.md](../PLAN.md) for the
+> current contracts.
+
 *Before you paste this, put `PROJECT_BRIEF.md` in the root of an empty repo. If you can, also add the World Bank concept note PDF as `docs/concept-note.pdf`. Fill in the `[FILL IN]` fields, then paste everything below the line into Claude Code.*
 
 ---

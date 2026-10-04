@@ -49,7 +49,7 @@ def now_iso() -> str:
 
 def model_threshold() -> float:
     """Confidence threshold of the image model (app/model/labels.json). Fails closed: if the file cannot be read,
-    1.0, so no ROYA report (conf <= 99) counts toward an outbreak alert on an unknown configuration."""
+    1.0, so no RUST report (conf <= 99) counts toward an outbreak alert on an unknown configuration."""
     try:
         return float(json.loads((app_dir() / "model" / "labels.json").read_text())["threshold"])
     except Exception:
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS members (
   phone TEXT NOT NULL UNIQUE,
   community TEXT NOT NULL,
   lat REAL, lon REAL,                     -- plot location (rounded to 2 decimals)
-  language TEXT NOT NULL DEFAULT 'es',    -- es | tzh | en
+  language TEXT NOT NULL DEFAULT 'en',    -- en | sw | kik  (SMS language)
   consent INTEGER NOT NULL,               -- must be 1
   consent_date TEXT NOT NULL,
   consent_by TEXT NOT NULL,               -- staff member who explained it
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS observations (
   uid TEXT PRIMARY KEY,                   -- "<member_id>-<obs_id>" (obs ids are only unique per phone)
   obs_id TEXT NOT NULL,                   -- 4-char base36 id from the phone
   member_id TEXT NOT NULL,
-  code TEXT NOT NULL,                     -- SANO ROYA MINA PHOM CERC ACAR OTRO DUDA
+  code TEXT NOT NULL,                     -- HLTH RUST MINR PHOM CERC MITE OTHR UNSR
   conf INTEGER NOT NULL,                  -- 0-100
   date TEXT NOT NULL,                     -- YYYY-MM-DD (phone local date)
   lat REAL, lon REAL,

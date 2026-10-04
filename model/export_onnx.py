@@ -273,7 +273,7 @@ def main():
     report["threshold"] = {
         "value": thr, "data_driven_value": data_thr, "policy_floor": args.min_threshold,
         "floor_reason": "validation images come from the same Kenyan dataset as training, so confidence on "
-                        "real Chiapas photos will be lower and less reliable; the floor keeps the PLAN.md "
+                        "real field photos will be lower and less reliable; the floor keeps the PLAN.md "
                         "default 0.70 when the data-driven value is lower",
         "rule": f"lowest t in [0.50,0.90] where accepted validation predictions reach >= {args.target_acc:.0%} "
                 f"accuracy on clean images AND on clean + 5 phone-like degradations (jpeg q25, blur r2, "

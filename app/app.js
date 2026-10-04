@@ -3,7 +3,7 @@
 import * as C from './content.js';
 import * as S from './store.js';
 import * as M from './infer.js';
-import { buildCode, smsLink, today } from './sms.js';
+import { CODES, buildCode, smsLink, today } from './sms.js';
 
 const APP_VERSION = 'app-v1';
 const $ = (id) => document.getElementById(id);
@@ -18,8 +18,12 @@ const st = {
 };
 window.__cafetal = st; // for debugging and tests
 
-// Result-screen play buttons: Tseltal and Spanish always; English only while the UI language is English.
-const PLAY_LANGS = ['tzh', 'es', 'en'];
+// Result-screen play buttons: one per language of cards.json, the UI language first, then cards.json order.
+function playLangs() {
+  const all = Object.keys(C.languages());
+  const ui = C.getLang();
+  return all.includes(ui) ? [ui, ...all.filter((l) => l !== ui)] : all;
+}
 const isDuda = (label) => label === 'duda' || label === 'otro';
 const ICON = (label) => 'icons/res_' + (isDuda(label) ? 'duda' : label) + '.svg';
 const DIAG = (label) => (isDuda(label) ? 'diag_duda' : 'diag_' + label);
@@ -62,7 +66,6 @@ function refresh() {
   $('pill-unverified').hidden = !unverified;
   $('pill-demo').hidden = st.config.gateway_label !== 'DEMO';
   $('pill-offline').hidden = !st.offlineReady;
-  $('r-play-en').hidden = C.getLang() !== 'en';
   $('btn-lock').setAttribute('aria-label', C.text('ui_lock'));
 }
 
@@ -77,8 +80,7 @@ function toast(cardId) {
 
 function langButtons(box, current, onPick) {
   box.textContent = '';
-  const langs = Object.entries(C.languages()).sort((a, b) => (b[0] === 'tzh') - (a[0] === 'tzh')); // local language first
-  for (const [code, name] of langs) {
+  for (const [code, name] of Object.entries(C.languages())) { // cards.json order: English, Kiswahili, Gikuyu
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'lang-btn' + (code === current ? ' selected' : '');
@@ -99,7 +101,16 @@ function langButtons(box, current, onPick) {
 // ---------- first use: language -> consent -> member ID (+ optional PIN) ----------
 function startOnboarding() {
   st.onboarding = { lang: null, consent_at: null };
-  C.setLang('es');
+  C.setLang(C.DEFAULT_LANG);
+  const prompts = $('lang-prompts');
+  prompts.textContent = '';
+  for (const code of Object.keys(C.languages())) {
+    const d = document.createElement('div');
+    d.className = 'say center';
+    d.dataset.card = 'ui_choose_language';
+    d.dataset.lang = code;
+    prompts.append(d);
+  }
   langButtons($('lang-list'), null, (code) => {
     st.onboarding.lang = code;
     C.setLang(code);
@@ -224,7 +235,7 @@ async function onPhoto(ev) {
   } catch (e) {
     console.error(e);
     const L = await M.getLabels();
-    r = { label: 'duda', code: 'DUDA', conf: 0, probs: null, top: null, reason: 'bad_image', model_version: L.version };
+    r = { label: 'duda', code: CODES.duda, conf: 0, probs: null, top: null, reason: 'bad_image', model_version: L.version };
   }
   const loc = await where;
   const o = {
@@ -281,18 +292,46 @@ function showResult(o, fresh) {
   $('r-advice2').hidden = adv.length < 2;
   if (adv[1]) $('r-advice2').dataset.card = adv[1];
   st.seq = [DIAG(o.label), ...(reason ? [reason] : []), ...adv, 'limits_yield'];
-  for (const l of PLAY_LANGS) {
-    const a = $('audio-' + l);
-    a.onended = null;
-    a.src = C.audioUrl(st.seq[0], l) || '';
-    $('r-badge-' + l).hidden = st.seq.every((id) => C.audioVerified(id, l));
-  }
+  renderPlay();
   $('r-sim-reply').textContent = '';
   $('r-sync-msg').textContent = '';
   renderSms();
   refresh();
   checkHub().then((ok) => ($('r-hub').hidden = !ok));
   if (fresh) playResult(C.getLang()); // auto-play once, if the browser allows it
+}
+
+// Play buttons (#r-play-<lang>, label card ui_play_<lang>) and their <audio id="audio-<lang>">, rebuilt for each
+// result so the order follows the current UI language. The badge shows unless every card played is verified audio.
+function renderPlay() {
+  C.stopAll();
+  const box = $('r-play');
+  const audios = $('r-audio');
+  box.textContent = '';
+  audios.textContent = '';
+  for (const l of playLangs()) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn play-btn';
+    b.id = 'r-play-' + l;
+    b.dataset.lang = l;
+    b.innerHTML = '<svg class="i"><use href="icons/icons.svg#speaker"/></svg>';
+    const label = document.createElement('span');
+    label.dataset.card = 'ui_play_' + l;
+    const badge = document.createElement('span');
+    badge.className = 'badge unverified';
+    badge.id = 'r-badge-' + l;
+    badge.dataset.card = 'ui_unverified';
+    badge.hidden = st.seq.every((id) => C.audioVerified(id, l));
+    b.append(label, badge);
+    b.addEventListener('click', () => playResult(l));
+    box.append(b);
+    const a = document.createElement('audio');
+    a.id = 'audio-' + l;
+    a.preload = 'auto';
+    a.src = C.audioUrl(st.seq[0], l) || '';
+    audios.append(a);
+  }
 }
 
 function playResult(l) {
@@ -360,7 +399,7 @@ async function simulateSend() {
       b.textContent = typeof r === 'string' ? r : r.body || r.text || ''; // already a filled card from the hub
       box.append(b);
     }
-    // Sent only if the hub stored the report (not e.g. "no entendimos el codigo").
+    // Sent only if the hub stored the report (not e.g. the "we did not understand the code" reply).
     if ((j.actions || []).some((a) => a.type === 'observation_stored' || a.type === 'observation_duplicate')) {
       await markSent('simulated');
     }
@@ -540,9 +579,6 @@ function bind() {
   $('btn-lock').addEventListener('click', () => go('lock'));
   $('set-lock').addEventListener('click', () => go('lock'));
   $('home-pending').addEventListener('click', () => go('history'));
-  $('r-play-tzh').addEventListener('click', () => playResult('tzh'));
-  $('r-play-es').addEventListener('click', () => playResult('es'));
-  $('r-play-en').addEventListener('click', () => playResult('en'));
   $('r-send').addEventListener('click', () => ($('r-confirm').hidden = false)); // the sms: link opens the SMS app
   $('r-sent-yes').addEventListener('click', () => markSent('sms').then(() => toast('ui_sent')));
   $('r-sent-no').addEventListener('click', () => ($('r-confirm').hidden = true));
@@ -574,7 +610,7 @@ async function boot() {
   bind();
   st.settings = S.getSettings();
   if (!st.settings) return startOnboarding();
-  C.setLang(st.settings.lang || 'es');
+  C.setLang(st.settings.lang); // falls back to English if cards.json does not list it
   go(st.settings.pin_hash ? 'lock' : 'home');
 }
 

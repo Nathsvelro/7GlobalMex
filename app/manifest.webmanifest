@@ -1,7 +1,7 @@
 {
   "name": "Cafetal",
   "short_name": "Cafetal",
-  "lang": "es-MX",
+  "lang": "en",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

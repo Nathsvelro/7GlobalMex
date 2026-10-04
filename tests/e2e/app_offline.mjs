@@ -1,9 +1,10 @@
 // End-to-end check of the phone app (Playwright + Chromium, phone viewport).
 //   node tests/e2e/app_offline.mjs            (from the repo root; needs python3 and playwright)
 // Phase A (offline): first load -> service worker caches everything -> server stopped + browser offline ->
-//   reload -> onboarding -> photo -> on-device result + audio from cache -> SMS code -> blurred photo = DUDA ->
-//   history -> settings/PIN/lock -> delete everything.
-// Phase B (hub buttons): service worker blocked, /api/* mocked -> "Simular envío" and "Sincronizar fotos".
+//   reload -> onboarding in English -> photo -> on-device result + audio in English, Kiswahili and Gikuyu from the
+//   cache -> SMS code -> blurred photo = UNSR -> history -> settings (language toggle)/PIN/lock -> delete everything
+//   -> onboarding again in Kiswahili (text + audio) -> the same result in Gikuyu (text + audio).
+// Phase B (hub buttons): service worker blocked, /api/* mocked -> "Send (SIMULATED)" and "Send photos".
 // Phase C (real hub, skipped if .venv/bin/uvicorn is missing): a throw-away hub (temporary DB) serves the app;
 //   register a member, diagnose, simulated send -> observation on the hub, sync -> photo on the hub.
 // Screenshots go to reports/screenshots/app_*.png. Asserts the flow, not model accuracy.
@@ -36,9 +37,10 @@ const freePort = () => new Promise((resolve) => {
 });
 const PORT = Number(process.env.PORT) || await freePort();
 const BASE = `http://127.0.0.1:${PORT}/app/`;
-const CODE_RE = /^CAF1 M\d{4} (SANO|ROYA|MINA|PHOM|CERC|ACAR|OTRO|DUDA) \d{1,2} \d{8} (-?\d{1,2}\.\d{2},-?\d{1,3}\.\d{2}|-) #[0-9A-Z]{4}$/;
+const CODE_RE = /^CAF1 M\d{4} (HLTH|RUST|MINR|PHOM|CERC|MITE|OTHR|UNSR) \d{1,2} \d{8} (-?\d{1,2}\.\d{2},-?\d{1,3}\.\d{2}|-) #[0-9A-Z]{4}$/;
 const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/cards.json'), 'utf8'));
-const T = (id, lang = 'es') => cards.cards.find((c) => c.id === id)[lang];
+const T = (id, lang = 'en') => cards.cards.find((c) => c.id === id)[lang];
+const LANGS = [['en', 'English'], ['sw', 'Kiswahili'], ['kik', 'Gĩkũyũ']]; // the Kenya contract, in this order
 fs.mkdirSync(SHOTS, { recursive: true });
 
 let failures = 0;
@@ -72,7 +74,8 @@ async function launchOpts() {
 
 const phone = {
   viewport: { width: 360, height: 740 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true,
-  locale: 'es-MX', permissions: ['geolocation'], geolocation: { latitude: 16.9123, longitude: -92.1087 },
+  // Noor's registered plot in the DEMO data (Ondera Juu, Kirinyaga County): rounds to -0.52,37.32 in the SMS
+  locale: 'en-KE', permissions: ['geolocation'], geolocation: { latitude: -0.518, longitude: 37.322 },
 };
 
 async function shot(page, name, full = false) {
@@ -112,11 +115,24 @@ async function phaseOffline(browser) {
   await page.waitForSelector('#s-lang:not([hidden])');
   check(await page.isVisible('#pill-demo'), 'DEMO badge visible (config gateway_label = DEMO)');
   const langBtns = await page.$$eval('#lang-list .lang-btn', (bs) => bs.map((b) => [b.dataset.lang, b.textContent.trim()]));
-  check(JSON.stringify(langBtns) === JSON.stringify([['tzh', cards.languages.tzh], ['es', 'Español'], ['en', 'English']]),
-    `language choice: Tseltal, Español, English (${JSON.stringify(langBtns)})`);
-  await page.click('.lang-btn[data-lang="tzh"]');
-  check((await page.textContent('#lang-next')).includes(T('ui_continue', 'tzh')), 'Tseltal selected -> labels switch to Tseltal');
-  await page.click('.lang-btn[data-lang="es"]');
+  check(JSON.stringify(langBtns) === JSON.stringify(LANGS) && JSON.stringify(Object.entries(cards.languages)) === JSON.stringify(LANGS),
+    `language choice: English, Kiswahili, Gĩkũyũ (${JSON.stringify(langBtns)})`);
+  const start = await page.evaluate(() => ({
+    html: document.documentElement.lang,
+    prompts: [...document.querySelectorAll('#lang-prompts .say')].map((d) => [d.dataset.lang, d.querySelector('.say-text').textContent]),
+  }));
+  check(start.html === 'en' && (await page.textContent('#lang-next')).includes(T('ui_continue', 'en')),
+    `before a choice the app is in English (html lang "${start.html}")`);
+  check(JSON.stringify(start.prompts) === JSON.stringify(LANGS.map(([l]) => [l, T('ui_choose_language', l)])),
+    `"Choose your language" shown in en, sw, kik (${JSON.stringify(start.prompts)})`);
+  await page.click('.lang-btn[data-lang="kik"]');
+  check((await page.textContent('#lang-next')).includes(T('ui_continue', 'kik')), 'Gĩkũyũ selected -> labels switch to Gĩkũyũ');
+  await page.click('.lang-btn[data-lang="sw"]');
+  check((await page.textContent('#lang-next')).includes(T('ui_continue', 'sw')), 'Kiswahili selected -> labels switch to Kiswahili');
+  await page.click('.lang-btn[data-lang="en"]');
+  check((await page.textContent('#lang-next')).includes(T('ui_continue', 'en')), 'English selected -> labels switch to English');
+  const nextBox = await page.evaluate(() => [document.getElementById('lang-next').getBoundingClientRect().bottom, window.innerHeight]);
+  check(nextBox[0] <= nextBox[1], `language screen: Continue visible at 360x740 without scrolling (bottom ${nextBox[0]} of ${nextBox[1]})`);
   await shot(page, 'app_01_language.png');
   await page.click('#lang-next');
 
@@ -128,7 +144,7 @@ async function phaseOffline(browser) {
   await page.click('#consent-no');
   await page.waitForSelector('#s-lang:not([hidden])');
   check(await page.evaluate(() => localStorage.length === 0), 'decline -> back to start, nothing stored');
-  await page.click('.lang-btn[data-lang="es"]');
+  await page.click('.lang-btn[data-lang="en"]');
   await page.click('#lang-next');
   await page.click('#consent-yes');
 
@@ -142,7 +158,8 @@ async function phaseOffline(browser) {
   await page.click('#member-next');
   await page.waitForSelector('#s-home:not([hidden])');
   const settings = await page.evaluate(() => JSON.parse(localStorage.getItem('cafetal.settings')));
-  check(settings && settings.member_id === 'M0123' && settings.pin_hash === null, 'settings saved: member M0123, no PIN');
+  check(settings && settings.member_id === 'M0123' && settings.pin_hash === null && settings.lang === 'en',
+    'settings saved: member M0123, language en, no PIN');
   await page.waitForTimeout(500); // geolocation permission answer
   await shot(page, 'app_04_home.png');
   await noMissingCards(page, 'home');
@@ -158,17 +175,32 @@ async function phaseOffline(browser) {
   });
   console.log('  result 1:', JSON.stringify(r1));
   check(CODE_RE.test(r1.code) && r1.code.length <= 160, `SMS code matches PLAN §5: ${r1.code}`);
-  check(r1.code.includes(' 16.91,-92.11 '), 'location rounded to 2 decimals in the code');
+  check(r1.code.includes(' -0.52,37.32 '), 'location rounded to 2 decimals in the code (Kirinyaga, -0.52,37.32)');
   check(r1.probs !== null && r1.model !== 'none', 'model ran offline (probabilities present)');
   check((await page.textContent('#r-code')) === r1.code, 'SMS code shown on screen');
   const name = (await page.textContent('#r-name')).trim();
   check(name.length > 0 && !name.startsWith('['), `result name shown: ${name}`);
   check(await page.isVisible('#r-diag .badge.unverified'), 'UNVERIFIED badge next to diagnosis text');
-  check(await page.isVisible('#r-badge-tzh'), 'UNVERIFIED badge on Tseltal audio button');
-  check(await page.isHidden('#r-play-en'), 'Spanish UI: only the Tseltal and Spanish play buttons are shown');
+  const play = await page.$$eval('#r-play .play-btn', (bs) => bs.map((b) => b.dataset.lang).join(','));
+  check(play === 'en,sw,kik' && await page.isVisible('#r-play-en') && await page.isVisible('#r-play-sw') &&
+    await page.isVisible('#r-play-kik'), `English UI: play buttons for all three languages, English first (${play})`);
+  check(await page.isVisible('#r-badge-en') && await page.isVisible('#r-badge-sw') && await page.isVisible('#r-badge-kik'),
+    'UNVERIFIED badge on the English, Kiswahili and Gĩkũyũ audio buttons');
+  // readable at 360 px: no sideways scrolling, every play button inside the screen, no label cut off
+  const lay = await page.evaluate(() => ({
+    vw: window.innerWidth,
+    page: document.documentElement.scrollWidth,
+    bs: [...document.querySelectorAll('#r-play .play-btn')].map((b) => {
+      const r = b.getBoundingClientRect();
+      return { l: r.left, r: r.right, t: r.top, w: r.width, cut: b.scrollWidth > b.clientWidth + 1 };
+    }),
+  }));
+  check(lay.page <= lay.vw && lay.bs.length === 3 && lay.bs.every((b) => b.l >= 0 && b.r <= lay.vw && !b.cut && b.w >= 140) &&
+    lay.bs[0].w > lay.bs[1].w && lay.bs[1].t === lay.bs[2].t,
+    `play buttons fit 360 px: UI language full width, the other two side by side (${JSON.stringify(lay)})`);
   const audio = await page.evaluate(async () => {
     const out = {};
-    for (const l of ['tzh', 'es']) {
+    for (const l of ['en', 'sw', 'kik']) {
       const a = document.getElementById('audio-' + l);
       const r = await fetch(a.src);
       const b = await r.arrayBuffer();
@@ -177,26 +209,24 @@ async function phaseOffline(browser) {
     return out;
   });
   console.log('  audio:', JSON.stringify(audio));
-  check(audio.tzh.src && audio.es.src && audio.tzh.ok && audio.es.ok && audio.es.bytes > 1000,
-    'both audio elements have src and their files load offline (from the cache)');
-  await page.click('#r-play-es');
-  await page.waitForTimeout(1500);
-  const playing = await page.evaluate(() => {
-    const a = document.getElementById('audio-es');
-    return { t: a.currentTime, paused: a.paused, err: a.error && a.error.code };
-  });
-  check(playing.t > 0 && !playing.err, `Spanish audio plays offline (currentTime ${playing.t.toFixed(2)} s)`);
-  await page.click('#r-play-tzh');
-  await page.waitForTimeout(1200);
-  const playingTzh = await page.evaluate(() => document.getElementById('audio-tzh').currentTime);
-  check(playingTzh > 0, `Tseltal audio plays offline (currentTime ${playingTzh.toFixed(2)} s)`);
+  check(['en', 'sw', 'kik'].every((l) => audio[l].src && audio[l].ok && audio[l].bytes > 1000),
+    'all three audio elements have src and their files load offline (from the cache)');
+  for (const [l, name] of LANGS) {
+    await page.click('#r-play-' + l);
+    await page.waitForTimeout(1300);
+    const p = await page.evaluate((x) => {
+      const a = document.getElementById('audio-' + x);
+      return { t: a.currentTime, err: a.error && a.error.code };
+    }, l);
+    check(p.t > 0 && !p.err, `${name} audio plays offline (currentTime ${p.t.toFixed(2)} s)`);
+  }
   await page.evaluate(() => document.querySelectorAll('audio').forEach((a) => a.pause()));
   await shot(page, 'app_05_result.png', true);
   await noMissingCards(page, 'result');
 
   // send by SMS: sms: link + manual confirmation (never sent automatically)
   const href = await page.getAttribute('#r-send', 'href');
-  check(href === 'sms:+520000000000?body=' + encodeURIComponent(r1.code), 'sms: link has gateway number and encoded code');
+  check(href === 'sms:+254700000000?body=' + encodeURIComponent(r1.code), 'sms: link has gateway number and encoded code');
   check((await page.textContent('#r-sms-status')) === T('ui_pending_sms'), 'status is pending before the user confirms');
   await page.evaluate(() => document.addEventListener('click', (e) => {
     if (e.target.closest('a[href^="sms:"]')) e.preventDefault(); // the test cannot open an SMS app
@@ -208,13 +238,13 @@ async function phaseOffline(browser) {
   check(true, 'marked sent only after the user confirmed');
   check(!(await page.isVisible('#r-hub')), 'hub buttons hidden while the hub is unreachable');
 
-  // blurred photo -> fail-safe DUDA
+  // blurred photo -> fail-safe UNSR
   await page.click('#nav [data-go="home"]');
   await page.setInputFiles('#file-camera', path.join(FIX, 'leaf_blurred.jpg'));
   await page.waitForSelector('#r-body:not([hidden])', { timeout: 60000 });
   const r2 = await page.evaluate(() => window.__cafetal.obs);
   console.log('  result 2:', JSON.stringify({ code: r2.sms_code, reason: r2.reason, blur: r2.blur }));
-  check(/ DUDA 0 /.test(r2.sms_code) && CODE_RE.test(r2.sms_code), `blurred photo -> DUDA, conf 0: ${r2.sms_code}`);
+  check(/ UNSR 0 /.test(r2.sms_code) && CODE_RE.test(r2.sms_code), `blurred photo -> UNSR, conf 0: ${r2.sms_code}`);
   check((await page.textContent('#r-diag .say-text')) === T('diag_duda'), `shows "${T('diag_duda')}"`);
   check((await page.textContent('#r-reason .say-text')) === T('ui_reason_blurry'), 'reason: blurry photo');
   check((await page.textContent('#r-advice .say-text')) === T('advice_call_officer'), 'advice: call the officer');
@@ -232,14 +262,15 @@ async function phaseOffline(browser) {
 
   // settings: language, PIN, lock
   await page.click('#nav [data-go="settings"]');
-  await page.click('#set-langs .lang-btn[data-lang="tzh"]');
-  check((await page.textContent('#nav [data-go="history"]')).includes(T('ui_history', 'tzh')), 'language toggle -> Tseltal UI');
-  await shot(page, 'app_08_settings_tzh.png', true);
-  check((await page.$$eval('#set-langs .lang-btn', (bs) => bs.map((b) => b.dataset.lang).join(','))) === 'tzh,es,en',
-    'settings language toggle offers tzh, es, en');
+  await page.click('#set-langs .lang-btn[data-lang="kik"]');
+  check((await page.textContent('#nav [data-go="history"]')).includes(T('ui_history', 'kik')), 'language toggle -> Gĩkũyũ UI');
+  await shot(page, 'app_08_settings_kik.png', true);
+  check((await page.$$eval('#set-langs .lang-btn', (bs) => bs.map((b) => b.dataset.lang).join(','))) === 'en,sw,kik',
+    'settings language toggle offers en, sw, kik');
+  await page.click('#set-langs .lang-btn[data-lang="sw"]');
+  check((await page.textContent('#nav [data-go="history"]')).includes(T('ui_history', 'sw')), 'language toggle -> Kiswahili UI');
   await page.click('#set-langs .lang-btn[data-lang="en"]');
   check((await page.textContent('#nav [data-go="history"]')).includes(T('ui_history', 'en')), 'language toggle -> English UI');
-  await page.click('#set-langs .lang-btn[data-lang="es"]');
   await page.fill('#set-pin', '1234');
   await page.click('#set-pin-save');
   const s2 = await page.evaluate(() => JSON.parse(localStorage.getItem('cafetal.settings')));
@@ -270,47 +301,72 @@ async function phaseOffline(browser) {
   check(left.ls === 0 && !left.dbs.includes('cafetal'), 'delete everything wiped settings and observations');
   check(left.caches.some((k) => k.startsWith('cafetal-')), 'offline app cache kept after delete');
 
-  // English (for visitors and judges), still in airplane mode: onboarding -> English diagnosis text + English audio
-  await page.click('.lang-btn[data-lang="en"]');
-  check((await page.textContent('#lang-next')).includes(T('ui_continue', 'en')), 'English selected -> labels switch to English');
-  await shot(page, 'app_en_01_language.png');
+  check((await page.textContent('#lang-next')).includes(T('ui_continue', 'en')), 'after delete the start screen is in English again');
+
+  // Kiswahili, still in airplane mode: onboarding -> Kiswahili diagnosis text + Kiswahili audio
+  await page.click('.lang-btn[data-lang="sw"]');
+  check((await page.textContent('#lang-next')).includes(T('ui_continue', 'sw')), 'Kiswahili selected -> labels switch to Kiswahili');
+  await shot(page, 'app_sw_01_language.png');
   await page.click('#lang-next');
   await page.waitForSelector('#s-consent:not([hidden])');
-  check((await page.textContent('#s-consent')).includes(T('ui_consent_text', 'en').slice(0, 40)), 'English consent text shown');
+  check((await page.textContent('#s-consent')).includes(T('ui_consent_text', 'sw').slice(0, 40)), 'Kiswahili consent text shown');
   await page.click('#consent-yes');
   await page.waitForSelector('#s-member:not([hidden])');
   await page.fill('#member-digits', '0777');
   await page.click('#member-next');
   await page.waitForSelector('#s-home:not([hidden])');
-  const sEn = await page.evaluate(() => JSON.parse(localStorage.getItem('cafetal.settings')));
-  check(sEn && sEn.lang === 'en' && sEn.member_id === 'M0777', 'settings saved with language en');
-  check((await page.textContent('#s-home')).includes(T('ui_take_photo', 'en')), 'home screen in English');
+  const sSw = await page.evaluate(() => JSON.parse(localStorage.getItem('cafetal.settings')));
+  check(sSw && sSw.lang === 'sw' && sSw.member_id === 'M0777', 'settings saved with language sw');
+  check((await page.textContent('#s-home')).includes(T('ui_take_photo', 'sw')), 'home screen in Kiswahili');
+  check(await page.evaluate(() => document.documentElement.lang) === 'sw', 'html lang follows the UI language (sw)');
   await page.waitForTimeout(300);
-  await shot(page, 'app_en_02_home.png');
-  await noMissingCards(page, 'home, en');
+  await shot(page, 'app_sw_02_home.png');
+  await noMissingCards(page, 'home, sw');
   await page.setInputFiles('#file-gallery', path.join(FIX, 'leaf_photo.jpg'));
   await page.waitForSelector('#r-body:not([hidden])', { timeout: 120000 });
-  const rEn = await page.evaluate(() => window.__cafetal.obs);
-  const diagEn = ['duda', 'otro'].includes(rEn.label) ? 'diag_duda' : 'diag_' + rEn.label;
-  check((await page.textContent('#r-diag .say-text')) === T(diagEn, 'en'), `English diagnosis text: "${T(diagEn, 'en')}"`);
-  check((await page.textContent('#r-diag .badge.unverified')) === T('ui_unverified', 'en'), 'English text has the UNVERIFIED badge');
-  check(await page.isVisible('#r-play-tzh') && await page.isVisible('#r-play-es') && await page.isVisible('#r-play-en'),
-    'English UI: Tseltal, Spanish and English play buttons');
-  check(await page.isVisible('#r-badge-en'), 'UNVERIFIED badge on English audio button');
-  const enSrc = await page.getAttribute('#audio-en', 'src');
-  check(enSrc === `../content/audio/en/${diagEn}.mp3`, `English audio element points at ${enSrc}`);
-  await page.click('#r-play-en');
+  const rSw = await page.evaluate(() => window.__cafetal.obs);
+  const diagSw = ['duda', 'otro'].includes(rSw.label) ? 'diag_duda' : 'diag_' + rSw.label;
+  check((await page.textContent('#r-diag .say-text')) === T(diagSw, 'sw'), `Kiswahili diagnosis text: "${T(diagSw, 'sw')}"`);
+  check((await page.textContent('#r-diag .badge.unverified')) === T('ui_unverified', 'sw'), 'Kiswahili text has the UNVERIFIED badge');
+  const playSw = await page.$$eval('#r-play .play-btn', (bs) => bs.map((b) => b.dataset.lang).join(','));
+  check(playSw === 'sw,en,kik' && await page.isVisible('#r-play-sw') && await page.isVisible('#r-play-en') &&
+    await page.isVisible('#r-play-kik'), `Kiswahili UI: all three play buttons, Kiswahili first (${playSw})`);
+  check(await page.isVisible('#r-badge-sw'), 'UNVERIFIED badge on Kiswahili audio button');
+  const swSrc = await page.getAttribute('#audio-sw', 'src');
+  check(swSrc === `../content/audio/sw/${diagSw}.mp3`, `Kiswahili audio element points at ${swSrc}`);
+  await page.click('#r-play-sw');
   await page.waitForTimeout(1500);
-  const playingEn = await page.evaluate(() => {
-    const a = document.getElementById('audio-en');
+  const playingSw = await page.evaluate(() => {
+    const a = document.getElementById('audio-sw');
     return { t: a.currentTime, err: a.error && a.error.code };
   });
-  check(playingEn.t > 0 && !playingEn.err, `English audio plays offline (currentTime ${playingEn.t.toFixed(2)} s)`);
+  check(playingSw.t > 0 && !playingSw.err, `Kiswahili audio plays offline (currentTime ${playingSw.t.toFixed(2)} s)`);
   await page.evaluate(() => document.querySelectorAll('audio').forEach((a) => a.pause()));
   await page.waitForSelector('#toast', { state: 'hidden', timeout: 5000 });
-  await shot(page, 'app_en_03_result.png');
-  await noMissingCards(page, 'result, en');
-  check(await serverDown(), 'English run happened with the server stopped (offline)');
+  await shot(page, 'app_sw_03_result.png');
+  await noMissingCards(page, 'result, sw');
+
+  // Gikuyu: switch in settings, reopen the same result from history -> Gikuyu text + Gikuyu audio first
+  await page.click('#nav [data-go="settings"]');
+  await page.click('#set-langs .lang-btn[data-lang="kik"]');
+  await page.click('#nav [data-go="history"]');
+  await page.click(`#hist-list button[data-obs="${rSw.obs_id}"]`);
+  await page.waitForSelector('#r-body:not([hidden])');
+  check((await page.textContent('#r-diag .say-text')) === T(diagSw, 'kik'), `Gĩkũyũ diagnosis text: "${T(diagSw, 'kik')}"`);
+  const playKik = await page.$$eval('#r-play .play-btn', (bs) => bs.map((b) => b.dataset.lang).join(','));
+  check(playKik === 'kik,en,sw', `Gĩkũyũ UI: Gĩkũyũ play button first (${playKik})`);
+  const kikSrc = await page.getAttribute('#audio-kik', 'src');
+  check(kikSrc === `../content/audio/kik/${diagSw}.mp3`, `Gĩkũyũ audio element points at ${kikSrc}`);
+  await page.click('#r-play-kik');
+  await page.waitForTimeout(1500);
+  const playingKik = await page.evaluate(() => {
+    const a = document.getElementById('audio-kik');
+    return { t: a.currentTime, err: a.error && a.error.code };
+  });
+  check(playingKik.t > 0 && !playingKik.err, `Gĩkũyũ audio plays offline (currentTime ${playingKik.t.toFixed(2)} s)`);
+  await page.evaluate(() => document.querySelectorAll('audio').forEach((a) => a.pause()));
+  await noMissingCards(page, 'result, kik');
+  check(await serverDown(), 'Kiswahili and Gĩkũyũ runs happened with the server stopped (offline)');
   check(errors.length === 0, 'no page errors' + (errors.length ? ': ' + errors.join(' | ') : ''));
   await ctx.close();
 }
@@ -341,7 +397,7 @@ async function phaseHub(browser) {
       ? { ok: false, status: 404, error: 'member not found' } : { ok: true })) } });
   });
   await page.goto(BASE);
-  await page.click('.lang-btn[data-lang="es"]');
+  await page.click('.lang-btn[data-lang="en"]');
   await page.click('#lang-next');
   await page.click('#consent-yes');
   await page.fill('#member-digits', '0456');
@@ -349,7 +405,7 @@ async function phaseHub(browser) {
   await page.setInputFiles('#file-gallery', path.join(FIX, 'leaf_roya.jpg'));
   await page.waitForSelector('#r-body:not([hidden])', { timeout: 120000 });
   await page.waitForSelector('#r-hub:not([hidden])', { timeout: 5000 });
-  check(true, 'hub reachable -> "Simular envío" and "Sincronizar fotos" shown');
+  check(true, 'hub reachable -> "Send (SIMULATED)" and "Send photos to the co-op" shown');
   // Member id not registered at the hub: say so, and mark nothing as sent or synced.
   await page.click('#r-sim');
   await page.waitForSelector('#r-sim-reply .say');
@@ -403,7 +459,7 @@ async function phaseRealHub(browser) {
     if (!up) throw new Error('hub did not start');
     const reg = await fetch(hubUrl + '/api/members', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'Prueba E2E', phone: '+529990001122', community: 'Prueba', lat: 16.9, lon: -92.1,
+      body: JSON.stringify({ name: 'E2E Test', phone: '+254799000122', community: 'Ondera Juu', lat: -0.52, lon: 37.32,
         consent: true, consent_by: 'e2e test' }),
     }).then((r) => r.json());
     const mid = reg.member_id;
@@ -413,7 +469,7 @@ async function phaseRealHub(browser) {
     await page.goto(hubUrl + '/app/');
     await page.waitForSelector('body[data-offline="ready"]', { timeout: 120000 });
     check(true, 'real hub: app served at /app/ and cached by the service worker');
-    await page.click('.lang-btn[data-lang="es"]');
+    await page.click('.lang-btn[data-lang="en"]');
     await page.click('#lang-next');
     await page.click('#consent-yes');
     await page.fill('#member-digits', mid.slice(1));

@@ -1,14 +1,16 @@
 // Observation SMS code v1 (PLAN.md §5). One SMS (<=160 chars), GSM-7 only, works on 2G.
 //   CAF1 <member> <code> <conf> <yyyymmdd> <lat>,<lon>|- #<obs>
-//   CAF1 M0123 ROYA 96 20261004 16.91,-92.11 #K3F9
+//   CAF1 M0123 RUST 99 20261004 -0.52,37.32 #K3F9
+// Keys are the internal labels (model classes in model/labels.json, plus 'duda' = the fail-safe "unsure");
+// values are the 4-letter English codes the hub reads (PLAN.md §3).
 
 export const CODES = {
-  sano: 'SANO', roya: 'ROYA', minador: 'MINA', phoma: 'PHOM',
-  cercospora: 'CERC', acaro_rojo: 'ACAR', otro: 'OTRO', duda: 'DUDA',
+  sano: 'HLTH', roya: 'RUST', minador: 'MINR', phoma: 'PHOM',
+  cercospora: 'CERC', acaro_rojo: 'MITE', otro: 'OTHR', duda: 'UNSR',
 };
 
 export const CODE_RE =
-  /^CAF1 M\d{4} (SANO|ROYA|MINA|PHOM|CERC|ACAR|OTRO|DUDA) \d{1,2} \d{8} (-?\d{1,2}\.\d{2},-?\d{1,3}\.\d{2}|-) #[0-9A-Z]{4}$/;
+  /^CAF1 M\d{4} (HLTH|RUST|MINR|PHOM|CERC|MITE|OTHR|UNSR) \d{1,2} \d{8} (-?\d{1,2}\.\d{2},-?\d{1,3}\.\d{2}|-) #[0-9A-Z]{4}$/;
 
 export function buildCode(o) {
   const loc = o.lat != null && o.lon != null ? o.lat.toFixed(2) + ',' + o.lon.toFixed(2) : '-';

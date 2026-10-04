@@ -47,8 +47,8 @@ def ymd(days_ago: int = 0) -> str:
     return (date.today() - timedelta(days=days_ago)).strftime("%Y%m%d")
 
 
-def register(client, name="Socia Prueba", phone="+529670001000", community="Ondera Alto", lat=16.91, lon=-92.11,
-             language="es"):
+def register(client, name="Test Member", phone="+254700001000", community="Ondera Juu", lat=-0.52, lon=37.32,
+             language="en"):
     r = client.post("/api/members", json={"name": name, "phone": phone, "community": community, "lat": lat,
                                           "lon": lon, "language": language, "consent": True,
                                           "consent_by": "Personal de prueba"})

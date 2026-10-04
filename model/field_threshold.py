@@ -565,14 +565,14 @@ def render_tradeoff(res, sw):
             f"{cf['coffea sample']['n']} Coffea plant photos (v1: {dis(b)})"
             + (" and never says \"sano\" to a diseased leaf" if safe else ""))
     if failed and team:
-        tail = ("; the price is more \"No estoy seguro\" on Kenyan lab close-ups"
+        tail = ("; the price is more \"I'm not sure\" on Kenyan lab close-ups"
                 + (", which breaks condition (2) by a small margin" if failed == ["jmuben_macro_f1_drop<=1pt"] else "")
                 + f". The pre-registered rule says **do not ship**. **The team shipped v2 at t = {t:.2f} anyway** "
                 f"({team['date']}), as an explicit, documented exception taken by people, not by this script, because "
                 f"{team['reason']} Any further threshold change would now be chosen with test knowledge and is not "
                 "offered here.")
     elif failed:
-        tail = ("; the price is more \"No estoy seguro\" on Kenyan lab close-ups"
+        tail = ("; the price is more \"I'm not sure\" on Kenyan lab close-ups"
                 + (", which breaks condition (2) by a small margin" if failed == ["jmuben_macro_f1_drop<=1pt"] else "")
                 + ". The pre-registered rule says **do not ship**. Shipping v2 anyway would be an explicit, documented "
                 "exception to that rule, taken by people, not by this script; any further threshold change would now "

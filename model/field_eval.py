@@ -2,12 +2,16 @@
 
   python model/field_eval.py --data /home/user/data_proc/cafetal --inat /home/user/data_raw/inat \
       --model v1=model/checkpoints/v1/cafetal.onnx --model v2=model/checkpoints/v2/cafetal_fp16_weights.onnx
+  python model/field_eval.py --render      # only rewrite reports/field_eval.md from reports/field_eval.json
 
-Writes reports/field_eval.json + reports/field_eval.md. Every photo is decided exactly like the app:
-centre-square crop, resize to 224, blur check on the 128 px view (model/blur.py), threshold from
-labels.json, "otro" -> DUDA; multicrop per model/multicrop.py.
+Writes reports/field_eval.json + reports/field_eval.md (+ reports/field_eval_photos.csv). Every photo is decided
+exactly like the app: centre-square crop, resize to 224, blur check on the 128 px view (model/blur.py), threshold
+from labels.json, "otro" -> fail-safe (SMS code UNSR, or OTHR for "otro"; internally "DUDA"); multicrop per
+model/multicrop.py. Predictions are cached per model file hash (--cache), so a rerun needs the images only for the
+blur check.
 Inputs: reports/field_inat_attribution.csv + reports/field_inat_screening.csv (model/inat_field.py),
 images in <inat>/photos/, JMuBEN/otro test split in <data>/test.npz.
+Geographic report subsets (East Africa, Kenya): GEO_RULE below; they never change the split, training or threshold.
 """
 import argparse
 import csv
@@ -15,6 +19,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import sys
 
 import numpy as np
@@ -23,13 +28,65 @@ from sklearn.metrics import f1_score
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from blur import BLUR_SIZE, center_square, laplacian_variance, laplacian_variance_array  # noqa: E402
-from inat_field import ATTRIBUTION, MEXICO_RULE, image_path, read_attribution  # noqa: E402
+from inat_field import ATTRIBUTION, MEXICO_BOX, image_path, read_attribution  # noqa: E402
 from multicrop import SCHEMES, decide_multicrop, decide_single, tiles, views  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCREENING = os.path.join(REPO, "reports", "field_inat_screening.csv")
 DISEASES = ("roya", "minador", "phoma", "cercospora")
-ANSWERS = ("sano", "roya", "minador", "phoma", "cercospora", "DUDA")
+ANSWERS = ("sano", "roya", "minador", "phoma", "cercospora", "DUDA")  # "DUDA" = internal name of the fail-safe
+
+# ---------------------------------------------------------------- geography (report subsets only)
+# Our users farm in Kirinyaga County, central Kenya. These subsets only describe where the iNaturalist photos come
+# from; they never change the split, the training data or the threshold. Input: the observation's public location
+# as rounded to 0.1 degree (about 11 km) in reports/field_inat_attribution.csv.
+EAST_AFRICA_BOX = (-11.8, 15.0, 28.8, 48.0)  # lat min, lat max, lon min, lon max
+# Simplified outline of Kenya (lon, lat), 34 vertices, borders accurate to roughly 10-30 km (the coffee areas are
+# far from the borders). Clockwise from the Kenya-Uganda-Tanzania point in Lake Victoria: Uganda (Busia, Malaba,
+# Mt Elgon, Karamoja), South Sudan (Ilemi), Ethiopia (Lake Turkana, Moyale), Somalia (Mandera, 41 E line), the
+# coast (Kiunga, Lamu, Malindi, Mombasa, Vanga), Tanzania (Lake Jipe, north of Kilimanjaro, Namanga line).
+KENYA_POLYGON = [
+    (33.92, -1.00), (33.95, 0.10), (34.09, 0.46), (34.27, 0.64), (34.55, 1.12), (34.82, 1.30), (35.02, 1.90),
+    (34.90, 2.50), (34.45, 3.60), (33.99, 4.22), (34.39, 4.62), (35.30, 4.95), (35.92, 4.62), (36.04, 4.45),
+    (36.85, 4.43), (38.10, 3.60), (39.05, 3.52), (39.85, 3.85), (40.77, 4.27), (41.17, 3.94), (41.90, 3.98),
+    (41.00, 2.80), (40.99, -0.85), (41.56, -1.66), (40.90, -2.30), (40.20, -2.85), (40.12, -3.27), (39.68, -4.05),
+    (39.20, -4.67), (37.75, -3.65), (37.60, -3.00), (36.79, -2.55), (35.00, -1.60), (34.40, -1.25),
+]
+GEO_RULE = ("East Africa = Kenya, Uganda, Tanzania, Rwanda, Burundi and Ethiopia, approximated by the box lat "
+            "-11.8..15.0, lon 28.8..48.0 (EAST_AFRICA_BOX in model/field_eval.py; it also takes in eastern DR Congo, "
+            "South Sudan, Somalia, Eritrea, Djibouti and northern Zambia, Malawi and Mozambique, so every photo inside "
+            "it is listed in the report). Kenya = inside a simplified 34-vertex outline of Kenya (KENYA_POLYGON; "
+            "ray-casting point-in-polygon; borders accurate to roughly 10-30 km). Both use the observation's public "
+            "location as rounded to 0.1 degree (about 11 km) in reports/field_inat_attribution.csv. Report subsets "
+            "only: they never change the split, the training data or the threshold.")
+SPLIT_BOX_RULE = ("field test = every observer with any disease photo inside the fixed box lat {:.1f}..{:.1f}, lon "
+                  "{:.1f}..{:.1f} (Mexico and northern Central America; `in_mexico_box` in the attribution CSV), plus "
+                  "a random ~30 % of the other observers of each disease (seed 42, `model/inat_field.py`). The box was "
+                  "fixed before any v2 result and is kept unchanged so the test set stays the same; it has no special "
+                  "meaning for Kenya.").format(*MEXICO_BOX)
+# placed by eye from the coordinates (not computed): the photos that fall inside EAST_AFRICA_BOX
+PLACE_BY_EYE = {"92700141": "Kenya, near Nakuru", "631362214": "Kenya, Kiambu County near Limuru",
+                "717871095": "Kenya, Taita Hills", "672111499": "Tanzania, Kilimanjaro slopes north of Moshi",
+                "710570289": "Tanzania, Zanzibar (Unguja)",
+                "621748067": "Lake Kivu shore, most likely Rwanda (positional accuracy 1.9 km; DR Congo is across the lake)"}
+
+
+def in_polygon(lat, lon, pts):
+    inside = False
+    for (x1, y1), (x2, y2) in zip(pts, pts[1:] + pts[:1]):
+        if (y1 > lat) != (y2 > lat) and lon < x1 + (lat - y1) * (x2 - x1) / (y2 - y1):
+            inside = not inside
+    return inside
+
+
+def geo_flags(lat, lon):
+    """(in_east_africa, in_kenya) from the rounded public location; (False, False) if unknown."""
+    try:
+        lat, lon = float(lat), float(lon)
+    except (TypeError, ValueError):
+        return False, False
+    b = EAST_AFRICA_BOX
+    return b[0] <= lat <= b[1] and b[2] <= lon <= b[3], in_polygon(lat, lon, KENYA_POLYGON)
 
 
 def wilson(k, n, z=1.96):
@@ -64,6 +121,8 @@ def load_rows(inat_dir, attribution=ATTRIBUTION, screening=SCREENING):
         r["path"] = image_path(photos, r)
         s = scr.get(r["photo_id"])
         r["screened"] = s["visible_leaf_symptom"] if s else ""
+        ea, ke = geo_flags(r["lat"], r["lon"])
+        r["in_east_africa"], r["in_kenya"] = str(int(ea)), str(int(ke))
     return [r for r in rows if r["path"]]
 
 
@@ -139,15 +198,14 @@ def field_groups(rows, splits=None):
     def sel(f):
         return np.array([bool(f(r)) and (splits is None or r["split"] in splits) for r in rows])
     g = {}
-    for lab in ("roya", "minador", "cercospora", "ojo_de_gallo"):
-        g[f"{lab}"] = (lab, sel(lambda r, lab=lab: r["label"] == lab))
-        g[f"{lab} screened"] = (lab, sel(lambda r, lab=lab: r["label"] == lab and r["screened"] == "yes"))
-        if lab == "roya":
-            g["roya Mexico+GT box"] = (lab, sel(lambda r: r["label"] == "roya" and r["in_mexico_box"] == "1"))
-            g["roya Mexico"] = (lab, sel(lambda r: r["label"] == "roya" and r["in_mexico"] == "1"))
-    g["minador Mexico"] = ("minador", sel(lambda r: r["label"] == "minador" and r["in_mexico"] == "1"))
-    g["coffea sample"] = ("coffea", sel(lambda r: r["label"] == "coffea"))
-    g["coffea sample Mexico"] = ("coffea", sel(lambda r: r["label"] == "coffea" and r["in_mexico"] == "1"))
+    for lab in ("roya", "minador", "cercospora", "ojo_de_gallo", "coffea"):
+        name = "coffea sample" if lab == "coffea" else lab
+        g[name] = (lab, sel(lambda r, lab=lab: r["label"] == lab))
+        if lab != "coffea":
+            g[f"{name} screened"] = (lab, sel(lambda r, lab=lab: r["label"] == lab and r["screened"] == "yes"))
+        # geographic subsets (GEO_RULE); evaluate_model drops empty ones, the report shows them as n = 0
+        g[f"{name} East Africa"] = (lab, sel(lambda r, lab=lab: r["label"] == lab and r["in_east_africa"] == "1"))
+        g[f"{name} Kenya"] = (lab, sel(lambda r, lab=lab: r["label"] == lab and r["in_kenya"] == "1"))
     return g
 
 
@@ -305,15 +363,22 @@ def main():
     schemes = args.schemes.split(",")
     mc, sel_table = select_scheme(specs[0][1], specs[0][2], rows, squares, blur, args.data, args.cache, schemes)
     print("multicrop scheme (chosen on validation + field-dev, baseline model):", mc)
-    res = {"generated_by": "model/field_eval.py", "n_photos": len(rows), "mexico_rule": MEXICO_RULE,
+    res = {"generated_by": "model/field_eval.py", "n_photos": len(rows), "split_rule": SPLIT_BOX_RULE,
+           "geo_rule": GEO_RULE,
            "multicrop": {"chosen": mc, "selection": sel_table,
                          "rule": " ".join(select_scheme.__doc__.split(":", 1)[1].split()).rstrip(".")},
            "photos": photo_summary(rows), "models": {}}
-    per_photo = {}
+    per_photo, geo_cfg = {}, []
+    app_labels = json.load(open(os.path.join(REPO, "app", "model", "labels.json")))
+    app_sha = file_hash(os.path.join(REPO, "app", "model", app_labels["file"]))
     for name, mpath, labels in specs:
-        out, _, per_photo[name] = evaluate_model(mpath, labels, rows, squares, blur, npz, args.cache, ["single"] + schemes)
+        out, pred, per_photo[name] = evaluate_model(mpath, labels, rows, squares, blur, npz, args.cache,
+                                                    ["single"] + schemes)
         out["version"] = labels.get("version")
         res["models"][name] = out
+        geo_cfg.append((f"{name}@{labels['threshold']}", pred, labels))
+        if out["sha1_12"] == app_sha and app_labels["threshold"] != labels["threshold"]:  # the app's threshold
+            geo_cfg.append((f"{name}@{app_labels['threshold']}", pred, dict(labels, threshold=app_labels["threshold"])))
         for m, r in out["methods"].items():
             ft = r["field_test"]
             print(name, m, "roya test correct", pct(ft["roya"]["correct"]), "coffea disease",
@@ -336,12 +401,16 @@ def main():
         fired = f"KEEP {base_name} single view: no candidate passes all five conditions"
     res["ship_rule"] = {"baseline": f"{base_name}+single", "candidates": decision, "shipped": f"{n}+{m}", "fired": fired}
     print(fired)
+    res["geo"] = geo_summary(rows, blur, geo_cfg, args.inat)
+    print("East Africa photos:", {k: v["east_africa"] for k, v in res["geo"]["counts"]["all_photos"].items()},
+          "Kenya:", {k: v["kenya"] for k, v in res["geo"]["counts"]["all_photos"].items()})
     with open(os.path.join(args.out, "field_eval_photos.csv"), "w", newline="") as fh:
         w = csv.writer(fh)
         keys = [(n, m) for n in res["models"] for m in ("single", mc)]
-        w.writerow(["photo_id", "label", "split", "screened", "in_mexico"] + [f"{n}_{m}" for n, m in keys])
+        w.writerow(["photo_id", "label", "split", "screened", "in_east_africa", "in_kenya"] +
+                   [f"{n}_{m}" for n, m in keys])
         for i, r in enumerate(rows):
-            w.writerow([r["photo_id"], r["label"], r["split"], r["screened"], r["in_mexico"]] +
+            w.writerow([r["photo_id"], r["label"], r["split"], r["screened"], r["in_east_africa"], r["in_kenya"]] +
                        [per_photo[n][m][i] for n, m in keys])
     with open(os.path.join(args.out, "field_eval.json"), "w") as fh:
         json.dump(res, fh, indent=1)
@@ -359,17 +428,147 @@ def photo_summary(rows):
                     "observers": len({r["observer_id"] for r in rs}),
                     "split": dict(Counter(r["split"] for r in rs)),
                     "screened_yes": sum(r["screened"] == "yes" for r in rs) if lab != "coffea" else None,
-                    "in_mexico": sum(r["in_mexico"] == "1" for r in rs),
-                    "in_mexico_box": sum(r["in_mexico_box"] == "1" for r in rs),
+                    "in_split_box": sum(r["in_mexico_box"] == "1" for r in rs),
+                    "in_east_africa": sum(r["in_east_africa"] == "1" for r in rs),
+                    "in_kenya": sum(r["in_kenya"] == "1" for r in rs),
                     "licenses": dict(Counter(r["license"] for r in rs)),
                     "quality_grade": dict(Counter(r["quality_grade"] for r in rs))}
     return out
+
+
+def geo_summary(rows, blur, configs, inat_dir=None):
+    """East Africa / Kenya subsets (GEO_RULE): photo counts per label and split, and every East African photo with
+    the app's answer for each (model, threshold) in configs = [(key, predictions, labels), ...]. With inat_dir, also
+    the taxa of all observations inside the East Africa box in the metadata export (<inat>/obs_coffee.tsv)."""
+    from collections import Counter
+    counts = {}
+    for scope, splits in SCOPES.items():
+        counts[scope] = {}
+        for lab in ("roya", "minador", "cercospora", "ojo_de_gallo", "coffea"):
+            rs = [r for r in rows if r["label"] == lab and (splits is None or r["split"] in splits)]
+            counts[scope][lab] = {"n": len(rs), "east_africa": sum(r["in_east_africa"] == "1" for r in rs),
+                                  "kenya": sum(r["in_kenya"] == "1" for r in rs)}
+    answers = {}
+    for key, pred, lab in configs:
+        answers[key] = decisions(pred, blur, lab["classes"], lab["threshold"], lab["blur_threshold"], "single")
+    photos = []
+    for i, r in enumerate(rows):
+        if r["in_east_africa"] != "1":
+            continue
+        top = {}
+        for key, pred, lab in configs:
+            k = int(np.argmax(pred["full"][i]))
+            top[key] = [lab["classes"][k], round(float(pred["full"][i][k]), 3)]
+        photos.append({"photo_id": r["photo_id"], "label": r["label"], "split": r["split"], "lat": r["lat"],
+                       "lon": r["lon"], "in_kenya": r["in_kenya"] == "1", "place_by_eye": PLACE_BY_EYE.get(r["photo_id"], ""),
+                       "license": r["license"], "quality_grade": r["quality_grade"], "observed_on": r["observed_on"],
+                       "inat_url": r["inat_url"], "answers": {key: str(answers[key][0][i]) for key, _, _ in configs},
+                       "top1": top})
+    dis = [r for r in rows if r["split"] == "field_test" and r["label"] != "coffea"]
+    americas = sum(r["lon"] != "" and float(r["lon"]) < -30 for r in dis)  # crude: west of 30 W
+    export = None
+    obs = os.path.join(inat_dir, "obs_coffee.tsv") if inat_dir else None
+    if obs and os.path.exists(obs):
+        from inat_field import TAXA
+        b = EAST_AFRICA_BOX
+        export = Counter()
+        for o in csv.DictReader(open(obs), delimiter="\t"):
+            try:
+                lat, lon = float(o["latitude"]), float(o["longitude"])
+            except (TypeError, ValueError):
+                continue
+            if o["taxon_id"] in TAXA and b[0] <= lat <= b[1] and b[2] <= lon <= b[3]:
+                export[TAXA[o["taxon_id"]][0]] += 1
+        export = {name: export.get(name, 0) for name, _ in TAXA.values()}
+    return {"rule": GEO_RULE, "configs": [key for key, _, _ in configs], "counts": counts, "photos": photos,
+            "field_test_disease_americas": americas, "export_box_by_taxon": export,
+            "note": "answers decided exactly like the app (single view); 'DUDA' = the fail-safe (SMS code UNSR, or "
+                    "OTHR when the top class is otro); place_by_eye is read by eye from the coordinates, not computed"}
 
 
 # ---------------------------------------------------------------- markdown
 ALARMS = os.path.join(REPO, "reports", "field_coffea_v2_alarms.csv")
 THRESHOLD_TEST = os.path.join(REPO, "reports", "field_v2_threshold_test.json")
 THRESHOLD_SWEEP = os.path.join(REPO, "reports", "field_v2_threshold_sweep.json")
+GEO_NAMES = ("East Africa", "Kenya")
+WORDS = ("Words used below: **UNSR** = the app's fail-safe answer \"I'm not sure - show the leaf to the extension "
+         "officer\" (blurry photo, top-1 probability below the threshold, or top class `otro` = not a coffee leaf; the "
+         "observation SMS then carries code UNSR, or OTHR for `otro`). Class names are the model's internal labels: "
+         "`sano` healthy, `roya` leaf rust, `minador` leaf miner, `phoma` Phoma leaf spot, `cercospora` brown eye "
+         "spot, `otro` not a coffee leaf; \"ojo de gallo\" is American leaf spot (*Mycena citricolor*), not a model "
+         "class.")
+JMUBEN_KENYA = ("The model's main held-out test set **is** Kenyan: JMuBEN, photographed in the Mutira coffee plantation, "
+                "Kirinyaga County, with a digital camera and a pathologist's help (Jepkoech et al. 2021, *Data in Brief* "
+                "36:107142) - the same county as our users. Its limits: one plantation, one camera, 128 px close-up "
+                "crops, many augmented copies of each source photo (we split by near-duplicate group), and very few "
+                "distinct healthy photos (`sano`: 2 source groups in test, 7 in train).")
+
+
+def english(text):
+    """Report wording in the app's language: the fail-safe is UNSR / "I'm not sure" (it was called DUDA / "No estoy
+    seguro" when these results were produced; the JSON keys keep the old internal name "DUDA"). Applied to text that
+    comes from other files too (model/ship_decision.json, model/field_threshold.py)."""
+    text = text.replace("\"No estoy seguro\"", "\"I'm not sure\"")
+    return re.sub(r"\bDUDA\b", "UNSR", text)
+
+
+def geo_groups_missing(scope_res):
+    """Geographic groups with no photo in this scope (evaluate_model drops empty groups)."""
+    return [g for g in GROUP_ORDER if g.endswith(GEO_NAMES) and g not in scope_res]
+
+
+def ea_count(r, scope, labels=("roya", "minador", "cercospora", "ojo_de_gallo")):
+    c = r.get("geo", {}).get("counts", {}).get(scope, {})
+    return sum(c[lab]["east_africa"] for lab in labels if lab in c) if c else None
+
+
+def geo_answer_counts(r, key, label="coffea", splits=("coffea_eval",), kenya=False):
+    """(disease answers, n) for the East African (or Kenyan) photos of one label, for one (model, threshold) key."""
+    ph = [p for p in r.get("geo", {}).get("photos", []) if p["label"] == label and p["split"] in splits
+          and (p["in_kenya"] or not kenya) and key in p["answers"]]
+    return sum(p["answers"][key] in DISEASES for p in ph), len(ph)
+
+
+def localize_tradeoff(text, r):
+    """The 'Threshold trade-off' section is rendered by model/field_threshold.py from
+    reports/field_v2_threshold_test.json (numbers, rule and decision unchanged). Its rows for the old hold-out region
+    (roya in the split box / in Mexico, Coffea in Mexico) are replaced by the East Africa / Kenya subsets of the same
+    test photos (GEO_RULE; decided by this script from the same cached predictions)."""
+    from field_threshold import ci as ci1, pct as pct1
+    keys = r.get("geo", {}).get("configs", [])
+    out = []
+    for line in text.split("\n"):
+        if line.startswith("| roya: correct & accepted, Mexico+Guatemala box"):
+            cols = line.count("|") - 2
+            n_ea = ea_count(r, "field_test", ("roya",))
+            out.append("| roya: correct & accepted, East Africa | " + " | ".join(
+                [f"n = {n_ea} (no photos)" if n_ea == 0 else "see field_eval.json"] * cols) + " |")
+            continue
+        if line.startswith("| roya: correct & accepted, Mexico only"):
+            continue
+        if line.startswith("| Coffea test sample Mexico"):
+            head = text.split("| metric |", 1)[1].split("\n", 1)[0]
+            cfgs = [c.strip() for c in head.strip(" |").split("|")]
+            for name, kenya in (("East Africa", False), ("Kenya", True)):
+                vals = []
+                for c in cfgs:
+                    if c not in keys:
+                        vals.append("n/a")
+                        continue
+                    k, n = geo_answer_counts(r, c, kenya=kenya)
+                    vals.append(f"{pct1(k / n)}{ci1(wilson(k, n))} ({k}/{n})" if n else "n = 0")
+                out.append(f"| Coffea test sample {name}: disease answers | " + " | ".join(vals) + " |")
+            continue
+        out.append(line)
+    text = "\n".join(out)
+    n_ea = ea_count(r, "field_test", ("roya",))
+    text = re.sub(r"proxy for Chiapas photos, n is small \((\d+) rust photos, \d+ from Mexico\)",
+                  lambda m: f"proxy for field photos from Kirinyaga, n is small ({m.group(1)} rust photos, "
+                            f"{n_ea} from East Africa)", text)
+    text = text.replace("the real fix is labelled Chiapas photos, healthy and diseased (officer confirmations",
+                        "the real fix is labelled photos from Kirinyaga farms, healthy and diseased (extension officer "
+                        "confirmations")
+    return text
 
 
 def conclusions(r):
@@ -378,6 +577,9 @@ def conclusions(r):
     b = models[base]["methods"]["single"]
     ba = b["all_photos"]
     roya = ba["roya"]
+    n_ea = ea_count(r, "field_test")
+    ea_txt = (f"no field-test disease photo is from East Africa (n = {n_ea})" if n_ea == 0 else
+              f"{n_ea} field-test disease photos are from East Africa")
     L = [f"- **{base} does not work on field photos.** Of {roya['n']} iNaturalist roya photos it answered "
          f"{roya['answer_counts']['roya']} correctly; {pct(roya['DUDA'])} got the fail-safe DUDA, almost all because the "
          f"model called the photo \"not a coffee leaf\" (`otro`: {roya['duda_reasons']['not_coffee']} photos). Same on "
@@ -394,11 +596,9 @@ def conclusions(r):
         L.append(f"- **{n} (trained with field photos) at its export threshold {models[n]['threshold']} finds rust in field "
                  f"photos**: roya correct & accepted "
                  f"{pct(f['roya']['correct'])}{ci(f['roya']['correct_ci95'])} on the held-out field test (n={f['roya']['n']}, "
-                 f"{pct(bt['roya']['correct'])} for {base}); Mexico+Guatemala box {pct(f['roya Mexico+GT box']['correct'])} "
-                 f"(n={f['roya Mexico+GT box']['n']}); Mexico only {f['roya Mexico']['answer_counts']['roya']} of "
-                 f"{f['roya Mexico']['n']}. Minador {f['minador']['answer_counts']['minador']} of {f['minador']['n']}, "
-                 f"cercospora {f['cercospora']['answer_counts']['cercospora']} of {f['cercospora']['n']} "
-                 f"({f['cercospora']['answer_counts']['roya']} called roya). Kenyan test macro-F1 "
+                 f"{pct(bt['roya']['correct'])} for {base}); {ea_txt}. Minador {f['minador']['answer_counts']['minador']} "
+                 f"of {f['minador']['n']}, cercospora {f['cercospora']['answer_counts']['cercospora']} of "
+                 f"{f['cercospora']['n']} ({f['cercospora']['answer_counts']['roya']} called roya). Kenyan test macro-F1 "
                  f"{jt['jmuben_macro_f1_argmax']:.4f} ({base}: {bj['jmuben_macro_f1_argmax']:.4f}); no diseased leaf "
                  "was called \"sano\"." if field_dangerous(x) == 0 and jt["jmuben_diseased_called_sano_n"] == 0 else
                  f"- **{n}**: roya correct {pct(f['roya']['correct'])}{ci(f['roya']['correct_ci95'])} (n={f['roya']['n']}).")
@@ -448,13 +648,15 @@ def conclusions(r):
         def rate(g, key="correct", with_ci=False):  # from exact counts (the stored rates are rounded)
             x, n = n_of(g, key)
             return pct(x / n) + (ci1(f[g][key + "_ci95"]) if with_ci else "")
+        ke, ne = geo_answer_counts(r, tt["candidate"])
+        kk, nk = geo_answer_counts(r, tt["candidate"], kenya=True)
         L.append(f"- **v2 at t = {tt['chosen_t']:.2f} (re-chosen on calibration data; the model the app now ships)**: "
                  f"roya correct & accepted {rate('roya', with_ci=True)} ({k('roya')}), "
-                 f"screened {rate('roya screened')} ({k('roya screened')}), Mexico+Guatemala box "
-                 f"{rate('roya Mexico+GT box')} ({k('roya Mexico+GT box')}), Mexico only {k('roya Mexico')}; "
+                 f"screened {rate('roya screened')} ({k('roya screened')}); "
                  f"minador {k('minador')}, cercospora {k('cercospora')}; ojo de gallo sent to DUDA "
                  f"{rate('ojo_de_gallo', 'DUDA')} ({k('ojo_de_gallo', 'DUDA')}); disease answers on the Coffea plant "
-                 f"photos {rate('coffea sample', 'disease_answer', True)} ({k('coffea sample', 'disease_answer')}); "
+                 f"photos {rate('coffea sample', 'disease_answer', True)} ({k('coffea sample', 'disease_answer')}; "
+                 f"East Africa {ke} of {ne}, Kenya {kk} of {nk}); "
                  f"non-coffee test images rejected {pct(j['otro_rejected'])}; "
                  f"diseased called \"sano\": {field_dangerous(c)} (field) and {j['jmuben_diseased_called_sano_n']} (JMuBEN). "
                  f"The cost: {pct(j['jmuben_coffee_DUDA'])} of Kenyan test close-ups go to DUDA "
@@ -468,18 +670,21 @@ def conclusions(r):
     else:
         L.append(f"- **Decision**: {r['ship_rule']['fired']}. The app keeps `{r['ship_rule']['shipped']}`: it stays safe "
                  "(DUDA, \"show the leaf to the officer\") rather than giving confident wrong answers.")
-    L += [
-          "- **What would fix it**: labelled photos from Chiapas, healthy *and* diseased, taken with the app - exactly "
-          "what the officer's confirmations in the hub (`labels` table) collect - then rerun this protocol "
-          "(`model/inat_field.py`, `model/train.py --extra`, `model/field_eval.py`). Healthy field leaves labelled by "
-          "a person are the missing piece; we did not label iNaturalist *Coffea* photos as healthy because their "
-          "health is unknown."]
+    L += [f"- **Kenya**: {ea_txt}, so this proxy says nothing specific about field photos "
+          "from Kirinyaga; the only Kenyan evidence is the JMuBEN test split (lab-like close-ups from one plantation "
+          "in Kirinyaga; `reports/model_eval.md`). See \"East Africa and Kenya\" below.",
+          "- **What would fix it**: labelled photos from Kirinyaga farms, healthy *and* diseased, taken with the app - "
+          "exactly what the extension officer's confirmations in the hub (`labels` table) collect - then rerun this "
+          "protocol (`model/inat_field.py`, `model/train.py --extra`, `model/field_eval.py`). Healthy field leaves "
+          "labelled by a person are the missing piece; we did not label iNaturalist *Coffea* photos as healthy because "
+          "their health is unknown."]
     return L
 
 
-GROUP_ORDER = ["roya", "roya screened", "roya Mexico+GT box", "roya Mexico", "minador", "minador screened",
-               "minador Mexico", "cercospora", "cercospora screened", "ojo_de_gallo", "ojo_de_gallo screened",
-               "coffea sample", "coffea sample Mexico"]
+GROUP_ORDER = ["roya", "roya screened", "roya East Africa", "roya Kenya", "minador", "minador screened",
+               "minador East Africa", "minador Kenya", "cercospora", "cercospora screened", "cercospora East Africa",
+               "cercospora Kenya", "ojo_de_gallo", "ojo_de_gallo screened", "ojo_de_gallo East Africa",
+               "ojo_de_gallo Kenya", "coffea sample", "coffea sample East Africa", "coffea sample Kenya"]
 
 
 def exact_rate(st, group, key):
@@ -495,7 +700,7 @@ def exact_rate(st, group, key):
 
 def group_table(scope_res):
     L = ["| group (true label) | n | correct & accepted [95% CI] | wrong but accepted | of which \"sano\" (dangerous) | "
-         "DUDA [95% CI] | answers: sano / roya / minador / phoma / cercospora / DUDA |", "|---|---|---|---|---|---|---|"]
+         "UNSR [95% CI] | answers: sano / roya / minador / phoma / cercospora / UNSR |", "|---|---|---|---|---|---|---|"]
     for g in GROUP_ORDER:
         if g not in scope_res:
             continue
@@ -508,11 +713,56 @@ def group_table(scope_res):
                      f"{ci(st['disease_answer_ci95'])} | n/a | sano answers: {r('sano_answer')} | "
                      f"{r('DUDA')}{ci(st['DUDA_ci95'])} | {cnt} |")
         elif g.startswith("ojo"):
-            L.append(f"| {g} (desired: DUDA) | {st['n']} | (no correct class) | {r('wrong_accepted')}"
+            L.append(f"| {g} (desired: UNSR) | {st['n']} | (no correct class) | {r('wrong_accepted')}"
                      f"{ci(st['wrong_accepted_ci95'])} | {st['dangerous_sano']} | **{r('DUDA')}**{ci(st['DUDA_ci95'])} | {cnt} |")
         else:
             L.append(f"| {g} | {st['n']} | **{r('correct')}**{ci(st['correct_ci95'])} | {r('wrong_accepted')} | "
                      f"{st['dangerous_sano']} | {r('DUDA')}{ci(st['DUDA_ci95'])} | {cnt} |")
+    miss = geo_groups_missing(scope_res)
+    if miss:
+        by = {geo: [g[:-len(geo) - 1] for g in miss if g.endswith(geo)] for geo in GEO_NAMES}
+        txt = (f"{', '.join(by['Kenya'])} in East Africa or Kenya" if by["East Africa"] == by["Kenya"] else
+               "; ".join(f"{', '.join(v)} in {geo}" for geo, v in by.items() if v))
+        L.append(f"| {txt} | 0 | no photos in these subsets | - | - | - | - |")
+    return L
+
+
+def geo_section(r):
+    g = r.get("geo")
+    if not g:
+        return []
+    c = g["counts"]
+    keys = g["configs"]
+    L = ["## East Africa and Kenya (where our users are)", "",
+         f"Rule: {g['rule']}", "",
+         "| label | photos (all splits) | in East Africa | in Kenya | field test: photos | field test: East Africa | "
+         "field test: Kenya |", "|---|---|---|---|---|---|---|"]
+    for lab in c["all_photos"]:
+        a, t = c["all_photos"][lab], c["field_test"][lab]
+        L.append(f"| {lab} | {a['n']} | {a['east_africa']} | {a['kenya']} | {t['n']} | {t['east_africa']} | {t['kenya']} |")
+    ex = g.get("export_box_by_taxon")
+    if ex:
+        L += ["", "In the whole iNaturalist metadata export these photos were drawn from (`obs_coffee.tsv`, filtered to "
+              "the six taxa in `model/inat_field.py`; not in the repository), the observations inside the East Africa "
+              "box are: " + ", ".join(f"{k} {v}" for k, v in ex.items()) + " (*computed*). So the export holds no "
+              "leaf rust, leaf miner, Cercospora or ojo de gallo observation from East Africa at all."]
+    L += ["", "Every photo inside the East Africa box, with the app's answer per model and threshold (decided exactly "
+          "like the app; top-1 class and probability in brackets; \"where\" is read by eye from the coordinates, not "
+          "computed):", "",
+          "| photo | label | split | where | lat, lon | Kenya polygon | licence | " + " | ".join(keys) + " |",
+          "|---|---|---|---|---|---|---|" + "---|" * len(keys)]
+    for p in g["photos"]:
+        L.append(f"| [{p['photo_id']}]({p['inat_url']}) | {p['label']} | {p['split']} | {p['place_by_eye']} | "
+                 f"{p['lat']}, {p['lon']} | {'yes' if p['in_kenya'] else 'no'} | {p['license']} | " + " | ".join(
+                     f"{p['answers'][k]} ({p['top1'][k][0]} {p['top1'][k][1]:.3f})" for k in keys) + " |")
+    n_ea = ea_count(r, "all_photos")
+    L += ["", "Plain words: " + (f"there are no labelled disease photos from East Africa (n = {n_ea}), " if n_ea == 0 else
+                                 f"there are only {n_ea} labelled disease photos from East Africa, ")
+          + "so the field numbers above do not measure the app on Kenyan field photos. The East African *Coffea* "
+          "photos (health unknown) are too few to estimate a false-alarm rate; they are listed so nobody has to trust a "
+          "rate computed from a handful of photos. The Kenyan evidence is the JMuBEN test split (Mutira, Kirinyaga), "
+          "with the limits listed at the top. Kenyan field photos, labelled by the extension officer, are the next "
+          "step (`data/field_test/README.md`).", ""]
     return L
 
 
@@ -523,16 +773,30 @@ def render_md(r):
     mc = r["multicrop"]["chosen"]
     ph = r["photos"]
     sr = r["ship_rule"]
-    L = ["# Field evaluation on iNaturalist photos (proxy for Chiapas field photos)", "",
+    gc = r.get("geo", {}).get("counts", {})
+    n_ea_all, n_ea_test = ea_count(r, "all_photos"), ea_count(r, "field_test")
+    am = r.get("geo", {}).get("field_test_disease_americas")
+    n_dis_test = sum(gc["field_test"][lab]["n"] for lab in ("roya", "minador", "cercospora", "ojo_de_gallo")) if gc else None
+    cof = gc.get("field_test", {}).get("coffea", {})
+    L = ["# Field evaluation on iNaturalist photos (a proxy for field photos from Kirinyaga, Kenya)", "",
          "Generated by `model/field_eval.py` (all numbers **measured** on the files listed below; 95 % intervals are "
          "Wilson score intervals). Photos: iNaturalist open data, decided exactly like the phone app "
-         "(centre-square crop, 224 px, blur check on the 128 px view, threshold from `labels.json`, `otro` -> DUDA).", "",
-         "> **Read this first.** iNaturalist photos are a *proxy* for Chiapas field photos, not a substitute: most are "
-         "from other countries (only " + str(ph["roya"]["in_mexico"]) + " roya photos are inside Mexico), taken with "
-         "many different cameras and framings, and many show severe, textbook infections. Labels are the iNaturalist "
-         "community identification (mostly \"research\" or \"needs_id\" grade; 3 disease test photos and 189 *Coffea* "
-         "photos are \"casual\"), not an agronomist's diagnosis. Sample sizes "
-         "are small, so the intervals are wide.", "",
+         "(centre-square crop, 224 px, blur check on the 128 px view, threshold from `labels.json`, top class `otro` "
+         "-> UNSR).", "", WORDS, "",
+         "> **Read this first.** Our users farm in Kirinyaga County, central Kenya. " + JMUBEN_KENYA + " iNaturalist "
+         "photos are a second, harder test (other phones and framings, whole plants), but they are **not** from our "
+         "users' region: " + (f"none of the {n_dis_test} labelled disease photos in the field test is from East Africa "
+                              f"(n = {n_ea_test}; in all splits together: n = {n_ea_all})" if n_ea_test == 0 else
+                              f"{n_ea_test} of the {n_dis_test} labelled disease photos in the field test are from East "
+                              "Africa")
+         + (("; all of them are from the Americas (Latin America, the Caribbean and Hawaii; *computed*: longitude "
+             "west of 30 W)" if am == n_dis_test else f"; {am} of them are from the Americas (*computed*: longitude "
+             "west of 30 W)") if am is not None else "")
+         + (f". Only {cof['east_africa']} of the {cof['n']} *Coffea arabica* plant photos are from East Africa "
+            f"({cof['kenya']} from Kenya), too few to measure anything (section \"East Africa and Kenya\")" if cof else "")
+         + ". Many photos show severe, textbook infections. Labels are the iNaturalist community identification "
+         "(mostly \"research\" or \"needs_id\" grade; 3 disease test photos and 189 *Coffea* photos are \"casual\"), "
+         "not an agronomist's diagnosis. Sample sizes are small, so the intervals are wide.", "",
          "## Result", ""]
     tradeoff, tt, team = None, None, []
     if os.path.exists(THRESHOLD_TEST) and os.path.exists(THRESHOLD_SWEEP):  # model/field_threshold.py (v2 recalibration)
@@ -543,13 +807,13 @@ def render_md(r):
         L += [(f"Rule outcome, first comparison (each model at its export threshold): **{sr['fired']}.** Rule's choice: "
                f"`{sr['shipped']}`. {RULE_ANCHOR}") if team else f"**{sr['fired']}.** Shipped: `{sr['shipped']}`.", "",
               pointer_line(tt), ""]
-        tradeoff = render_tradeoff(tt, sw)
+        tradeoff = localize_tradeoff(render_tradeoff(tt, sw), r)
     else:
         L += [f"**{sr['fired']}.** Shipped: `{sr['shipped']}`.", ""]
     # comparison table on the held-out field test
     cols = [(base, "single"), (base, mc)] + [(n, m) for n in names[1:] for m in ("single", mc)]
     head = ["metric"] + [f"{n} {'single view' if m == 'single' else m.replace('mc:', 'multicrop ')}" for n, m in cols]
-    L += ["### Comparison (held-out field test + Kenyan test split)", "",
+    L += ["### Comparison (held-out field test + Kenyan JMuBEN test split)", "",
           "| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
 
     def row(label, fn):
@@ -562,22 +826,26 @@ def render_md(r):
         L.append(f"| {label} | " + " | ".join(vals) + " |")
 
     ft = lambda g, k="correct": (lambda x: f"{pct(exact_rate(x['field_test'][g], g, k))}{ci(x['field_test'][g][k + '_ci95'])} (n={x['field_test'][g]['n']})")  # noqa: E731
+
+    def ft_geo(g, k="correct"):  # a geographic subset: n = 0 is shown as such
+        return lambda x: ft(g, k)(x) if g in x["field_test"] else "n = 0 (no photos)"
     row("roya: correct & accepted, all field-test photos", ft("roya"))
     row("roya: correct & accepted, screened (leaf symptom visible)", ft("roya screened"))
-    row("roya: correct & accepted, Mexico+Guatemala box", ft("roya Mexico+GT box"))
-    row("roya: correct & accepted, Mexico only", ft("roya Mexico"))
-    row("roya: DUDA, all field-test photos", ft("roya", "DUDA"))
+    row("roya: correct & accepted, East Africa", ft_geo("roya East Africa"))
+    row("roya: UNSR, all field-test photos", ft("roya", "DUDA"))
     row("minador: correct & accepted", ft("minador"))
     row("cercospora: correct & accepted", ft("cercospora"))
-    row("ojo de gallo (not a model class): DUDA (desired)", ft("ojo_de_gallo", "DUDA"))
+    row("ojo de gallo (not a model class): UNSR (desired)", ft("ojo_de_gallo", "DUDA"))
     row("diseased field-test photos accepted as \"sano\" (dangerous)", lambda x: str(field_dangerous(x)))
     row("wrong-but-accepted, all diseased field-test photos", lambda x: str(sum(
         round(x["field_test"][g]["wrong_accepted"] * x["field_test"][g]["n"]) for g in ("roya", "minador", "cercospora", "ojo_de_gallo"))))
     row("Coffea arabica sample: disease answers (health unknown)", ft("coffea sample", "disease_answer"))
-    row("JMuBEN test macro-F1 (argmax, 6 classes)", lambda x: f"{x['jmuben_otro_test']['jmuben_macro_f1_argmax']:.4f}")
-    row("JMuBEN test app macro-F1 (DUDA = miss, 5 coffee classes)", lambda x: f"{x['jmuben_otro_test']['jmuben_app_macro_f1']:.4f}")
-    row("JMuBEN test: diseased accepted as \"sano\" (count)", lambda x: str(x["jmuben_otro_test"]["jmuben_diseased_called_sano_n"]))
-    row("otro test images rejected (DUDA)", lambda x: f"{pct(x['jmuben_otro_test']['otro_rejected'])}{ci(x['jmuben_otro_test']['otro_rejected_ci95'])} (n={x['jmuben_otro_test']['otro_n']})")
+    row("Coffea arabica sample, East Africa: disease answers", ft_geo("coffea sample East Africa", "disease_answer"))
+    row("Coffea arabica sample, Kenya: disease answers", ft_geo("coffea sample Kenya", "disease_answer"))
+    row("JMuBEN test (Kenya) macro-F1 (argmax, 6 classes)", lambda x: f"{x['jmuben_otro_test']['jmuben_macro_f1_argmax']:.4f}")
+    row("JMuBEN test (Kenya) app macro-F1 (UNSR = miss, 5 coffee classes)", lambda x: f"{x['jmuben_otro_test']['jmuben_app_macro_f1']:.4f}")
+    row("JMuBEN test (Kenya): diseased accepted as \"sano\" (count)", lambda x: str(x["jmuben_otro_test"]["jmuben_diseased_called_sano_n"]))
+    row("otro test images rejected (UNSR)", lambda x: f"{pct(x['jmuben_otro_test']['otro_rejected'])}{ci(x['jmuben_otro_test']['otro_rejected_ci95'])} (n={x['jmuben_otro_test']['otro_n']})")
     L += ["", "### Ship rule (decided mechanically)", "",
           "The five conditions come from the task brief; how each is measured (both F1 variants, dangerous errors "
           "counted separately on the two test sets, fp16 export for v2, the multicrop scheme) was fixed before the v2 "
@@ -594,6 +862,7 @@ def render_md(r):
     if tradeoff:
         L += ["", tradeoff.rstrip("\n")]
     L += ["", "## Conclusions (plain words)", ""] + conclusions(r) + [""]
+    L += [""] + geo_section(r)
     # v1 on all photos
     L += ["", f"## {base} (the app's model before this test) on ALL photos", "",
           f"`{base}` never saw any of these photos, so every photo counts. Single view ({base}'s app rule):", ""]
@@ -612,7 +881,7 @@ def render_md(r):
           "tiles of 60 % of the side; `3x3` = 9 tiles of 45 %. Rule: blur check on the full view; a confident full-view "
           "disease answer is kept; otherwise a disease is accepted only if at least k tiles agree on it with "
           "probability >= threshold (and no other disease has as many votes); \"sano\" only ever comes from the full "
-          "view; otherwise DUDA.", "",
+          "view; otherwise UNSR.", "",
           f"Scheme chosen **without the field test** ({r['multicrop']['rule']}): **{mc}**.", "",
           "| scheme | inferences per photo | validation otro rejected | validation coffee correct & accepted | "
           "field-dev roya correct (baseline never saw these) |", "|---|---|---|---|---|"]
@@ -620,7 +889,7 @@ def render_md(r):
         L.append(f"| {t['method']} | {t['inferences']} | {pct(t['val_otro_rejected'])} | "
                  f"{pct(t['val_coffee_correct_accepted'])} | {pct(t['field_dev_roya_correct'])} (n={t['field_dev_roya_n']}) |")
     L += ["", "All schemes, held-out field test (for transparency; only the pre-registered scheme enters the ship rule):", "",
-          "| model | method | roya correct | roya screened correct | ojo de gallo DUDA | Coffea disease answers | "
+          "| model | method | roya correct | roya screened correct | ojo de gallo UNSR | Coffea disease answers | "
           "otro rejected | dangerous (field) |", "|---|---|---|---|---|---|---|---|"]
     for n in names:
         for m, x in models[n]["methods"].items():
@@ -636,14 +905,13 @@ def render_md(r):
           "Rebuild: `python model/inat_field.py --inat <dir>`.",
           "- **Labels**: taxon of the observation: *Hemileia vastatrix* and genus *Hemileia* -> roya; *Leucoptera "
           "coffeella* -> minador; *Cercospora coffeicola* -> cercospora; *Mycena citricolor* (ojo de gallo / American "
-          "leaf spot, not one of our classes) -> the right answer is DUDA; *Coffea arabica* -> coffee plant, health "
+          "leaf spot, not one of our classes) -> the right answer is UNSR; *Coffea arabica* -> coffee plant, health "
           "unknown (never trained on, only used to count disease answers).",
-          f"- **Mexico rule**: {r['mexico_rule']}",
-          "- **Split by observer** (seed 42, `model/inat_field.py`): field test = every observer with a photo in the box "
-          "+ a random ~30 % of the other observers of each disease; ojo de gallo is always test, so 1 ojo de gallo test "
-          "photo shares its observer with a v2 training photo (no other test photo does); the rest is field-train "
-          f"(used only by the v2 experiment). Coffea: one photo per observer, {ph['coffea']['observers']} distinct "
-          "observers, none of them a field-train observer.",
+          f"- **Split by observer** (`model/inat_field.py`): {r['split_rule']} Ojo de gallo is always test, so 1 ojo "
+          "de gallo test photo shares its observer with a v2 training photo (no other test photo does); the rest is "
+          "field-train (used only by the v2 experiment). Coffea: one photo per observer, "
+          f"{ph['coffea']['observers']} distinct observers, none of them a field-train observer.",
+          f"- **Geography (report subsets only)**: {r['geo_rule']}",
           "- **Screening** (`reports/field_inat_screening.csv`): every disease photo was looked at on contact sheets "
           "(220 px thumbnails) and "
           "marked `yes` if a leaf symptom is clearly visible (leaf or lesion close enough to see), `no` for whole "
@@ -655,20 +923,26 @@ def render_md(r):
           "`model/export_onnx.py` (fp16 weights, threshold floor 0.70, blur threshold from validation). Training log "
           "and calibration: `reports/field_v2_training_log.csv`, `reports/field_v2_calibration.json` (best epoch by "
           "JMuBEN validation macro-F1; v1's log is `reports/model_training_log.csv`).", "",
-          "| label | photos | observations | observers | field-train / field-test | screened yes | in Mexico | in box | licenses |",
-          "|---|---|---|---|---|---|---|---|---|"]
+          "| label | photos | observations | observers | field-train / field-test | screened yes | in split box | "
+          "East Africa | Kenya | licenses |",
+          "|---|---|---|---|---|---|---|---|---|---|"]
     for lab, v in ph.items():
         sp = v["split"]
         tr_te = (f"{sp.get('field_train', 0)} / {sp.get('field_test', 0)}" if lab != "coffea" else f"eval only ({sp.get('coffea_eval', 0)})")
         L.append(f"| {lab} | {v['photos']} | {v['observations']} | {v['observers']} | {tr_te} | "
-                 f"{'n/a' if v['screened_yes'] is None else v['screened_yes']} | {v['in_mexico']} | {v['in_mexico_box']} | "
+                 f"{'n/a' if v['screened_yes'] is None else v['screened_yes']} | {v['in_split_box']} | "
+                 f"{v['in_east_africa']} | {v['in_kenya']} | "
                  + ", ".join(f"{k} {c}" for k, c in sorted(v["licenses"].items())) + " |")
     L += ["", "Models: " + "; ".join(f"`{n}` = `{models[n]['model']}` ({models[n].get('version')}, sha1 "
                                      f"{models[n]['sha1_12']}, threshold {models[n]['threshold']}, blur "
                                      f"{models[n]['blur_threshold']})" for n in names) + "."
           + (f" The app ships the `{tt['candidate'].split('@')[0]}` file as `app/model/cafetal.onnx` with threshold "
              f"{tt['chosen_t']} (team decision, see \"Result\")." if team else ""), ""]
-    return "\n".join(L) + "\n"
+    md = english("\n".join(L) + "\n")
+    left = [x for x in md.split("\n") if re.search(r"Chiapas|Tseltal|Guatemala|No estoy|Mexico(?! and northern)", x)]
+    if left:
+        print("WARNING: old-region wording left in field_eval.md:", *[x[:120] for x in left], sep="\n  ")
+    return md
 
 
 if __name__ == "__main__":

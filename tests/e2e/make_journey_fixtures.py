@@ -2,8 +2,8 @@
 
   journey_roya.jpg     the FIRST leaf-rust image of the model's held-out TEST split (manifest order, not
                        hand-picked): JMuBEN Leaf_rust/1(105).jpg, CC BY 4.0, Jepkoech et al. 2021. Unchanged.
-  journey_blurred.jpg  the same image, Gaussian blur radius 6, upscaled to 960x960 like a phone photo -> DUDA
-  journey_object.jpg   a synthetic non-plant photo (a blue bucket on a concrete floor), drawn here -> DUDA/OTRO
+  journey_blurred.jpg  the same image, Gaussian blur radius 6, upscaled to 960x960 like a phone photo -> UNSR
+  journey_object.jpg   a synthetic non-plant photo (a blue bucket on a concrete floor), drawn here -> UNSR/OTHR
 
 PlantDoc and Imagenette test images are NOT copied into the repo (web-collected / ImageNet terms): journey.mjs
 reads them from $DATA_RAW (default /home/user/data_raw) and skips those two checks when they are missing.
@@ -12,7 +12,7 @@ Run: python tests/e2e/make_journey_fixtures.py [path to the raw JMuBEN rust imag
   python tests/e2e/make_journey_fixtures.py --pick-plantdoc   (needs onnxruntime + the prepared data)
 prints the PlantDoc image journey.mjs uses, by a fixed rule: the FIRST plantdoc test image in manifest order
 (<data>/manifest.csv, split=test, selected=1) that the shipped model (app/model/, decided like the app: blur check,
-top-1 >= threshold, otro -> DUDA) rejects. The first one, Apple Scab Leaf/Apple-Scab-image-02.jpg, is a known v2
+top-1 >= threshold, otro -> fail-safe) rejects. The first one, Apple Scab Leaf/Apple-Scab-image-02.jpg, is a known v2
 false alarm (roya 0.98 at t = 0.90; one of the 8 of 446 otro test images v2 accepts, reports/model_eval.md (a))."""
 import os
 import sys
@@ -39,7 +39,7 @@ if "--pick-plantdoc" in sys.argv:
         p = sess.run(None, {labels['input']['name']: x})[0][0]
         k = int(p.argmax())
         duda = laplacian_variance(im) < labels['blur_threshold'] or classes[k] == 'otro' or p[k] < labels['threshold']
-        print(f"{'DUDA' if duda else classes[k]:10s} top {classes[k]} {p[k]:.3f}  {r['path']}")
+        print(f"{'UNSR' if duda else classes[k]:10s} top {classes[k]} {p[k]:.3f}  {r['path']}")
         if duda:
             break
     sys.exit(0)

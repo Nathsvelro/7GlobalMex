@@ -1,22 +1,22 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mapa de reportes</title>
+<title>Report map</title>
 <link rel="stylesheet" href="/hub/style.css">
 <link rel="icon" href="data:,">
 </head>
 <body>
 <main>
-  <h1>Mapa de parcelas y avisos</h1>
-  <p class="muted small">Cada punto es la parcela de un socio, con el color de su reporte más grave de los últimos 30 días (roya &gt; duda &gt; otras manchas o plagas &gt; sana), como en la lista del técnico. Los círculos rojos son zonas de aviso de roya (radio de 5 km).
-    Mapa simple sin internet (sin calles ni relieve). Ubicaciones aproximadas.</p>
+  <h1>Map of farms and alerts</h1>
+  <p class="muted small">Each dot is a member's farm, coloured by its most serious report of the last 30 days (rust &gt; unsure &gt; other spots or pests &gt; healthy), as on the officer worklist. Red circles are rust alert areas (5 km radius).
+    Simple offline map (no roads or terrain). Locations are approximate.</p>
   <div class="map-wrap" id="map"></div>
   <p class="legend small" id="legend"></p>
   <div class="row">
-    <div class="card grow"><h2 style="margin-top:0">Avisos de brote</h2><div id="alerts" class="small"></div></div>
-    <div class="card grow"><h2 style="margin-top:0">Regla del aviso</h2><div id="rule" class="small"></div></div>
+    <div class="card grow"><h2 style="margin-top:0">Outbreak alerts</h2><div id="alerts" class="small"></div></div>
+    <div class="card grow"><h2 style="margin-top:0">Alert rule</h2><div id="rule" class="small"></div></div>
   </div>
 </main>
 <script src="/hub/common.js"></script>
@@ -26,7 +26,7 @@ function render(d) {
   const pts = d.members.filter((m) => m.lat != null);
   const lats = pts.map((m) => m.lat).concat(d.alerts.map((a) => a.lat));
   const lons = pts.map((m) => m.lon).concat(d.alerts.map((a) => a.lon));
-  if (!lats.length) { document.getElementById("map").innerHTML = '<p class="muted" style="padding:12px">No hay parcelas con ubicación.</p>'; return; }
+  if (!lats.length) { document.getElementById("map").innerHTML = '<p class="muted" style="padding:12px">No farms with a location.</p>'; return; }
   const r = d.params.outbreak.radius_km;
   let minLat = Math.min(...lats), maxLat = Math.max(...lats), minLon = Math.min(...lons), maxLon = Math.max(...lons);
   const mid = (minLat + maxLat) / 2, cos = Math.cos((mid * Math.PI) / 180);
@@ -36,7 +36,7 @@ function render(d) {
   const ox = (W - (maxLon - minLon) * cos * k) / 2, oy = (H - (maxLat - minLat) * k) / 2;
   const X = (lon) => ox + (lon - minLon) * cos * k, Y = (lat) => oy + (maxLat - lat) * k;
   const kmPx = k / 111.32;
-  let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de parcelas">`;
+  let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of farms">`;
   s += `<rect width="${W}" height="${H}" fill="#eef2e8"/>`;
   // light grid every 0.05 degrees
   for (let la = Math.ceil(minLat * 20) / 20; la <= maxLat; la += 0.05)
@@ -46,8 +46,8 @@ function render(d) {
   // alert circles
   for (const a of d.alerts) {
     const col = a.active ? "#b3361f" : "#9a9a9a";
-    s += `<circle cx="${X(a.lon)}" cy="${Y(a.lat)}" r="${r * kmPx}" fill="${col}" fill-opacity="${a.active ? 0.12 : 0.05}" stroke="${col}" stroke-dasharray="${a.active ? "" : "5 4"}" stroke-width="2"><title>Aviso #${a.id} ${a.active ? "activo" : "vencido"}: ${a.n_reports} socios con roya cerca de ${esc(a.community)}</title></circle>`;
-    s += `<text x="${X(a.lon)}" y="${Y(a.lat) - r * kmPx - 6}" text-anchor="middle" font-size="12" font-weight="700" fill="${col}">Aviso #${a.id}${a.active ? "" : " (vencido)"}</text>`;
+    s += `<circle cx="${X(a.lon)}" cy="${Y(a.lat)}" r="${r * kmPx}" fill="${col}" fill-opacity="${a.active ? 0.12 : 0.05}" stroke="${col}" stroke-dasharray="${a.active ? "" : "5 4"}" stroke-width="2"><title>Alert #${a.id} ${a.active ? "active" : "expired"}: ${a.n_reports} members with rust near ${esc(a.community)}</title></circle>`;
+    s += `<text x="${X(a.lon)}" y="${Y(a.lat) - r * kmPx - 6}" text-anchor="middle" font-size="12" font-weight="700" fill="${col}">Alert #${a.id}${a.active ? "" : " (expired)"}</text>`;
   }
   // community labels at the centroid of their plots
   const comm = {};
@@ -58,11 +58,11 @@ function render(d) {
   }
   // plots
   for (const m of pts) {
-    const l = m.worst, info = l ? CODE_INFO[l.code] : null;
+    const l = m.worst, info = l ? (CODE_INFO[l.code] || { name: l.code, color: "#555" }) : null;
     const col = info ? info.color : "#b8b8b0";
     const isNoor = m.member_id === "M0123";
     s += `<g><circle cx="${X(m.lon)}" cy="${Y(m.lat)}" r="${isNoor ? 9 : 7}" fill="${col}" stroke="${isNoor ? "#111" : "#fff"}" stroke-width="${isNoor ? 3 : 2}"/>
-      <title>${esc(m.member_id)} ${esc(m.name)} — ${l ? "más grave: " + esc(info.name) + (["DUDA", "OTRO"].includes(l.code) ? "" : " " + l.conf + "%") + " · " + l.date + " (" + m.reports_30d + (m.reports_30d === 1 ? " reporte" : " reportes") + " en 30 días)" : "sin reportes en 30 días"}</title></g>`;
+      <title>${esc(m.member_id)} ${esc(m.name)} — ${l ? "most serious: " + esc(info.name) + (NEEDS_PERSON.includes(l.code) ? "" : " " + l.conf + "%") + " · " + l.date + " (" + m.reports_30d + (m.reports_30d === 1 ? " report" : " reports") + " in 30 days)" : "no reports in 30 days"}</title></g>`;
     if (isNoor) s += `<text x="${X(m.lon) + 12}" y="${Y(m.lat) + 4}" font-size="12" font-weight="700" fill="#111">Noor</text>`;
   }
   // scale bar
@@ -74,18 +74,18 @@ function render(d) {
   await initPage();
   const d = await api("/api/map");
   render(d);
-  document.getElementById("legend").innerHTML = '<span><b>Color = reporte más grave (30 días), de más a menos grave:</b></span>' +
-    ["ROYA", "DUDA", "OTRO", "CERC", "PHOM", "MINA", "ACAR", "SANO"].map((k) => `<span><span class="dot" style="background:${CODE_INFO[k].color}"></span>${CODE_INFO[k].name}</span>`).join("") +
-    '<span><span class="dot" style="background:#b8b8b0"></span>Sin reportes (30 días)</span><span><span class="dot" style="background:#fff;border:3px solid #111"></span>Noor</span>' +
-    '<span style="color:#b3361f">◯ zona de aviso activa (5 km)</span>';
+  document.getElementById("legend").innerHTML = '<span><b>Colour = most serious report (30 days), most to least serious:</b></span>' +
+    ["RUST", "UNSR", "OTHR", "CERC", "PHOM", "MINR", "MITE", "HLTH"].map((k) => `<span><span class="dot" style="background:${CODE_INFO[k].color}"></span>${CODE_INFO[k].name} (${k})</span>`).join("") +
+    '<span><span class="dot" style="background:#b8b8b0"></span>No reports (30 days)</span><span><span class="dot" style="background:#fff;border:3px solid #111"></span>Noor</span>' +
+    '<span style="color:#b3361f">◯ active alert area (5 km)</span>';
   document.getElementById("alerts").innerHTML = d.alerts.length ? d.alerts.map((a) =>
-    `<p><b>#${a.id} ${a.active ? '<span class="badge unv">activo</span>' : '<span class="badge grey">vencido</span>'}</b> Roya cerca de ${esc(a.community)} · ${a.n_reports} socios ·
-     ${fmtDate(a.created_at)}<br><span class="muted">Socios: ${a.member_ids.map(esc).join(", ")} · SMS: ${a.messages.pending_approval || 0} por aprobar,
-     ${a.messages.sent_simulated || 0} enviados, ${a.messages.rejected || 0} rechazados</span></p>`).join("") : "No hay avisos.";
+    `<p><b>#${a.id} ${a.active ? '<span class="badge unv">active</span>' : '<span class="badge grey">expired</span>'}</b> Rust near ${esc(a.community)} · ${a.n_reports} members ·
+     ${fmtDate(a.created_at)}<br><span class="muted">Members: ${a.member_ids.map(esc).join(", ")} · SMS: ${a.messages.pending_approval || 0} waiting for approval,
+     ${a.messages.sent_simulated || 0} sent, ${a.messages.rejected || 0} rejected</span></p>`).join("") : "No alerts.";
   const o = d.params.outbreak;
-  document.getElementById("rule").innerHTML = `<p>${o.min_members} o más socios distintos reportan <b>ROYA</b> con confianza ≥ ${o.min_conf}%,
-    todos a menos de ${o.radius_km} km entre sí, en los últimos ${o.window_days} días → un aviso (máximo uno por zona cada ${o.one_alert_per_area_days} días).
-    El aviso se queda en la bandeja hasta que el personal lo aprueba.</p><p class="muted">${esc(o.note)} No es IA: es una regla fija.</p>`;
+  document.getElementById("rule").innerHTML = `<p>${o.min_members} or more different members report <b>RUST</b> with confidence ≥ ${o.min_conf}%,
+    all within ${o.radius_km} km of each other, in the last ${o.window_days} days → one alert (at most one per area every ${o.one_alert_per_area_days} days).
+    The alert stays in the outbox until staff approve it.</p><p class="muted">${esc(o.note)} Not AI: a fixed rule.</p>`;
 })();
 </script>
 </body>

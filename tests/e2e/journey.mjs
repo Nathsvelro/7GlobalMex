@@ -5,18 +5,19 @@
 //      DATA_RAW=/home/user/data_raw (PlantDoc + Imagenette test images; those checks are SKIPPED if missing)
 //      NO_RESET=1 (do not reset the DEMO data first; by default the test calls POST /api/demo/reset)
 //      KEEP_STATE=1 (leave the hub as the journey left it; by default the DEMO data is reset again at the end so
-//      the live demo can still fire the alert with Noor's ROYA)
+//      the live demo can still fire the alert with Noor's RUST report)
 // Playwright: uses `playwright` from node_modules or the global npm root. If Playwright cannot find its own
 //   Chromium, the test falls back to /opt/pw-browsers/chromium-1194/chrome-linux/chrome (or set CHROMIUM=<path>).
 //   Do not run "playwright install" in the sandbox.
 // Offline: PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS=1 (set below) makes Playwright see and route the service
 //   worker's own fetches; without it context.setOffline() does NOT stop them in Chromium. During the airplane-mode
 //   phase every request that would leave the browser is also aborted by a route, and counted.
-// Steps: A) first load -> SW caches everything -> offline reload -> onboarding (es, consent, M0123) -> rust
-//   test image -> audio tzh+es from the cache; B) PlantDoc / non-plant / blurred -> diag_duda; C) SMS code;
-//   D) back online: Simular envío -> observation, 3rd ROYA nearby -> alert + pending broadcasts, worklist,
-//   approve one broadcast in the Bandeja page, sync photo; E) simulator SMS: PRECIO + free text; F) every
-//   outbound SMS = a cards.json template with slots filled; every visible app text comes from cards.json.
+// Steps: A) first load -> SW caches everything -> offline reload -> onboarding (en, consent, M0123) -> rust
+//   test image -> audio en+sw+kik from the cache; B) PlantDoc / non-plant / blurred -> diag_duda; C) SMS code;
+//   D) back online: "Send (SIMULATED)" -> observation, 3rd RUST nearby -> alert + pending broadcasts, worklist,
+//   approve one broadcast in the outbox page, sync photo; E) simulator SMS: PRICE, BEI + free text in English and
+//   Kiswahili; F) every outbound SMS = a cards.json template with slots filled; every visible app text comes from
+//   cards.json.
 // Writes reports/screenshots/journey_*.png and reports/journey_results.json. Exit code 1 if a check fails.
 process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS ??= '1';
 import { execSync } from 'node:child_process';
@@ -48,11 +49,13 @@ const IMG = {
   object: path.join(FIX, 'journey_object.jpg'), // synthetic non-plant photo
   blurred: path.join(FIX, 'journey_blurred.jpg'), // rust image, Gaussian blur r=6
 };
-const NOOR = { member: 'M0123', phone: '+529670000123', lat: 16.912, lon: -92.108 };
-const CODE_RE = /^CAF1 M\d{4} (SANO|ROYA|MINA|PHOM|CERC|ACAR|OTRO|DUDA) \d{1,2} \d{8} (-?\d+\.\d{2},-?\d+\.\d{2}|-) #[0-9A-Z]{4}$/i;
+// Noor (DEMO data, hub/seed.py): member M0123, Ondera Juu, Kirinyaga County; her plot rounds to -0.52,37.32.
+const NOOR = { member: 'M0123', phone: '+254700000123', lat: -0.518, lon: 37.322 };
+const CODE_RE = /^CAF1 M\d{4} (HLTH|RUST|MINR|PHOM|CERC|MITE|OTHR|UNSR) \d{1,2} \d{8} (-?\d+\.\d{2},-?\d+\.\d{2}|-) #[0-9A-Z]{4}$/i;
 const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/cards.json'), 'utf8'));
 const byId = Object.fromEntries(cards.cards.map((c) => [c.id, c]));
-const T = (id, lang = 'es') => byId[id][lang];
+const T = (id, lang = 'en') => byId[id][lang];
+const LANGS = Object.keys(cards.languages); // en, sw, kik
 fs.mkdirSync(SHOTS, { recursive: true });
 
 const out = { hub: HUB, started: new Date().toISOString(), checks: [], results: {} };
@@ -160,14 +163,14 @@ async function failSafe(page, key, label) {
   const r = await diagnose(page, IMG[key]);
   out.results[key] = r;
   console.log(`  ${key}: ${r.sms_code} top=${r.top} reason=${r.reason} blur=${r.blur}`);
-  check(r.diag_text === T('diag_duda') && ['DUDA', 'OTRO'].includes(r.code),
+  check(r.diag_text === T('diag_duda') && ['UNSR', 'OTHR'].includes(r.code),
     `${label} -> "${T('diag_duda')}" (${r.code}, top ${r.top} ${r.conf}%, reason ${r.reason})`);
   return r;
 }
 
 async function phone(browser) {
   const ctx = await browser.newContext({
-    ...pw.devices['Pixel 5'], locale: 'es-MX', permissions: ['geolocation'],
+    ...pw.devices['Pixel 5'], locale: 'en-KE', permissions: ['geolocation'],
     geolocation: { latitude: NOOR.lat, longitude: NOOR.lon },
   });
   const page = await ctx.newPage();
@@ -199,7 +202,7 @@ async function phone(browser) {
   check(await page.isVisible('#pill-demo'), 'airplane mode: app opens from the cache; DEMO badge visible');
   await shot(page, 'journey_02_language.png');
   await auditText(page, 'language');
-  await page.click('.lang-btn[data-lang="es"]');
+  await page.click('.lang-btn[data-lang="en"]');
   await page.click('#lang-next');
   await page.waitForSelector('#s-consent:not([hidden])');
   await shot(page, 'journey_03_consent.png');
@@ -220,18 +223,18 @@ async function phone(browser) {
   out.results.roya = roya;
   console.log('  rust test image:', JSON.stringify({ code: roya.sms_code, top: roya.top, probs: roya.probs, ms: roya.ms }));
   check(roya.label === 'roya', `JMuBEN rust TEST image -> ${roya.label} ${roya.conf}% (expected roya)`);
-  const audio = await page.evaluate(async () => {
+  const audio = await page.evaluate(async (langs) => {
     const res = {};
-    for (const l of ['tzh', 'es']) {
+    for (const l of langs) {
       const a = document.getElementById('audio-' + l);
-      const r = await fetch(a.src).catch(() => null);
-      res[l] = { src: a.getAttribute('src'), ok: !!(r && r.ok), bytes: r ? (await r.arrayBuffer()).byteLength : 0 };
+      const r = a ? await fetch(a.src).catch(() => null) : null;
+      res[l] = { src: a && a.getAttribute('src'), ok: !!(r && r.ok), bytes: r ? (await r.arrayBuffer()).byteLength : 0 };
     }
     return res;
-  });
-  check(audio.tzh.ok && audio.es.ok && audio.tzh.bytes > 1000 && audio.es.bytes > 1000,
-    `audio for tzh and es present and loadable offline: ${audio.tzh.src} (${audio.tzh.bytes} B), ${audio.es.src} (${audio.es.bytes} B)`);
-  for (const l of ['tzh', 'es']) {
+  }, LANGS);
+  check(LANGS.length === 3 && LANGS.every((l) => audio[l].ok && audio[l].bytes > 1000),
+    `audio for ${LANGS.join(', ')} present and loadable offline: ` + LANGS.map((l) => `${audio[l].src} (${audio[l].bytes} B)`).join(', '));
+  for (const l of LANGS) {
     await page.click('#r-play-' + l);
     await page.waitForTimeout(1300);
     const t = await page.evaluate((x) => document.getElementById('audio-' + x).currentTime, l);
@@ -246,9 +249,9 @@ async function phone(browser) {
   // C) SMS code
   check(CODE_RE.test(roya.sms_code) && roya.sms_code.length <= 160,
     `SMS code valid, ${roya.sms_code.length} chars: ${roya.sms_code}`);
-  check(roya.sms_code.includes(' 16.91,-92.11 '), 'location rounded to 2 decimals (~1 km)');
+  check(roya.sms_code.includes(' -0.52,37.32 '), 'location rounded to 2 decimals (~1 km)');
   const href = await page.getAttribute('#r-send', 'href');
-  check(href === 'sms:+520000000000?body=' + encodeURIComponent(roya.sms_code), `"Enviar por SMS" link: ${href}`);
+  check(href === 'sms:+254700000000?body=' + encodeURIComponent(roya.sms_code), `"Send by SMS" link: ${href}`);
   await page.evaluate(() => document.addEventListener('click', (e) => {
     if (e.target.closest('a[href^="sms:"]')) e.preventDefault(); // no SMS app in the test browser
   }, true));
@@ -263,7 +266,7 @@ async function phone(browser) {
   await failSafe(page, 'object', 'synthetic non-plant photo (bucket)');
   await shot(page, 'journey_08_not_plant.png');
   const bl = await failSafe(page, 'blurred', 'heavily blurred rust photo');
-  check(bl && bl.reason === 'blurry' && / DUDA 0 /.test(bl.sms_code), `blurred photo caught by the blur check (score ${bl && bl.blur})`);
+  check(bl && bl.reason === 'blurry' && / UNSR 0 /.test(bl.sms_code), `blurred photo caught by the blur check (score ${bl && bl.blur})`);
   await shot(page, 'journey_09_blurred.png');
   await auditText(page, 'result (duda)');
 
@@ -274,16 +277,18 @@ async function phone(browser) {
   await page.click('#nav [data-go="settings"]');
   await page.waitForSelector('#s-settings:not([hidden])');
   await auditText(page, 'settings');
-  await page.click('#set-langs .lang-btn[data-lang="tzh"]');
-  await auditText(page, 'settings (tzh)');
+  await page.click('#set-langs .lang-btn[data-lang="kik"]');
+  await auditText(page, 'settings (kik)');
   await page.click('#nav [data-go="history"]');
   await page.click(`#hist-list button[data-obs="${roya.obs_id}"]`);
   await page.waitForSelector('#r-body:not([hidden])');
   await page.evaluate(() => document.querySelectorAll('audio').forEach((a) => a.pause()));
-  await shot(page, 'journey_11_result_tzh.png');
-  await auditText(page, 'result (roya, tzh)');
+  await shot(page, 'journey_11_result_kik.png');
+  await auditText(page, 'result (roya, kik)');
   await page.click('#nav [data-go="settings"]');
-  await page.click('#set-langs .lang-btn[data-lang="es"]');
+  await page.click('#set-langs .lang-btn[data-lang="sw"]');
+  await auditText(page, 'settings (sw)');
+  await page.click('#set-langs .lang-btn[data-lang="en"]');
 
   ctx.off('response', onResp);
   out.results.offline_network = net;
@@ -300,7 +305,7 @@ async function phone(browser) {
   await page.click('#r-sim');
   await page.waitForSelector('#r-sim-reply .bubble, #r-sim-reply .say', { timeout: 15000 });
   const reply = (await page.textContent('#r-sim-reply')).trim();
-  check(!!matchTemplate(reply, 'sms_obs_recibida', 'es'), `"Simular envío" -> hub reply (card sms_obs_recibida): "${reply}"`);
+  check(!!matchTemplate(reply, 'sms_obs_recibida', 'en'), `"Send (SIMULATED)" -> hub reply (card sms_obs_recibida, en): "${reply}"`);
   // The chip appears after the app records the send (await markSent), a moment after the reply bubbles.
   const chip = await page.waitForSelector('#r-sim-chip:not([hidden])', { timeout: 5000 }).then(() => true, () => false);
   check(chip, 'SIMULATED label shown on the phone');
@@ -335,13 +340,13 @@ async function phone(browser) {
 }
 
 async function hubPages(browser, { bcast }) {
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'es-MX' });
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'en-KE' });
   const page = await ctx.newPage();
   page.on('dialog', (d) => d.accept());
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
 
-  // approve ONE broadcast in the Bandeja page (staff tap)
+  // approve ONE broadcast in the outbox page (bandeja.html; staff tap)
   await page.goto(HUB + '/hub/bandeja.html?filter=pending_approval');
   await page.waitForSelector(`button[onclick="decide(${bcast[0].id},'approve')"]`);
   await shot(page, 'journey_14_bandeja_pending.png');
@@ -349,7 +354,7 @@ async function hubPages(browser, { bcast }) {
   await page.waitForTimeout(800);
   const all = (await api('/api/outbox')).messages;
   const m = all.find((x) => x.id === bcast[0].id);
-  check(m && m.status === 'sent_simulated', `staff approved one broadcast in the Bandeja page -> ${m && m.status}; ` +
+  check(m && m.status === 'sent_simulated', `staff approved one broadcast in the outbox page -> ${m && m.status}; ` +
     `${all.filter((x) => x.status === 'pending_approval').length} still pending`);
   await shot(page, 'journey_15_bandeja_approved.png');
 
@@ -364,29 +369,35 @@ async function hubPages(browser, { bcast }) {
   await page.goto(HUB + '/hub/simulador.html?phone=' + encodeURIComponent(NOOR.phone));
   await page.waitForFunction(() => document.getElementById('who').options.length > 1);
   const sms = {};
-  for (const body of ['PRECIO', 'cuanto estan pagando el kilo de cafe', 'mis matas tienen polvo naranja', 'asdf qwerty']) {
+  const PRICE_EN = 'how much are you paying for a kilo of cherry';
+  const REPORT_SW = 'majani ya kahawa yana unga wa rangi ya machungwa'; // "the coffee leaves have orange powder"
+  for (const body of ['PRICE', 'BEI', PRICE_EN, REPORT_SW, 'asdf qwerty']) {
     await page.fill('#body', body);
     const [resp] = await Promise.all([page.waitForResponse((r) => r.url().endsWith('/api/sms/inbound')), page.click('#send')]);
     sms[body] = await resp.json();
     await page.waitForTimeout(400);
-    if (body === 'PRECIO') await shot(page, 'journey_21_simulador_precio.png');
+    if (body === 'PRICE') await shot(page, 'journey_21_simulador_precio.png');
   }
   await page.waitForTimeout(2200); // thread refresh
   await shot(page, 'journey_22_simulador_texto.png');
   out.results.sms = sms;
   const prices = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/prices.json'), 'utf8'));
-  const p = sms.PRECIO.replies[0] || {};
-  const cafe = prices.items.find((i) => i.id === 'cafe_pergamino');
-  check(p.card_id === 'sms_precio' && p.body.includes(cafe.price.toFixed(2)) && p.body.includes(prices.sms_fuente) &&
-    p.body.includes(prices.sms_fecha), `PRECIO -> reference price ${cafe.price.toFixed(2)}, source "${prices.sms_fuente}", date "${prices.sms_fecha}": "${p.body}"`);
+  const cafe = prices.items.find((i) => i.id === 'coffee_cherry');
+  for (const kw of ['PRICE', 'BEI']) {
+    const p = sms[kw].replies[0] || {};
+    check(p.card_id === 'sms_precio' && p.body.includes(cafe.price.toFixed(2)) && p.body.includes(prices.sms_fuente) &&
+      p.body.includes(prices.sms_fecha) && !!matchTemplate(p.body, 'sms_precio', 'en'),
+    `${kw} -> reference price ${cafe.price.toFixed(2)} ${prices.currency}, source "${prices.sms_fuente}", date "${prices.sms_fecha}", ` +
+      `in Noor's language (en): "${p.body}"`);
+  }
   const intentOf = (r) => (r.actions.find((a) => a.type === 'intent') || {});
   const fw = (r) => r.actions.some((a) => a.type === 'forwarded_to_officer');
-  let r = sms['cuanto estan pagando el kilo de cafe'];
-  check(intentOf(r).intent === 'precio' && r.replies[0].card_id === 'sms_precio',
-    `"cuanto estan pagando el kilo de cafe" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}`);
-  r = sms['mis matas tienen polvo naranja'];
-  check(intentOf(r).intent === 'reporte' && r.replies[0].card_id === 'sms_reporte_instrucciones' && fw(r),
-    `"mis matas tienen polvo naranja" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}, forwarded to officer: ${fw(r)}`);
+  let r = sms[PRICE_EN];
+  check(intentOf(r).intent === 'price' && r.replies[0].card_id === 'sms_precio',
+    `"${PRICE_EN}" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}`);
+  r = sms[REPORT_SW];
+  check(intentOf(r).intent === 'report' && r.replies[0].card_id === 'sms_reporte_instrucciones' && fw(r),
+    `"${REPORT_SW}" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}, forwarded to officer: ${fw(r)}`);
   r = sms['asdf qwerty'];
   check(fw(r) && r.replies[0].card_id === 'sms_pasar_tecnico',
     `"asdf qwerty" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}, forwarded to officer: ${fw(r)}`);

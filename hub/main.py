@@ -1,6 +1,6 @@
 """Cafetal co-op hub (FastAPI). Start with ./run.sh, or:  uvicorn hub.main:app --host 0.0.0.0 --port 8000
 
-API: PLAN.md section 6. Pages: /hub/*.html (Spanish UI for co-op staff and the extension officer).
+API: PLAN.md section 6. Pages: /hub/*.html (English UI for co-op staff and the extension officer).
 """
 import base64
 import binascii
@@ -39,7 +39,7 @@ UID_RE = re.compile(r"^M\d{4}-[0-9A-Z]{4}$")
 # ready-made console for every state-changing endpoint (RESPONSIBLE_AI.md section 5).
 app = FastAPI(title="Cafetal hub", version="1.0",
               description="Co-op hub: registry with consent, SMS inbox (SIMULATED gateway), outbreak alerts, "
-                          "officer worklist, PRECIO, content review. PLAN.md section 6.",
+                          "officer worklist, PRICE, content review. PLAN.md section 6.",
               docs_url=None, redoc_url=None, openapi_url=None)
 
 _local = threading.local()
@@ -122,7 +122,7 @@ def summary():
     return {
         "members": q("SELECT COUNT(*) FROM members"),
         "observations_7d": q("SELECT COUNT(*) FROM observations WHERE date >= ?", week),
-        "roya_7d": q("SELECT COUNT(*) FROM observations WHERE code = 'ROYA' AND date >= ?", week),
+        "rust_7d": q("SELECT COUNT(*) FROM observations WHERE code = 'RUST' AND date >= ?", week),
         "pending_approval": q("SELECT COUNT(*) FROM messages WHERE status = 'pending_approval'"),
         "active_alerts": len(outbreak.active_alerts(c)),
         "officer_messages_new": q("SELECT COUNT(*) FROM officer_messages WHERE status = 'new'"),
@@ -152,7 +152,7 @@ class MemberIn(BaseModel):
     community: str = Field(min_length=1, max_length=60)
     lat: float | None = Field(default=None, ge=-90, le=90)
     lon: float | None = Field(default=None, ge=-180, le=180)
-    language: Literal["es", "tzh", "en"] = "es"
+    language: Literal["en", "sw", "kik"] = "en"
     consent: bool
     consent_by: str = Field(min_length=1, max_length=80)
     consent_text_version: str = "v1"
@@ -170,21 +170,21 @@ def list_members():
 @app.post("/api/members", status_code=201)
 def register_member(m: MemberIn):
     if m.consent is not True:
-        raise HTTPException(400, "Se necesita el consentimiento del socio para registrarlo (consent=true).")
+        raise HTTPException(400, "The member's consent is needed to register them (consent=true).")
     if not m.consent_by.strip():
-        raise HTTPException(400, "Escriba quién le explicó el consentimiento.")
+        raise HTTPException(400, "Write who explained the consent.")
     if not m.name.strip():
-        raise HTTPException(400, "Escriba el nombre del socio.")
+        raise HTTPException(400, "Write the member's name.")
     phone = sms.normalize_phone(m.phone)
     if not re.fullmatch(r"\+\d{10,15}", phone):
-        raise HTTPException(400, "Número de teléfono no válido.")
+        raise HTTPException(400, "Phone number not valid.")
     if not cards.SLOT_VALUE_RE.match(m.community.strip()):
         # The community name goes into the alert SMS, so it may only use letters, digits and . , / : - ( ) % '
-        raise HTTPException(400, "Nombre de comunidad no válido (solo letras, números y . , - ( ) ').")
+        raise HTTPException(400, "Community name not valid (letters, digits and . , - ( ) ' only).")
     c = conn()
     with db.Tx(c):
         if db.member_by_phone(c, phone):
-            raise HTTPException(409, "Ese teléfono ya está registrado.")
+            raise HTTPException(409, "That phone number is already registered.")
         mid = db.next_member_id(c)
         ts = db.now_iso()
         c.execute(
@@ -199,7 +199,7 @@ def register_member(m: MemberIn):
 @app.delete("/api/members/{member_id}")
 def remove_member(member_id: str):
     if not db.delete_member(conn(), member_id.upper()):
-        raise HTTPException(404, "Socio no encontrado.")
+        raise HTTPException(404, "Member not found.")
     return {"ok": True, "deleted": member_id.upper()}
 
 
@@ -242,7 +242,7 @@ def sms_thread(phone: str):
 
 def _card_status(card_id, lang):
     card = cards.get(card_id) if card_id else None
-    return (card or {}).get("status", {}).get(lang or "es", "unverified") if card else None
+    return (card or {}).get("status", {}).get(lang or cards.DEFAULT_LANG, "unverified") if card else None
 
 
 @app.get("/api/outbox")
@@ -272,11 +272,11 @@ def _decide(msg_id: int, new_status: str, d: Decision | None):
     with db.Tx(c):
         msg = db.one(c.execute("SELECT * FROM messages WHERE id = ?", (msg_id,)))
         if not msg:
-            raise HTTPException(404, "Mensaje no encontrado.")
+            raise HTTPException(404, "Message not found.")
         if msg["status"] != "pending_approval":
-            raise HTTPException(409, f"El mensaje ya está en estado '{msg['status']}'.")
+            raise HTTPException(409, f"The message is already '{msg['status']}'.")
         c.execute("UPDATE messages SET status = ?, decided_by = ?, decided_at = ? WHERE id = ?",
-                  (new_status, (d.by if d else None) or "personal de la cooperativa", db.now_iso(), msg_id))
+                  (new_status, (d.by if d else None) or "co-op staff", db.now_iso(), msg_id))
     return db.one(c.execute("SELECT * FROM messages WHERE id = ?", (msg_id,)))
 
 
@@ -435,7 +435,7 @@ def photo(uid: str):
 def get_worklist():
     c = conn()
     return {"farms": outbreak.worklist(c), "params": outbreak.params()["worklist"],
-            "note": "Usted decide a quién visitar. La lista solo ordena reportes; no es un diagnóstico."}
+            "note": "You decide whom to visit. The list only ranks reports; it is not a diagnosis."}
 
 
 class ActionIn(BaseModel):
@@ -451,15 +451,15 @@ def worklist_action(obs_uid: str, a: ActionIn):
     c = conn()
     obs = db.one(c.execute("SELECT * FROM observations WHERE uid = ?", (obs_uid.upper(),)))
     if not obs:
-        raise HTTPException(404, "Observación no encontrada.")
+        raise HTTPException(404, "Observation not found.")
     true_label = a.true_label or None
     model_label = outbreak.CODE_TO_LABEL.get(obs["code"])
     if true_label and true_label not in LABELS:
-        raise HTTPException(400, f"true_label debe ser uno de {LABELS}")
+        raise HTTPException(400, f"true_label must be one of {LABELS}")
     if a.action == "confirmed" and not true_label:
         true_label = model_label
     if a.action == "not_confirmed" and true_label and true_label == model_label:
-        raise HTTPException(400, "Si no se confirma, la etiqueta real debe ser distinta del resultado de la app.")
+        raise HTTPException(400, "If not confirmed, the true label must differ from the app's result.")
     ts = db.now_iso()
     with db.Tx(c):
         c.execute("INSERT INTO officer_actions(obs_uid, action, true_label, note, created_at) VALUES (?,?,?,?,?)",
@@ -504,8 +504,8 @@ def map_data():
     members = db.rows(c.execute("SELECT member_id, name, community, lat, lon, language, demo FROM members"))
     obs = db.rows(c.execute("SELECT uid, member_id, code, conf, date, lat, lon, received_at FROM observations"
                             " WHERE date >= ?", (since,)))
-    # Each farm is coloured by its most serious report (same choice as the worklist), so a later DUDA
-    # or SANO does not hide an earlier ROYA.
+    # Each farm is coloured by its most serious report (same choice as the worklist), so a later UNSR
+    # or HLTH does not hide an earlier RUST.
     worst, count = {}, {}
     for o in obs:
         mid = o["member_id"]
@@ -544,11 +544,11 @@ class VerifyIn(BaseModel):
 @app.post("/api/cards/{card_id}/verify")
 def verify_card(card_id: str, v: VerifyIn):
     if v.verified and not (v.reviewer or "").strip():
-        raise HTTPException(400, "Escriba el nombre de quien revisó.")
+        raise HTTPException(400, "Write the reviewer's name.")
     try:
         card = cards.set_verified(card_id, v.lang, (v.reviewer or "").strip(), v.verified)
     except KeyError:
-        raise HTTPException(404, "Tarjeta no encontrada.")
+        raise HTTPException(404, "Card not found.")
     except ValueError as e:
         raise HTTPException(400, str(e))
     return card
@@ -563,21 +563,21 @@ async def upload_audio(card_id: str, lang: str, file: UploadFile = File(...), sp
     """Native-speaker recording for one card. Saved as content/audio/<lang>/<id>.mp3 (ffmpeg) or kept as
     webm/ogg if ffmpeg is missing; audio_source[lang] = 'native:<speaker>' (make_audio.py never overwrites it)."""
     if not re.fullmatch(r"[a-z0-9_]{1,64}", card_id) or not cards.get(card_id):
-        raise HTTPException(404, "Tarjeta no encontrada.")
+        raise HTTPException(404, "Card not found.")
     if lang not in cards.languages():
-        raise HTTPException(400, "Idioma desconocido.")
+        raise HTTPException(400, "Unknown language.")
     speaker = speaker.strip()
     if not speaker or len(speaker) > 80 or ":" in speaker:
-        raise HTTPException(400, "Escriba el nombre de quien graba (sin ':').")
+        raise HTTPException(400, "Write the speaker's name (no ':').")
     data = await file.read(MAX_AUDIO_BYTES + 1)
     if len(data) > MAX_AUDIO_BYTES:
-        raise HTTPException(413, "Grabación de más de 10 MB.")
+        raise HTTPException(413, "Recording larger than 10 MB.")
     if len(data) < 100:
-        raise HTTPException(400, "Grabación vacía.")
+        raise HTTPException(400, "Empty recording.")
     ctype = (file.content_type or "").split(";")[0].strip().lower()
     ext = AUDIO_EXT.get(ctype) or Path(file.filename or "").suffix.lstrip(".").lower()
     if ext not in {"webm", "ogg", "mp3", "wav", "m4a"}:
-        raise HTTPException(400, "Formato de audio no reconocido (webm, ogg, mp3, wav, m4a).")
+        raise HTTPException(400, "Audio format not recognised (webm, ogg, mp3, wav, m4a).")
     folder = db.content_dir() / "audio" / lang
     folder.mkdir(parents=True, exist_ok=True)
     final_ext = ext

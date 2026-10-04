@@ -35,7 +35,7 @@
     "rule_outcome": "The pre-registered ship rule says DO NOT SHIP: v2 at t = 0.90 passes 4 of its 5 conditions and misses one (reports/field_v2_threshold_test.json)",
     "exception": "(2), JMuBEN test macro-F1 (argmax and app-level) may drop at most 1 point",
     "exception_check": "jmuben_macro_f1_drop<=1pt",
-    "reason": "the Kenyan close-ups it no longer answers go to the fail-safe \"No estoy seguro\" (DUDA: show the leaf to the officer), not to wrong answers, and it never called a diseased leaf \"sano\" on either test set; and v2 is the only model that finds rust in field photos (v1 finds none on the held-out field test)."
+    "reason": "the Kenyan close-ups it no longer answers go to the fail-safe \"I'm not sure\" (UNSR: show the leaf to the officer), not to wrong answers, and it never called a diseased leaf \"sano\" on either test set; and v2 is the only model that finds rust in field photos (v1 finds none on the held-out field test)."
   },
   "reference": {
     "name": "v1",
@@ -389,80 +389,6 @@
               0.0838
             ]
           },
-          "roya Mexico+GT box": {
-            "n": 31,
-            "answer_counts": {
-              "sano": 0,
-              "roya": 0,
-              "minador": 0,
-              "phoma": 1,
-              "cercospora": 0,
-              "DUDA": 30
-            },
-            "duda_reasons": {
-              "blurry": 0,
-              "not_coffee": 30,
-              "low_conf": 0
-            },
-            "DUDA": 0.9677,
-            "DUDA_ci95": [
-              0.8381,
-              0.9943
-            ],
-            "correct": 0.0,
-            "correct_ci95": [
-              0.0,
-              0.1103
-            ],
-            "wrong_accepted": 0.0323,
-            "wrong_accepted_ci95": [
-              0.0057,
-              0.1619
-            ],
-            "dangerous_sano": 0,
-            "dangerous_sano_rate": 0.0,
-            "dangerous_sano_ci95": [
-              0.0,
-              0.1103
-            ]
-          },
-          "roya Mexico": {
-            "n": 4,
-            "answer_counts": {
-              "sano": 0,
-              "roya": 0,
-              "minador": 0,
-              "phoma": 0,
-              "cercospora": 0,
-              "DUDA": 4
-            },
-            "duda_reasons": {
-              "blurry": 0,
-              "not_coffee": 4,
-              "low_conf": 0
-            },
-            "DUDA": 1.0,
-            "DUDA_ci95": [
-              0.5101,
-              1.0
-            ],
-            "correct": 0.0,
-            "correct_ci95": [
-              0.0,
-              0.4899
-            ],
-            "wrong_accepted": 0.0,
-            "wrong_accepted_ci95": [
-              0.0,
-              0.4899
-            ],
-            "dangerous_sano": 0,
-            "dangerous_sano_rate": 0.0,
-            "dangerous_sano_ci95": [
-              0.0,
-              0.4899
-            ]
-          },
           "minador": {
             "n": 9,
             "answer_counts": {
@@ -685,43 +611,6 @@
               0.1287
             ]
           },
-          "minador Mexico": {
-            "n": 2,
-            "answer_counts": {
-              "sano": 0,
-              "roya": 0,
-              "minador": 0,
-              "phoma": 0,
-              "cercospora": 0,
-              "DUDA": 2
-            },
-            "duda_reasons": {
-              "blurry": 0,
-              "not_coffee": 2,
-              "low_conf": 0
-            },
-            "DUDA": 1.0,
-            "DUDA_ci95": [
-              0.3424,
-              1.0
-            ],
-            "correct": 0.0,
-            "correct_ci95": [
-              0.0,
-              0.6576
-            ],
-            "wrong_accepted": 0.0,
-            "wrong_accepted_ci95": [
-              0.0,
-              0.6576
-            ],
-            "dangerous_sano": 0,
-            "dangerous_sano_rate": 0.0,
-            "dangerous_sano_ci95": [
-              0.0,
-              0.6576
-            ]
-          },
           "coffea sample": {
             "n": 399,
             "answer_counts": {
@@ -749,30 +638,57 @@
             ],
             "sano_answer": 0.0
           },
-          "coffea sample Mexico": {
-            "n": 37,
+          "coffea sample East Africa": {
+            "n": 6,
             "answer_counts": {
               "sano": 0,
               "roya": 0,
               "minador": 0,
               "phoma": 0,
               "cercospora": 0,
-              "DUDA": 37
+              "DUDA": 6
             },
             "duda_reasons": {
               "blurry": 0,
-              "not_coffee": 37,
+              "not_coffee": 6,
               "low_conf": 0
             },
             "DUDA": 1.0,
             "DUDA_ci95": [
-              0.9059,
+              0.6097,
               1.0
             ],
             "disease_answer": 0.0,
             "disease_answer_ci95": [
               0.0,
-              0.0941
+              0.3903
+            ],
+            "sano_answer": 0.0
+          },
+          "coffea sample Kenya": {
+            "n": 3,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 0,
+              "cercospora": 0,
+              "DUDA": 3
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 3,
+              "low_conf": 0
+            },
+            "DUDA": 1.0,
+            "DUDA_ci95": [
+              0.4385,
+              1.0
+            ],
+            "disease_answer": 0.0,
+            "disease_answer_ci95": [
+              0.0,
+              0.5615
             ],
             "sano_answer": 0.0
           }
@@ -1293,80 +1209,6 @@
             0.0838
           ]
         },
-        "roya Mexico+GT box": {
-          "n": 31,
-          "answer_counts": {
-            "sano": 0,
-            "roya": 23,
-            "minador": 0,
-            "phoma": 0,
-            "cercospora": 0,
-            "DUDA": 8
-          },
-          "duda_reasons": {
-            "blurry": 0,
-            "not_coffee": 1,
-            "low_conf": 7
-          },
-          "DUDA": 0.2581,
-          "DUDA_ci95": [
-            0.137,
-            0.4325
-          ],
-          "correct": 0.7419,
-          "correct_ci95": [
-            0.5675,
-            0.863
-          ],
-          "wrong_accepted": 0.0,
-          "wrong_accepted_ci95": [
-            0.0,
-            0.1103
-          ],
-          "dangerous_sano": 0,
-          "dangerous_sano_rate": 0.0,
-          "dangerous_sano_ci95": [
-            0.0,
-            0.1103
-          ]
-        },
-        "roya Mexico": {
-          "n": 4,
-          "answer_counts": {
-            "sano": 0,
-            "roya": 2,
-            "minador": 0,
-            "phoma": 0,
-            "cercospora": 0,
-            "DUDA": 2
-          },
-          "duda_reasons": {
-            "blurry": 0,
-            "not_coffee": 0,
-            "low_conf": 2
-          },
-          "DUDA": 0.5,
-          "DUDA_ci95": [
-            0.15,
-            0.85
-          ],
-          "correct": 0.5,
-          "correct_ci95": [
-            0.15,
-            0.85
-          ],
-          "wrong_accepted": 0.0,
-          "wrong_accepted_ci95": [
-            0.0,
-            0.4899
-          ],
-          "dangerous_sano": 0,
-          "dangerous_sano_rate": 0.0,
-          "dangerous_sano_ci95": [
-            0.0,
-            0.4899
-          ]
-        },
         "minador": {
           "n": 9,
           "answer_counts": {
@@ -1589,43 +1431,6 @@
             0.1287
           ]
         },
-        "minador Mexico": {
-          "n": 2,
-          "answer_counts": {
-            "sano": 0,
-            "roya": 0,
-            "minador": 0,
-            "phoma": 0,
-            "cercospora": 0,
-            "DUDA": 2
-          },
-          "duda_reasons": {
-            "blurry": 0,
-            "not_coffee": 0,
-            "low_conf": 2
-          },
-          "DUDA": 1.0,
-          "DUDA_ci95": [
-            0.3424,
-            1.0
-          ],
-          "correct": 0.0,
-          "correct_ci95": [
-            0.0,
-            0.6576
-          ],
-          "wrong_accepted": 0.0,
-          "wrong_accepted_ci95": [
-            0.0,
-            0.6576
-          ],
-          "dangerous_sano": 0,
-          "dangerous_sano_rate": 0.0,
-          "dangerous_sano_ci95": [
-            0.0,
-            0.6576
-          ]
-        },
         "coffea sample": {
           "n": 399,
           "answer_counts": {
@@ -1653,36 +1458,63 @@
           ],
           "sano_answer": 0.0
         },
-        "coffea sample Mexico": {
-          "n": 37,
+        "coffea sample East Africa": {
+          "n": 6,
           "answer_counts": {
             "sano": 0,
-            "roya": 1,
+            "roya": 0,
             "minador": 0,
             "phoma": 0,
             "cercospora": 0,
-            "DUDA": 36
+            "DUDA": 6
           },
           "duda_reasons": {
             "blurry": 0,
-            "not_coffee": 27,
-            "low_conf": 9
+            "not_coffee": 5,
+            "low_conf": 1
           },
-          "DUDA": 0.973,
+          "DUDA": 1.0,
           "DUDA_ci95": [
-            0.8618,
-            0.9952
+            0.6097,
+            1.0
           ],
-          "disease_answer": 0.027,
+          "disease_answer": 0.0,
           "disease_answer_ci95": [
-            0.0048,
-            0.1382
+            0.0,
+            0.3903
+          ],
+          "sano_answer": 0.0
+        },
+        "coffea sample Kenya": {
+          "n": 3,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 3
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 3,
+            "low_conf": 0
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.4385,
+            1.0
+          ],
+          "disease_answer": 0.0,
+          "disease_answer_ci95": [
+            0.0,
+            0.5615
           ],
           "sano_answer": 0.0
         }
       }
     },
-    "note": "held-out field test only (observers not used in training, except the observer of 1 ojo de gallo photo); iNaturalist photos are a proxy for Chiapas photos; details, ship rule and v1/v2 comparison in reports/field_eval.md"
+    "note": "held-out field test only (observers not used in training, except the observer of 1 ojo de gallo photo); iNaturalist photos are a proxy for field photos from Kirinyaga, and none of the labelled disease photos is from East Africa; details, ship rule and v1/v2 comparison in reports/field_eval.md"
   },
   "size_latency": {
     "size_bytes": {
@@ -1915,7 +1747,7 @@
       "value": 0.7,
       "data_driven_value": 0.5,
       "policy_floor": 0.7,
-      "floor_reason": "validation images come from the same Kenyan dataset as training, so confidence on real Chiapas photos will be lower and less reliable; the floor keeps the PLAN.md default 0.70 when the data-driven value is lower",
+      "floor_reason": "validation images come from the same Kenyan dataset as training, so confidence on real field photos will be lower and less reliable; the floor keeps the PLAN.md default 0.70 when the data-driven value is lower",
       "rule": "lowest t in [0.50,0.90] where accepted validation predictions reach >= 95% accuracy on clean images AND on clean + 5 phone-like degradations (jpeg q25, blur r2, brightness x0.6/x1.4, downscale 64); blur-rejected images count as not accepted",
       "curve": [
         {

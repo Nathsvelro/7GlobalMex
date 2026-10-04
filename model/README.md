@@ -9,13 +9,23 @@ iNaturalist field photos; its threshold 0.90 was chosen on calibration data only
 Results: `reports/model_eval.md` (shipped v2, with v1 as a reference column) and `reports/field_eval.md` (field
 photos, ship rule, decision).
 
+**Where the data comes from, seen from our users (Kirinyaga County, central Kenya).** The training, validation and
+main test images (JMuBEN/JMuBEN2) were photographed in the Mutira coffee plantation, **Kirinyaga County** - the same
+county as Noor's co-operative - with a digital camera and a pathologist's help (Jepkoech et al. 2021). That is a real
+strength: same region, same Arabica growing conditions. Its limits: one plantation, one camera, 128 px close-up crops,
+58,549 images that are augmented copies of about 1,250 source photos (about 880 near-duplicate groups), and only 14
+distinct healthy source photos. The iNaturalist field photos (the second test, and 147 of v2's training photos) are
+**not** from East Africa: the rust, leaf miner and Cercospora photos come mostly from the Americas, some from Asia and
+the Pacific, 2 from South Africa, 0 from East Africa (*computed* from the coordinates; `reports/field_eval.md`, "East
+Africa and Kenya"). Nobody has yet tested the app on photos taken with it on a Kirinyaga farm.
+
 **Shipped by explicit team decision, as an exception to the pre-registered ship rule** (`model/ship_decision.json`).
 v2 at t = 0.90 passes 4 of the 5 conditions and misses condition (2) - JMuBEN test macro-F1 may drop at most 1 point -
 by 0.04 points: the app-level macro-F1 drops 1.04 points (0.9670 vs 0.9774 for v1 at 0.70; argmax macro-F1 0.9850 vs
 0.9845 passes). The team shipped it anyway because the Kenyan close-ups it no longer answers (mostly phoma: correct
-98.4 % -> 86.8 %) go to the fail-safe "No estoy seguro" (DUDA), not to wrong answers, and because v2 is the only
-model that finds rust in field photos (v1: 0 of 53). Rule, numbers and decision: `reports/field_eval.md` ("Result",
-"Threshold trade-off").
+98.4 % -> 86.8 %) go to the fail-safe "I'm not sure - show the leaf to the extension officer" (SMS code UNSR), not to
+wrong answers, and because v2 is the only model that finds rust in field photos (v1: 0 of 53). Rule, numbers and
+decision: `reports/field_eval.md` ("Result", "Threshold trade-off").
 
 **Why not INT8?** Static INT8 post-training quantization (onnxruntime QDQ, per-channel) collapses
 this model to a constant answer (validation accuracy 15 %; tried per-tensor, percentile
@@ -34,12 +44,12 @@ and halve the download. Quantization-aware training would be the next step.
 | `check_ortweb.mjs` | runs an ONNX model in onnxruntime-web (Node, WASM, 1 thread) |
 | `blur_reference.mjs` | the same blur check in JavaScript, for the app (parity with `blur.py` checked) |
 | `demo_samples.py` | demo images: held-out lab crops (`--data`, venv), field photos (`--field`, plain python3: downloads the CC BY-NC ones, not redistributed), README (`--readme`) |
-| `inat_field.py` | iNaturalist field photos: label mapping, Mexico rule, split by observer, download, attribution CSV, contact sheets, field training views |
+| `inat_field.py` | iNaturalist field photos: label mapping, the fixed hold-out box used for the split, split by observer, download, attribution CSV, contact sheets, field training views |
 | `multicrop.py` | test-time multi-crop (full view + tiles) and its conservative decision rule (not shipped, see below) |
-| `field_eval.py` | field evaluation of one or more models, single view vs multicrop, ship rule -> `reports/field_eval.{json,md}` |
+| `field_eval.py` | field evaluation of one or more models, single view vs multicrop, ship rule, East Africa / Kenya subsets -> `reports/field_eval.{json,md}` (`--render`: md only, from the json) |
 | `field_threshold.py` | v2 threshold re-chosen on calibration data only (new Coffea sample + validation `otro`), then one test evaluation with the same ship rule -> `reports/field_v2_threshold_{sweep,test}.*` + "Threshold trade-off" in `reports/field_eval.md`; `install` copies the decided model into `app/model/` with the calibrated threshold |
 | `ship_decision.json` | the human ship decision (which model, threshold, date, why; the exception to the rule). Scripts only read it when they render reports; they never decide with it |
-| `check_demo_samples.mjs` | checks every demo image in the real app logic (Chromium, `app/infer.js`) -> `reports/model_demo_samples_check.json` |
+| `check_demo_samples.mjs` | checks every demo image in the real app logic (Chromium, `app/infer.js`; SMS codes read from `app/sms.js` at run time) -> `reports/model_demo_samples_check.json` |
 
 ## Reproduce (CPU only, ~30 minutes on 4 cores)
 
@@ -172,29 +182,33 @@ minador, phoma / brown leaf spot -> phoma, cercospora -> cercospora, red spider 
 
 ## What the model can and cannot do (read before the demo)
 
-Shipped v2 at t = 0.90, all numbers measured (`reports/model_eval.md`, `reports/field_eval.md`):
+Shipped v2 at t = 0.90, all numbers measured (`reports/model_eval.md`, `reports/field_eval.md`). UNSR = the
+fail-safe "I'm not sure - show the leaf to the extension officer":
 
-- **Field photos (iNaturalist, held-out field test; a proxy for Chiapas, labels = community identification)**:
-  rust correct & accepted **64.2 % [51-76]** (34 of 53; v1: 0 of 53), 81.0 % (34 of 42) when the symptom is clearly
-  visible, 74.2 % (23 of 31) in the Mexico+Guatemala box, **2 of 4 inside Mexico**. Leaf miner 2 of 9, Cercospora
-  **0 of 10** (2 called roya). Ojo de gallo (not a model class) goes to DUDA 91.1 % (82 of 90). No diseased field
-  photo was called "sano".
+- **Kenyan test split (JMuBEN, Mutira plantation, Kirinyaga; same dataset as training, split by near-duplicate
+  group)**: macro-F1 0.985 (argmax); as the app decides, 93.8 % of coffee close-ups answered, 100.0 % of the answers
+  right, 0 diseased leaves called "sano". The higher threshold sends more close-ups to UNSR than v1 (phoma 13.2 % vs
+  1.6 %): that is condition (2) above.
+- **Field photos (iNaturalist, held-out field test; a proxy, labels = community identification, none from East
+  Africa)**: rust correct & accepted **64.2 % [51-76]** (34 of 53; v1: 0 of 53), 81.0 % (34 of 42) when the symptom
+  is clearly visible. Leaf miner 2 of 9, Cercospora **0 of 10** (2 called roya). Ojo de gallo (American leaf spot,
+  not a model class) goes to UNSR 91.1 % (82 of 90). No diseased field photo was called "sano". East Africa: 0
+  labelled disease photos, so there is no field number for Kenya.
 - **False alarms**: disease answers on 2.5 % [1.4-4.5] (10 of 399) of *Coffea* plant photos with unknown health
-  (v1: 0 %), 6.5 % of the 200 iNatAg-mini coffee photos (v1: 0 %); non-coffee test images rejected 98.2 % (438 of
+  (v1: 0 %; East Africa 0 of 6, Kenya 0 of 3 - too few to mean anything), 6.5 % of the 200 iNatAg-mini coffee
+  photos (v1: 0 %); non-coffee test images rejected 98.2 % (438 of
   446; v1 99.8 %) - the 8 accepted test views (7 distinct photos, mostly apple rust/scab leaves answered "roya") are
   listed in `reports/model_eval.md` (a); one is the PlantDoc apple-scab leaf (roya 0.98) the journey test used, so
   the journey now uses the first PlantDoc test image v2 rejects.
-- **Kenyan test split (JMuBEN, same dataset as training)**: macro-F1 0.985 (argmax); as the app decides, 93.8 % of
-  coffee close-ups answered, 100.0 % of the answers right, 0 diseased leaves called "sano". The higher threshold
-  sends more close-ups to DUDA than v1 (phoma 13.2 % vs 1.6 %): that is condition (2) above.
-- Photograph the leaf so the lesion **fills the frame**: whole trees and branches get DUDA (the in-repo demo photo
+- Photograph the leaf so the lesion **fills the frame**: whole trees and branches get UNSR (the in-repo demo photo
   `demo_samples/field_whole_tree.jpg` shows this).
 - `sano` was learned from **7 near-duplicate groups** (about 7-10 distinct source photos; JMuBEN ships 18,983 copies of 14 photos) and there are no
-  labelled healthy field leaves: a real healthy Chiapas leaf will most likely get DUDA, not "sano".
-- Not covered: red spider mite (`acaro_rojo`), broca, nutrient deficiency, Robusta, night/flash photos, other
-  phones and cameras. The fix is labelled Chiapas photos, healthy and diseased (officer confirmations in the hub's
-  `labels` table), then rerun steps 9-11.
-- History: v1 (Kenyan crops only, t = 0.70) answered 0 of 219 iNaturalist rust photos (99.5 % DUDA); multicrop did
+  labelled healthy field leaves: a healthy leaf photographed with the app on a Kirinyaga farm will most likely get
+  UNSR, not "sano" (not yet measured).
+- Not covered: red spider mite (`acaro_rojo`), coffee berry borer, nutrient deficiency, Robusta, night/flash
+  photos, other phones and cameras. The fix is labelled photos from Kirinyaga farms, healthy and diseased (extension
+  officer confirmations in the hub's `labels` table; `data/field_test/README.md`), then rerun steps 9-11.
+- History: v1 (Kenyan crops only, t = 0.70) answered 0 of 219 iNaturalist rust photos (99.5 % UNSR); multicrop did
   not help it; v2 at its export threshold 0.70 found more rust (71.7 %) but failed the rule on false alarms
   (8.0 % Coffea disease answers, 95.7 % `otro` rejection). Full story: `reports/field_eval.md`.
 

@@ -4,7 +4,8 @@
 const CARDS_URL = '../content/cards.json';
 let data = { languages: {}, cards: [] };
 let byId = {};
-let lang = 'es';
+export const DEFAULT_LANG = 'en'; // English is the main language; cards.json "languages" lists the others
+let lang = DEFAULT_LANG;
 
 export async function loadCards() {
   const res = await fetch(CARDS_URL);
@@ -15,9 +16,10 @@ export async function loadCards() {
 
 export const languages = () => data.languages || {};
 export const getLang = () => lang;
+// A language that cards.json does not (or no longer) list falls back to the default.
 export function setLang(l) {
-  lang = l;
-  document.documentElement.lang = l;
+  lang = l in languages() ? l : DEFAULT_LANG;
+  document.documentElement.lang = lang;
 }
 
 export function text(id, l = lang, slots = {}) {

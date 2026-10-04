@@ -10,23 +10,24 @@ from datetime import date, timedelta
 
 from . import cards, db, intent, outbreak
 
-CODES = ["SANO", "ROYA", "MINA", "PHOM", "CERC", "ACAR", "OTRO", "DUDA"]
+CODES = ["HLTH", "RUST", "MINR", "PHOM", "CERC", "MITE", "OTHR", "UNSR"]
 
 # CAF1 <member> <code> <conf> <yyyymmdd> <lat>,<lon>|- [#<obs>]   (case-insensitive, extra spaces allowed)
+# e.g. CAF1 M0123 RUST 99 20261004 -0.52,37.32 #K3F9
 CODE_RE = re.compile(
     r"^\s*CAF1\s+(?P<member>M\d{4})\s+(?P<code>[A-Z]{4})\s+(?P<conf>\d{1,3})\s+(?P<date>\d{8})\s+"
     r"(?:(?P<lat>[+-]?\d{1,2}(?:\.\d{1,6})?)\s*,\s*(?P<lon>[+-]?\d{1,3}(?:\.\d{1,6})?)|(?P<noloc>-))"
     r"(?:\s+#(?P<obs>[0-9A-Z]{4}))?\s*$",
     re.IGNORECASE)
 
-KEYWORDS = {  # exact one-word messages (after removing accents/punctuation); the cards advertise these
-    "precio": "precio", "precios": "precio",
-    "ayuda": "ayuda",
-    "tecnico": "hablar_con_tecnico",
-    "price": "precio", "prices": "precio", "help": "ayuda", "officer": "hablar_con_tecnico",  # English cards
+KEYWORDS = {  # exact one-word messages (after removing accents/punctuation); the SMS cards advertise these
+    "price": "price", "prices": "price", "help": "help", "officer": "talk_to_officer",   # English
+    "bei": "price", "msaada": "help", "afisa": "talk_to_officer",                          # Kiswahili
 }
-INTENT_CARD = {"precio": "sms_precio", "reporte": "sms_reporte_instrucciones", "ayuda": "sms_ayuda",
-               "hablar_con_tecnico": "sms_pasar_tecnico", "otro": "sms_pasar_tecnico"}
+INTENT_CARD = {"price": "sms_precio", "report": "sms_reporte_instrucciones", "help": "sms_ayuda",
+               "talk_to_officer": "sms_pasar_tecnico", "other": "sms_pasar_tecnico"}
+
+COUNTRY_CODE = "254"   # Kenya: national numbers are 0 + 9 digits (07xx xxx xxx, 01xx xxx xxx)
 
 
 class ParseError(ValueError):
@@ -40,11 +41,11 @@ def normalize_phone(phone: str) -> str:
         return ""
     if p.startswith("+"):
         return "+" + digits
-    if len(digits) == 10:          # Mexican national number
-        return "+52" + digits
-    if digits.startswith("52") and len(digits) == 12:
-        return "+" + digits
-    return "+" + digits
+    if len(digits) == 10 and digits.startswith("0"):    # Kenyan national format: 0712 345 678
+        return "+" + COUNTRY_CODE + digits[1:]
+    if len(digits) == 9 and digits[0] in "17":          # the same number without the leading 0
+        return "+" + COUNTRY_CODE + digits
+    return "+" + digits                                 # already has a country code (254...)
 
 
 def parse_code(body: str, today: date | None = None) -> dict:
@@ -137,20 +138,20 @@ def price_slots() -> dict | None:
         return None
     items = {i.get("id"): i for i in p.get("items", [])}
     try:
-        cafe, maiz, frijol = items["cafe_pergamino"], items["maiz"], items["frijol"]
+        coffee, maize, beans = items["coffee_cherry"], items["maize"], items["beans"]
         return {
-            "precio_cafe": f"{float(cafe['price']):.2f}", "unidad_cafe": cafe.get("unit", "MXN/kg"),
-            "precio_maiz": f"{float(maiz['price']):.2f}", "precio_frijol": f"{float(frijol['price']):.2f}",
-            "fuente": p.get("sms_fuente") or cafe.get("source"),
-            "fecha": p.get("sms_fecha") or cafe.get("date"),
+            "precio_cafe": f"{float(coffee['price']):.2f}", "unidad_cafe": coffee.get("unit", "KES/kg"),
+            "precio_maiz": f"{float(maize['price']):.2f}", "precio_frijol": f"{float(beans['price']):.2f}",
+            "fuente": p.get("sms_fuente") or coffee.get("source"),
+            "fecha": p.get("sms_fecha") or coffee.get("date"),
         }
     except (KeyError, TypeError, ValueError):
         return None
 
 
 def _reply(conn, phone, member, card_id, out, **slots):
-    """Render a card in the member's language and log it as sent (SIMULATED gateway)."""
-    lang = member["language"] if member else "es"
+    """Render a card in the member's language (English for unknown senders) and log it as sent (SIMULATED gateway)."""
+    lang = member["language"] if member else cards.DEFAULT_LANG
     try:
         text, lang = cards.render(card_id, lang, **slots)
     except cards.CardError as e:   # never improvise text: log and send nothing
@@ -219,15 +220,15 @@ def route(conn, phone: str, body: str) -> dict:
                                            "n_reports": alert["n_reports"], "queued_pending_approval": alert["queued"]})
             return out
 
-        # 3. Exact keywords (PRECIO, AYUDA, TECNICO), then 4. the intent classifier.
+        # 3. Exact keywords (PRICE/BEI, HELP/MSAADA, OFFICER/AFISA), then 4. the intent classifier.
         norm = intent.normalize(body).replace(" ", "")
         if norm in KEYWORDS:
             cls = {"intent": KEYWORDS[norm], "conf": 1.0, "accepted": True, "method": "keyword"}
         else:
             cls = {**intent.classify(body), "method": "classifier"}
         out["actions"].append({"type": "intent", **cls})
-        name = cls["intent"] if cls["accepted"] else "otro"
-        if name == "precio":
+        name = cls["intent"] if cls["accepted"] else "other"
+        if name == "price":
             slots = price_slots()
             if slots:
                 _reply(conn, phone, member, "sms_precio", out, **slots)
@@ -236,6 +237,6 @@ def route(conn, phone: str, body: str) -> dict:
         else:
             _reply(conn, phone, member, INTENT_CARD[name], out)
             # A free-text symptom report also reaches a person: a basic-phone member cannot send a CAF1 code.
-            if name in ("hablar_con_tecnico", "otro", "reporte"):
+            if name in ("talk_to_officer", "other", "report"):
                 _forward_to_officer(conn, member, phone, body, msg_id, cls, out)
         return out

@@ -1,7 +1,7 @@
 {
   "emulated": true,
-  "hub": "http://localhost:8000",
-  "measured_at": "2026-10-03T22:16:54.613Z",
+  "hub": "http://localhost:8100",
+  "measured_at": "2026-10-04T01:43:56.391Z",
   "env": {
     "chromium": "141.0.7390.37",
     "cpus": 4,
@@ -12,148 +12,148 @@
   "inference": [
     {
       "cpu_throttle": 1,
-      "cold_first_photo_ms": 657.3,
+      "cold_first_photo_ms": 645.6,
       "first_result": {
         "label": "roya",
         "conf": 99
       },
-      "diagnose_128px_median_ms": 19.2,
-      "diagnose_12mp_median_ms": 16.8,
-      "session_run_median_ms": 14.1,
+      "diagnose_128px_median_ms": 18.4,
+      "diagnose_12mp_median_ms": 22.2,
+      "session_run_median_ms": 10,
       "raw_ms": {
         "diagnose_128px": [
-          28,
-          19.3,
-          19.1,
-          18.4,
-          17.8,
-          24.9,
-          20.7,
-          17,
-          17.5,
-          19.6
+          24.8,
+          19,
+          28.6,
+          19.2,
+          17.3,
+          17.1,
+          15.5,
+          23.3,
+          15.8,
+          17.8
         ],
         "diagnose_12mp": [
-          33,
-          16.3,
-          16.8,
-          15.6,
-          15.8,
-          16.8,
-          21,
-          17.6,
-          17,
-          15.9
+          107.5,
+          22.9,
+          15.1,
+          19,
+          19.6,
+          21.5,
+          27.7,
+          39.4,
+          31.3,
+          16.8
         ],
         "session_run": [
-          13,
-          13.6,
-          12.4,
-          12.6,
-          15.3,
-          14.6,
-          31.5,
-          15.9,
-          12.9,
-          22
+          10.3,
+          10.3,
+          12.3,
+          11.2,
+          9.6,
+          9.8,
+          9.7,
+          9.8,
+          10.1,
+          9.8
         ]
       }
     },
     {
       "cpu_throttle": 4,
-      "cold_first_photo_ms": 2497.4,
+      "cold_first_photo_ms": 3687.1,
       "first_result": {
         "label": "roya",
         "conf": 99
       },
-      "diagnose_128px_median_ms": 51.7,
-      "diagnose_12mp_median_ms": 53,
-      "session_run_median_ms": 57.5,
+      "diagnose_128px_median_ms": 61.9,
+      "diagnose_12mp_median_ms": 64,
+      "session_run_median_ms": 54.3,
       "raw_ms": {
         "diagnose_128px": [
-          75.9,
-          72.5,
-          76.7,
-          47.8,
-          14.9,
-          19.2,
-          47.2,
-          37.7,
-          68.6,
-          55.6
+          125.2,
+          78.3,
+          62.9,
+          56.6,
+          60.4,
+          62.9,
+          60.9,
+          54.8,
+          81,
+          60.6
         ],
         "diagnose_12mp": [
-          117.3,
-          53.1,
-          52.6,
-          54,
-          52.9,
-          43,
-          47.6,
-          53.1,
-          47.8,
-          53.5
+          146,
+          65.3,
+          64.7,
+          63.5,
+          63.2,
+          62.2,
+          63,
+          61.6,
+          64.5,
+          65.3
         ],
         "session_run": [
-          48.2,
-          57.7,
-          58.6,
-          57.7,
-          59,
-          57.4,
-          56.2,
+          55.3,
+          53.8,
+          53.3,
+          53.8,
+          52.8,
+          55.4,
+          54.7,
+          55.3,
           55.7,
-          58.6,
-          56.4
+          53.1
         ]
       }
     },
     {
       "cpu_throttle": 6,
-      "cold_first_photo_ms": 3739.9,
+      "cold_first_photo_ms": 3648.2,
       "first_result": {
         "label": "roya",
         "conf": 99
       },
-      "diagnose_128px_median_ms": 106.2,
-      "diagnose_12mp_median_ms": 83.4,
-      "session_run_median_ms": 71.1,
+      "diagnose_128px_median_ms": 98,
+      "diagnose_12mp_median_ms": 105.4,
+      "session_run_median_ms": 83.5,
       "raw_ms": {
         "diagnose_128px": [
-          115.7,
-          109.6,
-          105.7,
-          103.8,
-          101.1,
-          107.4,
-          106.7,
-          101,
-          137.3,
-          100.8
+          167.3,
+          110.9,
+          98.2,
+          105.6,
+          97.8,
+          94.4,
+          95.5,
+          101.2,
+          92.8,
+          93.1
         ],
         "diagnose_12mp": [
-          198.1,
-          86.7,
-          87.1,
-          83.6,
-          82.9,
-          84.8,
-          81.8,
-          81.3,
-          82.8,
-          83.1
+          182.3,
+          89.3,
+          101.5,
+          103.4,
+          123,
+          109.9,
+          136.8,
+          104.2,
+          106.5,
+          97.7
         ],
         "session_run": [
-          75.4,
-          70.8,
-          68.7,
-          69.1,
-          69.1,
-          71.3,
-          74.6,
-          69.2,
-          71.3,
-          73.4
+          76.5,
+          80.7,
+          79,
+          78.1,
+          81.6,
+          86.4,
+          85.5,
+          89.3,
+          95.2,
+          98.8
         ]
       }
     }
@@ -173,10 +173,10 @@
           "wire_bytes": 1972695
         },
         "bundle": {
-          "seconds": 94,
+          "seconds": 87.6,
           "files": 251,
-          "body_bytes": 16807428,
-          "wire_bytes": 8585604,
+          "body_bytes": 16209078,
+          "wire_bytes": 7975006,
           "gzip_responses": 26
         }
       },
@@ -193,10 +193,10 @@
           "wire_bytes": 1972695
         },
         "bundle": {
-          "seconds": 177.5,
+          "seconds": 165.7,
           "files": 251,
-          "body_bytes": 16807428,
-          "wire_bytes": 8585604,
+          "body_bytes": 16209078,
+          "wire_bytes": 7975006,
           "gzip_responses": 26
         }
       }
@@ -206,12 +206,12 @@
     "model_version": "cafetal-img-v2",
     "model_bytes": 1972422,
     "threshold": 0.9,
-    "sw_version": "cafetal-7b8eb4c086"
+    "sw_version": "cafetal-841334ea01"
   },
   "page_load": {
     "files": 13,
-    "decoded_bytes": 157140,
-    "wire_bytes": 36785,
+    "decoded_bytes": 172718,
+    "wire_bytes": 39335,
     "gzip_responses": 13,
     "urls": [
       "/app/",

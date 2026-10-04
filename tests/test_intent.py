@@ -13,9 +13,10 @@ EVAL = ROOT / "reports" / "intent_eval.json"
 
 
 def test_normalize():
-    assert normalize("¿Qué PRECIO tiene el café?") == "que precio tiene el cafe"
-    assert normalize("  Año   ñandú ") == "ano nandu"
-    assert normalize("k’op  ja'") == "k'op ja'"
+    assert normalize("What PRICE is the coffee?!") == "what price is the coffee"
+    assert normalize("  Thogora   wa kahũa ") == "thogora wa kahua"      # Gikuyu tildes, as typed on a basic phone
+    assert normalize("Gĩkũyũ") == "gikuyu"
+    assert normalize("I’m  here, bei?") == "i'm here bei"
 
 
 def test_char_wb_ngrams():
@@ -58,4 +59,26 @@ def test_json_inference_matches_live_sklearn():
 
 def test_threshold_is_in_model():
     m = IntentModel()
-    assert 0 < m.threshold < 1 and set(m.classes) == {"precio", "reporte", "ayuda", "hablar_con_tecnico", "otro"}
+    assert 0 < m.threshold < 1 and set(m.classes) == {"price", "report", "help", "talk_to_officer", "other"}
+
+
+# The fixed probes of hub/train_intent.py (kept out of the training data). "other" = forwarded to the officer.
+PROBES = {
+    "how much are you paying for a kilo of cherry": "price",
+    "bei ya kahawa ni ngapi": "price",
+    "my coffee leaves have orange powder": "report",
+    "majani ya kahawa yana unga wa rangi ya machungwa": "report",
+    "I want to talk to the extension officer": "talk_to_officer",
+    "asdf qwerty": "other",
+}
+
+
+def test_probe_messages_route_as_expected():
+    m = IntentModel()
+    rows = list(csv.DictReader((ROOT / "data" / "intent" / "examples.csv").open(encoding="utf-8")))
+    seen = {normalize(r["text"]) for r in rows}
+    for text, expected in PROBES.items():
+        assert normalize(text) not in seen, text                       # a probe, not a training example
+        r = m.classify(text)
+        routed = r["intent"] if r["accepted"] else "other"
+        assert routed == expected, (text, r)

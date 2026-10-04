@@ -11,7 +11,7 @@ def data_url(raw):
 
 
 def test_registration_requires_consent(client):
-    base = {"name": "X", "phone": "+529670009000", "community": "Ondera Alto", "consent_by": "Ana"}
+    base = {"name": "X", "phone": "+254700009000", "community": "Ondera Juu", "consent_by": "Ann"}
     assert client.post("/api/members", json={**base, "consent": False}).status_code == 400
     assert client.post("/api/members", json=base).status_code == 422             # consent missing
     assert client.post("/api/members", json={**base, "consent": True, "consent_by": ""}).status_code == 422
@@ -20,18 +20,23 @@ def test_registration_requires_consent(client):
     r = client.post("/api/members", json={**base, "consent": True})
     assert r.status_code == 201
     m = r.json()
-    assert m["member_id"] == "M0001" and m["consent"] == 1 and m["consent_by"] == "Ana" and m["consent_date"]
+    assert m["member_id"] == "M0001" and m["consent"] == 1 and m["consent_by"] == "Ann" and m["consent_date"]
+    assert m["language"] == "en"
     assert client.post("/api/members", json={**base, "consent": True}).status_code == 409   # same phone
-    assert register(client, phone="+529670009001")["member_id"] == "M0002"
+    assert client.post("/api/members", json={**base, "consent": True, "phone": "0700 009 000"}).status_code == 409
+    assert register(client, phone="+254700009001")["member_id"] == "M0002"
+    m3 = register(client, phone="0712 345 678")                      # Kenyan national format is normalised
+    assert m3["phone"] == "+254712345678"
+    assert client.post("/api/members", json={**base, "consent": True, "phone": "12345"}).status_code == 422
 
 
 def test_delete_member_cascades(client, conn, env):
     m = register(client)
-    other = register(client, name="Otra", phone="+529670001001")
-    sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA 88 {ymd()} 16.91,-92.11 #DEL1")
-    sms(client, m["phone"], "kiero hablar con el ingeniero")
-    sms(client, other["phone"], "PRECIO")
-    client.post("/api/observations/sync", json={"obs_id": "DEL1", "member_id": m["member_id"], "code": "ROYA",
+    other = register(client, name="Other", phone="+254700001001")
+    sms(client, m["phone"], f"CAF1 {m['member_id']} RUST 88 {ymd()} -0.52,37.32 #DEL1")
+    sms(client, m["phone"], "i want to talk to the officer")
+    sms(client, other["phone"], "PRICE")
+    client.post("/api/observations/sync", json={"obs_id": "DEL1", "member_id": m["member_id"], "code": "RUST",
                                                 "conf": 88, "date": ymd(), "photo": data_url(JPEG)})
     uid = f"{m['member_id']}-DEL1"
     client.post(f"/api/worklist/{uid}/action", json={"action": "confirmed"})
@@ -48,22 +53,22 @@ def test_delete_member_cascades(client, conn, env):
 
 def test_member_ids_of_deleted_members_are_never_reused(client):
     register(client)
-    last = register(client, name="Ultima", phone="+529670001001")["member_id"]
+    last = register(client, name="Last", phone="+254700001001")["member_id"]
     assert client.delete(f"/api/members/{last}").status_code == 200
-    new = register(client, name="Nueva", phone="+529670001002")["member_id"]
+    new = register(client, name="New", phone="+254700001002")["member_id"]
     assert new != last and int(new[1:]) == int(last[1:]) + 1
     # The deleted member's phone may still send codes under the old id: they must not land on anyone.
     sync = client.post("/api/observations/sync", json={"records": [
-        {"obs_id": "OLD1", "member_id": last, "code": "ROYA", "conf": 90, "date": ymd()}]}).json()
+        {"obs_id": "OLD1", "member_id": last, "code": "RUST", "conf": 90, "date": ymd()}]}).json()
     assert sync["results"][0]["ok"] is False and sync["results"][0]["status"] == 404
 
 
 def test_sync_merges_photo_with_sms_observation(client, conn):
     m = register(client)
-    sms(client, m["phone"], f"CAF1 {m['member_id']} ROYA 87 {ymd()} 16.91,-92.11 #K3F9")
+    sms(client, m["phone"], f"CAF1 {m['member_id']} RUST 87 {ymd()} -0.52,37.32 #K3F9")
     r = client.post("/api/observations/sync", json={
-        "obs_id": "K3F9", "member_id": m["member_id"], "code": "ROYA", "conf": 87, "date": ymd(), "lat": 16.9123,
-        "lon": -92.1111, "created_at": "2026-10-03T10:00:00", "model_version": "cafetal-img-v1",
+        "obs_id": "K3F9", "member_id": m["member_id"], "code": "RUST", "conf": 87, "date": ymd(), "lat": -0.5183,
+        "lon": 37.3222, "created_at": "2026-10-03T10:00:00", "model_version": "cafetal-img-v2",
         "top3": [["roya", 0.87], ["sano", 0.08], ["minador", 0.03]], "photo": data_url(JPEG)})
     assert r.status_code == 200, r.text
     assert r.json() == {"ok": True, "obs_uid": f"{m['member_id']}-K3F9", "created": False, "merged": True,
@@ -80,19 +85,20 @@ def test_sync_merges_photo_with_sms_observation(client, conn):
 def test_sync_new_record_then_sms_merges(client, conn):
     m = register(client)
     r = client.post("/api/observations/sync", json={"records": [
-        {"obs_id": "S001", "member_id": m["member_id"], "code": "SANO", "conf": 0.93, "date": ymd()}]})
+        {"obs_id": "S001", "member_id": m["member_id"], "code": "HLTH", "conf": 0.93, "date": ymd()}]})
     assert r.json()["results"][0]["created"] is True
     assert conn.execute("SELECT conf, source FROM observations").fetchone()[:] == (93, "sync")
     assert conn.execute("SELECT COUNT(*) FROM messages").fetchone()[0] == 0      # sync sends no SMS
-    sms(client, m["phone"], f"CAF1 {m['member_id']} SANO 93 {ymd()} 16.91,-92.11 #S001")
+    sms(client, m["phone"], f"CAF1 {m['member_id']} HLTH 93 {ymd()} -0.52,37.32 #S001")
     assert conn.execute("SELECT COUNT(*), source FROM observations").fetchone()[:] == (1, "sms+sync")
 
 
 def test_sync_validation(client):
     m = register(client)
-    rec = {"obs_id": "V001", "member_id": m["member_id"], "code": "ROYA", "conf": 80, "date": ymd()}
+    rec = {"obs_id": "V001", "member_id": m["member_id"], "code": "RUST", "conf": 80, "date": ymd()}
     assert client.post("/api/observations/sync", json={**rec, "member_id": "M9999"}).status_code == 404
     assert client.post("/api/observations/sync", json={**rec, "code": "XXXX"}).status_code == 400
+    assert client.post("/api/observations/sync", json={**rec, "code": "ROYA"}).status_code == 400   # old Spanish code
     assert client.post("/api/observations/sync", json={**rec, "photo": "data:image/png;base64,AAAA"}).status_code == 400
     assert client.post("/api/observations/sync", json={**rec, "photo": data_url(b"notajpeg" * 20)}).status_code == 400
     big = JPEG[:4] + b"\x00" * (2 * 1024 * 1024)

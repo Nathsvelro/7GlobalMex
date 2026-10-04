@@ -10,14 +10,15 @@ import unicodedata
 from pathlib import Path
 
 MODEL_PATH = Path(__file__).resolve().parent / "intent_model.json"
-INTENTS = ["precio", "reporte", "ayuda", "hablar_con_tecnico", "otro"]
+INTENTS = ["price", "report", "help", "talk_to_officer", "other"]
 
 _NON_WORD = re.compile(r"[^a-z0-9' ]+")
 _SPACES = re.compile(r"\s\s+")
 
 
 def normalize(text: str) -> str:
-    """Lowercase, drop accents (keep ñ as n), keep letters/digits/apostrophe (Tseltal glottal stop), squeeze spaces."""
+    """Lowercase, drop accents (Gikuyu i/u with tilde -> i/u, as members type them on a basic phone), keep
+    letters/digits/apostrophe (I'm, don't), squeeze spaces."""
     text = unicodedata.normalize("NFKD", text.lower())
     text = "".join(ch for ch in text if not unicodedata.combining(ch))
     text = text.replace("’", "'").replace("`", "'")
@@ -100,5 +101,5 @@ def get_model() -> IntentModel | None:
 def classify(text: str) -> dict:
     m = get_model()
     if m is None:  # no trained model: everything goes to the officer (safe default)
-        return {"intent": "otro", "conf": 0.0, "accepted": False, "threshold": None}
+        return {"intent": "other", "conf": 0.0, "accepted": False, "threshold": None}
     return m.classify(text)

@@ -1,77 +1,79 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lista del técnico</title>
+<title>Officer worklist</title>
 <link rel="stylesheet" href="/hub/style.css">
 <link rel="icon" href="data:,">
 </head>
 <body>
 <main>
-  <h1>Lista de visitas del técnico</h1>
-  <div class="notice warn"><b>Usted decide a quién visitar.</b> La lista solo ordena los reportes de los últimos 30 días con una regla fija
-    (no es un diagnóstico). La app del teléfono puede equivocarse; «Duda» quiere decir que la app no estaba segura y pidió que una persona revise.</div>
+  <h1>Extension officer's visit list</h1>
+  <div class="notice warn"><b>You decide whom to visit.</b> The list only ranks the reports of the last 30 days with a fixed rule
+    (it is not a diagnosis). The phone app can be wrong; "Unsure" means the app was not sure and asked for a person to look.</div>
   <p class="small muted" id="formula"></p>
   <div class="table-wrap"><table>
-    <thead><tr><th>#</th><th>Socio</th><th>Por qué está en la lista</th><th>Puntaje</th><th>Foto</th><th>Decisión del técnico</th></tr></thead>
+    <thead><tr><th>#</th><th>Member</th><th>Why it is on the list</th><th>Score</th><th>Photo</th><th>Officer's decision</th></tr></thead>
     <tbody id="list"></tbody>
   </table></div>
 
-  <h2 id="mensajes">Mensajes de socios para el técnico</h2>
-  <p class="small muted">Textos libres que el clasificador no supo contestar o que piden hablar con el técnico. El socio ya recibió «le paso su mensaje al técnico».
-    Para contestar, llame al socio (el sistema no manda textos libres a los socios).</p>
+  <h2 id="mensajes">Messages from members for the officer</h2>
+  <p class="small muted">Free texts the classifier could not answer, symptom reports, and requests to talk to the officer. The member already got an automatic card
+    ("we are passing your message to the extension officer" or the report instructions). To answer, call the member (the system never sends free text to members).</p>
   <div class="table-wrap"><table>
-    <thead><tr><th>Fecha</th><th>Socio</th><th>Mensaje</th><th>Clasificador</th><th></th></tr></thead>
+    <thead><tr><th>Date</th><th>Member</th><th>Message</th><th>Classifier</th><th></th></tr></thead>
     <tbody id="msgs"></tbody>
   </table></div>
 
-  <h2 id="etiquetas">Ejemplos revisados (para reentrenar el modelo)</h2>
-  <p class="small muted">Cuando usted confirma o corrige un resultado, se guarda la etiqueta real. Con fotos, sirven para mejorar el modelo más adelante.</p>
+  <h2 id="etiquetas">Checked examples (for retraining the model)</h2>
+  <p class="small muted">When you confirm or correct a result, the true label is saved. With photos, they help improve the model later.</p>
   <div class="table-wrap"><table>
-    <thead><tr><th>Fecha</th><th>Reporte</th><th>Resultado de la app</th><th>Etiqueta real</th><th>Foto</th></tr></thead>
+    <thead><tr><th>Date</th><th>Report</th><th>App result</th><th>True label</th><th>Photo</th></tr></thead>
     <tbody id="labels"></tbody>
   </table></div>
 </main>
 <script src="/hub/common.js"></script>
 <script>
-const LABELS = [["roya", "Roya"], ["minador", "Minador"], ["phoma", "Phoma"], ["cercospora", "Cercospora"], ["acaro_rojo", "Ácaro rojo"], ["sano", "Sano"], ["otro", "Otro problema / no es café"]];
-const STATUS = { visit_scheduled: '<span class="badge sim">Visita programada</span>' };
+// value = internal model label (never shown to farmers), text = what the officer sees
+const LABELS = [["roya", "Leaf rust"], ["minador", "Leaf miner"], ["phoma", "Phoma"], ["cercospora", "Cercospora (brown eye spot)"], ["acaro_rojo", "Red spider mite"], ["sano", "Healthy"], ["otro", "Other problem / not coffee"]];
+const LABEL_NAME = Object.fromEntries(LABELS);
+const STATUS = { visit_scheduled: '<span class="badge sim">Visit scheduled</span>' };
 const $ = (id) => document.getElementById(id);
 async function load() {
   const w = await api("/api/worklist");
   const p = w.params;
-  $("formula").textContent = `Puntaje = peso del resultado × confianza + ${p.alert_bonus} si la parcela está en una zona de aviso activa. Pesos: ` +
-    Object.entries(p.weights).map(([k, v]) => `${k} ${v}`).join(", ") + ". Confianza = 100% para DUDA y OTRO.";
+  $("formula").textContent = `Score = result weight × confidence + ${p.alert_bonus} if the farm is inside an active alert area. Weights: ` +
+    Object.entries(p.weights).map(([k, v]) => `${k} ${v}`).join(", ") + ". Confidence = 100% for UNSR and OTHR.";
   $("list").innerHTML = w.farms.map((f) => `<tr>
     <td><b>${f.rank}</b></td>
     <td>${esc(f.name)} ${f.demo ? '<span class="badge demo">DEMO</span>' : ""}<br><span class="small muted"><span class="code">${esc(f.member_id)}</span> · ${esc(f.community)} · <span class="code">${esc(f.phone)}</span></span></td>
-    <td>${codeDot(f.code)}${esc(f.reason)}<br><span class="small muted">Reporte ${esc(f.obs_uid)} · ${fmtDate(f.date)}</span></td>
+    <td>${codeDot(f.code)}${esc(f.reason)}<br><span class="small muted">Report ${esc(f.obs_uid)} · ${esc(f.code)} · ${fmtDate(f.date)}</span></td>
     <td><b>${f.score.toFixed(2)}</b></td>
-    <td>${f.photo_url ? `<a href="${f.photo_url}" target="_blank"><img class="thumb" src="${f.photo_url}" alt="foto de la hoja"></a>` : '<span class="small muted">sin foto</span>'}</td>
+    <td>${f.photo_url ? `<a href="${f.photo_url}" target="_blank"><img class="thumb" src="${f.photo_url}" alt="photo of the leaf"></a>` : '<span class="small muted">no photo</span>'}</td>
     <td class="small">${f.status ? STATUS[f.status] + "<br>" : ""}
-      <button onclick="act('${f.obs_uid}','visit_scheduled')">Visita programada</button><br>
-      <select id="tl-${f.obs_uid}" style="margin:4px 0"><option value="">Etiqueta real…</option>${LABELS.map(([v, l]) => `<option value="${v}" ${v === f.model_label ? "selected" : ""}>${l}</option>`).join("")}</select><br>
-      <button class="primary" onclick="act('${f.obs_uid}','confirmed')">Confirmado</button>
-      <button class="danger" onclick="act('${f.obs_uid}','not_confirmed')">No confirmado</button>
-    </td></tr>`).join("") || '<tr><td colspan="6" class="muted">No hay granjas en la lista.</td></tr>';
+      <button onclick="act('${f.obs_uid}','visit_scheduled')">Visit scheduled</button><br>
+      <select id="tl-${f.obs_uid}" style="margin:4px 0"><option value="">True label…</option>${LABELS.map(([v, l]) => `<option value="${v}" ${v === f.model_label ? "selected" : ""}>${l}</option>`).join("")}</select><br>
+      <button class="primary" onclick="act('${f.obs_uid}','confirmed')">Confirmed</button>
+      <button class="danger" onclick="act('${f.obs_uid}','not_confirmed')">Not confirmed</button>
+    </td></tr>`).join("") || '<tr><td colspan="6" class="muted">No farms on the list.</td></tr>';
 
   const m = await api("/api/officer/messages");
   $("msgs").innerHTML = m.messages.map((x) => `<tr style="${x.status === "new" ? "font-weight:600" : ""}">
     <td class="small">${fmtDate(x.created_at)}</td>
-    <td class="small">${esc(x.name || "no registrado")} ${x.demo ? '<span class="badge demo">DEMO</span>' : ""}<br><span class="code">${esc(x.phone)}</span></td>
+    <td class="small">${esc(x.name || "not registered")} ${x.demo ? '<span class="badge demo">DEMO</span>' : ""}<br><span class="code">${esc(x.phone)}</span></td>
     <td>${esc(x.body)}</td>
     <td class="small">${esc(x.intent || "")} ${x.conf != null ? Math.round(x.conf * 100) + "%" : ""}</td>
-    <td>${x.status === "new" ? `<button onclick="readMsg(${x.id})">Marcar leído</button>` : '<span class="small muted">leído</span>'}</td></tr>`).join("") || '<tr><td colspan="5" class="muted">Sin mensajes.</td></tr>';
+    <td>${x.status === "new" ? `<button onclick="readMsg(${x.id})">Mark as read</button>` : '<span class="small muted">read</span>'}</td></tr>`).join("") || '<tr><td colspan="5" class="muted">No messages.</td></tr>';
 
   const l = await api("/api/labels");
   $("labels").innerHTML = l.labels.map((x) => `<tr><td class="small">${fmtDate(x.created_at)}</td><td class="code">${esc(x.obs_uid)}</td>
-    <td>${esc(x.model_label || "duda")}</td><td><b>${esc(x.true_label)}</b></td><td>${x.photo_path ? "sí" : "no"}</td></tr>`).join("") || '<tr><td colspan="5" class="muted">Todavía no hay ejemplos.</td></tr>';
+    <td>${esc(x.model_label ? (LABEL_NAME[x.model_label] || x.model_label) : "unsure")}</td><td><b>${esc(LABEL_NAME[x.true_label] || x.true_label)}</b></td><td>${x.photo_path ? "yes" : "no"}</td></tr>`).join("") || '<tr><td colspan="5" class="muted">No examples yet.</td></tr>';
 }
 async function act(uid, action) {
   const tl = $("tl-" + uid).value || null;
-  if (action === "not_confirmed" && !tl) { if (!confirm("Sin etiqueta real no se guarda como ejemplo para reentrenar. ¿Seguir?")) return; }
-  const note = action === "visit_scheduled" ? null : prompt("Nota (opcional):", "") || null;
+  if (action === "not_confirmed" && !tl) { if (!confirm("Without a true label it is not saved as a retraining example. Continue?")) return; }
+  const note = action === "visit_scheduled" ? null : prompt("Note (optional):", "") || null;
   try { await api(`/api/worklist/${uid}/action`, { json: { action, true_label: action === "visit_scheduled" ? null : tl, note } }); }
   catch (e) { alert(e.message); }
   load();
