@@ -209,6 +209,7 @@ Ways to get a secure origin on the phone:
    by side on any HTTPS static host. The hub buttons stay hidden there, because there is no hub to reach.
 3. **Demo only:** on the phone, open `chrome://flags/#unsafely-treat-insecure-origin-as-secure` and add
    `http://<hub-ip>:8000`. This weakens the browser's security, so never do it on a farmer's phone.
+4. **Online DEMO hub.** Hub and app on one public HTTPS link (Render): [docs/DEPLOY_HUB_RENDER.md](docs/DEPLOY_HUB_RENDER.md).
 
 ## Run the tests
 

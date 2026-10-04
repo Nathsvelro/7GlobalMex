@@ -56,6 +56,8 @@ installed its offline cache, then with every request blocked it showed the three
 
 The hub is FastAPI + SQLite with photo uploads and a content page that edits `content/cards.json`. Vercel runs Python
 as short-lived functions with no lasting disk, so the database, photos and card edits would be lost. It also has no
-login yet, and its consent text promises that member data stays on the co-op computer. For an online hub demo, run a
-separate DEMO-only copy behind a password on a host with a persistent disk (for example Render, Railway or Fly.io),
-where `./run.sh` works almost unchanged.
+login yet, and its consent text promises that member data stays on the co-op computer.
+
+For an online hub demo, a public DEMO-only copy now exists for Render: [DEPLOY_HUB_RENDER.md](DEPLOY_HUB_RENDER.md).
+It holds only fake DEMO data, reloads it on every start (so nothing needs to last), and has content edits off. A real
+co-op still runs the hub on its own computer.

@@ -419,6 +419,12 @@ async function markSent(via) {
 }
 
 // ---------- hub (co-op Wi-Fi): only when reachable, only on tap ----------
+// A sleeping online demo hub on free hosting takes up to a minute to start. Asking once at boot means it is awake by
+// the time someone looks for the hub buttons. No answer is fine (e.g. offline).
+function wakeHub() {
+  fetch('../api/health', { cache: 'no-store' }).catch(() => {});
+}
+
 async function checkHub() {
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), 1500);
@@ -664,6 +670,7 @@ function bind() {
 
 async function boot() {
   registerSW();
+  wakeHub();
   try {
     st.config = { ...st.config, ...(await (await fetch('config.json')).json()) };
   } catch (e) {

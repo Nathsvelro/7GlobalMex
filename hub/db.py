@@ -6,6 +6,7 @@ Paths can be changed with environment variables (the tests use temporary copies)
   CAFETAL_PRICES   reference price table  (default data/prices.json)
   CAFETAL_UPLOADS  synced photos          (default hub/uploads/, never served as static files)
   CAFETAL_APP      phone PWA folder       (default app/)
+  CAFETAL_PUBLIC_DEMO  1 = public online DEMO copy (banner on hub pages, content edits off)
 """
 import json
 import os
@@ -36,6 +37,12 @@ def uploads_dir() -> Path:
 
 def app_dir() -> Path:
     return Path(os.environ.get("CAFETAL_APP", ROOT / "app"))
+
+
+def public_demo() -> bool:
+    """True on the public online DEMO copy (render.yaml sets CAFETAL_PUBLIC_DEMO=1). Read on every call, so tests
+    can switch it. Off when unset, empty, 0, false or no."""
+    return os.environ.get("CAFETAL_PUBLIC_DEMO", "").strip().lower() not in ("", "0", "false", "no")
 
 
 def now() -> datetime:
