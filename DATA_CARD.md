@@ -25,8 +25,8 @@ It could reach PyPI/npm, GitHub and public S3 buckets. That decided several choi
 | 8 | Hand-written SMS examples (team English and Kiswahili, AI-draft Gĩkũyũ) | SMS intent classifier | project | 472 messages | classifier weights only |
 | 9 | Reference prices, KES | PRICE / BEI reply (not AI) | public sources, **all DEMO** | 3 prices | yes (DEMO) |
 | 10 | Piper TTS, voice `en-us-lessac-medium`, with espeak-ng phonemes | English audio; **provisional** Kiswahili and Gĩkũyũ audio | Piper MIT; voice data: Lessac licence (to be checked) | 222 MP3 files, 2.95 MB | yes (MP3 only) |
-| 11 | English card text (team-written, the main language) | every screen, diagnosis, advice and SMS | project | 83 cards | yes (UNVERIFIED) |
-| 11b | Kiswahili and Gĩkũyũ card text (AI drafts) | the same cards in the national and the local language | project | 83 cards each | yes (UNVERIFIED) |
+| 11 | English card text (team-written, the main language) | every screen, diagnosis, advice and SMS | project | 84 cards | yes (UNVERIFIED) |
+| 11b | Kiswahili and Gĩkũyũ card text (AI drafts) | the same cards in the national and the local language | project | 84 cards each | yes (UNVERIFIED) |
 | 12 | Meta MMS Kiswahili and Gĩkũyũ models; other language resources | **not used** | CC BY-NC 4.0 (MMS) | — | no |
 | 13 | Evidence sources (CA/KNBS, Findex, AFA, USDA, KALRO-CRI review, KAMIS, …) | problem evidence | various | see [`docs/evidence.md`](docs/evidence.md) | no |
 | 14 | DEMO hub data | demo of the co-op hub | project | 24 fictional members in Kirinyaga | yes (DEMO) |
@@ -343,7 +343,7 @@ There is no East African field photo of a coffee disease to use instead (section
   (https://www.cstr.ed.ac.uk/projects/blizzard/2013/lessac_blizzard2013/license.html), which we could not open here,
   and gives no separate licence for the voice weights: **to be checked**. The espeak-ng licence was not checked here.
   Only the generated MP3 files ship, not the voice model.
-- **Size:** 222 MP3s (74 per language), 24 kbps mono, **2.95 MB** in total: English 0.93 MB, Kiswahili 1.03 MB,
+- **Size:** 225 MP3s (75 per language), 24 kbps mono, **2.97 MB** in total: English 0.94 MB, Kiswahili 1.04 MB,
   Gĩkũyũ 0.98 MB ([`content/README.md`](content/README.md)). The 9 SMS and alert cards are text only.
 - **What it does NOT cover:** a Kenyan English accent (the voice is American); Kiswahili and Gĩkũyũ as a native speaker
   says them: the English voice has no rolled *r* and no *ny* (computed phoneme check), Gĩkũyũ tones are missing, and
@@ -352,9 +352,9 @@ There is no East African field photo of a coffee disease to use instead (section
 
 ## 11. English content (the main language)
 
-- **What it is:** all 83 cards in [`content/cards.json`](content/cards.json), written by the team in plain, short
+- **What it is:** all 84 cards in [`content/cards.json`](content/cards.json), written by the team in plain, short
   sentences for low literacy, in Kenyan English (*extension officer*, *co-op*, *factory*, prices in *KES*). English is
-  the app's default language. 74 cards are spoken (section 10). About 928 words.
+  the app's default language. 75 cards are spoken (section 10). About 931 words.
 - **Advice sources:** each card's `source` field. Mainly the KALRO Coffee Research Institute review of coffee leaf rust in
   Kenya (*Agronomy* 2021), CABI Plantwise factsheets, Infonet-Biovision and the Kenya Coffee Sustainability Manual
   ([`content/README.md`](content/README.md)). **These pages were seen only through search summaries** (every card says
@@ -363,7 +363,7 @@ There is no East African field photo of a coffee disease to use instead (section
 - **Fixed sentences:** the fail-safe reads exactly "I'm not sure — show the leaf to the extension officer."
   `limits_yield` says the app only looks at leaves and cannot see coffee berry disease on the berries, antestia bugs,
   berry borer, lack of fertiliser, drought, old trees or soil problems.
-- **Status:** **83 of 83 cards are `unverified`** in every language. The app shows "UNVERIFIED" next to unverified text
+- **Status:** **84 of 84 cards are `unverified`** in every language. The app shows "UNVERIFIED" next to unverified text
   and audio. An agronomist or extension officer can verify a card on the hub's Content page.
 - **SMS:** the English SMS cards advertise PRICE, HELP and OFFICER, and also the Kiswahili BEI, MSAADA and AFISA
   (`sms_ayuda`).
@@ -371,18 +371,18 @@ There is no East African field photo of a coffee disease to use instead (section
 
 ## 11b. Kiswahili and Gĩkũyũ content (AI drafts)
 
-- **Kiswahili** (`sw`, the national language): all 83 cards, an **AI draft** in standard Kiswahili, about 811 words.
+- **Kiswahili** (`sw`, the national language): all 84 cards, an **AI draft** in standard Kiswahili, about 815 words.
   Nobody who speaks Kiswahili has read it. A few terms (*kutu ya majani*, *chule buni*, *afisa ugani*) were seen in
   Kiswahili extension writing through a search summary; the rest are the AI model's choices
   ([`content/README.md`](content/README.md)).
-- **Gĩkũyũ** (`kik`, the local language of central Kenya): all 83 cards, an **AI draft, best effort, low confidence**,
-  about 867 words. It was written without any Gĩkũyũ dictionary that the build machine could open. Expect wrong words,
+- **Gĩkũyũ** (`kik`, the local language of central Kenya): all 84 cards, an **AI draft, best effort, low confidence**,
+  about 871 words. It was written without any Gĩkũyũ dictionary that the build machine could open. Expect wrong words,
   wrong noun-class agreement and unnatural phrasing.
 - **SMS:** the Gĩkũyũ SMS cards write ĩ and ũ as i and u to stay in GSM-7. In Meta's Gĩkũyũ text counts, ĩ and ũ are
   17 % of all letters (F counts, D share; [`docs/evidence.md`](docs/evidence.md) §6), so SMS Gĩkũyũ merges vowels the
   language keeps apart. The app's screens and audio keep ĩ and ũ. There are no Gĩkũyũ SMS keywords; the Gĩkũyũ cards
   advertise the English and Kiswahili ones.
-- **Status:** **83 of 83 cards `unverified`** in both languages, marked as AI drafts in
+- **Status:** **84 of 84 cards `unverified`** in both languages, marked as AI drafts in
   [`content/README.md`](content/README.md). The app shows *HAIJAHAKIKIWA* (Kiswahili) or *NDĨRATHUTHURIO* (Gĩkũyũ), the
   drafts of "UNVERIFIED", next to them, each followed by the English word UNVERIFIED in case the draft is wrong. A
   native speaker can verify a card or record it on the hub's Content page; a native recording is never overwritten by
@@ -501,5 +501,5 @@ and, later, into training. A faster start: ask a Kirinyaga co-op or KALRO-CRI fo
 rust, leaf miner and healthy leaves, labelled by an extension officer, and score the shipped model on them without
 changing the threshold ([`docs/evidence.md`](docs/evidence.md), "How to close the gaps"). Then rerun the field protocol
 and ship rule ([`model/README.md`](model/README.md)), and record any exception openly, as for the shipped v2@0.90
-(`model/ship_decision.json`). In parallel, native Kiswahili and Gĩkũyũ speakers from the area review the 83 cards and
+(`model/ship_decision.json`). In parallel, native Kiswahili and Gĩkũyũ speakers from the area review the 84 cards and
 record the 74 spoken ones ([`content/README.md`](content/README.md)), and an agronomist checks the English advice.

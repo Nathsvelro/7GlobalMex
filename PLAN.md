@@ -28,8 +28,8 @@ Design rule: **keep it simple.** Vanilla HTML/JS (no build step), FastAPI + SQLi
 >   never downloaded (Mendeley is blocked). v2's 147 iNaturalist field photos come from Latin America and the
 >   Caribbean (86), Asia (30, mostly Taiwan), Hawaii (27), Florida (3) and South Africa (1); **none from East Africa**
 >   (*computed* from the coordinates in `reports/field_inat_attribution.csv`).
-> - **83 cards** in three languages (`en`, `sw`, `kik`), 74 of them spoken (222 MP3s, 2.95 MB). Adding a language means
->   83 card texts (about 800–950 words; 60 required ids) and 74 recordings, with no model retraining.
+> - **84 cards** in three languages (`en`, `sw`, `kik`), 75 of them spoken (225 MP3s, 2.97 MB). Adding a language means
+>   84 card texts (about 800–950 words; 60 required ids) and 75 recordings, with no model retraining.
 > - The blur threshold (4.2) is calibrated on **validation** images. The "too little leaf colour" check in §3 was
 >   **not built**; the `otro` class does that job.
 > - SMS keywords: PRICE/PRICES, HELP, OFFICER (English) and BEI, MSAADA, AFISA (Kiswahili). There are no Gĩkũyũ

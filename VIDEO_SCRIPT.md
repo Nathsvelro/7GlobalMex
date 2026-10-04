@@ -135,7 +135,7 @@ speed and download are *emulated* in desktop Chromium, not measured on a phone):
 
 | Part | What it uses |
 |---|---|
-| Phone | Web app (HTML/JS, no build step) with a service worker for offline use. onnxruntime-web 1.19.2 (WASM). MobileNetV3-Small fine-tuned, ONNX, fp16, **1.97 MB**, threshold 0.90. Interface in English, Kiswahili and Gĩkũyũ; 83 cards, audio pre-rendered with Piper TTS (Kiswahili and Gĩkũyũ voice provisional). Records in the browser's IndexedDB. |
+| Phone | Web app (HTML/JS, no build step) with a service worker for offline use. onnxruntime-web 1.19.2 (WASM). MobileNetV3-Small fine-tuned, ONNX, fp16, **1.97 MB**, threshold 0.90. Interface in English, Kiswahili and Gĩkũyũ; 84 cards, audio pre-rendered with Piper TTS (Kiswahili and Gĩkũyũ voice provisional). Records in the browser's IndexedDB. |
 | Speed *(emulated, CPU slowed 4×)* | First photo **3.7 s** (loading included; one cold run), then **62 ms** per photo |
 | First download *(emulated 3G)* | Model alone **21 s**; everything needed offline **88 s** |
 | SMS | `CAF1` code, at most 160 characters (45 in the end-to-end test), works on 2G. Gateway **SIMULATED** in this build. |

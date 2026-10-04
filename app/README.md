@@ -11,7 +11,7 @@ Static files, no build step. Vanilla JS modules:
 | `sms.js` | observation SMS code v1 (PLAN §5), English result codes: `HLTH RUST MINR PHOM CERC MITE OTHR UNSR` |
 | `store.js` | settings (localStorage), observations + photos (IndexedDB), PIN hash (SHA-256) |
 | `sw.js` | offline cache. `VERSION` is a hash of every precached file, set by `scripts/bump_sw_version.py` (`run.sh` runs it; run it by hand before copying `app/` to a static host), so phones never keep an old copy |
-| `config.json` | SMS gateway number used in the `sms:` link (now the placeholder `+254700000000`; the `DEMO` label shows a DEMO badge); `"demo_samples": true` shows the DEMO sample photos on the Home screen (set it to `false` for a real co-op, then run `scripts/bump_sw_version.py`) |
+| `config.json` | SMS gateway number used in the `sms:` link (now the placeholder `+254700000000`; the `DEMO` label shows a DEMO badge); `"demo_samples": true` shows the DEMO sample photos on the Home screen; `"hub_url"` shows a "Co-op hub (DEMO)" button under the top bar on every screen, opening the hub that serves the page or else that address (for a real co-op: `demo_samples` false, `hub_url` empty, then run `scripts/bump_sw_version.py`) |
 | `demo/` | DEMO sample photos for the demo video and for people trying the app without a coffee leaf: 7 unchanged CC BY copies from `model/demo_samples/`, and `samples.json` (file, credit shown with the photo, expected answer). Cached for offline use only when `demo_samples` is on; a sample goes through the same steps as a camera photo, and its result and "My checks" row say "DEMO: sample data" |
 | `vendor/` | onnxruntime-web 1.19.2 (MIT), see `vendor/README.md` |
 | `model/` | `cafetal.onnx` + `labels.json` (owned by `model/`) |
@@ -33,6 +33,6 @@ airplane mode and the SMS location is `-`. Options for the demo phone:
 2. Put `app/` + `content/` on any HTTPS static host (the hub buttons stay hidden there).
 3. Demo only: `chrome://flags/#unsafely-treat-insecure-origin-as-secure` = `http://<hub-ip>:8000` on the phone.
 
-First load downloads about 16.2 MB (onnxruntime WASM 11.0 MB raw / 2.9 MB gzip, model ~2 MB, 222 MP3s in English,
-Kiswahili and Gĩkũyũ 2.9 MB; computed from file sizes),
+First load downloads about 16.2 MB (onnxruntime WASM 11.0 MB raw / 2.9 MB gzip, model ~2 MB, 225 MP3s in English,
+Kiswahili and Gĩkũyũ 3.0 MB; computed from file sizes),
 then nothing more is needed offline. With `"demo_samples": true` the DEMO sample photos add 0.23 MB (8 files).

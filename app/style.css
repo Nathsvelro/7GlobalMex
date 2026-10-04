@@ -37,7 +37,7 @@ body {
 .top .logo { width: 36px; height: 36px; }
 .top h1 { flex: 1; margin: 0; font-size: 22px; letter-spacing: .5px; }
 .icon-btn { min-width: 56px; min-height: 48px; border: 0; border-radius: 12px; background: rgba(255,255,255,.12); color: #fff; display: grid; place-items: center; }
-.strip { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 16px 0; }
+.strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 6px 16px 0; }
 .strip:empty { display: none; }
 .pill, .badge, .chip { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; font-weight: 700; max-width: 100%; }
 .pill { font-size: 12px; padding: 3px 10px; }
@@ -46,6 +46,8 @@ body {
 .pill.unverified, .badge.unverified { background: #ffe082; color: #4e342e; }
 .pill.ok { background: var(--leaf-l); color: var(--leaf-d); }
 .pill.sim, .chip.sim { background: #e3f2fd; color: #0d47a1; }
+.pill.hub { font-size: 13px; min-height: 32px; padding: 4px 12px; background: var(--coffee); color: #fff; text-decoration: none; }
+.pill.hub .i { width: 16px; height: 16px; }
 .badge { font-size: 11px; padding: 2px 8px; letter-spacing: .3px; }
 
 main { flex: 1; width: 100%; padding: 12px 16px 20px; max-width: 560px; margin: 0 auto; }

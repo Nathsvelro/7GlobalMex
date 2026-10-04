@@ -1,10 +1,10 @@
 {
-  "hub": "http://localhost:8177",
-  "started": "2026-10-04T05:23:15.874Z",
+  "hub": "http://localhost:8179",
+  "started": "2026-10-04T06:36:02.475Z",
   "checks": [
     {
       "ok": true,
-      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1906 ms (unthrottled, localhost)"
+      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1926 ms (unthrottled, localhost)"
     },
     {
       "ok": true,
@@ -12,19 +12,19 @@
     },
     {
       "ok": true,
-      "msg": "visible text on \"language\" comes from cards.json (11 strings)"
+      "msg": "visible text on \"language\" comes from cards.json (12 strings)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"consent\" comes from cards.json (8 strings)"
+      "msg": "visible text on \"consent\" comes from cards.json (9 strings)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"member id\" comes from cards.json (8 strings)"
+      "msg": "visible text on \"member id\" comes from cards.json (9 strings)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"home\" comes from cards.json (11 strings)"
+      "msg": "visible text on \"home\" comes from cards.json (12 strings)"
     },
     {
       "ok": true,
@@ -36,7 +36,7 @@
     },
     {
       "ok": true,
-      "msg": "en advice audio plays offline (currentTime 1.20 s)"
+      "msg": "en advice audio plays offline (currentTime 1.21 s)"
     },
     {
       "ok": true,
@@ -44,15 +44,15 @@
     },
     {
       "ok": true,
-      "msg": "kik advice audio plays offline (currentTime 1.21 s)"
+      "msg": "kik advice audio plays offline (currentTime 1.19 s)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"result (roya)\" comes from cards.json (24 strings)"
+      "msg": "visible text on \"result (roya)\" comes from cards.json (25 strings)"
     },
     {
       "ok": true,
-      "msg": "SMS code valid, 45 chars: CAF1 M0123 RUST 99 20261004 -0.52,37.32 #MLKN"
+      "msg": "SMS code valid, 45 chars: CAF1 M0123 RUST 99 20261004 -0.52,37.32 #8HZF"
     },
     {
       "ok": true,
@@ -60,7 +60,7 @@
     },
     {
       "ok": true,
-      "msg": "\"Send by SMS\" link: sms:+254700000000?body=CAF1%20M0123%20RUST%2099%2020261004%20-0.52%2C37.32%20%23MLKN"
+      "msg": "\"Send by SMS\" link: sms:+254700000000?body=CAF1%20M0123%20RUST%2099%2020261004%20-0.52%2C37.32%20%238HZF"
     },
     {
       "ok": true,
@@ -88,31 +88,31 @@
     },
     {
       "ok": true,
-      "msg": "visible text on \"result (duda)\" comes from cards.json (24 strings)"
+      "msg": "visible text on \"result (duda)\" comes from cards.json (25 strings)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"history\" comes from cards.json (12 strings)"
+      "msg": "visible text on \"history\" comes from cards.json (13 strings)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"settings\" comes from cards.json (16 strings)"
+      "msg": "visible text on \"settings\" comes from cards.json (17 strings)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"settings (kik)\" comes from cards.json (16 strings)"
+      "msg": "visible text on \"settings (kik)\" comes from cards.json (17 strings)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"result (roya, kik)\" comes from cards.json (24 strings)"
+      "msg": "visible text on \"result (roya, kik)\" comes from cards.json (25 strings)"
     },
     {
       "ok": true,
-      "msg": "visible text on \"settings (sw)\" comes from cards.json (16 strings)"
+      "msg": "visible text on \"settings (sw)\" comes from cards.json (17 strings)"
     },
     {
       "ok": true,
-      "msg": "airplane mode: 0 responses from the network (11 attempts blocked: sw /app/config.json, sw /content/cards.json, sw /app/model/labels.json, sw /api/health)"
+      "msg": "airplane mode: 0 responses from the network (13 attempts blocked: sw /api/health, sw /app/config.json, sw /content/cards.json, page /hub/outbox.html, sw /app/model/labels.json)"
     },
     {
       "ok": true,
@@ -124,11 +124,11 @@
     },
     {
       "ok": true,
-      "msg": "hub stored the observation M0123-MLKN (RUST 99%) from the SMS"
+      "msg": "hub stored the observation M0123-8HZF (RUST 99%) from the SMS"
     },
     {
       "ok": true,
-      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-04T05:23:38\",\"community\":\"Ondera Juu\",\"lat\":-0.52,\"lon\":37.32,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-MLKN\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
+      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-04T06:36:24\",\"community\":\"Ondera Juu\",\"lat\":-0.52,\"lon\":37.32,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-8HZF\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
     },
     {
       "ok": true,
@@ -144,7 +144,7 @@
     },
     {
       "ok": true,
-      "msg": "photo attached to M0123-MLKN: /api/photos/M0123-MLKN"
+      "msg": "photo attached to M0123-8HZF: /api/photos/M0123-8HZF"
     },
     {
       "ok": true,
@@ -188,16 +188,16 @@
     }
   ],
   "results": {
-    "first_load_ready_ms": 1906,
+    "first_load_ready_ms": 1926,
     "roya": {
-      "obs_id": "MLKN",
+      "obs_id": "8HZF",
       "label": "roya",
       "code": "RUST",
       "top": "roya",
       "conf": 99,
       "reason": null,
       "blur": 51.69,
-      "ms": 1090,
+      "ms": 656,
       "probs": {
         "sano": 0,
         "roya": 0.996,
@@ -206,19 +206,19 @@
         "cercospora": 0,
         "otro": 0.004
       },
-      "sms_code": "CAF1 M0123 RUST 99 20261004 -0.52,37.32 #MLKN",
+      "sms_code": "CAF1 M0123 RUST 99 20261004 -0.52,37.32 #8HZF",
       "model_version": "cafetal-img-v2",
       "diag_text": "It looks like coffee leaf rust."
     },
     "plantdoc": {
-      "obs_id": "3VYN",
+      "obs_id": "XXX0",
       "label": "otro",
       "code": "OTHR",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 959.88,
-      "ms": 17,
+      "ms": 18,
       "probs": {
         "sano": 0,
         "roya": 0.001,
@@ -227,19 +227,19 @@
         "cercospora": 0,
         "otro": 0.999
       },
-      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #3VYN",
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #XXX0",
       "model_version": "cafetal-img-v2",
       "diag_text": "I'm not sure — show the leaf to the extension officer."
     },
     "imagenette": {
-      "obs_id": "YHYS",
+      "obs_id": "XV7M",
       "label": "otro",
       "code": "OTHR",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 1032.66,
-      "ms": 15,
+      "ms": 16,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -248,19 +248,19 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #YHYS",
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #XV7M",
       "model_version": "cafetal-img-v2",
       "diag_text": "I'm not sure — show the leaf to the extension officer."
     },
     "object": {
-      "obs_id": "3Q1I",
+      "obs_id": "HZNB",
       "label": "otro",
       "code": "OTHR",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 145.58,
-      "ms": 24,
+      "ms": 25,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -269,12 +269,12 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #3Q1I",
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #HZNB",
       "model_version": "cafetal-img-v2",
       "diag_text": "I'm not sure — show the leaf to the extension officer."
     },
     "blurred": {
-      "obs_id": "DV82",
+      "obs_id": "WZJY",
       "label": "duda",
       "code": "UNSR",
       "top": null,
@@ -283,14 +283,16 @@
       "blur": 2.35,
       "ms": 2,
       "probs": null,
-      "sms_code": "CAF1 M0123 UNSR 0 20261004 -0.52,37.32 #DV82",
+      "sms_code": "CAF1 M0123 UNSR 0 20261004 -0.52,37.32 #WZJY",
       "model_version": "cafetal-img-v2",
       "diag_text": "I'm not sure — show the leaf to the extension officer."
     },
     "offline_network": {
       "attempts": [
+        "sw /api/health",
         "sw /app/config.json",
         "sw /content/cards.json",
+        "page /hub/outbox.html",
         "sw /app/model/labels.json",
         "sw /api/health",
         "sw /api/health",
@@ -306,7 +308,7 @@
     "alerts": [
       {
         "id": 1,
-        "created_at": "2026-10-04T05:23:38",
+        "created_at": "2026-10-04T06:36:24",
         "community": "Ondera Juu",
         "lat": -0.52,
         "lon": 37.32,
@@ -317,7 +319,7 @@
           "M0123"
         ],
         "obs_uids": [
-          "M0123-MLKN",
+          "M0123-8HZF",
           "M0105-A1R2",
           "M0108-B7K4"
         ],
@@ -334,8 +336,8 @@
       "name": "Noor (DEMO)",
       "community": "Ondera Juu",
       "phone": "+254700000123",
-      "obs_uid": "M0123-MLKN",
-      "obs_id": "MLKN",
+      "obs_uid": "M0123-8HZF",
+      "obs_id": "8HZF",
       "code": "RUST",
       "conf": 99,
       "date": "2026-10-04",
@@ -513,62 +515,62 @@
     "screens": [
       {
         "where": "language",
-        "strings": 11,
-        "bad": []
-      },
-      {
-        "where": "consent",
-        "strings": 8,
-        "bad": []
-      },
-      {
-        "where": "member id",
-        "strings": 8,
-        "bad": []
-      },
-      {
-        "where": "home",
-        "strings": 11,
-        "bad": []
-      },
-      {
-        "where": "result (roya)",
-        "strings": 24,
-        "bad": []
-      },
-      {
-        "where": "result (duda)",
-        "strings": 24,
-        "bad": []
-      },
-      {
-        "where": "history",
         "strings": 12,
         "bad": []
       },
       {
+        "where": "consent",
+        "strings": 9,
+        "bad": []
+      },
+      {
+        "where": "member id",
+        "strings": 9,
+        "bad": []
+      },
+      {
+        "where": "home",
+        "strings": 12,
+        "bad": []
+      },
+      {
+        "where": "result (roya)",
+        "strings": 25,
+        "bad": []
+      },
+      {
+        "where": "result (duda)",
+        "strings": 25,
+        "bad": []
+      },
+      {
+        "where": "history",
+        "strings": 13,
+        "bad": []
+      },
+      {
         "where": "settings",
-        "strings": 16,
+        "strings": 17,
         "bad": []
       },
       {
         "where": "settings (kik)",
-        "strings": 16,
+        "strings": 17,
         "bad": []
       },
       {
         "where": "result (roya, kik)",
-        "strings": 24,
+        "strings": 25,
         "bad": []
       },
       {
         "where": "settings (sw)",
-        "strings": 16,
+        "strings": 17,
         "bad": []
       }
     ],
     "notFromCards": []
   },
-  "finished": "2026-10-04T05:23:51.885Z",
+  "finished": "2026-10-04T06:36:37.434Z",
   "failures": 0
 }

@@ -203,7 +203,7 @@ replies are logged as `sent_simulated`.
   - [tests/e2e/journey.mjs](tests/e2e/journey.mjs): "all 52 outbox + 8 thread messages are cards.json templates
     with only slot values filled", and a check that the visible text on 11 phone screens, including Kiswahili and
     Gĩkũyũ ones, comes from cards.json ([journey_results.json](reports/journey_results.json), 46 of 46 checks passed).
-- **Limit: fixed is not the same as correct.** **0 of 83 cards** have been checked by a person, in any of the three
+- **Limit: fixed is not the same as correct.** **0 of 84 cards** have been checked by a person, in any of the three
   languages. The team wrote the advice from public Kenyan and international extension material seen only through
   search summaries (each card's `source` field). The cards never name a pesticide or a dose. The hub pages for staff
   have their own English text, which farmers do not see (`test_hub_pages_are_english`).
@@ -355,8 +355,8 @@ to do after a data breach. The consent text and the hub should then be changed t
 
 - **Languages:** **English** (`en`) is the main and default language and an official language of Kenya; **Kiswahili**
   (`sw`) is the national language and also official (Constitution Art. 7, S); **Gĩkũyũ** (`kik`) is the local
-  language of central Kenya (S; [docs/evidence.md](docs/evidence.md) §6). All 83 cards have text in all three. 74 cards
-  have audio in each language (222 MP3s, 2.95 MB); the 9 SMS and alert cards are text only
+  language of central Kenya (S; [docs/evidence.md](docs/evidence.md) §6). All 84 cards have text in all three. 75 cards
+  have audio in each language (225 MP3s, 2.97 MB); the 9 SMS and alert cards are text only
   ([content/README.md](content/README.md)).
 - **English text** was written by the team for low literacy. No agronomist or co-op staff member has checked it.
 - **Kiswahili text is an AI draft** in standard Kiswahili. Nobody who speaks Kiswahili has read it.
@@ -432,7 +432,7 @@ to the officer ([intent_eval.md](reports/intent_eval.md)). The exact keywords wo
 
 ## 10. Before real use: checklist
 
-- [ ] An agronomist or the extension officer checks every English advice card on the "Content review" page (0 of 83 today).
+- [ ] An agronomist or the extension officer checks every English advice card on the "Content review" page (0 of 84 today).
 - [ ] Native Kiswahili and Gĩkũyũ speakers from Kirinyaga review the drafts and record the 74 spoken cards in each language.
 - [ ] Collect officer-confirmed photos from Kirinyaga farms, **healthy and diseased**. Rerun the field protocol
       ([model/README.md](model/README.md)). Ship a new model only if it passes the ship rule, or record any exception
