@@ -53,5 +53,10 @@ off (see below).
 
 ## Connecting the Vercel phone app
 
-The Vercel copy of the phone app ([DEPLOY_VERCEL.md](DEPLOY_VERCEL.md)) has no hub, so its hub buttons stay hidden.
-Once the Render link is known, a rewrite in `vercel.json` will send `/api/*` to that link. It is not there yet.
+Ours is live at https://cafetal-hub-demo.onrender.com/. The Vercel copy of the phone app
+([DEPLOY_VERCEL.md](DEPLOY_VERCEL.md)) reaches it through two rewrites in `vercel.json` that send `/api/*` to that link
+(one for paths with the trailing slash Vercel adds, one without). So "Send (SIMULATED)" and "Send photos to the co-op
+(Wi-Fi)" also work from the Vercel link, once the hub is awake. If the Render link changes, change it in both rules.
+
+Check after a Vercel deploy: `https://<your-project>.vercel.app/api/health` should answer
+`{"ok":true, … "public_demo":true}` (wait up to a minute if the hub was asleep).
