@@ -5,9 +5,10 @@
     python3 scripts/bump_sw_version.py --check   # exit 1 if VERSION is out of date (nothing written)
 
 Hashed: the SHELL list in sw.js, config.json, model/labels.json, the model file it names, content/cards.json,
-every audio file listed in cards.json, and sw.js itself (with the VERSION line blanked). A new VERSION makes
-phones download a fresh copy and delete the old cache. run.sh calls this before starting the hub; sw.js stays a
-plain static file, so the app also works from any static host (run this script before uploading).
+every audio file listed in cards.json, demo/samples.json and the DEMO photos it lists, and sw.js itself (with
+the VERSION line blanked). A new VERSION makes phones download a fresh copy and delete the old cache. run.sh
+calls this before starting the hub; sw.js stays a plain static file, so the app also works from any static host
+(run this script before uploading).
 """
 import argparse
 import hashlib
@@ -35,6 +36,10 @@ def precached(sw_text: str) -> list[Path]:
     cards = json.loads(cards_path.read_text(encoding="utf-8"))
     for card in cards["cards"]:
         files += [ROOT / "content" / p for p in (card.get("audio") or {}).values() if p]
+    demo = APP / "demo" / "samples.json"  # cached when config.json has "demo_samples": true
+    if demo.is_file():
+        files.append(demo)
+        files += [APP / "demo" / s["file"] for s in json.loads(demo.read_text(encoding="utf-8")).get("samples", [])]
     return sorted(set(files))
 
 

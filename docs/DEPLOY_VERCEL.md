@@ -36,6 +36,10 @@ protected by Vercel Authentication (Settings → Deployment Protection), so shar
   commit `app/sw.js` too.
 - **Every app or content change:** run `python3 scripts/bump_sw_version.py` before you push (`./run.sh` does it for
   you), otherwise phones keep the cached copy.
+- **DEMO sample photos.** With `"demo_samples": true` in `app/config.json` (this build), the Home screen shows seven
+  sample leaf photos, so judges and the video can try the app without a coffee leaf. Each one is checked by the real
+  model on the phone, and its result says "DEMO: sample data" with the photo's credit. For a real co-op, set it to
+  `false`, then run `python3 scripts/bump_sw_version.py` and commit `app/sw.js` too.
 - **iPhone:** use "Add to Home Screen". Safari can clear a website's offline storage after about 7 days without use.
 - **No hub buttons.** "Send (SIMULATED)" and "Send photos to the co-op (Wi-Fi)" appear only when the co-op hub answers, so they are hidden
   on the Vercel copy. Diagnosis, audio, history and the SMS code work.

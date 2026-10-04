@@ -1,0 +1,12 @@
+{
+  "note": "DEMO sample photos for the demo video and for anyone trying the app without a coffee leaf. Shown on the Home screen only when app/config.json has \"demo_samples\": true; a sample goes through exactly the same steps as a camera photo. Unchanged copies of CC BY files in model/demo_samples/ (sources and licences: model/demo_samples/README.md); the CC BY-NC field photos are never bundled. \"credit\" is shown next to the photo; \"expected\" is the app's answer (SMS code), checked offline by tests/e2e/app_offline.mjs.",
+  "samples": [
+    {"file": "roya_1.jpg", "credit": "JMuBEN, Kirinyaga (Jepkoech et al. 2021), CC BY 4.0", "expected": "RUST"},
+    {"file": "blurred_roya.jpg", "credit": "JMuBEN, Kirinyaga (Jepkoech et al. 2021), CC BY 4.0, blurred", "expected": "UNSR"},
+    {"file": "sano_1.jpg", "credit": "JMuBEN, Kirinyaga (Jepkoech et al. 2021), CC BY 4.0", "expected": "HLTH"},
+    {"file": "minador_1.jpg", "credit": "JMuBEN, Kirinyaga (Jepkoech et al. 2021), CC BY 4.0", "expected": "MINR"},
+    {"file": "phoma_1.jpg", "credit": "JMuBEN, Kirinyaga (Jepkoech et al. 2021), CC BY 4.0", "expected": "PHOM"},
+    {"file": "cercospora_1.jpg", "credit": "JMuBEN, Kirinyaga (Jepkoech et al. 2021), CC BY 4.0", "expected": "CERC"},
+    {"file": "field_whole_tree.jpg", "credit": "© Carl Ramirez, CC BY, via iNaturalist", "expected": "OTHR"}
+  ]
+}

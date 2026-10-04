@@ -453,6 +453,9 @@ Project-defined profiles (not the DevTools presets):
   The previous run measured 16.81 MB decoded, 8.59 MB on the wire and 94.0 s on 3G (`reports/browser_metrics.md` at
   commit 6891b8c). The difference, 0.6 MB, is about what the audio lost when it was re-made for the new languages
   (about 3.5 MB before, 2.95 MB now).
+- **DEMO sample photos, added after this run.** With `"demo_samples": true` in `app/config.json` (this build), the
+  service worker also saves `app/demo/`: 8 files, 0.23 MB (7 CC BY sample photos and their list). On the 3G profile
+  that is about 2.5 s more (computed from the size, not measured). They are not in the numbers above.
 - **How it was measured.** The page fetched the files in the same four groups as the service worker's `precache()`.
   The real service-worker install could not be throttled, because Chromium does not apply CDP throttling to service-worker fetches.
   The page's own first 13 requests come on top: 173 KB decoded, 39 KB with gzip (measured, unthrottled).

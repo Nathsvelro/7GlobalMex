@@ -2,9 +2,11 @@
 //   node tests/e2e/app_offline.mjs            (from the repo root; needs python3 and playwright)
 // Phase A (offline): first load -> service worker caches everything -> server stopped + browser offline ->
 //   reload -> onboarding in English -> photo -> on-device result + audio in English, Kiswahili and Gikuyu from the
-//   cache -> SMS code -> blurred photo = UNSR -> history -> settings (language toggle)/PIN/lock -> delete everything
-//   -> onboarding again in Kiswahili (text + audio) -> the same result in Gikuyu (text + audio).
-// Phase B (hub buttons): service worker blocked, /api/* mocked -> "Send (SIMULATED)" and "Send photos".
+//   cache -> SMS code -> blurred photo = UNSR -> history -> DEMO sample photos (each gives its expected answer, marked
+//   DEMO with its credit) -> settings (language toggle)/PIN/lock -> delete everything -> onboarding again in
+//   Kiswahili (text + audio) -> the same result in Gikuyu (text + audio).
+// Phase B (hub buttons): service worker blocked, /api/* mocked -> "Send (SIMULATED)" and "Send photos"; a config
+//   with "demo_samples": false shows no sample photos.
 // Phase C (real hub, skipped if .venv/bin/uvicorn is missing): a throw-away hub (temporary DB) serves the app;
 //   register a member, diagnose, simulated send -> observation on the hub, sync -> photo on the hub.
 // Screenshots go to reports/screenshots/app_*.png. Asserts the flow, not model accuracy.
@@ -260,6 +262,44 @@ async function phaseOffline(browser) {
   await page.waitForSelector('#r-body:not([hidden])');
   check((await page.textContent('#r-code')) === r2.sms_code, 'tapping a history row reopens its result');
 
+  // DEMO sample photos (config.json "demo_samples": true), still offline: shown on the home screen from the cache,
+  // each one goes through the normal diagnosis, and the result and "My checks" mark it DEMO with the photo credit.
+  const demo = JSON.parse(fs.readFileSync(path.join(ROOT, 'app/demo/samples.json'), 'utf8')).samples;
+  check(JSON.parse(fs.readFileSync(path.join(ROOT, 'app/config.json'), 'utf8')).demo_samples === true,
+    'config.json: demo_samples is on in this build');
+  await page.click('#nav [data-go="home"]');
+  await page.waitForSelector('#home-demo:not([hidden]) .sample-btn');
+  await page.waitForFunction(() => [...document.querySelectorAll('#demo-list img')].every((i) => i.complete));
+  const thumbs = await page.$$eval('#demo-list .sample-btn', (bs) => bs.map((b) => [b.dataset.sample, b.querySelector('img').naturalWidth]));
+  check(JSON.stringify(thumbs.map((t) => t[0])) === JSON.stringify(demo.map((s) => s.file)) && thumbs.every((t) => t[1] > 0),
+    `DEMO sample photos on the home screen, loaded from the cache (${thumbs.map((t) => t[0]).join(', ')})`);
+  await shot(page, 'app_13_demo_samples.png', true);
+  for (const s of demo) {
+    const prev = await page.evaluate(() => window.__cafetal.obs.obs_id);
+    await page.click('#nav [data-go="home"]');
+    await page.click(`#demo-list .sample-btn[data-sample="${s.file}"]`);
+    await page.waitForFunction((p) => window.__cafetal.obs.obs_id !== p && !document.getElementById('r-body').hidden, prev,
+      { timeout: 60000 });
+    const o = await page.evaluate(() => window.__cafetal.obs);
+    const credit = await page.isVisible('#r-sample') && (await page.textContent('#r-sample-credit')) === s.credit;
+    const ran = o.probs !== null || o.reason === 'blurry'; // a blurry photo never reaches the model
+    check(o.code === s.expected && CODE_RE.test(o.sms_code) && ran && o.sample && o.sample.file === s.file && credit,
+      `DEMO sample ${s.file} -> ${o.code} (expected ${s.expected}), DEMO + credit shown: ${o.sms_code}`);
+    await page.evaluate(() => document.querySelectorAll('audio').forEach((a) => a.pause()));
+  }
+  await page.click('#nav [data-go="history"]');
+  await page.waitForFunction((n) => document.querySelectorAll('#hist-list li').length === n, 2 + demo.length,
+    { timeout: 10000 }).catch(() => {});
+  const marked = await page.$$eval('#hist-list li', (ls) => ls.map((l) => !!l.querySelector('.hist-demo')));
+  check(marked.length === 2 + demo.length && marked.filter(Boolean).length === demo.length,
+    `"My checks": the ${demo.length} sample checks are marked DEMO, the 2 photo checks are not (${JSON.stringify(marked)})`);
+  await shot(page, 'app_14_demo_history.png', true);
+  await page.click('#nav [data-go="home"]');
+  await page.setInputFiles('#file-gallery', path.join(FIX, 'leaf_photo.jpg'));
+  await page.waitForFunction(() => !window.__cafetal.obs.sample && !document.getElementById('r-body').hidden, null, { timeout: 60000 });
+  check(await page.isHidden('#r-sample'), 'a gallery photo after a sample shows no DEMO credit');
+  await page.evaluate(() => document.querySelectorAll('audio').forEach((a) => a.pause()));
+
   // settings: language, PIN, lock
   await page.click('#nav [data-go="settings"]');
   await page.click('#set-langs .lang-btn[data-lang="kik"]');
@@ -396,12 +436,19 @@ async function phaseHub(browser) {
     r.fulfill({ json: { results: seen.sync.records.map(() => (hub.member === 'unknown'
       ? { ok: false, status: 404, error: 'member not found' } : { ok: true })) } });
   });
+  // A real co-op's build: "demo_samples": false -> no sample photos on the home screen
+  const realConfig = { ...JSON.parse(fs.readFileSync(path.join(ROOT, 'app/config.json'), 'utf8')), demo_samples: false };
+  await page.route('**/app/config.json', (r) => r.fulfill({ json: realConfig }));
   await page.goto(BASE);
   await page.click('.lang-btn[data-lang="en"]');
   await page.click('#lang-next');
   await page.click('#consent-yes');
   await page.fill('#member-digits', '0456');
   await page.click('#member-next');
+  await page.waitForSelector('#s-home:not([hidden])');
+  await page.waitForTimeout(300);
+  check(await page.isHidden('#home-demo') && (await page.$$('#demo-list .sample-btn')).length === 0,
+    'config "demo_samples": false -> no DEMO sample photos on the home screen');
   await page.setInputFiles('#file-gallery', path.join(FIX, 'leaf_roya.jpg'));
   await page.waitForSelector('#r-body:not([hidden])', { timeout: 120000 });
   await page.waitForSelector('#r-hub:not([hidden])', { timeout: 5000 });

@@ -169,9 +169,12 @@ with `PYTHON=python3.11 ./run.sh` the first time (the variable only matters whil
 5. Phone: turn on USB debugging, connect the cable, and run **`adb reverse tcp:8000 tcp:8000`**.
 6. On the phone, open **http://localhost:8000/app/** in Chrome. Wait for the green **"Ready to use without
    internet"** label. The first load is 16.21 MB of files, 7.98 MB over the wire with the hub's gzip (see
-   [reports/browser_metrics.md](reports/browser_metrics.md)).
+   [reports/browser_metrics.md](reports/browser_metrics.md); measured before the DEMO sample photos were added,
+   which add 0.23 MB).
 7. Go offline (airplane mode, **and unplug the USB cable**, because `adb reverse` still works over USB). Then take
-   or choose a photo. The full click-by-click demo is in **[DEMO.md](DEMO.md)**.
+   or choose a photo. No coffee leaf at hand? Tap one of the **DEMO sample photos** on the Home screen (rust,
+   blurred, healthy, leaf miner, Phoma, brown eye spot, a distant tree). The full click-by-click demo is in
+   **[DEMO.md](DEMO.md)**.
 8. Stop the hub with Ctrl+C. To get fresh DEMO dates next time, run `rm hub/cafetal.db*`, or press "Reset DEMO
    data" on the hub home page.
 
@@ -232,7 +235,8 @@ run.sh                  one command: venv + deps + DEMO data + hub on 0.0.0.0:80
 requirements.txt        hub runtime only (fastapi, uvicorn, python-multipart)
 requirements-train.txt  image-model and intent training (tensorflow-cpu, tf2onnx, onnxruntime, scikit-learn, ...)
 Makefile                make demo | make test | make intent
-app/                    phone PWA (vanilla JS, no build). model/ = cafetal.onnx + labels.json; vendor/ = onnxruntime-web
+app/                    phone PWA (vanilla JS, no build). model/ = cafetal.onnx + labels.json; vendor/ = onnxruntime-web;
+                        demo/ = DEMO sample photos (CC BY) shown when config.json has "demo_samples": true
 hub/                    co-op hub (FastAPI + SQLite); static/ = hub pages (English); seed.py = DEMO data
 content/                cards.json (every farmer-facing sentence) + audio/en, audio/sw, audio/kik (MP3)
 model/                  data prep, training, ONNX export, evaluation, iNaturalist field evaluation; demo_samples/
