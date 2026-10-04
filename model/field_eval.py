@@ -282,7 +282,7 @@ def ci(c):
 
 
 def field_dangerous(res):
-    """diseased field-test photos (roya, minador, cercospora, ojo de gallo) accepted as 'sano'."""
+    """diseased field-test photos (roya, minador, cercospora, American leaf spot) accepted as 'sano'."""
     return sum(res["field_test"][g]["answer_counts"]["sano"] for g in ("roya", "minador", "cercospora", "ojo_de_gallo")
                if g in res["field_test"])
 
@@ -495,8 +495,8 @@ WORDS = ("Words used below: **UNSR** = the app's fail-safe answer \"I'm not sure
          "officer\" (blurry photo, top-1 probability below the threshold, or top class `otro` = not a coffee leaf; the "
          "observation SMS then carries code UNSR, or OTHR for `otro`). Class names are the model's internal labels: "
          "`sano` healthy, `roya` leaf rust, `minador` leaf miner, `phoma` Phoma leaf spot, `cercospora` brown eye "
-         "spot, `otro` not a coffee leaf; \"ojo de gallo\" is American leaf spot (*Mycena citricolor*), not a model "
-         "class.")
+         "spot, `otro` not a coffee leaf; `ojo_de_gallo` (a table key) is American leaf spot (*Mycena citricolor*), not a "
+         "model class.")
 JMUBEN_KENYA = ("The model's main held-out test set **is** Kenyan: JMuBEN, photographed in the Mutira coffee plantation, "
                 "Kirinyaga County, with a digital camera and a pathologist's help (Jepkoech et al. 2021, *Data in Brief* "
                 "36:107142) - the same county as our users. Its limits: one plantation, one camera, 128 px close-up "
@@ -562,12 +562,9 @@ def localize_tradeoff(text, r):
         out.append(line)
     text = "\n".join(out)
     n_ea = ea_count(r, "field_test", ("roya",))
-    text = re.sub(r"proxy for Chiapas photos, n is small \((\d+) rust photos, \d+ from Mexico\)",
+    text = re.sub(r"proxy for field photos from Kirinyaga, n is small \((\d+) rust photos\)",
                   lambda m: f"proxy for field photos from Kirinyaga, n is small ({m.group(1)} rust photos, "
                             f"{n_ea} from East Africa)", text)
-    text = text.replace("the real fix is labelled Chiapas photos, healthy and diseased (officer confirmations",
-                        "the real fix is labelled photos from Kirinyaga farms, healthy and diseased (extension officer "
-                        "confirmations")
     return text
 
 
@@ -605,7 +602,7 @@ def conclusions(r):
         L.append(f"- **But {n} at {models[n]['threshold']} raises false alarms**: disease answers on the Coffea plant photos "
                  f"{pct(f['coffea sample']['disease_answer'])}{ci(f['coffea sample']['disease_answer_ci95'])} "
                  f"({base}: {pct(bt['coffea sample']['disease_answer'])}); non-coffee test images rejected "
-                 f"{pct(jt['otro_rejected'])} ({base}: {pct(bj['otro_rejected'])}); ojo de gallo sent to DUDA "
+                 f"{pct(jt['otro_rejected'])} ({base}: {pct(bj['otro_rejected'])}); American leaf spot sent to DUDA "
                  f"{pct(f['ojo_de_gallo']['DUDA'])} ({base}: {pct(bt['ojo_de_gallo']['DUDA'])}), "
                  f"{f['ojo_de_gallo']['answer_counts']['roya']} of {f['ojo_de_gallo']['n']} called roya. "
                  f"Multicrop makes both sides bigger ({pct(models[n]['methods'][mc]['field_test']['roya']['correct'])} "
@@ -653,7 +650,7 @@ def conclusions(r):
         L.append(f"- **v2 at t = {tt['chosen_t']:.2f} (re-chosen on calibration data; the model the app now ships)**: "
                  f"roya correct & accepted {rate('roya', with_ci=True)} ({k('roya')}), "
                  f"screened {rate('roya screened')} ({k('roya screened')}); "
-                 f"minador {k('minador')}, cercospora {k('cercospora')}; ojo de gallo sent to DUDA "
+                 f"minador {k('minador')}, cercospora {k('cercospora')}; American leaf spot sent to DUDA "
                  f"{rate('ojo_de_gallo', 'DUDA')} ({k('ojo_de_gallo', 'DUDA')}); disease answers on the Coffea plant "
                  f"photos {rate('coffea sample', 'disease_answer', True)} ({k('coffea sample', 'disease_answer')}; "
                  f"East Africa {ke} of {ne}, Kenya {kk} of {nk}); "
@@ -745,7 +742,7 @@ def geo_section(r):
         L += ["", "In the whole iNaturalist metadata export these photos were drawn from (`obs_coffee.tsv`, filtered to "
               "the six taxa in `model/inat_field.py`; not in the repository), the observations inside the East Africa "
               "box are: " + ", ".join(f"{k} {v}" for k, v in ex.items()) + " (*computed*). So the export holds no "
-              "leaf rust, leaf miner, Cercospora or ojo de gallo observation from East Africa at all."]
+              "leaf rust, leaf miner, Cercospora or American leaf spot observation from East Africa at all."]
     L += ["", "Every photo inside the East Africa box, with the app's answer per model and threshold (decided exactly "
           "like the app; top-1 class and probability in brackets; \"where\" is read by eye from the coordinates, not "
           "computed):", "",
@@ -835,7 +832,7 @@ def render_md(r):
     row("roya: UNSR, all field-test photos", ft("roya", "DUDA"))
     row("minador: correct & accepted", ft("minador"))
     row("cercospora: correct & accepted", ft("cercospora"))
-    row("ojo de gallo (not a model class): UNSR (desired)", ft("ojo_de_gallo", "DUDA"))
+    row("American leaf spot (not a model class): UNSR (desired)", ft("ojo_de_gallo", "DUDA"))
     row("diseased field-test photos accepted as \"sano\" (dangerous)", lambda x: str(field_dangerous(x)))
     row("wrong-but-accepted, all diseased field-test photos", lambda x: str(sum(
         round(x["field_test"][g]["wrong_accepted"] * x["field_test"][g]["n"]) for g in ("roya", "minador", "cercospora", "ojo_de_gallo"))))
@@ -889,7 +886,7 @@ def render_md(r):
         L.append(f"| {t['method']} | {t['inferences']} | {pct(t['val_otro_rejected'])} | "
                  f"{pct(t['val_coffee_correct_accepted'])} | {pct(t['field_dev_roya_correct'])} (n={t['field_dev_roya_n']}) |")
     L += ["", "All schemes, held-out field test (for transparency; only the pre-registered scheme enters the ship rule):", "",
-          "| model | method | roya correct | roya screened correct | ojo de gallo UNSR | Coffea disease answers | "
+          "| model | method | roya correct | roya screened correct | American leaf spot UNSR | Coffea disease answers | "
           "otro rejected | dangerous (field) |", "|---|---|---|---|---|---|---|---|"]
     for n in names:
         for m, x in models[n]["methods"].items():
@@ -904,11 +901,11 @@ def render_md(r):
           "`reports/field_inat_attribution.csv`. Images are **not** in the repository (many are CC BY-NC or ND). "
           "Rebuild: `python model/inat_field.py --inat <dir>`.",
           "- **Labels**: taxon of the observation: *Hemileia vastatrix* and genus *Hemileia* -> roya; *Leucoptera "
-          "coffeella* -> minador; *Cercospora coffeicola* -> cercospora; *Mycena citricolor* (ojo de gallo / American "
-          "leaf spot, not one of our classes) -> the right answer is UNSR; *Coffea arabica* -> coffee plant, health "
+          "coffeella* -> minador; *Cercospora coffeicola* -> cercospora; *Mycena citricolor* (American leaf spot, "
+          "`ojo_de_gallo` in the tables, not one of our classes) -> the right answer is UNSR; *Coffea arabica* -> coffee plant, health "
           "unknown (never trained on, only used to count disease answers).",
-          f"- **Split by observer** (`model/inat_field.py`): {r['split_rule']} Ojo de gallo is always test, so 1 ojo "
-          "de gallo test photo shares its observer with a v2 training photo (no other test photo does); the rest is "
+          f"- **Split by observer** (`model/inat_field.py`): {r['split_rule']} American leaf spot is always test, so 1 "
+          "American leaf spot test photo shares its observer with a v2 training photo (no other test photo does); the rest is "
           "field-train (used only by the v2 experiment). Coffea: one photo per observer, "
           f"{ph['coffea']['observers']} distinct observers, none of them a field-train observer.",
           f"- **Geography (report subsets only)**: {r['geo_rule']}",

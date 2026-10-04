@@ -133,9 +133,9 @@ not a real phone. The rust result is a Kenyan lab close-up (JMuBEN) from the tes
 <img src="reports/screenshots/journey_09_blurred.png" alt="Phone: fail-safe for a blurry photo" width="160">
 <img src="reports/screenshots/journey_11_result_kik.png" alt="Phone: the same rust result with the interface in Gĩkũyũ" width="160">
 <img src="reports/screenshots/app_sw_03_result.png" alt="Phone: a rust result with the interface in Kiswahili" width="160">
-<img src="reports/screenshots/journey_17_mapa.png" alt="Hub: map with the outbreak alert zone" width="300">
-<img src="reports/screenshots/journey_18_tecnico.png" alt="Hub: extension officer worklist" width="300">
-<img src="reports/screenshots/journey_21_simulador_precio.png" alt="Hub: SMS simulator, PRICE reply" width="300">
+<img src="reports/screenshots/journey_17_map.png" alt="Hub: map with the outbreak alert zone" width="300">
+<img src="reports/screenshots/journey_18_officer.png" alt="Hub: extension officer worklist" width="300">
+<img src="reports/screenshots/journey_21_simulator_price.png" alt="Hub: SMS simulator, PRICE reply" width="300">
 </p>
 
 From left to right:
@@ -210,7 +210,7 @@ Ways to get a secure origin on the phone:
 |---|---|---|
 | Hub unit tests | `.venv/bin/pip install pytest httpx` then `.venv/bin/python -m pytest tests -q` (or `make test`) | Uses a temporary database. Last run (2026-10-04): 74 passed, 1 skipped. The skipped test needs scikit-learn: it checks the pure-Python intent model against scikit-learn. |
 | Phone app, offline | `node tests/e2e/app_offline.mjs` | Starts its own server. Checks onboarding, diagnosis, the fail-safe, audio in English, Kiswahili and Gĩkũyũ from the cache, PIN, delete, simulated send and sync (also with a member ID the hub does not know). Screenshots: `reports/screenshots/app_*.png`. |
-| Whole journey | start `./run.sh`, then `node tests/e2e/journey.mjs` | Covers every item of the Definition of Done in [docs/CLAUDE_CODE_PROMPT.md](docs/CLAUDE_CODE_PROMPT.md). **Resets the DEMO data** before and after (`KEEP_STATE=1` keeps the end state). Writes `reports/journey_results.json` and `reports/screenshots/journey_*.png`. `HUB=http://localhost:9000` for another port. |
+| Whole journey | start `./run.sh`, then `node tests/e2e/journey.mjs` | Covers every product item of the Definition of Done in [docs/CLAUDE_CODE_PROMPT.md](docs/CLAUDE_CODE_PROMPT.md) (not the fresh-clone start, checked above, nor the written documents). **Resets the DEMO data** before and after (`KEEP_STATE=1` keeps the end state). Writes `reports/journey_results.json` and `reports/screenshots/journey_*.png`. `HUB=http://localhost:9000` for another port. |
 | Browser metrics | with the hub running: `node tests/e2e/browser_metrics.mjs` | Emulated latency and 3G download → `reports/browser_metrics.md`. |
 | Cards | `python3 scripts/make_audio.py --check` | Card ids, slots, languages, the exact fail-safe sentence, and every SMS card at most 160 GSM-7 characters after filling slots. |
 
@@ -237,7 +237,7 @@ data/                   prices.json (DEMO, KES), intent/ (SMS examples), field_t
 scripts/                make_audio.py (Piper -> MP3), bump_sw_version.py (offline-cache version)
 tests/                  pytest for the hub; e2e/ = Playwright tests (app offline, whole journey, browser metrics)
 reports/                evaluation results (md + json), screenshots
-docs/                   concept-note.pdf, evidence.md (figures + verification codes), CLAUDE_CODE_PROMPT.md
+docs/                   concept-note.pdf, evidence.md (figures + verification codes), CLAUDE_CODE_PROMPT.md (build prompt + Definition of Done)
 ```
 
 ## Key numbers
@@ -339,8 +339,8 @@ and fixed before the test sets were scored at that threshold.
 | FastAPI, Uvicorn, python-multipart | MIT, BSD-3-Clause, Apache-2.0 | Hub runtime. |
 
 Not used, but worth knowing: Meta's MMS has Gĩkũyũ and Kiswahili text-to-speech models (`facebook/mms-tts-kik`,
-`facebook/mms-tts-swh`, about 145 MB each, CC-BY-NC-4.0). Hugging Face was blocked from the build machine
-([docs/evidence.md](docs/evidence.md) §8).
+`facebook/mms-tts-swh`, about 145 MB each, CC-BY-NC-4.0). Their files could not be downloaded from Hugging Face to
+the build machine; only Hub metadata could be read ([docs/evidence.md](docs/evidence.md) §8).
 
 Full data card: [DATA_CARD.md](DATA_CARD.md). Per-dataset notes: [model/README.md](model/README.md).
 

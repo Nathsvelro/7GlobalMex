@@ -35,7 +35,8 @@
     "rule_outcome": "The pre-registered ship rule says DO NOT SHIP: v2 at t = 0.90 passes 4 of its 5 conditions and misses one (reports/field_v2_threshold_test.json)",
     "exception": "(2), JMuBEN test macro-F1 (argmax and app-level) may drop at most 1 point",
     "exception_check": "jmuben_macro_f1_drop<=1pt",
-    "reason": "the Kenyan close-ups it no longer answers go to the fail-safe \"I'm not sure\" (UNSR: show the leaf to the officer), not to wrong answers, and it never called a diseased leaf \"sano\" on either test set; and v2 is the only model that finds rust in field photos (v1 finds none on the held-out field test)."
+    "reason": "the Kenyan close-ups it no longer answers go to the fail-safe \"I'm not sure\" (UNSR: show the leaf to the officer), not to wrong answers, and it never called a diseased leaf \"sano\" on either test set; and v2 is the only model that finds rust in field photos (v1 finds none on the held-out field test).",
+    "note": "Wording of \"reason\" updated on 2026-10-04 for the Kenya/English re-localization: the fail-safe is now quoted by its English text and SMS code (\"I'm not sure\", UNSR). The decision, its date and its grounds are unchanged; the earlier wording is in git history."
   },
   "reference": {
     "name": "v1",
@@ -1514,7 +1515,7 @@
         }
       }
     },
-    "note": "held-out field test only (observers not used in training, except the observer of 1 ojo de gallo photo); iNaturalist photos are a proxy for field photos from Kirinyaga, and none of the labelled disease photos is from East Africa; details, ship rule and v1/v2 comparison in reports/field_eval.md"
+    "note": "held-out field test only (observers not used in training, except the observer of 1 American leaf spot photo); iNaturalist photos are a proxy for field photos from Kirinyaga, and none of the labelled disease photos is from East Africa; details, ship rule and v1/v2 comparison in reports/field_eval.md"
   },
   "size_latency": {
     "size_bytes": {

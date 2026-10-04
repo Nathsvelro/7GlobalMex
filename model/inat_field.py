@@ -13,7 +13,7 @@ Outputs:
 Split (decided once, seed 42, by OBSERVER so one person's photos are never in both train and test):
   field_test  = every photo of an observer who has any photo inside the Mexico box (all of them held out),
                 plus a random ~30 % of the remaining observers of each disease label;
-                ojo de gallo (not one of our classes) is always test.
+                American leaf spot (`ojo_de_gallo`, not one of our classes) is always test.
   field_train = the other roya / minador / cercospora photos (used by the v2 experiment only).
   coffea_eval = ~400 Coffea arabica photos from distinct observers (health unknown: never trained on,
                 only used to measure how often the app answers a disease).

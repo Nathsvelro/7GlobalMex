@@ -346,27 +346,27 @@ async function hubPages(browser, { bcast }) {
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
 
-  // approve ONE broadcast in the outbox page (bandeja.html; staff tap)
-  await page.goto(HUB + '/hub/bandeja.html?filter=pending_approval');
+  // approve ONE broadcast in the outbox page (outbox.html; staff tap)
+  await page.goto(HUB + '/hub/outbox.html?filter=pending_approval');
   await page.waitForSelector(`button[onclick="decide(${bcast[0].id},'approve')"]`);
-  await shot(page, 'journey_14_bandeja_pending.png');
+  await shot(page, 'journey_14_outbox_pending.png');
   await page.click(`button[onclick="decide(${bcast[0].id},'approve')"]`);
   await page.waitForTimeout(800);
   const all = (await api('/api/outbox')).messages;
   const m = all.find((x) => x.id === bcast[0].id);
   check(m && m.status === 'sent_simulated', `staff approved one broadcast in the outbox page -> ${m && m.status}; ` +
     `${all.filter((x) => x.status === 'pending_approval').length} still pending`);
-  await shot(page, 'journey_15_bandeja_approved.png');
+  await shot(page, 'journey_15_outbox_approved.png');
 
-  for (const [file, name] of [['', 'journey_16_hub_home.png'], ['mapa.html', 'journey_17_mapa.png'],
-    ['tecnico.html', 'journey_18_tecnico.png'], ['contenido.html', 'journey_19_contenido.png'], ['registro.html', 'journey_20_registro.png']]) {
+  for (const [file, name] of [['', 'journey_16_hub_home.png'], ['map.html', 'journey_17_map.png'],
+    ['officer.html', 'journey_18_officer.png'], ['content.html', 'journey_19_content.png'], ['register.html', 'journey_20_register.png']]) {
     await page.goto(HUB + '/hub/' + file);
     await page.waitForLoadState('networkidle');
     await shot(page, name);
   }
 
   // ---- E) simulated basic phone ----
-  await page.goto(HUB + '/hub/simulador.html?phone=' + encodeURIComponent(NOOR.phone));
+  await page.goto(HUB + '/hub/simulator.html?phone=' + encodeURIComponent(NOOR.phone));
   await page.waitForFunction(() => document.getElementById('who').options.length > 1);
   const sms = {};
   const PRICE_EN = 'how much are you paying for a kilo of cherry';
@@ -376,10 +376,10 @@ async function hubPages(browser, { bcast }) {
     const [resp] = await Promise.all([page.waitForResponse((r) => r.url().endsWith('/api/sms/inbound')), page.click('#send')]);
     sms[body] = await resp.json();
     await page.waitForTimeout(400);
-    if (body === 'PRICE') await shot(page, 'journey_21_simulador_precio.png');
+    if (body === 'PRICE') await shot(page, 'journey_21_simulator_price.png');
   }
   await page.waitForTimeout(2200); // thread refresh
-  await shot(page, 'journey_22_simulador_texto.png');
+  await shot(page, 'journey_22_simulator_text.png');
   out.results.sms = sms;
   const prices = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/prices.json'), 'utf8'));
   const cafe = prices.items.find((i) => i.id === 'coffee_cherry');
@@ -403,9 +403,9 @@ async function hubPages(browser, { bcast }) {
     `"asdf qwerty" -> ${intentOf(r).intent} (${intentOf(r).conf}) -> ${r.replies[0].card_id}, forwarded to officer: ${fw(r)}`);
   const om = (await api('/api/officer/messages')).messages;
   check(om.some((x) => x.body === 'asdf qwerty'), 'the unknown message is in the officer\'s inbox (/api/officer/messages)');
-  await page.goto(HUB + '/hub/tecnico.html#mensajes');
+  await page.goto(HUB + '/hub/officer.html#messages');
   await page.waitForLoadState('networkidle');
-  await page.screenshot({ path: path.join(SHOTS, 'journey_23_tecnico_mensajes.png'), fullPage: true });
+  await page.screenshot({ path: path.join(SHOTS, 'journey_23_officer_messages.png'), fullPage: true });
   check(errors.length === 0, 'no page errors on the hub pages' + (errors.length ? ': ' + errors.join(' | ') : ''));
   await ctx.close();
 }

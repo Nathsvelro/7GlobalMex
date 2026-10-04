@@ -132,35 +132,44 @@ def prices() -> dict | None:
 
 
 def price_slots() -> dict | None:
-    """Slots for card sms_precio from data/prices.json, or None if the table is missing/incomplete."""
+    """Slots for card sms_precio from data/prices.json, or None (the member then gets sms_precio_sin_datos) if the
+    table is missing or incomplete, if maize or beans are not in KES/kg (the unit the card prints for them), or if a
+    value would not pass the slot whitelist (cards.SLOT_VALUE_RE)."""
     p = prices()
     if not p:
         return None
     items = {i.get("id"): i for i in p.get("items", [])}
     try:
         coffee, maize, beans = items["coffee_cherry"], items["maize"], items["beans"]
-        return {
+        if maize.get("unit") != "KES/kg" or beans.get("unit") != "KES/kg":
+            return None
+        slots = {
             "precio_cafe": f"{float(coffee['price']):.2f}", "unidad_cafe": coffee.get("unit", "KES/kg"),
             "precio_maiz": f"{float(maize['price']):.2f}", "precio_frijol": f"{float(beans['price']):.2f}",
             "fuente": p.get("sms_fuente") or coffee.get("source"),
             "fecha": p.get("sms_fecha") or coffee.get("date"),
         }
-    except (KeyError, TypeError, ValueError):
+    except (KeyError, TypeError, ValueError, AttributeError):
         return None
+    if not all(isinstance(v, str) and cards.SLOT_VALUE_RE.match(v) for v in slots.values()):
+        return None
+    return slots
 
 
-def _reply(conn, phone, member, card_id, out, **slots):
-    """Render a card in the member's language (English for unknown senders) and log it as sent (SIMULATED gateway)."""
+def _reply(conn, phone, member, card_id, out, **slots) -> bool:
+    """Render a card in the member's language (English for unknown senders) and log it as sent (SIMULATED gateway).
+    Returns False (and sends nothing) if the card cannot be rendered."""
     lang = member["language"] if member else cards.DEFAULT_LANG
     try:
         text, lang = cards.render(card_id, lang, **slots)
     except cards.CardError as e:   # never improvise text: log and send nothing
         out["actions"].append({"type": "card_error", "detail": str(e)})
-        return
+        return False
     mid = db.add_message(conn, "out", phone, text, "sent_simulated",
                          member_id=member["member_id"] if member else None, card_id=card_id, lang=lang)
     out["replies"].append({"id": mid, "to": phone, "body": text, "card_id": card_id, "lang": lang,
                            "status": "sent_simulated", **cards.sms_length(text)})
+    return True
 
 
 def _forward_to_officer(conn, member, phone, body, message_id, cls, out):
@@ -230,9 +239,8 @@ def route(conn, phone: str, body: str) -> dict:
         name = cls["intent"] if cls["accepted"] else "other"
         if name == "price":
             slots = price_slots()
-            if slots:
-                _reply(conn, phone, member, "sms_precio", out, **slots)
-            else:
+            # A price table that does not fit the card (e.g. a reply longer than one SMS) gets the no-data reply.
+            if not (slots and _reply(conn, phone, member, "sms_precio", out, **slots)):
                 _reply(conn, phone, member, "sms_precio_sin_datos", out)
         else:
             _reply(conn, phone, member, INTENT_CARD[name], out)

@@ -126,9 +126,9 @@
     {
       "id": "ui_consent_hub_text",
       "type": "ui",
-      "en": "The co-op computer keeps: your name, phone, community, the rough place of your farm, your language and the reports you send (result, confidence, date and rough place). Photos only if you send them over the co-op Wi-Fi. Co-op staff and the extension officer see them. For now the system has no password: other people on the co-op Wi-Fi could also see them. You can ask for them to be deleted at any time.",
-      "sw": "Kompyuta ya chama huhifadhi: jina lako, simu, kijiji, mahali takriban pa shamba lako, lugha yako na ripoti unazotuma (jibu, uhakika, tarehe na mahali takriban). Picha ni zile tu unazotuma kupitia Wi-Fi ya chama. Wafanyakazi wa chama na afisa ugani wanaziona. Kwa sasa mfumo hauna nenosiri: watu wengine walio kwenye Wi-Fi ya chama pia wanaweza kuziona. Unaweza kuomba zifutwe wakati wowote.",
-      "kik": "Kombiuta ya sosaiti ĩigaga: rĩĩtwa rĩaku, thimũ, itũũra rĩaku, handũ o hakuhĩ ha mũgũnda waku, rũthiomi rwaku na ripoti iria ũtũmaga (macokio, wĩhoko, mũthenya na handũ o hakuhĩ). Mbica no iria ũtũmĩte na Wi-Fi ya sosaiti. Aruti wĩra a sosaiti na afisa wa ũrĩmi nĩmacionaga. Rĩu mũtaratara ũyũ ndũrĩ na password: andũ angĩ arĩa marĩ Wi-Fi-inĩ ya sosaiti o nao no macione. No ũhoe cieherio hĩndĩ o yothe.",
+      "en": "The co-op computer keeps: your name, phone, community, the rough place of your farm, your language, the reports you send (result, confidence, date and rough place) and the text messages you send to Cafetal or get from it. Photos only if you send them over the co-op Wi-Fi. Co-op staff and the extension officer see them. For now the system has no password: other people on the co-op Wi-Fi could also see them. You can ask for them to be deleted at any time.",
+      "sw": "Kompyuta ya chama huhifadhi: jina lako, simu, kijiji, mahali takriban pa shamba lako, lugha yako, ripoti unazotuma (jibu, uhakika, tarehe na mahali takriban) na ujumbe mfupi unaotuma kwa Cafetal au unaopokea kutoka kwake. Picha ni zile tu unazotuma kupitia Wi-Fi ya chama. Wafanyakazi wa chama na afisa ugani wanaziona. Kwa sasa mfumo hauna nenosiri: watu wengine walio kwenye Wi-Fi ya chama pia wanaweza kuziona. Unaweza kuomba zifutwe wakati wowote.",
+      "kik": "Kombiuta ya sosaiti ĩigaga: rĩĩtwa rĩaku, thimũ, itũũra rĩaku, handũ o hakuhĩ ha mũgũnda waku, rũthiomi rwaku, ripoti iria ũtũmaga (macokio, wĩhoko, mũthenya na handũ o hakuhĩ) na SMS iria ũtũmaga Cafetal kana iria ũtũmĩrwo nĩyo. Mbica no iria ũtũmĩte na Wi-Fi ya sosaiti. Aruti wĩra a sosaiti na afisa wa ũrĩmi nĩmacionaga. Rĩu mũtaratara ũyũ ndũrĩ na password: andũ angĩ arĩa marĩ Wi-Fi-inĩ ya sosaiti o nao no macione. No ũhoe cieherio hĩndĩ o yothe.",
       "slots": [],
       "audio": {
         "en": "audio/en/ui_consent_hub_text.mp3",
@@ -140,7 +140,7 @@
         "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
         "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
       },
-      "source": "Cafetal privacy design: what the co-op hub stores (hub/db.py) and who can read it (RESPONSIBLE_AI.md: no login yet). Read aloud by co-op staff at registration (hub/static/registro.html). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "source": "Cafetal privacy design: what the co-op hub stores (hub/db.py) and who can read it (RESPONSIBLE_AI.md: no login yet). Read aloud by co-op staff at registration (hub/static/register.html). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
       "status": {
         "en": "unverified",
         "sw": "unverified",
@@ -823,8 +823,8 @@
       "id": "ui_unverified",
       "type": "ui",
       "en": "UNVERIFIED",
-      "sw": "HAIJAHAKIKIWA",
-      "kik": "NDĨRATHUTHURIO",
+      "sw": "HAIJAHAKIKIWA · UNVERIFIED",
+      "kik": "NDĨRATHUTHURIO · UNVERIFIED",
       "slots": [],
       "audio": {
         "en": "audio/en/ui_unverified.mp3",
@@ -836,7 +836,7 @@
         "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
         "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
       },
-      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md). The Kiswahili and Gĩkũyũ labels also carry the English word, so the label still reads right if the drafted word is wrong; the provisional audio says only the drafted word.",
       "status": {
         "en": "unverified",
         "sw": "unverified",
@@ -881,8 +881,8 @@
       "id": "ui_simulated",
       "type": "ui",
       "en": "SIMULATED: no real SMS was sent",
-      "sw": "MAJARIBIO: hakuna SMS halisi iliyotumwa",
-      "kik": "MAGERIO: gũtirĩ SMS ya ma ĩtũmĩtwo",
+      "sw": "MAJARIBIO · SIMULATED: hakuna SMS halisi iliyotumwa",
+      "kik": "MAGERIO · SIMULATED: gũtirĩ SMS ya ma ĩtũmĩtwo",
       "slots": [],
       "audio": {
         "en": "audio/en/ui_simulated.mp3",
@@ -894,7 +894,7 @@
         "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
         "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
       },
-      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md). The Kiswahili and Gĩkũyũ labels also carry the English word, so the label still reads right if the drafted word is wrong; the provisional audio says only the drafted word.",
       "status": {
         "en": "unverified",
         "sw": "unverified",

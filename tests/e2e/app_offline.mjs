@@ -248,7 +248,7 @@ async function phaseOffline(browser) {
   check((await page.textContent('#r-diag .say-text')) === T('diag_duda'), `shows "${T('diag_duda')}"`);
   check((await page.textContent('#r-reason .say-text')) === T('ui_reason_blurry'), 'reason: blurry photo');
   check((await page.textContent('#r-advice .say-text')) === T('advice_call_officer'), 'advice: call the officer');
-  await shot(page, 'app_06_duda.png', true);
+  await shot(page, 'app_06_unsure.png', true);
 
   // history
   await page.click('#nav [data-go="history"]');

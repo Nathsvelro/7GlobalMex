@@ -88,12 +88,14 @@ DUDA = {"en": "I'm not sure — show the leaf to the extension officer."}
 # Fields of a card that are not language texts; any other key must be a language from "languages".
 CARD_FIELDS = {"id", "type", "slots", "audio", "audio_source", "source", "status", "reviewed_by"}
 
-# Worst-case-ish slot values used to check that every SMS fits in one message (KES, Kirinyaga).
+# Long slot values used to check that every SMS fits in one message (KES, Kirinyaga). The community name has the
+# 40 characters registration allows (hub/main.py, hub/cards.py SLOT_VALUE_RE); the report count has 3 digits.
 SAMPLE_SLOTS = {
     "precio_cafe": "157.40", "unidad_cafe": "KES/kg cherry", "precio_maiz": "105.50",
-    "precio_frijol": "180.00", "fecha": "2026-09-30", "comunidad": "Ondera Kilima Upper Ward",
-    "n_reportes": "12",
+    "precio_frijol": "180.00", "fecha": "2026-09-30", "comunidad": "Ondera Kilima Upper Ward, by the factory",
+    "n_reportes": "120",
 }
+assert len(SAMPLE_SLOTS["comunidad"]) == 40
 # GSM 03.38 basic alphabet (one SMS = 160 of these). Anything else forces UCS-2 (70 chars).
 GSM7 = set("@£$¥èéùìòÇ\nØø\rÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ !\"#¤%&'()*+,-./0123456789:;<=>?"
            "¡ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÑÜ§¿abcdefghijklmnopqrstuvwxyzäöñüà")
@@ -203,6 +205,10 @@ def tts_text(text, lang):
     if lang == "kik":
         # Gikuyu spelling: i-tilde is [e], u-tilde is [o]. espeak "sw" knows neither letter.
         t = t.replace("ĩ", "e").replace("ũ", "o").replace("Ĩ", "E").replace("Ũ", "O")
+    if lang != "en":
+        # Bilingual labels ("HAIJAHAKIKIWA · UNVERIFIED"): the English word is for readers; the voice says only the
+        # word in the card's own language.
+        t = re.sub(r"\s*·\s*(UNVERIFIED|SIMULATED)\b", "", t)
     for a, b in SPOKEN_WORDS.get(lang, SPOKEN_WORDS["sw"]).items():
         t = re.sub(r"(?<!\w)" + re.escape(a) + r"(?!\w)", b, t)
     t = re.sub(r"\b([A-Z]{2,})\b", lambda m: m.group(1).lower(), t)  # UNVERIFIED -> unverified (not spelled)

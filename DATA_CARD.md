@@ -153,7 +153,7 @@ There is no East African field photo of a coffee disease to use instead (section
   | *Hemileia vastatrix* and genus *Hemileia* | roya (leaf rust) |
   | *Leucoptera coffeella* | minador (leaf miner) |
   | *Cercospora coffeicola* | cercospora (brown eye spot) |
-  | *Mycena citricolor* (American leaf spot, "ojo de gallo"; not a model class) | right answer is the fail-safe (UNSR) |
+  | *Mycena citricolor* (American leaf spot, key `ojo_de_gallo`; not a model class) | right answer is the fail-safe (UNSR) |
   | *Coffea arabica* | coffee plant, health unknown |
 
   Quality grades for rust: research 118, needs ID 100, casual 1.

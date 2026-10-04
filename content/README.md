@@ -12,7 +12,8 @@ Kenya**, in three languages:
 
 Nothing a farmer sees or hears is written anywhere else, and nothing is generated on the fly. The app and the hub
 only pick a card by its `id` and fill slots such as `{fecha}` with numbers, dates and source names. Card ids and
-slot names are internal (several are Spanish words from the first version of the project); they are never shown.
+slot names are internal (several are Spanish words from the first version of the project). Members never see them;
+co-op staff see them on the hub's Content page.
 
 ```
 content/
@@ -87,7 +88,7 @@ Checklist for reviewers:
    for it in `voice_for()` if one exists).
 4. SMS cards must stay one SMS after filling slots: run `python3 scripts/make_audio.py --check`.
 5. Register members with that language at the co-op (the `language` choice in `hub/main.py` and
-   `hub/static/registro.html`); the hub replies in the member's language, and in English for a card that lacks it.
+   `hub/static/register.html`); the hub replies in the member's language, and in English for a card that lacks it.
 6. The phone app offers every language in `"languages"` on its first screen and in Settings. A "Listen in …" button
    on the result screen needs a `ui_play_<code>` card.
 
@@ -110,7 +111,8 @@ The image model does not change: it outputs a label (`roya`, `minador`…), and 
   70-character UCS-2 SMS. **The Gĩkũyũ SMS cards write ĩ and ũ as i and u.** This merges vowels that Gĩkũyũ
   keeps apart (in Meta's Gĩkũyũ text counts, ĩ and ũ are 17% of all letters; `docs/evidence.md` §6), so SMS
   Gĩkũyũ is harder to read than the app's. `make_audio.py --check` tests length and alphabet with long sample
-  values (coffee 157.40 KES/kg cherry, a 24-letter community name).
+  values (coffee 157.40 KES/kg cherry, a 40-character community name, the most registration allows, and 120
+  reports). At send time the hub refuses any SMS card longer than one SMS (`hub/cards.py`).
 - SMS keywords (one-word messages): **PRICE/PRICES** or **BEI**, **HELP** or **MSAADA**, **OFFICER** or
   **AFISA**. `sms_ayuda` advertises them and the CAF1 report code. There are no Gĩkũyũ keywords; the Gĩkũyũ
   cards advertise the English and Kiswahili ones.
@@ -213,5 +215,6 @@ native speaker should listen to both before any field use.
 languages on Hugging Face: **`facebook/mms-tts-swh`** (Kiswahili) and **`facebook/mms-tts-kik`** (Gĩkũyũ). Both are
 VITS models of about 145 MB each (too big to ship in the phone app, but fine for pre-rendering MP3s once on a
 laptop), and both are licensed **CC-BY-NC-4.0 (non-commercial only)**; names, sizes and licence as listed in
-`docs/evidence.md` §8. Hugging Face is blocked from this build machine, so we could not use them. MMS was trained on
+`docs/evidence.md` §8. Their files could not be downloaded from Hugging Face to this build machine (only Hub
+metadata could be read), so we could not use them. MMS was trained on
 readings of religious texts, so farming words may still come out wrong. Native-speaker recordings remain the goal.

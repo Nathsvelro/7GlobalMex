@@ -1,10 +1,11 @@
 # Prompt for Claude Code
 
-> **Note (2026-10-04):** this is the original prompt, kept as it was written. The setting has since changed by team
-> decision: Noor's co-op is now in **Kirinyaga County, Kenya**, and the languages are **English** (main),
-> **Kiswahili** (national) and **Gĩkũyũ** (local). The fail-safe now reads "I'm not sure — show the leaf to the
-> extension officer.", the price keywords are PRICE and BEI, and prices are in KES. See [PLAN.md](../PLAN.md) for the
-> current contracts.
+> **Note (2026-10-04):** this is the build prompt with its defaults set for **Kenya**, by team decision: Noor's co-op
+> is in **Kirinyaga County**, and the languages are **English** (main), **Kiswahili** (national) and **Gĩkũyũ**
+> (local). The project was first set in another country; that version of this prompt is in git history. Where the
+> build differs from a default below (for example fp16 instead of INT8, or JMuBEN as the training data),
+> [PLAN.md](../PLAN.md) has the current contracts and [METRICS.md](../METRICS.md) and [DATA_CARD.md](../DATA_CARD.md)
+> describe what was built.
 
 *Before you paste this, put `PROJECT_BRIEF.md` in the root of an empty repo. If you can, also add the World Bank concept note PDF as `docs/concept-note.pdf`. Fill in the `[FILL IN]` fields, then paste everything below the line into Claude Code.*
 
@@ -18,20 +19,20 @@ You are the lead engineer on a hackathon team. We are building **Cafetal** for t
 - Noor has a **basic phone** (calls, texts, mobile money).
 - Her daughter's **Android smartphone** is available only on weekends.
 - There's no Wi-Fi at home, and mobile data is bought only now and then.
-- Her cooperative is the trusted local institution.
-- Local language: **[FILL IN, default: Tseltal]**. National language: **Spanish**. Region: **[FILL IN, default: coffee highlands of Chiapas, Mexico]**.
+- Her cooperative society (with its coffee factory, the wet mill) is the trusted local institution.
+- Main language of the app: **English**. National language: **Kiswahili**. Local language: **[FILL IN, default: Gĩkũyũ]**. Region: **[FILL IN, default: Kirinyaga County, on the coffee slopes of Mount Kenya]**.
 
 ## Hard constraints (from the official rules)
 - **Deadline:** [FILL IN the exact submission time on Oct 4, 2026]. A 2–5 minute video is required.
 - **Devices people already have:** the smartphone app, SMS to and from a basic phone, and a hub on the co-op's existing computer.
 - **Core feature works offline:** after the first load, diagnosis plus spoken advice must work in airplane mode.
 - **Small model:** the image model must be ≤10 MB. Report its size and how long it takes to download over 3G.
-- **Local language:** at least one interaction by **voice in the local language**, plus Spanish.
+- **Local language:** at least one interaction by **voice in the local language**, plus Kiswahili and English.
 - **Human in the loop:** the tool informs and flags uncertainty. It **never acts on anyone's behalf**: no SMS goes out without a user tap, and the extension officer decides on visits.
 - **No hallucinations:** farmers only ever see or hear text from a **fixed list of checked advice cards**. No free-form generated text goes to farmers.
-- **Fail-safe:** when the model isn't confident, or the photo isn't a coffee leaf, it says "No estoy seguro — muestre la hoja al técnico" ("I'm not sure, show the leaf to the extension officer") and adds the farm to the officer's worklist.
+- **Fail-safe:** when the model isn't confident, or the photo isn't a coffee leaf, it says "I'm not sure — show the leaf to the extension officer." and adds the farm to the officer's worklist.
 - **No cloud services or paid APIs** in the demo path.
-- User-facing text in Spanish and the local language. Code and docs in English.
+- User-facing text in English, Kiswahili and the local language. Code and docs in English.
 
 ## Architecture (default choices; change one only if it blocks you, and tell me why)
 
@@ -43,16 +44,16 @@ An offline-capable PWA. A service worker caches the app, the model, the advice c
   - Runs on the device via onnxruntime-web or TF.js.
   - Shows the result and confidence.
   - Includes an "other / not coffee" class plus a confidence threshold.
-- **Advice card and audio** in the local language or Spanish.
+- **Advice card and audio** in English, Kiswahili or the local language.
 - **Observations** are stored in IndexedDB under a member ID. Add an optional PIN and a "delete everything" button.
-- **"Enviar por SMS" ("Send by SMS") button:**
-  - Builds an `sms:` link holding a compact, single-SMS code (≤160 characters, versioned, documented), e.g., `CAF1 M0123 ROYA 87 20261004 16.7,-92.6`.
+- **"Send by SMS" button:**
+  - Builds an `sms:` link holding a compact, single-SMS code (≤160 characters, versioned, documented), e.g., `CAF1 M0123 RUST 87 20261004 -0.52,37.32`.
   - The user taps Send in their own SMS app.
 - Photos and full records upload to the hub only when it's reachable over Wi-Fi.
 
 ### 2. Co-op hub
-FastAPI + SQLite, served on `0.0.0.0`.
-- **Member registry** with consent records (member ID, phone number, community, plot location).
+FastAPI + SQLite, served on `0.0.0.0`. Pages for co-op staff and the extension officer in English.
+- **Member registry** with consent records (member ID, phone number, community, plot location, SMS language).
 - **SMS inbox endpoint:**
   - Parses observation codes.
   - Sends free-text messages to the intent sorter.
@@ -63,30 +64,31 @@ FastAPI + SQLite, served on `0.0.0.0`.
   - Farms ranked by severity, confidence and clustering, with photos when available.
   - Buttons for "visit scheduled" and "confirmed / not confirmed". The officer decides.
   - Officer confirmations are stored as **labeled examples for later retraining**.
-- **"PRECIO" reply:**
-  - Reference price for parchment coffee (plus maize and beans) from a cached table.
-  - Always includes the source, the date and "precio de referencia" (reference price).
+- **"PRICE" reply** (also "BEI" in Kiswahili):
+  - Reference price for coffee (what co-op factories paid per kg of cherry; the Nairobi Coffee Exchange auction as context), plus maize and beans, in KES, from a cached table.
+  - Always includes the source, the date and "reference price". Never call it a farm-gate price.
   - Not AI; say so in the docs.
 - **Intent sorting for free-text SMS:**
   - A small multilingual sentence-embedding model, or a tiny classifier.
-  - Fixed intents: `precio`, `reporte`, `ayuda`, `hablar_con_tecnico`, `otro`.
-  - Replies only from the checked advice cards. If it's unsure → "Le paso su mensaje al técnico" ("I'll pass your message to the extension officer").
+  - Fixed intents: `price`, `report`, `help`, `talk_to_officer`, `other`.
+  - Replies only from the checked advice cards. If it's unsure → "We are passing your message to the extension officer."
 
 ### 3. Content
 `content/cards.json` holds **every sentence the system can say**. Each card has:
 - `id`
-- Spanish text
+- English text
+- Kiswahili text
 - local-language text
 - an audio file per language
 - the manual or source it came from
 - a `status` of `verified` or `unverified`
 
 Rules for the content:
-- Machine-translated local-language text stays `unverified` until a native speaker checks it, and the UI marks it as such.
-- For voice: check whether **Meta MMS** text-to-speech supports the local language (e.g., `tzh` for Tseltal). If it doesn't, use recordings by a native speaker, and fall back to Spanish audio from an offline TTS such as Piper.
+- Machine-translated Kiswahili and local-language text stays `unverified` until a native speaker checks it, and the UI marks it as such.
+- For voice: check whether **Meta MMS** text-to-speech supports the local language and Kiswahili (e.g., `kik` for Gĩkũyũ, `swh` for Kiswahili). If it doesn't, use recordings by a native speaker, and fall back to English audio from an offline TTS such as Piper.
 
 ### 4. Image model training
-- **Data scripts:** BRACOL (doi:10.17632/yy2k5y8mxg.1) and RoCoLe (doi:10.17632/c5yvn32dzg.2). Map both to shared labels: `sano`, `roya`, `minador`, `phoma`, `cercospora`, `acaro_rojo`, `otro`.
+- **Data scripts:** JMuBEN/JMuBEN2 (Kenya, Arabica; Jepkoech et al. 2021), BRACOL (doi:10.17632/yy2k5y8mxg.1) and RoCoLe (doi:10.17632/c5yvn32dzg.2), whichever can be downloaded. Map them to shared labels: `sano`, `roya`, `minador`, `phoma`, `cercospora`, `acaro_rojo`, `otro` (internal identifiers; farmers only see card text).
 - **"Not coffee" examples** for `otro` come from PlantDoc or similar images.
 - **Training:**
   - Fine-tune MobileNetV3-Small (or EfficientNet-Lite0).
@@ -98,7 +100,7 @@ Rules for the content:
 - If a dataset needs a manual download, give me the exact steps and keep working with a small placeholder set meanwhile.
 
 ### 5. Data and sync scripts
-- Cached price tables: InfoAserca coffee, SNIIM maize and beans.
+- Cached price tables in KES: co-op cherry payouts and Nairobi Coffee Exchange results for coffee; KAMIS (Ministry of Agriculture market information) for maize and beans.
 - *Stretch:* NASA POWER weather by coordinates, for a rust-risk / spray-timing flag. Cite the source of any thresholds.
 - All sample data is labeled `DEMO` in the UI.
 
@@ -108,9 +110,9 @@ Rules for the content:
 ## Milestones (in this order; demo-critical path first)
 1. **Plan and scaffold (≤30 min):** write `PLAN.md`, scaffold the repo, and start the model training early, since it can run in the background.
 2. **Image model:** data scripts, training, export, evaluation report. Start `DATA_CARD.md`.
-3. **Offline diagnosis on the phone:** photo → result → advice card → audio (Spanish first, then the local language). Verify it works in airplane mode.
+3. **Offline diagnosis on the phone:** photo → result → advice card → audio (English first, then Kiswahili and the local language). Verify it works in airplane mode.
 4. **Save-and-send-later:** the observation SMS code, the hub's SMS inbox, the simulator, and Wi-Fi sync of photos.
-5. **Hub features:** registry and consent, outbreak alert, officer worklist, PRECIO reply, intent sorting, DEMO data seeding.
+5. **Hub features:** registry and consent, outbreak alert, officer worklist, PRICE/BEI reply, intent sorting, DEMO data seeding.
 6. **Guardrails and privacy pass:**
    - threshold and "not coffee" handling
    - no automatic sending
@@ -141,11 +143,11 @@ Rules for the content:
 
 ## Definition of done (check every item before saying you're finished)
 - [ ] `./run.sh` starts the hub from a fresh clone, following the README.
-- [ ] The phone loads the app once, then **in airplane mode** diagnoses a leaf photo and plays advice in the local language and in Spanish.
-- [ ] A blurry photo or a non-coffee photo gives "No estoy seguro — muestre la hoja al técnico."
-- [ ] "Enviar por SMS" prepares a valid ≤160-character code. When it's sent through the simulator, the observation appears on the hub.
+- [ ] The phone loads the app once, then **in airplane mode** diagnoses a leaf photo and plays advice in the local language, in Kiswahili and in English.
+- [ ] A blurry photo or a non-coffee photo gives "I'm not sure — show the leaf to the extension officer."
+- [ ] "Send by SMS" prepares a valid ≤160-character code. When it's sent through the simulator, the observation appears on the hub.
 - [ ] Rust reports trigger an outbreak alert in the outbox, and the farm appears on the officer's worklist.
-- [ ] Texting "PRECIO" from the simulated basic phone returns a reference price with its source and date.
-- [ ] Free-text SMS in Spanish is sorted into the right intent, and unknown messages go to the officer.
+- [ ] Texting "PRICE" (or "BEI") from the simulated basic phone returns a reference price with its source and date.
+- [ ] Free-text SMS in English and Kiswahili is sorted into the right intent, and unknown messages go to the officer.
 - [ ] Every sentence a farmer can see or hear comes from `content/cards.json`.
 - [ ] `METRICS.md`, `DATA_CARD.md`, `RESPONSIBLE_AI.md` and `VIDEO_SCRIPT.md` are filled with real content.

@@ -42,7 +42,7 @@ Design rule: **keep it simple.** Vanilla HTML/JS (no build step), FastAPI + SQLi
 | Topic | Decision | Why |
 |---|---|---|
 | Setting | **Kirinyaga County, central Kenya**. English main language, Kiswahili national, Gĩkũyũ local | Team decision (2026-10-04). Our training data is Kenyan (F) and was photographed in Kirinyaga (S), so the main held-out test comes from the users' own county, though from one plantation and as close-up crops ([DATA_CARD.md](DATA_CARD.md) §1). Kiswahili is the national language, and Kiswahili and English are the official ones (Constitution Art. 7, S). Gĩkũyũ is spoken mainly in central Kenya (S). About 71 % of Kenyan coffee came through co-operative societies in 2022/23 (AFA figures, S; arithmetic D), so a co-op hub fits. Codes and URLs: [docs/evidence.md](docs/evidence.md) §3, §6. |
-| Training data | **JMuBEN/JMuBEN2** (Kenya, Arabica, CC BY 4.0) via the AgML public bucket, plus **PlantDoc** and Imagenette for "not coffee"; the shipped v2 adds 147 screened **iNaturalist** field photos (`DATA_CARD.md` §4) | Mendeley (BRACOL, RoCoLe), Hugging Face and Kaggle are blocked by this build environment's network policy. `model/prepare_data.py` also accepts BRACOL/RoCoLe folders if the team downloads them by hand (steps in `DATA_CARD.md`). |
+| Training data | **JMuBEN/JMuBEN2** (Kenya, Arabica, CC BY 4.0) via the AgML public bucket, plus **PlantDoc** and Imagenette for "not coffee"; the shipped v2 adds 147 screened **iNaturalist** field photos (`DATA_CARD.md` §4) | Mendeley (BRACOL, RoCoLe) and Kaggle are blocked by this build environment's network policy, and so are file downloads from Hugging Face (only Hub metadata could be read). `model/prepare_data.py` also accepts BRACOL/RoCoLe folders if the team downloads them by hand (steps in `DATA_CARD.md`). |
 | Image model | Keras **MobileNetV3-Small** (ImageNet weights) fine-tuned → ONNX → **fp16 weights** (planned INT8; static INT8 broke the model) | Weights reachable from storage.googleapis.com; ONNX runs in the browser with onnxruntime-web (WASM). |
 | Phone runtime | **onnxruntime-web 1.19.2**, vendored in `app/vendor/` (WASM, 1 thread) | No CDN at run time; works offline once cached by the service worker. |
 | Card text | **English** written by the team; **Kiswahili** and **Gĩkũyũ** are **AI drafts**. Every card in every language is **UNVERIFIED** | No native speaker or agronomist has checked them yet. The Gĩkũyũ draft is low confidence: no Gĩkũyũ dictionary could be opened from the build machine ([content/README.md](content/README.md)). |
@@ -101,8 +101,9 @@ Paths are relative so `app/` can fetch `../content/cards.json` both from the hub
 | *(fail-safe: unsure / blurry / low confidence)* | `UNSR` | `diag_duda` | n/a |
 
 Model labels, card ids and slot names are internal identifiers (several are Spanish words from the project's first
-version). They are never shown: the farmer sees the card text. The codes table lives in `app/sms.js` (`CODES`) and
-`hub/sms.py`; codes of the first version are not accepted (no device ever used them).
+version). Members never see them (they see and hear the card text); co-op staff see card ids and slot names on the
+hub's Content page. The codes table lives in `app/sms.js` (`CODES`) and `hub/sms.py`; codes of the first version
+are not accepted (no device ever used them).
 
 Fail-safe: if the photo is blurry, top-1 < threshold, or top-1 is `otro`,
 the app shows/plays **`diag_duda`** = "I'm not sure — show the leaf to the extension officer." and the
@@ -209,7 +210,7 @@ The UI shows the reason ("Rust 99% · alert area · 2 reports in 30 days"). Offi
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "languages": {"en": "English", "sw": "Kiswahili", "kik": "Gĩkũyũ"},
   "cards": [
     {

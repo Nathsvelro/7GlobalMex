@@ -168,16 +168,14 @@ def test_static_and_mime(client):
 def test_hub_pages_are_english(client):
     """Staff and officer pages: English UI, no Spanish left (Kenya re-localization)."""
     spanish = re.compile(r"\b(socio|socios|técnico|tecnico|bandeja|aviso|avisos|precio|reporte|enviar|guardar|"
-                         r"aprobar|rechazar|cargando|idioma|comunidad|parcela|roya|duda)\b", re.IGNORECASE)
-    for page in ("index.html", "registro.html", "simulador.html", "bandeja.html", "mapa.html", "tecnico.html",
-                 "contenido.html", "common.js"):
+                         r"aprobar|rechazar|cargando|idioma|comunidad|parcela|roya|duda|registro|simulador|mapa|"
+                         r"contenido|mensajes|etiquetas)\b", re.IGNORECASE)
+    for page in ("index.html", "register.html", "simulator.html", "outbox.html", "map.html", "officer.html",
+                 "content.html", "common.js"):
         r = client.get(f"/hub/{page}")
         assert r.status_code == 200, page
-        # file names, in-page anchors and internal model labels stay as they were (other pages, tests and the
-        # model use them; they are never shown as text)
-        text = re.sub(r"(registro|simulador|bandeja|mapa|tecnico|contenido)\.html|#(mensajes|etiquetas)|"
-                      r"id=\"(mensajes|etiquetas)\"|\[\"(roya|minador|phoma|cercospora|acaro_rojo|sano|otro)\",",
-                      "", r.text)
+        # internal model labels stay as they were (the model uses them; they are never shown as text)
+        text = re.sub(r"\[\"(roya|minador|phoma|cercospora|acaro_rojo|sano|otro)\",", "", r.text)
         assert not spanish.findall(text), (page, sorted(set(spanish.findall(text)))[:10])
         if page.endswith(".html"):
             assert '<html lang="en">' in r.text, page

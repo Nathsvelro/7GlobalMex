@@ -1,8 +1,8 @@
 // Cafetal hub: shared helpers (vanilla JS, no build step).
 const PAGES = [
-  ["/", "Home"], ["/hub/registro.html", "Registration"], ["/hub/simulador.html", "SMS simulator"],
-  ["/hub/bandeja.html", "Outbox"], ["/hub/mapa.html", "Map"], ["/hub/tecnico.html", "Officer worklist"],
-  ["/hub/contenido.html", "Content"],
+  ["/", "Home"], ["/hub/register.html", "Registration"], ["/hub/simulator.html", "SMS simulator"],
+  ["/hub/outbox.html", "Outbox"], ["/hub/map.html", "Map"], ["/hub/officer.html", "Officer worklist"],
+  ["/hub/content.html", "Content"],
 ];
 
 const CODE_INFO = {

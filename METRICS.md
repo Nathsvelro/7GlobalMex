@@ -189,7 +189,7 @@ the per-model tables), [`reports/field_eval.json`](reports/field_eval.json),
 in percentage points.
 
 **What this test is.** It uses 768 public iNaturalist photos of coffee leaf rust, leaf miner, Cercospora, American
-leaf spot (*Mycena citricolor*, "ojo de gallo"; not a model class, so the right answer is UNSR) and *Coffea arabica*
+leaf spot (*Mycena citricolor*, key `ojo_de_gallo`; not a model class, so the right answer is UNSR) and *Coffea arabica*
 plants (health unknown). Labels are the iNaturalist community identification, not an agronomist's diagnosis. The
 photos are split **by observer**: every observer with a photo in a fixed box over Mexico and northern Central America
 is held out, plus about 30 % of the other observers. The box was fixed before any v2 result and is kept so the test
@@ -537,10 +537,11 @@ The PRICE reply read: *"Reference price 2026: coffee 139.00 KES/kg cherry, maize
 DEMO county 25/26, KAMIS. Not the price at your factory."* All prices are DEMO ([`DATA_CARD.md`](DATA_CARD.md#9-reference-prices-datapricesjson-demo)).
 
 **Every SMS card with long sample values** (computed). This fills the slots with the sample values in
-`scripts/make_audio.py` (coffee 157.40 KES/kg cherry, maize 105.50, beans 180.00, date "2026-09-30", the 24-character
-community name "Ondera Kilima Upper Ward", 12 reports, and the `sms_fuente` text from `data/prices.json`), then counts
-GSM-7 characters. These are long values, **not the worst case**. `python3 scripts/make_audio.py --check` reports
-"83 cards checked, 0 problem(s)".
+`scripts/make_audio.py` (coffee 157.40 KES/kg cherry, maize 105.50, beans 180.00, date "2026-09-30", the 40-character
+community name "Ondera Kilima Upper Ward, by the factory", 120 reports, and the `sms_fuente` text from
+`data/prices.json`), then counts GSM-7 characters. The community name is the longest registration allows; the other
+values are long, **not the worst case**. `python3 scripts/make_audio.py --check` reports "83 cards checked, 0
+problem(s)".
 
 | card | en | sw | kik |
 |---|---|---|---|
@@ -552,15 +553,18 @@ GSM-7 characters. These are long values, **not the worst case**. `python3 script
 | `sms_reporte_instrucciones` | 124 | 120 | 129 |
 | `sms_ayuda` | 146 | 119 | 147 |
 | `sms_pasar_tecnico` | 104 | 75 | 91 |
-| `alert_roya` | 117 | 131 | **142** |
+| `alert_roya` | 134 | 148 | **159** |
 
 **Real limits** (computed with the same counting as `hub/cards.py`):
 - **`alert_roya`**: registration accepts community names of up to 40 characters (`SLOT_VALUE_RE` in
-  [`hub/cards.py`](hub/cards.py), checked in [`hub/main.py`](hub/main.py)). With a 40-character name and 99 reports the
-  alert is 133 characters in English, 147 in Kiswahili and **158 in Gĩkũyũ**: one SMS in every language. Gĩkũyũ has
-  only 2 characters to spare.
+  [`hub/cards.py`](hub/cards.py), checked in [`hub/main.py`](hub/main.py)). With a 40-character name and 120 reports
+  (the table above) the alert is 134 characters in English, 148 in Kiswahili and **159 in Gĩkũyũ**: one SMS in every
+  language. Gĩkũyũ has only 1 character to spare.
 - **`sms_precio` in English** has 4 characters to spare with the sample values. Keep `sms_fuente` in
-  `data/prices.json` short: 5 more characters in the slots make it 2 SMS.
+  `data/prices.json` short: 5 more characters in the slots make it longer than one SMS.
+- **At send time** the hub refuses any SMS card that would be longer than one SMS ([`hub/cards.py`](hub/cards.py)
+  `render`). A price reply that does not fit is replaced by `sms_precio_sin_datos` ("we have no reference price
+  today"); it is never sent in two parts.
 
 ## 12. What we have not measured
 
