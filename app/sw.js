@@ -1,11 +1,12 @@
 // Service worker: makes the app work in airplane mode after the first load.
 //  - cache-first: app shell, onnxruntime-web, model, cards.json, every audio file listed in cards.json
 //  - cards.json / labels.json / config.json: served from cache, refreshed in the background when online;
-//    a refresh also downloads audio whose file or source changed (e.g. a new native recording) and a new model
+//    a refresh also downloads audio whose file or source changed (e.g. a new native recording) and a new model,
+//    and switches the JSON only after they are all cached (if one fails, the old JSON and its files stay)
 //  - /api/*: network only (never cached, so "hub reachable" is never faked)
 // VERSION = hash of every precached file, written by scripts/bump_sw_version.py (run.sh runs it before starting the
 // hub; run it by hand before copying app/ to a static host). A new VERSION makes phones re-download everything.
-const VERSION = 'cafetal-1d8c27fb25';
+const VERSION = 'cafetal-54f297e032';
 const SHELL = [
   './', 'index.html', 'style.css', 'app.js', 'content.js', 'store.js', 'infer.js', 'sms.js',
   'manifest.webmanifest',
@@ -66,34 +67,40 @@ self.addEventListener('activate', (e) => {
   })());
 });
 
-// After a newer cards.json / labels.json arrives: fetch only the files that changed.
+// After a newer cards.json / labels.json arrives: fetch only the files that changed. Rejects if a new or changed
+// file fails, so the caller keeps the old JSON.
 async function topUp(url, oldJson, newJson) {
   const cache = await caches.open(VERSION);
   if (url === CARDS) {
     const before = audioMap(oldJson);
     for (const [u, src] of audioMap(newJson)) {
-      if (before.get(u) !== src || !(await cache.match(u))) await cache.add(fresh(u)).catch(() => {});
+      if (before.get(u) !== src) await cache.add(fresh(u));
+      // already missing under the old cards.json (tolerated at install): retry, but do not block the update
+      else if (!(await cache.match(u))) await cache.add(fresh(u)).catch(() => {});
     }
   } else if (url === LABELS) {
     const changed = !oldJson || oldJson.version !== newJson.version || oldJson.size_bytes !== newJson.size_bytes ||
       oldJson.file !== newJson.file;
-    if (changed || !(await cache.match(modelUrl(newJson)))) await cache.add(fresh(modelUrl(newJson))).catch(() => {});
+    if (changed || !(await cache.match(modelUrl(newJson)))) await cache.add(fresh(modelUrl(newJson)));
   }
 }
 
 async function staleWhileRevalidate(e, url) {
   const cache = await caches.open(VERSION);
   const cached = await cache.match(url);
+  // read the cached text now: once `cached` is handed to the page its body is used and can no longer be cloned
+  const old = cached ? await cached.clone().text() : null;
   const update = (async () => {
     try {
       const res = await fetch(fresh(url));
       if (!res.ok) return null;
       const text = await res.clone().text();
-      const old = cached ? await cached.clone().text() : null;
       if (text !== old) {
-        // download changed audio / model first, then switch the JSON, so they never point at missing files
-        if (url !== CONFIG) await topUp(url, old && JSON.parse(old), JSON.parse(text));
-        await cache.put(url, res.clone());
+        // download changed audio / model first, then switch the JSON, so they never point at missing files;
+        // if a download fails the old JSON stays cached and the next load retries
+        const ready = url === CONFIG ||
+          await topUp(url, old && JSON.parse(old), JSON.parse(text)).then(() => true, () => false);
+        if (ready) await cache.put(url, res.clone());
       }
       return res;
     } catch {
