@@ -1,0 +1,13 @@
+# Image-model training / export / evaluation (model/). Python 3.11, CPU only.
+# The hub does NOT need these (see requirements.txt).
+tensorflow-cpu==2.17.1
+keras==3.15.1
+protobuf==4.25.9
+tf2onnx==1.17.0
+onnx==1.16.2
+onnxruntime==1.19.2
+numpy==1.26.4
+pillow==12.3.0
+scikit-learn==1.9.1
+scipy==1.17.1
+matplotlib==3.11.2

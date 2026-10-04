@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+hub/*.db
+hub/*.db-*
+hub/uploads/
+model/checkpoints/
+model/*.keras
+model/*.h5
+*.log
+node_modules/
+.DS_Store
+.claude/worktrees/

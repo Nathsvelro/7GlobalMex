@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Content review</title>
+<link rel="stylesheet" href="/hub/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<main>
+  <h1>Content review (cards)</h1>
+  <div class="notice">Everything a member sees or hears comes from these cards (<span class="code">content/cards.json</span>). Nothing is made up on the fly.
+    Each language stays <span class="badge unv">UNVERIFIED</span> until a person reviews it: an agronomist or the extension officer for the advice,
+    a native speaker for each language's text and voice. English is the main language. The Kiswahili and Gĩkũyũ texts are AI drafts and their audio is
+    provisional synthetic speech (an English voice reading them); native speakers must review the texts and record the audio here.</div>
+  <div class="card row" style="gap:8px 18px;align-items:flex-end">
+    <div><label for="reviewer">Who reviews</label><input id="reviewer" maxlength="80" placeholder="name and role"></div>
+    <div><label for="speaker">Who records (native voice)</label><input id="speaker" maxlength="80" placeholder="name"></div>
+    <div><label for="type">Type</label><select id="type"><option value="">All</option><option value="diagnosis">Diagnosis</option><option value="advice">Advice</option>
+      <option value="sms">SMS</option><option value="alert">Alert</option><option value="ui">Screen (UI)</option></select></div>
+    <div><label for="st">Status</label><select id="st"><option value="">All</option><option value="unverified">Something unverified</option><option value="verified">All verified</option></select></div>
+    <div><label for="q">Search</label><input id="q" placeholder="text or id"></div>
+  </div>
+  <p class="small muted" id="summary"></p>
+  <p class="small muted" id="rec-note"></p>
+  <div id="list"></div>
+</main>
+<script src="/hub/common.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+let data = null, recorder = null, chunks = [], recTarget = null;
+function remember(id) { try { const v = localStorage.getItem("cafetal-" + id); if (v) $(id).value = v; } catch (e) {} $(id).addEventListener("change", () => { try { localStorage.setItem("cafetal-" + id, $(id).value); } catch (e) {} }); }
+
+async function load() { data = await api("/api/cards"); render(); }
+function render() {
+  const langs = Object.keys(data.languages);
+  const t = $("type").value, st = $("st").value, q = $("q").value.toLowerCase();
+  const cards = data.cards.filter((c) => (!t || c.type === t) &&
+    (!st || (st === "verified" ? langs.every((l) => c.status[l] === "verified") : langs.some((l) => c.status[l] !== "verified"))) &&
+    (!q || (c.id + " " + langs.map((l) => c[l]).join(" ")).toLowerCase().includes(q)));
+  const nVer = (l) => data.cards.filter((c) => c.status[l] === "verified").length;
+  const name = (l) => data.languages[l] || LANG_NAME[l] || l;
+  $("summary").textContent = `${data.cards.length} cards · verified: ` + langs.map((l) => `${name(l)} ${nVer(l)}`).join(", ") + ` · showing ${cards.length}`;
+  $("list").innerHTML = cards.map((c) => `<div class="card"><div><b class="code">${esc(c.id)}</b> <span class="badge grey">${esc(c.type)}</span>
+      ${c.slots && c.slots.length ? `<span class="small muted">slots: ${c.slots.map((s) => "{" + esc(s) + "}").join(" ")}</span>` : ""}</div>
+    <div class="row" style="margin-top:8px">` + langs.map((l) => {
+      const audio = c.audio && c.audio[l];
+      const src = c.audio_source && c.audio_source[l];
+      return `<div class="grow" style="flex-basis:260px;border-left:3px solid #dcd8cc;padding-left:10px">
+        <div><b>${esc(name(l))}</b> ${statusBadge(c.status[l])} ${c.reviewed_by && c.reviewed_by[l] ? `<span class="small muted">by ${esc(c.reviewed_by[l])}</span>` : ""}</div>
+        <p style="margin:6px 0" class="wrap">${esc(c[l] || "(no text)")}</p>
+        ${audio ? `<audio controls preload="none" src="/content/${esc(audio)}?v=${encodeURIComponent(src || "")}" style="width:100%;max-width:340px;height:34px"></audio>
+          <div class="small muted">Audio: ${esc(src || "")} ${src && src.startsWith("native") ? '<span class="badge ok">native voice</span>' : '<span class="badge unv">synthetic</span>'}</div>` : '<div class="small muted">No audio (SMS only).</div>'}
+        <p class="row" style="gap:6px;margin:8px 0 0">
+          ${c.status[l] === "verified" ? `<button onclick="verify('${c.id}','${l}',false)">Remove verified</button>` : `<button class="primary" onclick="verify('${c.id}','${l}',true)">Mark verified</button>`}
+          ${c.type !== "sms" && c.type !== "alert" ? `<button id="rec-${c.id}-${l}" onclick="rec('${c.id}','${l}')">● Record</button>
+          <label class="btn" style="margin:0;font-weight:400">Upload file<input type="file" accept="audio/*" style="display:none" onchange="uploadFile('${c.id}','${l}',this)"></label>` : ""}
+        </p></div>`;
+    }).join("") + `</div><p class="small muted wrap" style="margin:8px 0 0">Source: ${esc(c.source || "")}</p></div>`).join("");
+}
+async function verify(id, lang, ok) {
+  const reviewer = $("reviewer").value.trim();
+  if (ok && !reviewer) { alert("Write the reviewer's name at the top first."); $("reviewer").focus(); return; }
+  try { await api(`/api/cards/${id}/verify`, { json: { lang, reviewer, verified: ok } }); await load(); } catch (e) { alert(e.message); }
+}
+async function upload(id, lang, blob, filename) {
+  const speaker = $("speaker").value.trim();
+  if (!speaker) { alert("Write the speaker's name at the top first."); $("speaker").focus(); return; }
+  const fd = new FormData();
+  fd.append("file", blob, filename);
+  fd.append("speaker", speaker);
+  try {
+    const r = await fetch(`/api/cards/${id}/audio/${lang}`, { method: "POST", body: fd });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.detail || r.statusText);
+    await load();
+    $("rec-note").textContent = `Saved ${j.path}${j.converted_to_mp3 ? " (converted to MP3)" : ""}. It stays UNVERIFIED until someone listens to it and marks it.`;
+  } catch (e) { alert("Could not upload: " + e.message); }
+}
+function uploadFile(id, lang, input) { if (input.files[0]) upload(id, lang, input.files[0], input.files[0].name); }
+async function rec(id, lang) {
+  const btn = $(`rec-${id}-${lang}`);
+  if (recorder && recorder.state === "recording") {
+    if (recTarget !== id + lang) return;
+    recorder.stop();
+    return;
+  }
+  if (!navigator.mediaDevices || !window.MediaRecorder) { alert("This browser cannot record here (it needs localhost or HTTPS). Use \"Upload file\"."); return; }
+  if (!$("speaker").value.trim()) { alert("Write the speaker's name at the top first."); $("speaker").focus(); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const type = ["audio/webm", "audio/ogg", "audio/mp4"].find((t) => MediaRecorder.isTypeSupported(t)) || "";
+    recorder = new MediaRecorder(stream, type ? { mimeType: type } : undefined);
+    chunks = []; recTarget = id + lang;
+    recorder.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+    recorder.onstop = () => {
+      stream.getTracks().forEach((t) => t.stop());
+      const mime = (recorder.mimeType || "audio/webm").split(";")[0];
+      const ext = mime.includes("ogg") ? "ogg" : mime.includes("mp4") ? "m4a" : "webm";
+      btn.textContent = "● Record";
+      upload(id, lang, new Blob(chunks, { type: mime }), `${id}.${ext}`);
+    };
+    recorder.start();
+    btn.textContent = "■ Stop and save";
+  } catch (e) { alert("Could not use the microphone: " + e.message); }
+}
+["type", "st"].forEach((id) => ($(id).onchange = render));
+$("q").oninput = render;
+(async function () {
+  await initPage();
+  remember("reviewer"); remember("speaker");
+  if (!window.isSecureContext) $("rec-note").textContent = "To record with the microphone, open this page as http://localhost:8000 (or HTTPS). From another computer use \"Upload file\".";
+  load();
+})();
+</script>
+</body>
+</html>

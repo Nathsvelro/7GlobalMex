@@ -1,0 +1,899 @@
+{
+  "bitrate": "24k",
+  "files": {
+    "audio/en/advice_acaro_rojo.mp3": {
+      "hash": "ccfc283291945264",
+      "spoken_text": "Red spider mite comes in the dry season, on trees in full sun and near dusty roads. Every week, check the trees next to the road. Keep some shade; a hedge by the road helps stop the dust. If the tops of the leaves turn dull bronze, tell the extension officer."
+    },
+    "audio/en/advice_call_officer.mp3": {
+      "hash": "5ac5a25780674b07",
+      "spoken_text": "Call the extension officer or the co-op if you see orange powder on many trees, if many leaves fall, or if the app is not sure. Keep one leaf in a closed bag to show them."
+    },
+    "audio/en/advice_cercospora.mp3": {
+      "hash": "dd8b9c87de63f447",
+      "spoken_text": "Brown eye spot attacks weak trees: poor soil, strong sun or dry weather. Ask the extension officer about a soil test and the right fertiliser. Keep some shade and keep the farm weeded."
+    },
+    "audio/en/advice_minador.mp3": {
+      "hash": "014f1481ce076d69",
+      "spoken_text": "Leaf miner is worse in the hot, dry season. Keep some shade trees, and check a few leaves every week. Do not spray on your own: sprays also kill the small wasps that eat the miner. If many leaves have brown patches or fall, tell the extension officer."
+    },
+    "audio/en/advice_phoma.mp3": {
+      "hash": "c252a49fee30dc8a",
+      "spoken_text": "Phoma comes with cold wind and hail, high on the mountain. Plant or keep trees on the windy side of the farm to stop the wind. Feed the trees well with manure and fertiliser. If the branch tips dry out, tell the extension officer."
+    },
+    "audio/en/advice_roya.mp3": {
+      "hash": "f703015cc3611afa",
+      "spoken_text": "Check under the leaves every week, on several trees. Prune so air and light get in, and keep the farm weeded. Use fertiliser as the extension officer advises. Ask the officer about spraying before the rains, and about rust-resistant varieties such as Ruiru 11 and Batian. If many leaves have orange powder, tell the officer."
+    },
+    "audio/en/advice_sano.mp3": {
+      "hash": "914555c1b589708c",
+      "spoken_text": "Very good. Keep checking under the leaves every week. Prune, keep some shade, keep the farm weeded and feed the trees as the extension officer advises."
+    },
+    "audio/en/diag_acaro_rojo.mp3": {
+      "hash": "7512555a44a73f1f",
+      "spoken_text": "It looks like red spider mite."
+    },
+    "audio/en/diag_cercospora.mp3": {
+      "hash": "63283b8a34fa9a1d",
+      "spoken_text": "It looks like brown eye spot, Cercospora."
+    },
+    "audio/en/diag_duda.mp3": {
+      "hash": "16b28b54f9ea392a",
+      "spoken_text": "I'm not sure, show the leaf to the extension officer."
+    },
+    "audio/en/diag_minador.mp3": {
+      "hash": "5c5c148da6d154d5",
+      "spoken_text": "It looks like coffee leaf miner."
+    },
+    "audio/en/diag_phoma.mp3": {
+      "hash": "198acf121c090e47",
+      "spoken_text": "It looks like Phoma leaf spot."
+    },
+    "audio/en/diag_roya.mp3": {
+      "hash": "62eef10c732efa59",
+      "spoken_text": "It looks like coffee leaf rust."
+    },
+    "audio/en/diag_sano.mp3": {
+      "hash": "9881408d9ecb832c",
+      "spoken_text": "The leaf looks healthy."
+    },
+    "audio/en/limits_yield.mp3": {
+      "hash": "64e6c21c3f5abc9c",
+      "spoken_text": "This app only looks at leaves. It cannot see coffee berry disease on the berries, antestia bugs, berry borer, lack of fertiliser, drought, old trees or soil problems. If your harvest went down, talk to the extension officer."
+    },
+    "audio/en/name_acaro_rojo.mp3": {
+      "hash": "ddb4f0dce24c3b94",
+      "spoken_text": "Red spider mite"
+    },
+    "audio/en/name_cercospora.mp3": {
+      "hash": "f0cc01569d021005",
+      "spoken_text": "Brown eye spot"
+    },
+    "audio/en/name_duda.mp3": {
+      "hash": "3e6220853fa8d466",
+      "spoken_text": "Not sure"
+    },
+    "audio/en/name_minador.mp3": {
+      "hash": "aac81f28085fb90d",
+      "spoken_text": "Leaf miner"
+    },
+    "audio/en/name_phoma.mp3": {
+      "hash": "900e99d752d23318",
+      "spoken_text": "Phoma leaf spot"
+    },
+    "audio/en/name_roya.mp3": {
+      "hash": "c0bd0615bbf3b4f4",
+      "spoken_text": "Leaf rust"
+    },
+    "audio/en/name_sano.mp3": {
+      "hash": "5abedaa0fdb54214",
+      "spoken_text": "Healthy"
+    },
+    "audio/en/ui_analyzing.mp3": {
+      "hash": "a800245b92a13217",
+      "spoken_text": "Checking the leaf."
+    },
+    "audio/en/ui_app_name.mp3": {
+      "hash": "005d15a3ec12b14c",
+      "spoken_text": "Cafetal"
+    },
+    "audio/en/ui_back.mp3": {
+      "hash": "d6c0fa4e3ea48d4f",
+      "spoken_text": "Back"
+    },
+    "audio/en/ui_cancel.mp3": {
+      "hash": "e04bcf5610f55f5b",
+      "spoken_text": "Cancel"
+    },
+    "audio/en/ui_choose_language.mp3": {
+      "hash": "b5fa7fd4521a5755",
+      "spoken_text": "Choose your language"
+    },
+    "audio/en/ui_choose_photo.mp3": {
+      "hash": "2b82011d65088725",
+      "spoken_text": "Choose a photo"
+    },
+    "audio/en/ui_confidence.mp3": {
+      "hash": "1a4935a8e1a9d372",
+      "spoken_text": "How sure"
+    },
+    "audio/en/ui_consent_accept.mp3": {
+      "hash": "4b2c8239871b43fe",
+      "spoken_text": "Yes, I agree"
+    },
+    "audio/en/ui_consent_decline.mp3": {
+      "hash": "9fafee6369b86e2c",
+      "spoken_text": "No, thank you"
+    },
+    "audio/en/ui_consent_hub_text.mp3": {
+      "hash": "28f58822a498414d",
+      "spoken_text": "The co-op computer keeps: your name, phone, community, the rough place of your farm, your language and the reports you send, result, confidence, date and rough place. Photos only if you send them over the co-op Wi-Fi. Co-op staff and the extension officer see them. For now the system has no password: other people on the co-op Wi-Fi could also see them. You can ask for them to be deleted at any time."
+    },
+    "audio/en/ui_consent_text.mp3": {
+      "hash": "9b6f155b7eb6d1fa",
+      "spoken_text": "Cafetal saves on this phone the date, the result and the rough place of each check. The photo stays on this phone. Everything is saved with your member number, not your name. Nothing is sent unless you tap Send. If you want, the photos go to the co-op, only over the co-op Wi-Fi. You can delete everything at any time."
+    },
+    "audio/en/ui_consent_title.mp3": {
+      "hash": "27913c6b605725cb",
+      "spoken_text": "Your permission"
+    },
+    "audio/en/ui_continue.mp3": {
+      "hash": "22e24c2ff29d7e76",
+      "spoken_text": "Continue"
+    },
+    "audio/en/ui_delete_all.mp3": {
+      "hash": "9213888c7c15194e",
+      "spoken_text": "Delete all"
+    },
+    "audio/en/ui_delete_confirm.mp3": {
+      "hash": "b572de46a0d024b0",
+      "spoken_text": "Delete all checks and photos from this phone? This cannot be undone."
+    },
+    "audio/en/ui_delete_yes.mp3": {
+      "hash": "afd4fa84cdfdd5b6",
+      "spoken_text": "Yes, delete all"
+    },
+    "audio/en/ui_demo.mp3": {
+      "hash": "ef22f95dd34cf760",
+      "spoken_text": "demo: sample data"
+    },
+    "audio/en/ui_history.mp3": {
+      "hash": "4096fffd3bc265f4",
+      "spoken_text": "My checks"
+    },
+    "audio/en/ui_hub_offline.mp3": {
+      "hash": "fd34665258d7f95c",
+      "spoken_text": "No connection to the co-op."
+    },
+    "audio/en/ui_language.mp3": {
+      "hash": "2fd2c40ca0699a41",
+      "spoken_text": "Language"
+    },
+    "audio/en/ui_limits_note.mp3": {
+      "hash": "f5b004f1a0222352",
+      "spoken_text": "It only checks leaves. It does not see berry disease, berry pests, fertiliser, drought or soil."
+    },
+    "audio/en/ui_lock.mp3": {
+      "hash": "1c80af8413da261a",
+      "spoken_text": "Lock"
+    },
+    "audio/en/ui_member_id_invalid.mp3": {
+      "hash": "a156d0e2e81cfd7a",
+      "spoken_text": "Type M and 4 numbers, for example M 0 1 2 3."
+    },
+    "audio/en/ui_member_id_prompt.mp3": {
+      "hash": "617fb9e3decda0e4",
+      "spoken_text": "Your member number, example: M 0 1 2 3"
+    },
+    "audio/en/ui_member_not_registered.mp3": {
+      "hash": "1d49a9cc9cf6947f",
+      "spoken_text": "This member number is not registered at the co-op. Ask at the co-op office."
+    },
+    "audio/en/ui_new_photo.mp3": {
+      "hash": "b759ce19ee104771",
+      "spoken_text": "Another photo"
+    },
+    "audio/en/ui_no_records.mp3": {
+      "hash": "6969b5b803489ae2",
+      "spoken_text": "No checks yet."
+    },
+    "audio/en/ui_offline_ready.mp3": {
+      "hash": "587dc7cdba56b40f",
+      "spoken_text": "Ready to use without internet"
+    },
+    "audio/en/ui_pending_sms.mp3": {
+      "hash": "817363a3c8425fb6",
+      "spoken_text": "Not sent yet"
+    },
+    "audio/en/ui_photo_tip_underside.mp3": {
+      "hash": "85d99f3f5a27a7ef",
+      "spoken_text": "Take the photo under the leaf, up close: let the spot fill the photo. Use good light."
+    },
+    "audio/en/ui_pin_optional.mp3": {
+      "hash": "0e04c03970163775",
+      "spoken_text": "4-number pin, if you want"
+    },
+    "audio/en/ui_pin_prompt.mp3": {
+      "hash": "9962c9f4fc1a0a9f",
+      "spoken_text": "Type your pin"
+    },
+    "audio/en/ui_pin_wrong.mp3": {
+      "hash": "88f06ae9aa4bc84d",
+      "spoken_text": "Wrong pin. Try again."
+    },
+    "audio/en/ui_play_en.mp3": {
+      "hash": "34fbcdfd454819fe",
+      "spoken_text": "Listen in English"
+    },
+    "audio/en/ui_play_kik.mp3": {
+      "hash": "0e22edf4197cdb65",
+      "spoken_text": "Listen in Gikuyu"
+    },
+    "audio/en/ui_play_sw.mp3": {
+      "hash": "7324aa45edfb3384",
+      "spoken_text": "Listen in Kiswahili"
+    },
+    "audio/en/ui_reason_blurry.mp3": {
+      "hash": "92d3ddfd9176ac1d",
+      "spoken_text": "The photo is blurry."
+    },
+    "audio/en/ui_reason_low_conf.mp3": {
+      "hash": "ec86023e354add73",
+      "spoken_text": "The app is not sure."
+    },
+    "audio/en/ui_reason_not_coffee.mp3": {
+      "hash": "d383f8435eba63fc",
+      "spoken_text": "It does not look like a coffee leaf."
+    },
+    "audio/en/ui_saved.mp3": {
+      "hash": "446b6d74b631cfa9",
+      "spoken_text": "Saved on this phone"
+    },
+    "audio/en/ui_send_sms.mp3": {
+      "hash": "45d5f865e6a0275a",
+      "spoken_text": "Send by S M S"
+    },
+    "audio/en/ui_sent.mp3": {
+      "hash": "9fe89207f8560c56",
+      "spoken_text": "Sent"
+    },
+    "audio/en/ui_settings.mp3": {
+      "hash": "3499da6f1741a975",
+      "spoken_text": "Settings"
+    },
+    "audio/en/ui_simulate_send.mp3": {
+      "hash": "51c34cc1d68b4498",
+      "spoken_text": "Send, simulated"
+    },
+    "audio/en/ui_simulated.mp3": {
+      "hash": "25be2a477eb2596e",
+      "spoken_text": "simulated: no real S M S was sent"
+    },
+    "audio/en/ui_sms_preview.mp3": {
+      "hash": "be25241698cee55d",
+      "spoken_text": "This is the message that will be sent:"
+    },
+    "audio/en/ui_sync_photos.mp3": {
+      "hash": "b7e5bfb903d60d6b",
+      "spoken_text": "Send photos to the co-op, Wi-Fi"
+    },
+    "audio/en/ui_synced.mp3": {
+      "hash": "7df58cf4bff775af",
+      "spoken_text": "Photos sent to the co-op"
+    },
+    "audio/en/ui_take_photo.mp3": {
+      "hash": "a634e09daf1f8db0",
+      "spoken_text": "Take photo"
+    },
+    "audio/en/ui_tip_bring_leaf_home.mp3": {
+      "hash": "ee2cdd7c8122a579",
+      "spoken_text": "No phone in the coffee field? Bring a few leaves home and take the photo there."
+    },
+    "audio/en/ui_unverified.mp3": {
+      "hash": "d7da9f9d5e29932a",
+      "spoken_text": "unverified"
+    },
+    "audio/en/ui_what_to_do.mp3": {
+      "hash": "6fe739471b0000ab",
+      "spoken_text": "What to do this week"
+    },
+    "audio/kik/advice_acaro_rojo.mp3": {
+      "hash": "18b24c8ec5c55b24",
+      "spoken_text": "Totambi totune toukaga hende ya omo, mete-ine etare na keeruru na hakuhe na barabara ere na rokongo. O kiumia, rora mete erea ere hakuhe na barabara. Tiga keeruru kenini; rogiri rwa mete mwena wa barabara ne roteithagia kogiria rokongo. Igoro rea mathango rengegaroroka rangi wa shaba, era afisa wa oremi."
+    },
+    "audio/kik/advice_call_officer.mp3": {
+      "hash": "ffd839bfe0b83315",
+      "spoken_text": "Eta afisa wa oremi kana sosaiti ongeona motu wa rangi wa macungwa mete-ine meinge, mathango mainge makegwa, kana ap etare na wehoko. Iga ithango remwe mohuko-ine ohingetwo neguo omonie."
+    },
+    "audio/kik/advice_cercospora.mp3": {
+      "hash": "503b2c7f6851e814",
+      "spoken_text": "Ndoa cia rangi wa ndaka itharagera mete etare na hinya: teeri otare mwega, rioa renene kana kwaga mbura. Oria afisa wa oremi ohoro wa gothima teeri na mbolea erea yagereire. Tiga keeruru kenini na oremere mahuti."
+    },
+    "audio/kik/advice_minador.mp3": {
+      "hash": "9232d8a85496ac85",
+      "spoken_text": "Totambi torea mathango toingehaga hende ya orugare na omo. Tiga mete ya keeruru, na ororage mathango mamwe o kiumia. Ndokahore dawa wiki: dawa ne eoragaga o na totambi tonini torea toreaga totambi tou. Mathango mainge mangegea na ndoa cia rangi wa ndaka kana makagwa, era afisa wa oremi."
+    },
+    "audio/kik/advice_phoma.mp3": {
+      "hash": "f0830e0aa21bda11",
+      "spoken_text": "Phoma erehagwo ne rohuho rwa heho na mbura ya mahiga, igoro kerema-ine. Handa kana orende mete mwena orea rohuho roumaga, neguo egirie rohuho. He mete thumu na mbolea ya koigana. Methia ya honge engeoma, era afisa wa oremi."
+    },
+    "audio/kik/advice_roya.mp3": {
+      "hash": "2e63d96b9ef2e45b",
+      "spoken_text": "Rora mohuro wa mathango o kiumia, mete-ine meinge. Ceha neguo rohuho na otheri itoonye, na oremere mahuti. Hothera mbolea ta orea afisa wa oremi akwerete. Oria afisa ohoro wa kohora dawa mbere ya mbura, na mekahoa erea ehotaga kutu ta Ruiru 11 na Batian. Ongeona motu wa rangi wa macungwa mathango-ine mainge, era afisa."
+    },
+    "audio/kik/advice_sano.mp3": {
+      "hash": "2b09152bf25bda8c",
+      "spoken_text": "Wega mono. Thie na mbere korora mohuro wa mathango o kiumia. Ceha, tiga keeruru kenini, remera mahuti na ohe mete irio ta orea afisa wa oremi akwerete."
+    },
+    "audio/kik/diag_acaro_rojo.mp3": {
+      "hash": "bea6ae586c2e570b",
+      "spoken_text": "Reonekana ta totambi totune."
+    },
+    "audio/kik/diag_cercospora.mp3": {
+      "hash": "95fba3455f242fe3",
+      "spoken_text": "Reonekana ta ndoa cia rangi wa ndaka, Cercospora."
+    },
+    "audio/kik/diag_duda.mp3": {
+      "hash": "e735de5d0f4322ef",
+      "spoken_text": "Ndioe wega, onia afisa wa oremi ithango reere."
+    },
+    "audio/kik/diag_minador.mp3": {
+      "hash": "798b484ac634116a",
+      "spoken_text": "Reonekana ta totambi torea mathango ma kahoa."
+    },
+    "audio/kik/diag_phoma.mp3": {
+      "hash": "591e24c7221aa271",
+      "spoken_text": "Reonekana ta ndoa cia Phoma."
+    },
+    "audio/kik/diag_roya.mp3": {
+      "hash": "2b9b77d61228bd0f",
+      "spoken_text": "Reonekana ta kutu ya mathango ma kahoa."
+    },
+    "audio/kik/diag_sano.mp3": {
+      "hash": "0f11bb2689844277",
+      "spoken_text": "Ithango ne reonekana rere na ogima."
+    },
+    "audio/kik/limits_yield.mp3": {
+      "hash": "86b11617eaa78505",
+      "spoken_text": "ap eno eroraga mathango tu. Ndengeona morimo wa matunda ma kahoa, si bi di, totambi twa antestia, totambi totoboraga matunda, kwaga mbolea, kwaga mbura, mete mekoro kana matheena ma teeri. Magetha maku mangenyiha, aria na afisa wa oremi."
+    },
+    "audio/kik/name_acaro_rojo.mp3": {
+      "hash": "5369ccfd60576323",
+      "spoken_text": "Totambi totune"
+    },
+    "audio/kik/name_cercospora.mp3": {
+      "hash": "c4f3ab3d6b06b23e",
+      "spoken_text": "Ndoa cia rangi wa ndaka"
+    },
+    "audio/kik/name_duda.mp3": {
+      "hash": "fefff67f461f1020",
+      "spoken_text": "Ndioe wega"
+    },
+    "audio/kik/name_minador.mp3": {
+      "hash": "af39f6f9b6743a19",
+      "spoken_text": "Totambi torea mathango"
+    },
+    "audio/kik/name_phoma.mp3": {
+      "hash": "0b69ef4b14d0c21b",
+      "spoken_text": "Ndoa cia Phoma"
+    },
+    "audio/kik/name_roya.mp3": {
+      "hash": "9a5310b3ef6eb7ad",
+      "spoken_text": "Kutu ya mathango"
+    },
+    "audio/kik/name_sano.mp3": {
+      "hash": "2ac78a33e95baa04",
+      "spoken_text": "Rere na ogima"
+    },
+    "audio/kik/ui_analyzing.mp3": {
+      "hash": "559d1b7690ce3a73",
+      "spoken_text": "Ithango ne rerathuthurio."
+    },
+    "audio/kik/ui_app_name.mp3": {
+      "hash": "ced17dfccafcdc09",
+      "spoken_text": "Cafetal"
+    },
+    "audio/kik/ui_back.mp3": {
+      "hash": "7cfe7fa2496cf14f",
+      "spoken_text": "Cooka"
+    },
+    "audio/kik/ui_cancel.mp3": {
+      "hash": "03a7a4abf6ed7011",
+      "spoken_text": "Tiga"
+    },
+    "audio/kik/ui_choose_language.mp3": {
+      "hash": "762e8c48cb05f6f4",
+      "spoken_text": "Thuura rothiomi rwaku"
+    },
+    "audio/kik/ui_choose_photo.mp3": {
+      "hash": "a8b59190cf884c03",
+      "spoken_text": "Thuura mbica"
+    },
+    "audio/kik/ui_confidence.mp3": {
+      "hash": "62ad247ec393684e",
+      "spoken_text": "Wehoko"
+    },
+    "audio/kik/ui_consent_accept.mp3": {
+      "hash": "720a7c757084f997",
+      "spoken_text": "Ee, nenetekera"
+    },
+    "audio/kik/ui_consent_decline.mp3": {
+      "hash": "9ff92b415d9d3238",
+      "spoken_text": "Aca, ne wega"
+    },
+    "audio/kik/ui_consent_hub_text.mp3": {
+      "hash": "b20da88a9fcf14eb",
+      "spoken_text": "Kombiuta ya sosaiti eigaga: reetwa reaku, thimo, itoora reaku, hando o hakuhe ha mogonda waku, rothiomi rwaku na ripoti iria otomaga, macokio, wehoko, mothenya na hando o hakuhe. Mbica no iria otomete na waifai ya sosaiti. Aruti wera a sosaiti na afisa wa oremi nemacionaga. Reu motaratara oyo ndore na password: ando ange area mare waifai-ine ya sosaiti o nao no macione. No ohoe cieherio hende o yothe."
+    },
+    "audio/kik/ui_consent_text.mp3": {
+      "hash": "0d66fe912665796b",
+      "spoken_text": "Cafetal eigaga thimo-ine eno mothenya, macokio na hando o hakuhe ha o othuthuria. Mbica etigaraga thimo-ine eno. Maondo mothe maigagwo na namba yaku ya sosaiti, ti reetwa reaku. Gotire kendo getomagwo otahorete Toma. Ongeenda, mbica ne ithie sosaiti-ine, na waifai ya sosaiti tu. No oeherie maondo mothe hende o yothe."
+    },
+    "audio/kik/ui_consent_title.mp3": {
+      "hash": "c91554b8d5a054c3",
+      "spoken_text": "Rotha rwaku"
+    },
+    "audio/kik/ui_continue.mp3": {
+      "hash": "53e4b482c2c6fa24",
+      "spoken_text": "Thie na mbere"
+    },
+    "audio/kik/ui_delete_all.mp3": {
+      "hash": "bf595f0c0638afc5",
+      "spoken_text": "Eheria ciothe"
+    },
+    "audio/kik/ui_delete_confirm.mp3": {
+      "hash": "8a27745bda590571",
+      "spoken_text": "Oeherie othuthuria wothe na mbica ciothe thimo-ine eno? Ondo oyo ndongecokio."
+    },
+    "audio/kik/ui_delete_yes.mp3": {
+      "hash": "d06a404615a0bec9",
+      "spoken_text": "Ee, eheria ciothe"
+    },
+    "audio/kik/ui_demo.mp3": {
+      "hash": "b56766c50081e33f",
+      "spoken_text": "demo: data cia keonereria"
+    },
+    "audio/kik/ui_history.mp3": {
+      "hash": "a7a1af2995c1ea85",
+      "spoken_text": "Othuthuria wakwa"
+    },
+    "audio/kik/ui_hub_offline.mp3": {
+      "hash": "684fb2dcc08bc869",
+      "spoken_text": "Gotire onyitanero na sosaiti."
+    },
+    "audio/kik/ui_language.mp3": {
+      "hash": "cb1e8d067f65968c",
+      "spoken_text": "Rothiomi"
+    },
+    "audio/kik/ui_limits_note.mp3": {
+      "hash": "c690bdc970afe6a2",
+      "spoken_text": "Ethuthagia mathango tu. Ndeonaga morimo wa matunda, totambi twa matunda, mbolea, kwaga mbura kana teeri."
+    },
+    "audio/kik/ui_lock.mp3": {
+      "hash": "eff6e8518aadc19d",
+      "spoken_text": "Hinga"
+    },
+    "audio/kik/ui_member_id_invalid.mp3": {
+      "hash": "0d7b4a94e55ff418",
+      "spoken_text": "Andeka M na namba 4, ta M 0 1 2 3."
+    },
+    "audio/kik/ui_member_id_prompt.mp3": {
+      "hash": "fca85025e7da1cf8",
+      "spoken_text": "Namba yaku ya sosaiti, ta M 0 1 2 3"
+    },
+    "audio/kik/ui_member_not_registered.mp3": {
+      "hash": "ee1404a8ec405046",
+      "spoken_text": "Namba eno ya sosaiti ndeandeketwo sosaiti-ine. Oria ofisi-ine ya sosaiti."
+    },
+    "audio/kik/ui_new_photo.mp3": {
+      "hash": "db868a94a6908c26",
+      "spoken_text": "Mbica enge"
+    },
+    "audio/kik/ui_no_records.mp3": {
+      "hash": "9a0e419f5ebe2835",
+      "spoken_text": "Gotire othuthuria reu."
+    },
+    "audio/kik/ui_offline_ready.mp3": {
+      "hash": "79d3709cd0de9ee6",
+      "spoken_text": "Ne ehaarerie kohotherwo hatare intaneti"
+    },
+    "audio/kik/ui_pending_sms.mp3": {
+      "hash": "2a162cd772622a37",
+      "spoken_text": "Ndere yatomwo"
+    },
+    "audio/kik/ui_photo_tip_underside.mp3": {
+      "hash": "58c08f0177a5ca3f",
+      "spoken_text": "Oya mbica mohuro wa ithango, ore hakuhe: harea haroarete hiyore mbica. Hothera otheri mwega."
+    },
+    "audio/kik/ui_pin_optional.mp3": {
+      "hash": "4482c6022597e6e1",
+      "spoken_text": "pin ya namba 4, ongeenda"
+    },
+    "audio/kik/ui_pin_prompt.mp3": {
+      "hash": "cdf78f2179bda975",
+      "spoken_text": "Andeka pin yaku"
+    },
+    "audio/kik/ui_pin_wrong.mp3": {
+      "hash": "16c442e99b4281de",
+      "spoken_text": "pin ti yo. Geria renge."
+    },
+    "audio/kik/ui_play_en.mp3": {
+      "hash": "07854d8a8001a195",
+      "spoken_text": "Thikereria na Gethongo"
+    },
+    "audio/kik/ui_play_kik.mp3": {
+      "hash": "c9fc595ac28d311c",
+      "spoken_text": "Thikereria na Gegekoyo"
+    },
+    "audio/kik/ui_play_sw.mp3": {
+      "hash": "9dc6a62fb12bd0d4",
+      "spoken_text": "Thikereria na Gethweri"
+    },
+    "audio/kik/ui_reason_blurry.mp3": {
+      "hash": "a6cdea596d0810a5",
+      "spoken_text": "Mbica nderonekana wega."
+    },
+    "audio/kik/ui_reason_low_conf.mp3": {
+      "hash": "baebbaf01651d7e9",
+      "spoken_text": "ap ndere na wehoko."
+    },
+    "audio/kik/ui_reason_not_coffee.mp3": {
+      "hash": "1b9136ba71bf019c",
+      "spoken_text": "Retihaana ta ithango rea kahoa."
+    },
+    "audio/kik/ui_saved.mp3": {
+      "hash": "7f8f2e6ac5627487",
+      "spoken_text": "Ne keigetwo thimo-ine eno"
+    },
+    "audio/kik/ui_send_sms.mp3": {
+      "hash": "c5a2a21ae77a35a4",
+      "spoken_text": "Toma na es em es"
+    },
+    "audio/kik/ui_sent.mp3": {
+      "hash": "312d3c87f3781959",
+      "spoken_text": "Ne etometwo"
+    },
+    "audio/kik/ui_settings.mp3": {
+      "hash": "5f31949350684722",
+      "spoken_text": "Mebango"
+    },
+    "audio/kik/ui_simulate_send.mp3": {
+      "hash": "120a3f228bbddec7",
+      "spoken_text": "Toma, magerio"
+    },
+    "audio/kik/ui_simulated.mp3": {
+      "hash": "f21831a9ff23e304",
+      "spoken_text": "magerio: gotire es em es ya ma etometwo"
+    },
+    "audio/kik/ui_sms_preview.mp3": {
+      "hash": "a821f8eee999f2f0",
+      "spoken_text": "Eno neyo ndomereri eretomwo:"
+    },
+    "audio/kik/ui_sync_photos.mp3": {
+      "hash": "b479b3b2df926128",
+      "spoken_text": "Toma mbica sosaiti-ine, waifai"
+    },
+    "audio/kik/ui_synced.mp3": {
+      "hash": "b210d3953eaf93cc",
+      "spoken_text": "Mbica neitometwo sosaiti-ine"
+    },
+    "audio/kik/ui_take_photo.mp3": {
+      "hash": "cd67ad35217da150",
+      "spoken_text": "Oya mbica"
+    },
+    "audio/kik/ui_tip_bring_leaf_home.mp3": {
+      "hash": "6902fdf52a987dec",
+      "spoken_text": "Ndore na thimo mogonda-ine? Rehe mathango mamwe mocie, ooe mbica kou."
+    },
+    "audio/kik/ui_unverified.mp3": {
+      "hash": "f6526bc22969ebe9",
+      "spoken_text": "nderathuthurio"
+    },
+    "audio/kik/ui_what_to_do.mp3": {
+      "hash": "7a1e236f643204e7",
+      "spoken_text": "Orea wagereirwo gweka kiumia geke"
+    },
+    "audio/sw/advice_acaro_rojo.mp3": {
+      "hash": "e3554297daaf6607",
+      "spoken_text": "Utitiri mwekundu hudya wakati wa kiangazi, kwenye miti isiyo na kivuli na karibu na barabara zenye vumbi. Kila wiki, kagua miti iliyo karibu na barabara. Acha kivuli kidogo; ua wa miti kando ya barabara husaidia kuzuia vumbi. Sehemu ya dyuu ya madyani ikigeuka rangi ya shaba, mwambie afisa ugani."
+    },
+    "audio/sw/advice_call_officer.mp3": {
+      "hash": "33047c5260703a67",
+      "spoken_text": "Mpigie simu afisa ugani au chama ukiona unga wa rangi ya machungwa kwenye miti mingi, madyani mengi yakianguka, au ap isipokuwa na uhakika. Weka dyani modya kwenye mfuko uliofungwa ili uwaonyeshe."
+    },
+    "audio/sw/advice_cercospora.mp3": {
+      "hash": "175e7c6abb3fd33a",
+      "spoken_text": "Doa dyicho kahawia hushambulia miti dhaifu: udongo duni, dyua kali au ukame. Muulize afisa ugani kuhusu kupima udongo na mbolea inayofaa. Acha kivuli kidogo na palilia shamba."
+    },
+    "audio/sw/advice_minador.mp3": {
+      "hash": "558485e02bdbfa16",
+      "spoken_text": "Mchimba madyani huzidi wakati wa dyoto na kiangazi. Acha miti ya kivuli, na kagua madyani machache kila wiki. Usinyunyizie dawa peke yako: dawa huua pia nyigu wadogo wanaokula mchimba madyani. Madyani mengi yakiwa na mabaka ya kahawia au yakianguka, mwambie afisa ugani."
+    },
+    "audio/sw/advice_phoma.mp3": {
+      "hash": "f631e14790724686",
+      "spoken_text": "Phoma hudya na upepo baridi na mvua ya mawe, dyuu mlimani. Panda au tunza miti upande wenye upepo ili kuzuia upepo. Lisha miti vizuri kwa samadi na mbolea. Ncha za matawi zikikauka, mwambie afisa ugani."
+    },
+    "audio/sw/advice_roya.mp3": {
+      "hash": "b744f343aac5622a",
+      "spoken_text": "Kagua upande wa chini wa madyani kila wiki, kwenye miti kadhaa. Pogoa ili hewa na mwanga viingie, na palilia shamba. Tumia mbolea kama afisa ugani anavyoshauri. Muulize afisa kuhusu kunyunyizia dawa kabla ya mvua, na kuhusu aina zinazostahimili kutu kama Ruiru 11 na Batian. Ukiona unga wa rangi ya machungwa kwenye madyani mengi, mwambie afisa."
+    },
+    "audio/sw/advice_sano.mp3": {
+      "hash": "9d1999ee2b7e05bf",
+      "spoken_text": "Vizuri sana. Endelea kukagua chini ya madyani kila wiki. Pogoa, acha kivuli kidogo, palilia shamba na lisha miti kama afisa ugani anavyoshauri."
+    },
+    "audio/sw/diag_acaro_rojo.mp3": {
+      "hash": "0e14aff3c2bd0ebf",
+      "spoken_text": "Inaonekana ni utitiri mwekundu."
+    },
+    "audio/sw/diag_cercospora.mp3": {
+      "hash": "2c5baf6c205b1abd",
+      "spoken_text": "Inaonekana ni doa dyicho kahawia, Cercospora."
+    },
+    "audio/sw/diag_duda.mp3": {
+      "hash": "69a0995519949154",
+      "spoken_text": "Sina uhakika, mwonyeshe afisa ugani dyani hili."
+    },
+    "audio/sw/diag_minador.mp3": {
+      "hash": "422311aa7d5b98e8",
+      "spoken_text": "Inaonekana ni mchimba madyani wa kahawa."
+    },
+    "audio/sw/diag_phoma.mp3": {
+      "hash": "e71c6c4693be384b",
+      "spoken_text": "Inaonekana ni madoa ya Phoma."
+    },
+    "audio/sw/diag_roya.mp3": {
+      "hash": "d06b9f3aea0e8c87",
+      "spoken_text": "Inaonekana ni kutu ya madyani ya kahawa."
+    },
+    "audio/sw/diag_sano.mp3": {
+      "hash": "a2aab1f4e3fa22da",
+      "spoken_text": "Dyani linaonekana kuwa na afya."
+    },
+    "audio/sw/limits_yield.mp3": {
+      "hash": "879b09147c17594b",
+      "spoken_text": "ap hii inaangalia madyani tu. Haiwezi kuona chule buni kwenye matunda, wadudu antestia, kipekecha matunda, ukosefu wa mbolea, ukame, miti mizee wala matatizo ya udongo. Mavuno yako yakipungua, ongea na afisa ugani."
+    },
+    "audio/sw/name_acaro_rojo.mp3": {
+      "hash": "f90572506212a1a5",
+      "spoken_text": "Utitiri mwekundu"
+    },
+    "audio/sw/name_cercospora.mp3": {
+      "hash": "243b032c3b5b659d",
+      "spoken_text": "Doa dyicho kahawia"
+    },
+    "audio/sw/name_duda.mp3": {
+      "hash": "c4736e08601a1881",
+      "spoken_text": "Sina uhakika"
+    },
+    "audio/sw/name_minador.mp3": {
+      "hash": "fd06f8d31e915c8c",
+      "spoken_text": "Mchimba madyani"
+    },
+    "audio/sw/name_phoma.mp3": {
+      "hash": "bd2c3d5a892146f4",
+      "spoken_text": "Madoa ya Phoma"
+    },
+    "audio/sw/name_roya.mp3": {
+      "hash": "74d0342a71a05628",
+      "spoken_text": "Kutu ya madyani"
+    },
+    "audio/sw/name_sano.mp3": {
+      "hash": "58d2eb983da6ab2b",
+      "spoken_text": "Lenye afya"
+    },
+    "audio/sw/ui_analyzing.mp3": {
+      "hash": "24e8c13ae301af00",
+      "spoken_text": "Inakagua dyani."
+    },
+    "audio/sw/ui_app_name.mp3": {
+      "hash": "ced17dfccafcdc09",
+      "spoken_text": "Cafetal"
+    },
+    "audio/sw/ui_back.mp3": {
+      "hash": "1b03da84545434d5",
+      "spoken_text": "Rudi"
+    },
+    "audio/sw/ui_cancel.mp3": {
+      "hash": "221c5ba2b0eb439f",
+      "spoken_text": "Ghairi"
+    },
+    "audio/sw/ui_choose_language.mp3": {
+      "hash": "9bd31daedabe7227",
+      "spoken_text": "Chagua lugha yako"
+    },
+    "audio/sw/ui_choose_photo.mp3": {
+      "hash": "abc74c9de0cd9474",
+      "spoken_text": "Chagua picha"
+    },
+    "audio/sw/ui_confidence.mp3": {
+      "hash": "cb224e656219756c",
+      "spoken_text": "Uhakika"
+    },
+    "audio/sw/ui_consent_accept.mp3": {
+      "hash": "0b45b63f9b845c78",
+      "spoken_text": "Ndiyo, nakubali"
+    },
+    "audio/sw/ui_consent_decline.mp3": {
+      "hash": "8597f9ec012d637d",
+      "spoken_text": "Hapana, asante"
+    },
+    "audio/sw/ui_consent_hub_text.mp3": {
+      "hash": "3667d64e178276f2",
+      "spoken_text": "Kompyuta ya chama huhifadhi: dyina lako, simu, kidyidyi, mahali takriban pa shamba lako, lugha yako na ripoti unazotuma, dyibu, uhakika, tarehe na mahali takriban. Picha ni zile tu unazotuma kupitia waifai ya chama. Wafanyakazi wa chama na afisa ugani wanaziona. Kwa sasa mfumo hauna nenosiri: watu wengine walio kwenye waifai ya chama pia wanaweza kuziona. Unaweza kuomba zifutwe wakati wowote."
+    },
+    "audio/sw/ui_consent_text.mp3": {
+      "hash": "3d27bb388e9573ff",
+      "spoken_text": "Cafetal huhifadhi kwenye simu hii tarehe, dyibu na mahali takriban pa kila ukaguzi. Picha inabaki kwenye simu hii. Kila kitu kinahifadhiwa kwa nambari yako ya mwanachama, si kwa dyina lako. Hakuna kinachotumwa usipobonyeza Tuma. Ukitaka, picha zinaenda kwa chama cha ushirika, kupitia waifai ya chama tu. Unaweza kufuta kila kitu wakati wowote."
+    },
+    "audio/sw/ui_consent_title.mp3": {
+      "hash": "d054acd715e2ef6a",
+      "spoken_text": "Ruhusa yako"
+    },
+    "audio/sw/ui_continue.mp3": {
+      "hash": "7fd7e3e7797ab390",
+      "spoken_text": "Endelea"
+    },
+    "audio/sw/ui_delete_all.mp3": {
+      "hash": "f929d7daa5e7d4da",
+      "spoken_text": "Futa yote"
+    },
+    "audio/sw/ui_delete_confirm.mp3": {
+      "hash": "78fff987c2b34ea1",
+      "spoken_text": "Ufute ukaguzi wote na picha zote kwenye simu hii? Hili haliwezi kurudishwa."
+    },
+    "audio/sw/ui_delete_yes.mp3": {
+      "hash": "bd240d98f08a7e5d",
+      "spoken_text": "Ndiyo, futa yote"
+    },
+    "audio/sw/ui_demo.mp3": {
+      "hash": "0253a9cd8d2d0d79",
+      "spoken_text": "demo: data ya mfano"
+    },
+    "audio/sw/ui_history.mp3": {
+      "hash": "dc727d41fa7b071b",
+      "spoken_text": "Ukaguzi wangu"
+    },
+    "audio/sw/ui_hub_offline.mp3": {
+      "hash": "abe63b266a55f6f0",
+      "spoken_text": "Hakuna muunganisho na chama."
+    },
+    "audio/sw/ui_language.mp3": {
+      "hash": "be8d9053b82bd38e",
+      "spoken_text": "Lugha"
+    },
+    "audio/sw/ui_limits_note.mp3": {
+      "hash": "a2bea9e174080752",
+      "spoken_text": "Inakagua madyani tu. Haioni chule buni, wadudu wa matunda, mbolea, ukame wala udongo."
+    },
+    "audio/sw/ui_lock.mp3": {
+      "hash": "03f4b310aa87e233",
+      "spoken_text": "Funga"
+    },
+    "audio/sw/ui_member_id_invalid.mp3": {
+      "hash": "cf5e19ca2d84d84e",
+      "spoken_text": "Andika M na tarakimu 4, kwa mfano M 0 1 2 3."
+    },
+    "audio/sw/ui_member_id_prompt.mp3": {
+      "hash": "49f03019ef22a14e",
+      "spoken_text": "Nambari yako ya mwanachama, mfano: M 0 1 2 3"
+    },
+    "audio/sw/ui_member_not_registered.mp3": {
+      "hash": "2ccb039baeb0f42e",
+      "spoken_text": "Nambari hii ya mwanachama haidyasadyiliwa kwenye chama. Uliza kwenye ofisi ya chama."
+    },
+    "audio/sw/ui_new_photo.mp3": {
+      "hash": "ab4654276f987158",
+      "spoken_text": "Picha nyingine"
+    },
+    "audio/sw/ui_no_records.mp3": {
+      "hash": "17fb08d151d10bbf",
+      "spoken_text": "Bado hakuna ukaguzi."
+    },
+    "audio/sw/ui_offline_ready.mp3": {
+      "hash": "72db1d10013356c7",
+      "spoken_text": "Tayari kutumika bila intaneti"
+    },
+    "audio/sw/ui_pending_sms.mp3": {
+      "hash": "70781b04405a6358",
+      "spoken_text": "Bado haidyatumwa"
+    },
+    "audio/sw/ui_photo_tip_underside.mp3": {
+      "hash": "ee4793a41a28b9ef",
+      "spoken_text": "Piga picha upande wa chini wa dyani, karibu: doa lidyaze picha. Tumia mwanga mzuri."
+    },
+    "audio/sw/ui_pin_optional.mp3": {
+      "hash": "9f038af526f91f44",
+      "spoken_text": "pin ya tarakimu 4, ukitaka"
+    },
+    "audio/sw/ui_pin_prompt.mp3": {
+      "hash": "b4a0e57270be3b06",
+      "spoken_text": "Andika pin yako"
+    },
+    "audio/sw/ui_pin_wrong.mp3": {
+      "hash": "5625643dcf4753d0",
+      "spoken_text": "pin si sahihi. Dyaribu tena."
+    },
+    "audio/sw/ui_play_en.mp3": {
+      "hash": "b20ea25edaf7f5f0",
+      "spoken_text": "Sikiliza kwa Kiingereza"
+    },
+    "audio/sw/ui_play_kik.mp3": {
+      "hash": "b5d2e0a9bf89cbc4",
+      "spoken_text": "Sikiliza kwa Kikuyu"
+    },
+    "audio/sw/ui_play_sw.mp3": {
+      "hash": "784fd93db21c6c15",
+      "spoken_text": "Sikiliza kwa Kiswahili"
+    },
+    "audio/sw/ui_reason_blurry.mp3": {
+      "hash": "f373e1c4572a4e6b",
+      "spoken_text": "Picha haiko wazi."
+    },
+    "audio/sw/ui_reason_low_conf.mp3": {
+      "hash": "29e051aefe72996d",
+      "spoken_text": "ap haina uhakika."
+    },
+    "audio/sw/ui_reason_not_coffee.mp3": {
+      "hash": "21fd5ce5293772d4",
+      "spoken_text": "Haionekani kama dyani la kahawa."
+    },
+    "audio/sw/ui_saved.mp3": {
+      "hash": "e58dee90295762bf",
+      "spoken_text": "Imehifadhiwa kwenye simu hii"
+    },
+    "audio/sw/ui_send_sms.mp3": {
+      "hash": "eb705c30916be254",
+      "spoken_text": "Tuma kwa es em es"
+    },
+    "audio/sw/ui_sent.mp3": {
+      "hash": "020a0290dc272f7c",
+      "spoken_text": "Imetumwa"
+    },
+    "audio/sw/ui_settings.mp3": {
+      "hash": "b78184224b4d7b7a",
+      "spoken_text": "Mipangilio"
+    },
+    "audio/sw/ui_simulate_send.mp3": {
+      "hash": "3f04582346353496",
+      "spoken_text": "Tuma, madyaribio"
+    },
+    "audio/sw/ui_simulated.mp3": {
+      "hash": "d85a8a29c9ff8489",
+      "spoken_text": "madyaribio: hakuna es em es halisi iliyotumwa"
+    },
+    "audio/sw/ui_sms_preview.mp3": {
+      "hash": "943e91ace44151f8",
+      "spoken_text": "Huu ndio udyumbe utakaotumwa:"
+    },
+    "audio/sw/ui_sync_photos.mp3": {
+      "hash": "23e5c08e3f3bda52",
+      "spoken_text": "Tuma picha kwa chama, waifai"
+    },
+    "audio/sw/ui_synced.mp3": {
+      "hash": "cb683d40d34fed5b",
+      "spoken_text": "Picha zimetumwa kwa chama"
+    },
+    "audio/sw/ui_take_photo.mp3": {
+      "hash": "3bebc0e967f9935a",
+      "spoken_text": "Piga picha"
+    },
+    "audio/sw/ui_tip_bring_leaf_home.mp3": {
+      "hash": "b378aa6b6b4f2765",
+      "spoken_text": "Huna simu shambani? Lete madyani machache nyumbani upige picha huko."
+    },
+    "audio/sw/ui_unverified.mp3": {
+      "hash": "c4dc9571c9253488",
+      "spoken_text": "haidyahakikiwa"
+    },
+    "audio/sw/ui_what_to_do.mp3": {
+      "hash": "2936ec4481105ebf",
+      "spoken_text": "Ufanye nini wiki hii"
+    }
+  },
+  "note": "Hash of the text actually spoken per file; make_audio.py skips files whose hash is unchanged. Native recordings (audio_source 'native...') are never touched.",
+  "voices": {
+    "en": "en-us-lessac-medium.onnx (espeak en-us) --noise_w 0.4 --sentence_silence 0.3 --length_scale 1.4",
+    "kik": "en-us-lessac-medium.onnx (espeak sw) --noise_w 0.4 --sentence_silence 0.3 --length_scale 1.25",
+    "sw": "en-us-lessac-medium.onnx (espeak sw) --noise_w 0.4 --sentence_silence 0.3 --length_scale 1.25"
+  }
+}

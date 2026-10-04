@@ -1,0 +1,2968 @@
+{
+ "date": "2026-10-04",
+ "data": {
+  "file": "data/intent/examples.csv",
+  "n": 872,
+  "per_intent": {
+   "price": 101,
+   "report": 108,
+   "help": 99,
+   "talk_to_officer": 99,
+   "other": 465
+  },
+  "per_language": {
+   "en": 427,
+   "kik": 17,
+   "sw": 428
+  },
+  "per_source": {
+   "MASSIVE": 400,
+   "ai-draft-unverified": 17,
+   "team": 455
+  },
+  "n_train": 697,
+  "n_test": 175,
+  "split": "stratified 80/20, random_state=42"
+ },
+ "model": {
+  "vectorizer": "TF-IDF char_wb (2, 4), sublinear_tf, l2",
+  "classifier": "LogisticRegression multinomial, class_weight=balanced",
+  "C": 30.0,
+  "cv_macro_f1_by_C": {
+   "1.0": 0.8825,
+   "3.0": 0.8909,
+   "10.0": 0.8935,
+   "30.0": 0.8964
+  },
+  "n_features": 6490
+ },
+ "threshold": {
+  "value": 0.55,
+  "rule": "lowest t with >= 95% precision on auto-answered messages, out-of-fold predictions on the 80% split",
+  "sweep_oof_train": [
+   {
+    "threshold": 0.3,
+    "auto_precision": 0.9186,
+    "auto_coverage": 0.4405,
+    "macro_f1_routed": 0.8964
+   },
+   {
+    "threshold": 0.35,
+    "auto_precision": 0.9186,
+    "auto_coverage": 0.4405,
+    "macro_f1_routed": 0.8964
+   },
+   {
+    "threshold": 0.4,
+    "auto_precision": 0.9213,
+    "auto_coverage": 0.4376,
+    "macro_f1_routed": 0.8964
+   },
+   {
+    "threshold": 0.45,
+    "auto_precision": 0.9272,
+    "auto_coverage": 0.4333,
+    "macro_f1_routed": 0.8966
+   },
+   {
+    "threshold": 0.5,
+    "auto_precision": 0.939,
+    "auto_coverage": 0.4232,
+    "macro_f1_routed": 0.8974
+   },
+   {
+    "threshold": 0.55,
+    "auto_precision": 0.957,
+    "auto_coverage": 0.4003,
+    "macro_f1_routed": 0.8884
+   },
+   {
+    "threshold": 0.6,
+    "auto_precision": 0.9627,
+    "auto_coverage": 0.3845,
+    "macro_f1_routed": 0.8756
+   },
+   {
+    "threshold": 0.65,
+    "auto_precision": 0.9728,
+    "auto_coverage": 0.3687,
+    "macro_f1_routed": 0.8643
+   },
+   {
+    "threshold": 0.7,
+    "auto_precision": 0.9761,
+    "auto_coverage": 0.3601,
+    "macro_f1_routed": 0.8559
+   },
+   {
+    "threshold": 0.75,
+    "auto_precision": 0.9748,
+    "auto_coverage": 0.3415,
+    "macro_f1_routed": 0.8315
+   },
+   {
+    "threshold": 0.8,
+    "auto_precision": 0.9862,
+    "auto_coverage": 0.3128,
+    "macro_f1_routed": 0.8007
+   },
+   {
+    "threshold": 0.85,
+    "auto_precision": 0.99,
+    "auto_coverage": 0.2869,
+    "macro_f1_routed": 0.7645
+   },
+   {
+    "threshold": 0.9,
+    "auto_precision": 0.9886,
+    "auto_coverage": 0.2525,
+    "macro_f1_routed": 0.7043
+   }
+  ]
+ },
+ "test": {
+  "argmax": {
+   "n": 175,
+   "accuracy": 0.9714,
+   "macro_f1": 0.9695
+  },
+  "with_threshold": {
+   "n": 175,
+   "accuracy": 0.9543,
+   "macro_f1": 0.9495
+  },
+  "with_threshold_english_only": {
+   "n": 82,
+   "accuracy": 1.0,
+   "macro_f1": 1.0
+  },
+  "with_threshold_swahili_only": {
+   "n": 89,
+   "accuracy": 0.9213,
+   "macro_f1": 0.917
+  },
+  "with_threshold_kikuyu_only": {
+   "n": 4,
+   "accuracy": 0.75,
+   "macro_f1": 0.7778
+  },
+  "with_threshold_excluding_massive": {
+   "n": 98,
+   "accuracy": 0.9184,
+   "macro_f1": 0.9178
+  },
+  "auto_answered_precision": 1.0,
+  "auto_answered_share": 0.4229,
+  "on_topic_answered_right": 0.9024,
+  "confusion_with_threshold": {
+   "labels": [
+    "price",
+    "report",
+    "help",
+    "talk_to_officer",
+    "other"
+   ],
+   "matrix": [
+    [
+     19,
+     0,
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     21,
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     17,
+     0,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     17,
+     3
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     93
+    ]
+   ]
+  },
+  "per_class": {
+   "price": {
+    "precision": 1.0,
+    "recall": 0.95,
+    "f1-score": 0.9743589743589743,
+    "support": 20.0
+   },
+   "report": {
+    "precision": 1.0,
+    "recall": 0.9545454545454546,
+    "f1-score": 0.9767441860465116,
+    "support": 22.0
+   },
+   "help": {
+    "precision": 1.0,
+    "recall": 0.85,
+    "f1-score": 0.918918918918919,
+    "support": 20.0
+   },
+   "talk_to_officer": {
+    "precision": 1.0,
+    "recall": 0.85,
+    "f1-score": 0.918918918918919,
+    "support": 20.0
+   },
+   "other": {
+    "precision": 0.9207920792079208,
+    "recall": 1.0,
+    "f1-score": 0.9587628865979382,
+    "support": 93.0
+   },
+   "accuracy": 0.9542857142857143,
+   "macro avg": {
+    "precision": 0.9841584158415841,
+    "recall": 0.9209090909090909,
+    "f1-score": 0.9495407769682525,
+    "support": 175.0
+   },
+   "weighted avg": {
+    "precision": 0.9579066478076379,
+    "recall": 0.9542857142857143,
+    "f1-score": 0.9536986102318157,
+    "support": 175.0
+   }
+  }
+ },
+ "probes": [
+  {
+   "text": "how much are you paying for a kilo of cherry",
+   "pred": "price",
+   "conf": 0.994,
+   "routed": "price"
+  },
+  {
+   "text": "bei ya kahawa ni ngapi",
+   "pred": "price",
+   "conf": 1.0,
+   "routed": "price"
+  },
+  {
+   "text": "my coffee leaves have orange powder",
+   "pred": "report",
+   "conf": 0.999,
+   "routed": "report"
+  },
+  {
+   "text": "majani ya kahawa yana unga wa rangi ya machungwa",
+   "pred": "report",
+   "conf": 0.996,
+   "routed": "report"
+  },
+  {
+   "text": "I want to talk to the extension officer",
+   "pred": "talk_to_officer",
+   "conf": 1.0,
+   "routed": "talk_to_officer"
+  },
+  {
+   "text": "asdf qwerty",
+   "pred": "other",
+   "conf": 0.872,
+   "routed": "other"
+  },
+  {
+   "text": "wat r u paying for maize",
+   "pred": "price",
+   "conf": 0.782,
+   "routed": "price"
+  },
+  {
+   "text": "kahawa yangu ina madoa ya kahawia",
+   "pred": "report",
+   "conf": 0.986,
+   "routed": "report"
+  },
+  {
+   "text": "nataka kuongea na afisa ugani",
+   "pred": "talk_to_officer",
+   "conf": 0.999,
+   "routed": "talk_to_officer"
+  },
+  {
+   "text": "how do i send my report code",
+   "pred": "help",
+   "conf": 0.79,
+   "routed": "help"
+  },
+  {
+   "text": "msaada tafadhali nifanye aje",
+   "pred": "help",
+   "conf": 0.986,
+   "routed": "help"
+  },
+  {
+   "text": "good afternoon",
+   "pred": "other",
+   "conf": 0.899,
+   "routed": "other"
+  },
+  {
+   "text": "habari za asubuhi",
+   "pred": "other",
+   "conf": 0.963,
+   "routed": "other"
+  },
+  {
+   "text": "play some music",
+   "pred": "other",
+   "conf": 0.959,
+   "routed": "other"
+  },
+  {
+   "text": "weka muziki",
+   "pred": "other",
+   "conf": 0.956,
+   "routed": "other"
+  }
+ ],
+ "test_predictions": [
+  {
+   "text": "price for maize",
+   "true": "price",
+   "lang": "en",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.994277,
+   "proba": [
+    0.0028419670424471404,
+    0.0015717222334382067,
+    0.9942773256388227,
+    0.00034539786978305423,
+    0.0009635872155090512
+   ]
+  },
+  {
+   "text": "come to my farm",
+   "true": "talk_to_officer",
+   "lang": "en",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.696828,
+   "proba": [
+    0.030800178040366437,
+    0.23114136073763641,
+    0.006540617594764424,
+    0.03469023008362789,
+    0.6968276135436049
+   ]
+  },
+  {
+   "text": "price of beans and maize",
+   "true": "price",
+   "lang": "en",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.992701,
+   "proba": [
+    0.002156947354255396,
+    0.002417934063130119,
+    0.9927007599560229,
+    0.0009949189918180763,
+    0.001729439634773465
+   ]
+  },
+  {
+   "text": "bei mpya ya cherry",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.995321,
+   "proba": [
+    0.0005371189229769914,
+    0.0034138637721158045,
+    0.9953214764444199,
+    0.0004708213539250632,
+    0.0002567195065621904
+   ]
+  },
+  {
+   "text": "my neighbour and i have yellow leaves",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.951375,
+   "proba": [
+    0.007581055213137662,
+    0.035019682474655214,
+    0.0018548940530264137,
+    0.9513754166854025,
+    0.004168951573778285
+   ]
+  },
+  {
+   "text": "habari bei ya kahawa ni gani",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.960763,
+   "proba": [
+    0.015188982015702228,
+    0.00877423237942406,
+    0.9607627485785978,
+    0.013490643596231937,
+    0.0017833934300441534
+   ]
+  },
+  {
+   "text": "afisa anaweza kunipigia simu",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.994356,
+   "proba": [
+    0.0014888645293295566,
+    0.0024657048353180313,
+    0.0007980850906940975,
+    0.0008916431537270879,
+    0.9943557023909312
+   ]
+  },
+  {
+   "text": "my berries are turning black",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.734622,
+   "proba": [
+    0.011324555995025312,
+    0.22380978594683398,
+    0.015432663035022127,
+    0.7346221050580615,
+    0.014810889965057151
+   ]
+  },
+  {
+   "text": "what's a good present for a girlfriend",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.647943,
+   "proba": [
+    0.18111071562974398,
+    0.6479434249593673,
+    0.12155127411911576,
+    0.014702109997053568,
+    0.03469247529471936
+   ]
+  },
+  {
+   "text": "nataka kumwona afisa",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.988726,
+   "proba": [
+    0.002420728082001923,
+    0.006090432610618769,
+    0.001276430567884708,
+    0.0014861088348939726,
+    0.9887262999046005
+   ]
+  },
+  {
+   "text": "what is the square root of one hundred and forty eight thousand five hundred and eighty seven",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.940152,
+   "proba": [
+    0.021196248559362824,
+    0.9401522322177808,
+    0.012827976089933238,
+    0.013410812195580098,
+    0.01241273093734307
+   ]
+  },
+  {
+   "text": "i want to and my email address",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.808771,
+   "proba": [
+    0.03665663356278329,
+    0.8087706896876178,
+    0.004997092495895502,
+    0.0659253025029409,
+    0.08365028175076264
+   ]
+  },
+  {
+   "text": "what is the reference price",
+   "true": "price",
+   "lang": "en",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.943186,
+   "proba": [
+    0.043314254721514185,
+    0.008982001110234233,
+    0.9431864208625725,
+    0.002342019202586457,
+    0.002175304103092722
+   ]
+  },
+  {
+   "text": "how do i do it",
+   "true": "help",
+   "lang": "en",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.99649,
+   "proba": [
+    0.9964901337151539,
+    0.002542721153365238,
+    0.00016909325436448598,
+    0.0005973960170336429,
+    0.000200655860082769
+   ]
+  },
+  {
+   "text": "leaves have orange dust",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.996273,
+   "proba": [
+    0.0005919260379698959,
+    0.002706805225556619,
+    0.00015348804098833422,
+    0.9962727552417633,
+    0.0002750254537220324
+   ]
+  },
+  {
+   "text": "rate ya kahawa ni ngapi",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.993582,
+   "proba": [
+    0.00030347657522049185,
+    0.0015108706189223427,
+    0.993582270385622,
+    0.004061556280974779,
+    0.0005418261392602463
+   ]
+  },
+  {
+   "text": "angaza taa kidogo",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.939749,
+   "proba": [
+    0.0206757293236494,
+    0.9397491367475428,
+    0.020878783808410288,
+    0.00767354253264877,
+    0.011022807587748774
+   ]
+  },
+  {
+   "text": "are there any construction areas on harvard",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.817408,
+   "proba": [
+    0.06419990649430535,
+    0.8174078792394415,
+    0.014813305279680814,
+    0.07475464230181464,
+    0.028824266684757866
+   ]
+  },
+  {
+   "text": "poa",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.660027,
+   "proba": [
+    0.10690397376036015,
+    0.6600267877418645,
+    0.04588188043271126,
+    0.1586412977629751,
+    0.02854606030208886
+   ]
+  },
+  {
+   "text": "after cooking the stuffs add some masala content and cook it again in a tawa and serve",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.788761,
+   "proba": [
+    0.025345234624595762,
+    0.7887612099532688,
+    0.010590750212322846,
+    0.04274970175720404,
+    0.1325531034526084
+   ]
+  },
+  {
+   "text": "afisa uka mugunda wakwa",
+   "true": "talk_to_officer",
+   "lang": "kik",
+   "source": "ai-draft-unverified",
+   "pred": "talk_to_officer",
+   "conf": 0.948614,
+   "proba": [
+    0.0011327768347145042,
+    0.02362037870443404,
+    0.008247798274875255,
+    0.018384955294856703,
+    0.9486140908911195
+   ]
+  },
+  {
+   "text": "wimwega",
+   "true": "other",
+   "lang": "kik",
+   "source": "ai-draft-unverified",
+   "pred": "other",
+   "conf": 0.940016,
+   "proba": [
+    0.024946925566818313,
+    0.9400163870818203,
+    0.009562861801804346,
+    0.012602428928405828,
+    0.012871396621151138
+   ]
+  },
+  {
+   "text": "can you play back to december",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.699325,
+   "proba": [
+    0.08489059911217836,
+    0.6993251891900736,
+    0.013275337201863446,
+    0.00970762838765535,
+    0.19280124610822943
+   ]
+  },
+  {
+   "text": "talk to officer",
+   "true": "talk_to_officer",
+   "lang": "en",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.998407,
+   "proba": [
+    0.00023068612103350724,
+    0.0007851014906712507,
+    0.0003614166663522669,
+    0.00021538219403043052,
+    0.9984074135279125
+   ]
+  },
+  {
+   "text": "majani yana unga wa njano",
+   "true": "report",
+   "lang": "sw",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.989733,
+   "proba": [
+    0.0009266569068586754,
+    0.00637551215356349,
+    0.001416585139634168,
+    0.9897325565612899,
+    0.0015486892386538127
+   ]
+  },
+  {
+   "text": "please repeat that music again of akon",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.907321,
+   "proba": [
+    0.01040199866421851,
+    0.9073205486801816,
+    0.013583980514723377,
+    0.039929279440150976,
+    0.028764192700725437
+   ]
+  },
+  {
+   "text": "nahitaji ushauri wa mtaalamu",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.478052,
+   "proba": [
+    0.04962967009502237,
+    0.43170574926894173,
+    0.015335946906706267,
+    0.02527634559241026,
+    0.47805228813691936
+   ]
+  },
+  {
+   "text": "zima soketi ya plagi ya wemo",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.983714,
+   "proba": [
+    0.003904748632588281,
+    0.9837140189291403,
+    0.005359336343927498,
+    0.004507680713576991,
+    0.0025142153807670427
+   ]
+  },
+  {
+   "text": "connect me to the officer",
+   "true": "talk_to_officer",
+   "lang": "en",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.987536,
+   "proba": [
+    0.0018507599652402436,
+    0.006250027996456488,
+    0.0027547327846844808,
+    0.0016088634620843006,
+    0.9875356157915344
+   ]
+  },
+  {
+   "text": "send me credit please",
+   "true": "other",
+   "lang": "en",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.551542,
+   "proba": [
+    0.16110363523302543,
+    0.5515424649693752,
+    0.01887829725608506,
+    0.03200316803003539,
+    0.23647243451147898
+   ]
+  },
+  {
+   "text": "how does this work",
+   "true": "help",
+   "lang": "en",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.920439,
+   "proba": [
+    0.9204389519779943,
+    0.0669282435030831,
+    0.004518532267227446,
+    0.004973185807687221,
+    0.003141086444007765
+   ]
+  },
+  {
+   "text": "zima hiyo sauti tafadhali",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.930574,
+   "proba": [
+    0.04871822272950763,
+    0.9305744957574814,
+    0.0044078948838387425,
+    0.0034604456971821683,
+    0.012838940931990138
+   ]
+  },
+  {
+   "text": "tell me about amazon's history",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.923276,
+   "proba": [
+    0.01888084528492664,
+    0.9232759413227263,
+    0.02107287856654332,
+    0.006359934836183489,
+    0.030410399989620064
+   ]
+  },
+  {
+   "text": "ninaweza kupata orodha yangu",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.615779,
+   "proba": [
+    0.3367179092596986,
+    0.6157794574405341,
+    0.0038781304456863143,
+    0.02324741852769939,
+    0.020377084326381554
+   ]
+  },
+  {
+   "text": "how do i send the code",
+   "true": "help",
+   "lang": "en",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.99419,
+   "proba": [
+    0.9941903536984639,
+    0.0023061298689075944,
+    0.0015204558539738623,
+    0.0008592350726702318,
+    0.001123825505984555
+   ]
+  },
+  {
+   "text": "tafadhali ondoa tukio lifwatalo kwenye kalenda ambalo nimeliongeza",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.970346,
+   "proba": [
+    0.01089273650071119,
+    0.9703460406917193,
+    0.003507707257422772,
+    0.004193373346445347,
+    0.011060142203701597
+   ]
+  },
+  {
+   "text": "punguza sauti kwa kipaza sauti",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.975213,
+   "proba": [
+    0.006274833532377557,
+    0.9752126061482198,
+    0.007812872581261041,
+    0.005897332944209535,
+    0.004802354793932141
+   ]
+  },
+  {
+   "text": "erase",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.800902,
+   "proba": [
+    0.08841187263174806,
+    0.800901959067993,
+    0.02036506497419116,
+    0.03564358653215482,
+    0.05467751679391294
+   ]
+  },
+  {
+   "text": "beans price today",
+   "true": "price",
+   "lang": "en",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.990334,
+   "proba": [
+    0.0020502064716322456,
+    0.005821947472111822,
+    0.9903343020238713,
+    0.0005097479560289377,
+    0.0012837960763556358
+   ]
+  },
+  {
+   "text": "washa plagi ya chaja ya rununu",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.943705,
+   "proba": [
+    0.01542819917961774,
+    0.9437045751905729,
+    0.009805906550312906,
+    0.02725516937801331,
+    0.003806149701483064
+   ]
+  },
+  {
+   "text": "bei elekezi",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.535884,
+   "proba": [
+    0.406162704447415,
+    0.045034676785447515,
+    0.5358839678519517,
+    0.0038899925539223603,
+    0.009028658361263424
+   ]
+  },
+  {
+   "text": "ungenipa jibu la swali hili",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.919233,
+   "proba": [
+    0.01810349860160985,
+    0.919232531136721,
+    0.017091453437683098,
+    0.016345211586167932,
+    0.029227305237818423
+   ]
+  },
+  {
+   "text": "nimesahau jinsi ya kutumia",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.930412,
+   "proba": [
+    0.9304122196421801,
+    0.029762651624652317,
+    0.009372194589552851,
+    0.02159403482010544,
+    0.00885889932350937
+   ]
+  },
+  {
+   "text": "get me an uber please",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.621023,
+   "proba": [
+    0.12652004775716602,
+    0.6210233058655585,
+    0.008131306316250286,
+    0.017574534092051196,
+    0.22675080596897385
+   ]
+  },
+  {
+   "text": "pls help",
+   "true": "help",
+   "lang": "en",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.995176,
+   "proba": [
+    0.9951761043994217,
+    0.002021454686211046,
+    0.0014863876788828894,
+    0.0006546932056190082,
+    0.000661360029865347
+   ]
+  },
+  {
+   "text": "naomba maelezo",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.897726,
+   "proba": [
+    0.8977259668912523,
+    0.06323940632617239,
+    0.009225370579754212,
+    0.013201252813978145,
+    0.016608003388842864
+   ]
+  },
+  {
+   "text": "afisa anipigie kwa nambari hii",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.994005,
+   "proba": [
+    0.00397505096633191,
+    0.0008665289406543128,
+    0.0006622769403968148,
+    0.0004915523149234772,
+    0.9940045908376934
+   ]
+  },
+  {
+   "text": "unaweza badilisha taa za sebuleni ziwe rangi laini zaidi",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.974223,
+   "proba": [
+    0.013711857697546175,
+    0.9742231553171148,
+    0.0032171744395352786,
+    0.004758638927509153,
+    0.004089173618294643
+   ]
+  },
+  {
+   "text": "maharagwe yanauzwa ngapi",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.951381,
+   "proba": [
+    0.0070332043202662765,
+    0.021852250038213155,
+    0.9513814095458281,
+    0.012977840308127915,
+    0.006755295787564725
+   ]
+  },
+  {
+   "text": "nifanye nini na nambari ya CAF1",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.990575,
+   "proba": [
+    0.9905748088478429,
+    0.0024116175312230716,
+    0.0005838382550666983,
+    0.004566568779293846,
+    0.001863166586573376
+   ]
+  },
+  {
+   "text": "coffee rates pls",
+   "true": "price",
+   "lang": "en",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.762155,
+   "proba": [
+    0.023146368213070548,
+    0.012056423031352561,
+    0.7621545919784736,
+    0.19294660227897165,
+    0.009696014498131582
+   ]
+  },
+  {
+   "text": "nahitaji kukata tikiti ya gari moshi kutoka mombasa kwenda kisumu",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.918024,
+   "proba": [
+    0.017413288505758632,
+    0.9180244569863667,
+    0.00870646926314834,
+    0.009382257122452926,
+    0.046473528122273254
+   ]
+  },
+  {
+   "text": "please provide current time in india",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.861689,
+   "proba": [
+    0.06631060822120004,
+    0.8616888568435761,
+    0.018220883603008206,
+    0.029418133119146476,
+    0.02436151821306923
+   ]
+  },
+  {
+   "text": "kahawa iko how much",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.978485,
+   "proba": [
+    0.0032000217571560028,
+    0.002483441867647231,
+    0.9784845943256953,
+    0.014888577790397475,
+    0.0009433642591039958
+   ]
+  },
+  {
+   "text": "unaweza washa kifyonzi",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.971081,
+   "proba": [
+    0.014703306256019628,
+    0.9710810861259285,
+    0.0038459369164172124,
+    0.004657957919914256,
+    0.005711712781720556
+   ]
+  },
+  {
+   "text": "kuna tamasha zozote mjini wakati huu wiki inayokuja",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.967134,
+   "proba": [
+    0.008085951821897829,
+    0.9671344798668198,
+    0.0031326935789085623,
+    0.013293848008638889,
+    0.008353026723734735
+   ]
+  },
+  {
+   "text": "what is cafetal",
+   "true": "help",
+   "lang": "en",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.961671,
+   "proba": [
+    0.9616712050439531,
+    0.022128223204694857,
+    0.009097746246701729,
+    0.0028021229379416464,
+    0.004300702566708706
+   ]
+  },
+  {
+   "text": "how long until we get to chicago",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.929436,
+   "proba": [
+    0.04816640973446339,
+    0.9294358103890094,
+    0.009743376252673309,
+    0.00495142327569461,
+    0.007702980348159377
+   ]
+  },
+  {
+   "text": "black spots on the berries",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.698047,
+   "proba": [
+    0.05076841765711424,
+    0.17514338669377916,
+    0.03194734142463758,
+    0.6980469688645805,
+    0.044093885359888556
+   ]
+  },
+  {
+   "text": "kahawa imeshikwa na kutu",
+   "true": "report",
+   "lang": "sw",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.715238,
+   "proba": [
+    0.022598901010302142,
+    0.05825319068827397,
+    0.1585504667521659,
+    0.7152384028547504,
+    0.04535903869450771
+   ]
+  },
+  {
+   "text": "onyesha mipangilio ya sauti",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.960677,
+   "proba": [
+    0.011753425178185662,
+    0.9606772321288242,
+    0.004675610267014884,
+    0.019111242211985444,
+    0.003782490213989817
+   ]
+  },
+  {
+   "text": "nahitaji afisa ugani",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.997214,
+   "proba": [
+    0.0013480303788566195,
+    0.0007113537986443353,
+    0.00027965984102686016,
+    0.0004467424254018346,
+    0.9972142135560704
+   ]
+  },
+  {
+   "text": "fiti",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.791425,
+   "proba": [
+    0.04992542240868004,
+    0.7914253748348274,
+    0.010953409358713204,
+    0.08460414721768619,
+    0.06309164618009323
+   ]
+  },
+  {
+   "text": "majani yana njia ndani",
+   "true": "report",
+   "lang": "sw",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.974975,
+   "proba": [
+    0.008053311026869448,
+    0.009787386870338729,
+    0.0022185185338559703,
+    0.9749752986512048,
+    0.004965484917730993
+   ]
+  },
+  {
+   "text": "cheza wimbo niko sawa",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.981965,
+   "proba": [
+    0.0039353365719066525,
+    0.9819649576208525,
+    0.008309769848603736,
+    0.002882432056002686,
+    0.002907503902634507
+   ]
+  },
+  {
+   "text": "when is the officer coming",
+   "true": "talk_to_officer",
+   "lang": "en",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.98273,
+   "proba": [
+    0.0030640924911980324,
+    0.005030034026566914,
+    0.006410922888960879,
+    0.0027647694594613043,
+    0.9827301811338128
+   ]
+  },
+  {
+   "text": "wewe ni nani",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.517507,
+   "proba": [
+    0.34276571416602447,
+    0.5175068365859283,
+    0.030989745740203408,
+    0.04929582242124275,
+    0.05944188108660102
+   ]
+  },
+  {
+   "text": "hi what can i do here",
+   "true": "help",
+   "lang": "en",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.919417,
+   "proba": [
+    0.9194171074560721,
+    0.07401142406272314,
+    0.0018969856235172883,
+    0.0027379733862934715,
+    0.0019365094713938151
+   ]
+  },
+  {
+   "text": "buibui wadogo wekundu kwenye kahawa",
+   "true": "report",
+   "lang": "sw",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.668397,
+   "proba": [
+    0.015669551802464342,
+    0.22808061145353872,
+    0.07664476690665627,
+    0.6683965776682913,
+    0.01120849216904928
+   ]
+  },
+  {
+   "text": "leaf rust in my farm",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.864746,
+   "proba": [
+    0.009703675978074046,
+    0.097553273102514,
+    0.00251210572660996,
+    0.8647458718308899,
+    0.025485073361912036
+   ]
+  },
+  {
+   "text": "the app wont open",
+   "true": "help",
+   "lang": "en",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.90222,
+   "proba": [
+    0.9022200837478721,
+    0.057199079570060686,
+    0.005624319198307218,
+    0.004341216056940114,
+    0.030615301426819782
+   ]
+  },
+  {
+   "text": "broker ananipa 80 kwa kilo ni bei nzuri",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.904485,
+   "proba": [
+    0.011872708555560383,
+    0.05965323122893195,
+    0.9044851271424451,
+    0.005775068119206491,
+    0.018213864953856174
+   ]
+  },
+  {
+   "text": "pests are attacking my coffee",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.972293,
+   "proba": [
+    0.001065656521468848,
+    0.006301043369829041,
+    0.017941216312825106,
+    0.9722933020544389,
+    0.0023987817414381587
+   ]
+  },
+  {
+   "text": "could you change the volume",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.977344,
+   "proba": [
+    0.008396398665168623,
+    0.9773439196704414,
+    0.002237476241477185,
+    0.005663372798067393,
+    0.006358832624845367
+   ]
+  },
+  {
+   "text": "afisa hajakuja",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.990398,
+   "proba": [
+    0.0017369971880501405,
+    0.004288778257947707,
+    0.0009169490979121476,
+    0.002659438118751725,
+    0.9903978373373383
+   ]
+  },
+  {
+   "text": "i really enjoy rock and roll",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.934544,
+   "proba": [
+    0.009599303446043563,
+    0.9345436717562156,
+    0.0044990918928879305,
+    0.019637247675211644,
+    0.03172068522964144
+   ]
+  },
+  {
+   "text": "what is the time in hyderabad",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.709273,
+   "proba": [
+    0.22106122783950394,
+    0.709272561358732,
+    0.027433631533448334,
+    0.025719350126191455,
+    0.016513229142124133
+   ]
+  },
+  {
+   "text": "show johns office number",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "help",
+   "conf": 0.343883,
+   "proba": [
+    0.3438830371076658,
+    0.23229971845929712,
+    0.07149618189689624,
+    0.021035638130962018,
+    0.3312854244051788
+   ]
+  },
+  {
+   "text": "nairobi coffee exchange price",
+   "true": "price",
+   "lang": "en",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.903148,
+   "proba": [
+    0.013373687476073808,
+    0.024306352753568943,
+    0.9031477233602108,
+    0.04366527231477459,
+    0.015506964095371924
+   ]
+  },
+  {
+   "text": "i need to talk to someone from the society",
+   "true": "talk_to_officer",
+   "lang": "en",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.959993,
+   "proba": [
+    0.00289180659458143,
+    0.03560424016652447,
+    0.0008285881118445108,
+    0.0006822229757909777,
+    0.9599931421512585
+   ]
+  },
+  {
+   "text": "njoo shambani kwangu",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.435283,
+   "proba": [
+    0.030936490845194318,
+    0.20443741619686975,
+    0.011057982800078393,
+    0.3182855536202667,
+    0.4352825565375908
+   ]
+  },
+  {
+   "text": "app haileti jibu",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.671755,
+   "proba": [
+    0.6717552372826665,
+    0.30124796496378814,
+    0.006713761752123331,
+    0.01180172645873597,
+    0.008481309542686043
+   ]
+  },
+  {
+   "text": "kahua yakwa niirwaru",
+   "true": "report",
+   "lang": "kik",
+   "source": "ai-draft-unverified",
+   "pred": "other",
+   "conf": 0.469674,
+   "proba": [
+    0.028103148145061225,
+    0.46967390858369273,
+    0.2291054212660694,
+    0.22514576039455528,
+    0.04797176161062151
+   ]
+  },
+  {
+   "text": "leaves look burnt",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.972988,
+   "proba": [
+    0.002117576498373428,
+    0.0218623771127438,
+    0.0013746668464893154,
+    0.9729882196868092,
+    0.0016571598555842782
+   ]
+  },
+  {
+   "text": "send me the prices",
+   "true": "price",
+   "lang": "en",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.865437,
+   "proba": [
+    0.08423580978227924,
+    0.004453272293233079,
+    0.8654366288397084,
+    0.006383860096608129,
+    0.039490428988171115
+   ]
+  },
+  {
+   "text": "nina nini kinasubiri",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.598728,
+   "proba": [
+    0.3245565700875426,
+    0.5987277643683434,
+    0.01845367439388764,
+    0.034576844634570954,
+    0.023685146515655345
+   ]
+  },
+  {
+   "text": "hatua zipi nafaa kufuata kuandaa pilau",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.78258,
+   "proba": [
+    0.15124064241973206,
+    0.782580098423795,
+    0.01950571571287817,
+    0.020312818086481187,
+    0.026360725357113698
+   ]
+  },
+  {
+   "text": "niambia utani",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.833528,
+   "proba": [
+    0.11509651720542173,
+    0.8335282772286254,
+    0.008340991981415797,
+    0.022187710060633407,
+    0.020846503523903555
+   ]
+  },
+  {
+   "text": "badilisha kengele ianze usiku wa manane",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.983568,
+   "proba": [
+    0.0033891006433267924,
+    0.9835676504256803,
+    0.0036102494249662,
+    0.004254943470895761,
+    0.005178056035130883
+   ]
+  },
+  {
+   "text": "let me see my alarms",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.644886,
+   "proba": [
+    0.06147486823247083,
+    0.6448864870064889,
+    0.014906083841126386,
+    0.14168146036084864,
+    0.13705110055906514
+   ]
+  },
+  {
+   "text": "what's my latest email",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.949811,
+   "proba": [
+    0.014701684439051005,
+    0.9498109676689493,
+    0.005241680231347199,
+    0.027639746266899867,
+    0.0026059213937523478
+   ]
+  },
+  {
+   "text": "nabadilisha lugha aje",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.921721,
+   "proba": [
+    0.041160359648284184,
+    0.9217214014258518,
+    0.011249781376921812,
+    0.006684313679366038,
+    0.01918414386957616
+   ]
+  },
+  {
+   "text": "has john sent me any new emails",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.949746,
+   "proba": [
+    0.015824054055256293,
+    0.9497457191739475,
+    0.003978504174031889,
+    0.00998704296378817,
+    0.020464679632976338
+   ]
+  },
+  {
+   "text": "utitiri mwekundu kwenye majani",
+   "true": "report",
+   "lang": "sw",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.845144,
+   "proba": [
+    0.010111044261868039,
+    0.13902899126547297,
+    0.002431568122024211,
+    0.8451435497539127,
+    0.003284846596722083
+   ]
+  },
+  {
+   "text": "cheza podikasti yangu ninayopendelea",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.970119,
+   "proba": [
+    0.011372741849069399,
+    0.9701185345628783,
+    0.002516616722138277,
+    0.011355373370866178,
+    0.004636733495047682
+   ]
+  },
+  {
+   "text": "can you make it a little quieter",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.956165,
+   "proba": [
+    0.017228709012158287,
+    0.9561645062501759,
+    0.0029754027664563045,
+    0.007490727597577905,
+    0.01614065437363154
+   ]
+  },
+  {
+   "text": "niko njiani",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.651046,
+   "proba": [
+    0.22662961553816718,
+    0.651045659182372,
+    0.0274249011693197,
+    0.06363058896637143,
+    0.03126923514376956
+   ]
+  },
+  {
+   "text": "sijui nifanye aje",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.852364,
+   "proba": [
+    0.8523640102415811,
+    0.0570163710269589,
+    0.014424892032527087,
+    0.05063221025233765,
+    0.025562516446595265
+   ]
+  },
+  {
+   "text": "deactivate the socket",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.947668,
+   "proba": [
+    0.023528053159335937,
+    0.9476683021171028,
+    0.01188148745423213,
+    0.009115898480006884,
+    0.007806258789322343
+   ]
+  },
+  {
+   "text": "migahawa ya kiitaliano inapatika wapi katika eneo langu",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.812779,
+   "proba": [
+    0.02075409215385743,
+    0.812779290889174,
+    0.04689087408839081,
+    0.09278369981110765,
+    0.026792043057470093
+   ]
+  },
+  {
+   "text": "majani mapya ni meusi",
+   "true": "report",
+   "lang": "sw",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.966449,
+   "proba": [
+    0.012355408351542242,
+    0.012666703683112965,
+    0.004356296017944797,
+    0.9664492871491467,
+    0.004172304798253244
+   ]
+  },
+  {
+   "text": "kilo ya cherry inalipwa ngapi",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.989076,
+   "proba": [
+    0.0011321404249384165,
+    0.007363686695652186,
+    0.9890762973991584,
+    0.0015331591685282394,
+    0.0008947163117227167
+   ]
+  },
+  {
+   "text": "what are all my lists",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.915237,
+   "proba": [
+    0.012369696983201691,
+    0.9152374537298928,
+    0.01219213925594563,
+    0.04848810427340142,
+    0.011712605757558473
+   ]
+  },
+  {
+   "text": "nataka mtu anieleze ana kwa ana",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.814044,
+   "proba": [
+    0.0293746082004971,
+    0.10384076941886335,
+    0.019077036180859003,
+    0.03366361276286569,
+    0.8140439734369149
+   ]
+  },
+  {
+   "text": "kindly share the cherry rates",
+   "true": "price",
+   "lang": "en",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.724737,
+   "proba": [
+    0.005861498270488334,
+    0.17827473164424743,
+    0.7247373713311994,
+    0.05757918817349066,
+    0.03354721058057425
+   ]
+  },
+  {
+   "text": "there are small worms in the leaves",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.927495,
+   "proba": [
+    0.010636846857972337,
+    0.04516531231988455,
+    0.0043813577657879675,
+    0.9274954097868002,
+    0.01232107326955484
+   ]
+  },
+  {
+   "text": "kahawa ni bei gani",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.994013,
+   "proba": [
+    0.0018283808587506265,
+    0.00021556484761709463,
+    0.9940134252417787,
+    0.0035026623897515905,
+    0.0004399666621018875
+   ]
+  },
+  {
+   "text": "hii inafanya kazi aje",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.8951,
+   "proba": [
+    0.8950999834791399,
+    0.03252193188934536,
+    0.024774673935545628,
+    0.02199706139762421,
+    0.025606349298344804
+   ]
+  },
+  {
+   "text": "huu wimbo ni mrefu sana",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.929688,
+   "proba": [
+    0.03613126463474454,
+    0.9296879904589102,
+    0.0092571004389243,
+    0.012236373147782184,
+    0.012687271319638715
+   ]
+  },
+  {
+   "text": "send an email",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.820832,
+   "proba": [
+    0.06684234503857323,
+    0.8208318702812919,
+    0.016986928534690506,
+    0.012581799247260586,
+    0.08275705689818373
+   ]
+  },
+  {
+   "text": "tafadhali tuma mtaalamu wa kilimo",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.662373,
+   "proba": [
+    0.07704121186206643,
+    0.6623730304063563,
+    0.025768733674230652,
+    0.007249282119792984,
+    0.22756774193755347
+   ]
+  },
+  {
+   "text": "niambie mengi kuhusu hiyo filamu",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.930928,
+   "proba": [
+    0.026142646440219495,
+    0.9309277896204928,
+    0.006360267973965107,
+    0.01033317158668862,
+    0.02623612437863385
+   ]
+  },
+  {
+   "text": "get me new definition",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.724993,
+   "proba": [
+    0.18118895248594402,
+    0.7249927492763946,
+    0.005028942331664046,
+    0.013285387131919695,
+    0.07550396877407774
+   ]
+  },
+  {
+   "text": "washa taa zote za gorofa ya juu",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.976057,
+   "proba": [
+    0.0038141215770198518,
+    0.9760566771354402,
+    0.00982703086934842,
+    0.005224486517034684,
+    0.0050776839011568466
+   ]
+  },
+  {
+   "text": "nijulishe ikiwa kitu chochote kitatokea ya mada hiyo",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.956333,
+   "proba": [
+    0.012711736940196514,
+    0.9563330031200795,
+    0.013324621892015966,
+    0.009685773333881705,
+    0.007944864713826478
+   ]
+  },
+  {
+   "text": "please cancel all alarms for tomorrow",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.819134,
+   "proba": [
+    0.0791424635843401,
+    0.8191337999714841,
+    0.01640401924629461,
+    0.0054918244465283015,
+    0.07982789275135291
+   ]
+  },
+  {
+   "text": "hifadhi hiyo barua pepe kama anwani mpya",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.953057,
+   "proba": [
+    0.014832250386324406,
+    0.9530571311329681,
+    0.012599344146075366,
+    0.011788097965108671,
+    0.007723176369523346
+   ]
+  },
+  {
+   "text": "mahindi ni ngapi",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.942723,
+   "proba": [
+    0.01897563855781513,
+    0.028471948446864053,
+    0.9427232207313527,
+    0.005111523832958859,
+    0.004717668431009331
+   ]
+  },
+  {
+   "text": "unaweza kupunguza sauti tafathali na uniambie mada ya wimbo huu",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.940688,
+   "proba": [
+    0.0324600348571085,
+    0.9406880171341,
+    0.004562218879530137,
+    0.011769668880342333,
+    0.01052006024891909
+   ]
+  },
+  {
+   "text": "hapana",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.58447,
+   "proba": [
+    0.2548797112012504,
+    0.5844700718618382,
+    0.05061793429671135,
+    0.06082507878954487,
+    0.049207203850655176
+   ]
+  },
+  {
+   "text": "what time is the meeting",
+   "true": "other",
+   "lang": "en",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.802313,
+   "proba": [
+    0.12017872652257595,
+    0.8023128065267109,
+    0.03130768395669296,
+    0.035172661934626044,
+    0.01102812105939422
+   ]
+  },
+  {
+   "text": "tafadhali ongeza sauti hadi upeo",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.96709,
+   "proba": [
+    0.019993971051232767,
+    0.9670896220690745,
+    0.0020045613886931924,
+    0.0016597877285284843,
+    0.009252057762471072
+   ]
+  },
+  {
+   "text": "tafadhali rekebisha vipaza sauti kwa kiwango ya chini kidogo yenye starehe",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.966185,
+   "proba": [
+    0.006367105536738918,
+    0.9661854237526972,
+    0.009907974503058175,
+    0.0101058854076603,
+    0.0074336107998454375
+   ]
+  },
+  {
+   "text": "open up a new list",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.969872,
+   "proba": [
+    0.006038602760166209,
+    0.9698721232331861,
+    0.00630836799400913,
+    0.004325830744271145,
+    0.013455075268367625
+   ]
+  },
+  {
+   "text": "improve volume clarity",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.982945,
+   "proba": [
+    0.005679943052749884,
+    0.9829451915066963,
+    0.003468909679462689,
+    0.004492958457340575,
+    0.0034129973037505318
+   ]
+  },
+  {
+   "text": "asubuhi njema",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.884287,
+   "proba": [
+    0.07166429005244224,
+    0.8842865818495722,
+    0.010341873559106258,
+    0.018579317185986977,
+    0.015127937352892468
+   ]
+  },
+  {
+   "text": "remove wyatt's birthday party on my calendar",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.974094,
+   "proba": [
+    0.004370251432610215,
+    0.9740940027065037,
+    0.004323018585996314,
+    0.0114567797698835,
+    0.005755947505006393
+   ]
+  },
+  {
+   "text": "punguza mwangaza wa taa kidogo",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.964317,
+   "proba": [
+    0.010211276834389089,
+    0.9643169796651169,
+    0.013019961049057106,
+    0.005480186608155834,
+    0.006971595843281173
+   ]
+  },
+  {
+   "text": "mambo",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.841004,
+   "proba": [
+    0.05279030902026629,
+    0.8410042926623503,
+    0.021493702048886572,
+    0.06295429841711044,
+    0.02175739785138644
+   ]
+  },
+  {
+   "text": "can i meet the officer at the factory",
+   "true": "talk_to_officer",
+   "lang": "en",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.964037,
+   "proba": [
+    0.014532361103232257,
+    0.007499371677061065,
+    0.009651331903193349,
+    0.0042803330675403005,
+    0.964036602248973
+   ]
+  },
+  {
+   "text": "see you at church",
+   "true": "other",
+   "lang": "en",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.861504,
+   "proba": [
+    0.03875267676076918,
+    0.8615042819077238,
+    0.04065821496200084,
+    0.02474102167790354,
+    0.034343804691602836
+   ]
+  },
+  {
+   "text": "sijui kutumia simu vizuri",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.542469,
+   "proba": [
+    0.5424689768043508,
+    0.24582487161708078,
+    0.028190366241745098,
+    0.04645070603103738,
+    0.1370650793057859
+   ]
+  },
+  {
+   "text": "open emails",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.962499,
+   "proba": [
+    0.018121315550541025,
+    0.9624987759928437,
+    0.0060289892699716555,
+    0.006435133714366585,
+    0.006915785472276783
+   ]
+  },
+  {
+   "text": "what trips are available from new york city to poughkeepsie",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.947496,
+   "proba": [
+    0.011214726643420225,
+    0.9474960695112034,
+    0.005045483324725685,
+    0.024432677776913745,
+    0.011811042743736793
+   ]
+  },
+  {
+   "text": "majani yana madoa ya kahawia",
+   "true": "report",
+   "lang": "sw",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.99871,
+   "proba": [
+    0.00014810925887165174,
+    0.0002043697776761135,
+    0.0007284178212990714,
+    0.9987098160731895,
+    0.00020928706896375162
+   ]
+  },
+  {
+   "text": "kutu ya mathangu kahua-ini yakwa",
+   "true": "report",
+   "lang": "kik",
+   "source": "ai-draft-unverified",
+   "pred": "report",
+   "conf": 0.93792,
+   "proba": [
+    0.01200522635840614,
+    0.023614503270895367,
+    0.01746275695859283,
+    0.9379195678486216,
+    0.008997945563484011
+   ]
+  },
+  {
+   "text": "orodha ya huduma",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.636196,
+   "proba": [
+    0.30629778364003063,
+    0.6361959636534709,
+    0.016490838164875923,
+    0.030556222492054887,
+    0.01045919204956782
+   ]
+  },
+  {
+   "text": "tuma barua kwa samantha kuhusu ratiba ya mazoezi ya mwili",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.948596,
+   "proba": [
+    0.011289105659027321,
+    0.9485955514828752,
+    0.017802982288436537,
+    0.01499944102569784,
+    0.007312919543963017
+   ]
+  },
+  {
+   "text": "sms inafanya kazi vipi",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.740325,
+   "proba": [
+    0.7403252694850495,
+    0.12584385722869837,
+    0.026139845392340554,
+    0.07030032762565258,
+    0.03739070026825896
+   ]
+  },
+  {
+   "text": "my coffee leaves are yellow what do i do",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.994612,
+   "proba": [
+    0.0041508640512737,
+    0.00030057764369820873,
+    0.0008246162995343423,
+    0.9946122216623229,
+    0.00011172034317078422
+   ]
+  },
+  {
+   "text": "thank you",
+   "true": "other",
+   "lang": "en",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.974517,
+   "proba": [
+    0.00880099778218328,
+    0.9745173723183277,
+    0.0021768592255822458,
+    0.009528727322338658,
+    0.0049760433515679695
+   ]
+  },
+  {
+   "text": "nakupenda mama",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.710451,
+   "proba": [
+    0.13298414969102043,
+    0.7104513626496077,
+    0.023950119055158793,
+    0.0800277219068047,
+    0.052586646697408396
+   ]
+  },
+  {
+   "text": "my coffee trees are drying",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.997023,
+   "proba": [
+    8.963528491930742e-05,
+    0.00031642955985103057,
+    0.002334799338283008,
+    0.9970229267875137,
+    0.00023620902943310144
+   ]
+  },
+  {
+   "text": "kuna ugonjwa kwa kahawa",
+   "true": "report",
+   "lang": "sw",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.951437,
+   "proba": [
+    0.0012896348024178021,
+    0.013587396901224139,
+    0.027039705117386677,
+    0.9514373255467208,
+    0.006645937632250535
+   ]
+  },
+  {
+   "text": "kill the lights",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.948607,
+   "proba": [
+    0.007836526324410944,
+    0.9486069154476175,
+    0.02488012535921428,
+    0.004287713093639616,
+    0.014388719775117733
+   ]
+  },
+  {
+   "text": "find a taxi service close to me",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.365666,
+   "proba": [
+    0.29312694150611585,
+    0.3656661581826416,
+    0.03470123496739898,
+    0.013049293220157012,
+    0.2934563721236867
+   ]
+  },
+  {
+   "text": "turn the lights down to seven",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.985007,
+   "proba": [
+    0.00403812281151371,
+    0.9850074837110576,
+    0.0013231804819246803,
+    0.003142611064588534,
+    0.0064886019309155305
+   ]
+  },
+  {
+   "text": "leaf miner in my coffee",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.972321,
+   "proba": [
+    0.0017799481958000953,
+    0.004848423743968053,
+    0.013145816759737734,
+    0.9723214264622058,
+    0.00790438483828835
+   ]
+  },
+  {
+   "text": "bei za leo",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.943021,
+   "proba": [
+    0.010312349965325467,
+    0.04004387259543357,
+    0.9430210591983758,
+    0.0022125968940878565,
+    0.004410121346777339
+   ]
+  },
+  {
+   "text": "i need help with the application",
+   "true": "help",
+   "lang": "en",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.937102,
+   "proba": [
+    0.9371018363929713,
+    0.018728725954089448,
+    0.0032133453901592693,
+    0.0022635873416621184,
+    0.038692504921117817
+   ]
+  },
+  {
+   "text": "kengele saa kumi na moja jioni",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.970781,
+   "proba": [
+    0.012239863736427619,
+    0.9707811338355188,
+    0.0027901619408818973,
+    0.005056647462033275,
+    0.009132193025138282
+   ]
+  },
+  {
+   "text": "play the podcast entitled episode one making a murderer",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.913474,
+   "proba": [
+    0.012828329732153679,
+    0.913473871520563,
+    0.015129524030356296,
+    0.019840524027271194,
+    0.038727750689655775
+   ]
+  },
+  {
+   "text": "nataka kuongea na afisa",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.999359,
+   "proba": [
+    0.00011186266531639987,
+    0.00028425461169549466,
+    9.669106401461635e-05,
+    0.0001481014986616902,
+    0.9993590901603119
+   ]
+  },
+  {
+   "text": "i like top forty music",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.948006,
+   "proba": [
+    0.021048672273202413,
+    0.9480056271153792,
+    0.00978814431087221,
+    0.009589717861910763,
+    0.011567838438635736
+   ]
+  },
+  {
+   "text": "msaada pls",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.98488,
+   "proba": [
+    0.9848799767050946,
+    0.006977394893433751,
+    0.004132517875097907,
+    0.0022920542875909593,
+    0.0017180562387828305
+   ]
+  },
+  {
+   "text": "hujambo",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.758252,
+   "proba": [
+    0.15188682817074303,
+    0.7582522202983999,
+    0.023564462878644277,
+    0.03162130813422796,
+    0.03467518051798481
+   ]
+  },
+  {
+   "text": "nataka afisa aone shamba langu",
+   "true": "talk_to_officer",
+   "lang": "sw",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.997179,
+   "proba": [
+    0.0005898978102339627,
+    0.0009040311641780877,
+    0.00019440401391331214,
+    0.0011324887279742953,
+    0.9971791782837003
+   ]
+  },
+  {
+   "text": "add event for date and time with these people",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.910355,
+   "proba": [
+    0.03025050412200059,
+    0.9103547777073216,
+    0.01504362986977475,
+    0.007546897168661499,
+    0.03680419113224131
+   ]
+  },
+  {
+   "text": "mkutano ni saa ngapi",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.709778,
+   "proba": [
+    0.1272368013998494,
+    0.7097775064969952,
+    0.13453058649225144,
+    0.009921746432923786,
+    0.018533359177980137
+   ]
+  },
+  {
+   "text": "save this song in my great songs category",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.934898,
+   "proba": [
+    0.008502724898147322,
+    0.9348977817646286,
+    0.009762206057466206,
+    0.036446150653612654,
+    0.0103911366261454
+   ]
+  },
+  {
+   "text": "can you please turn off my wemo plug",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.952897,
+   "proba": [
+    0.0061186483795037825,
+    0.9528973172373619,
+    0.00165886531652887,
+    0.010076458135383954,
+    0.029248710931221465
+   ]
+  },
+  {
+   "text": "my coffee has yellow spots",
+   "true": "report",
+   "lang": "en",
+   "source": "team",
+   "pred": "report",
+   "conf": 0.954075,
+   "proba": [
+    0.005387153224714543,
+    0.014326527283054556,
+    0.021718868526686815,
+    0.9540747956815183,
+    0.004492655284025841
+   ]
+  },
+  {
+   "text": "ninatumaje cafetal",
+   "true": "help",
+   "lang": "sw",
+   "source": "team",
+   "pred": "help",
+   "conf": 0.980071,
+   "proba": [
+    0.9800709487001038,
+    0.006766990938129153,
+    0.002644908199137895,
+    0.0030660694706329,
+    0.00745108269199642
+   ]
+  },
+  {
+   "text": "cheza muziki wa gurdian angel",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.957754,
+   "proba": [
+    0.009824764783046058,
+    0.9577538362765697,
+    0.010833051513458524,
+    0.004894808530746552,
+    0.016693538896179222
+   ]
+  },
+  {
+   "text": "search for a train ticket to newcastle",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.954755,
+   "proba": [
+    0.012760549535080292,
+    0.9547554465423227,
+    0.00825707242917984,
+    0.00689491091061166,
+    0.0173320205828053
+   ]
+  },
+  {
+   "text": "i want the officer to see my shamba",
+   "true": "talk_to_officer",
+   "lang": "en",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.991001,
+   "proba": [
+    0.0007541765159019245,
+    0.0003775590398882359,
+    0.0005362850976678521,
+    0.007330857351969115,
+    0.9910011219945729
+   ]
+  },
+  {
+   "text": "sasa",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.951956,
+   "proba": [
+    0.019460188370635307,
+    0.9519558600933051,
+    0.004549043820481856,
+    0.0053286740220218915,
+    0.01870623369355563
+   ]
+  },
+  {
+   "text": "i need the extension officer",
+   "true": "talk_to_officer",
+   "lang": "en",
+   "source": "team",
+   "pred": "talk_to_officer",
+   "conf": 0.998358,
+   "proba": [
+    0.000563803125094441,
+    0.0004672417329658916,
+    0.0003345636953840092,
+    0.00027595056365888087,
+    0.9983584408828968
+   ]
+  },
+  {
+   "text": "lol",
+   "true": "other",
+   "lang": "en",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.94899,
+   "proba": [
+    0.014521731497541303,
+    0.948990120163108,
+    0.012847081406800553,
+    0.013985916039788672,
+    0.009655150892761423
+   ]
+  },
+  {
+   "text": "siufurahii muziki huu",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.795305,
+   "proba": [
+    0.11049549467960014,
+    0.7953053522952472,
+    0.03556661195070805,
+    0.017085861662052212,
+    0.04154667941239233
+   ]
+  },
+  {
+   "text": "ningependa kujua bei ya maharagwe",
+   "true": "price",
+   "lang": "sw",
+   "source": "team",
+   "pred": "price",
+   "conf": 0.916192,
+   "proba": [
+    0.011140856366311095,
+    0.04979984410352646,
+    0.916191612661847,
+    0.015297191228881155,
+    0.0075704956394341775
+   ]
+  },
+  {
+   "text": "zima plagi",
+   "true": "other",
+   "lang": "sw",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.92763,
+   "proba": [
+    0.03825670519567621,
+    0.9276299339640409,
+    0.011496187458934114,
+    0.010946314623646071,
+    0.011670858757702905
+   ]
+  },
+  {
+   "text": "please tell dsw i'm returning defective shoes",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.95062,
+   "proba": [
+    0.013154535994912469,
+    0.9506200496500246,
+    0.005376375011025701,
+    0.026760443279116853,
+    0.004088596064920384
+   ]
+  },
+  {
+   "text": "nimefika",
+   "true": "other",
+   "lang": "sw",
+   "source": "team",
+   "pred": "other",
+   "conf": 0.84303,
+   "proba": [
+    0.0400186223101478,
+    0.8430302839459451,
+    0.01843635641492165,
+    0.05644894825735481,
+    0.04206578907163051
+   ]
+  },
+  {
+   "text": "can you give me some idea about dance bar",
+   "true": "other",
+   "lang": "en",
+   "source": "MASSIVE",
+   "pred": "other",
+   "conf": 0.785306,
+   "proba": [
+    0.12349815759078961,
+    0.7853058663854664,
+    0.00910864952640429,
+    0.00870581738591787,
+    0.0733815091114218
+   ]
+  }
+ ]
+}

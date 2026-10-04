@@ -1,0 +1,2356 @@
+{
+  "version": 2,
+  "languages": {
+    "en": "English",
+    "sw": "Kiswahili",
+    "kik": "Gĩkũyũ"
+  },
+  "notes": "Every sentence a farmer can see or hear, for coffee farmers of a co-operative society in Kirinyaga County, Kenya. English (en) is the main language; Kiswahili (sw) is the national language; Gĩkũyũ (kik) is the local language. All text and audio start UNVERIFIED. English was written by the team; the Kiswahili and Gĩkũyũ texts are AI drafts, and their audio is provisional synthetic speech, until native speakers review and record them. SMS cards are plain ASCII (GSM-7). See content/README.md.",
+  "cards": [
+    {
+      "id": "ui_app_name",
+      "type": "ui",
+      "en": "Cafetal",
+      "sw": "Cafetal",
+      "kik": "Cafetal",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_app_name.mp3",
+        "sw": "audio/sw/ui_app_name.mp3",
+        "kik": "audio/kik/ui_app_name.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_choose_language",
+      "type": "ui",
+      "en": "Choose your language",
+      "sw": "Chagua lugha yako",
+      "kik": "Thuura rũthiomi rwaku",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_choose_language.mp3",
+        "sw": "audio/sw/ui_choose_language.mp3",
+        "kik": "audio/kik/ui_choose_language.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_consent_title",
+      "type": "ui",
+      "en": "Your permission",
+      "sw": "Ruhusa yako",
+      "kik": "Rũtha rwaku",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_consent_title.mp3",
+        "sw": "audio/sw/ui_consent_title.mp3",
+        "kik": "audio/kik/ui_consent_title.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal privacy design: RESPONSIBLE_AI.md and PLAN.md section 5 (member number not name, photo stays on the phone, nothing sent without a tap, delete everything). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_consent_text",
+      "type": "ui",
+      "en": "Cafetal saves on this phone the date, the result and the rough place of each check. The photo stays on this phone. Everything is saved with your member number, not your name. Nothing is sent unless you tap “Send”. If you want, the photos go to the co-op, only over the co-op Wi-Fi. You can delete everything at any time.",
+      "sw": "Cafetal huhifadhi kwenye simu hii tarehe, jibu na mahali takriban pa kila ukaguzi. Picha inabaki kwenye simu hii. Kila kitu kinahifadhiwa kwa nambari yako ya mwanachama, si kwa jina lako. Hakuna kinachotumwa usipobonyeza “Tuma”. Ukitaka, picha zinaenda kwa chama cha ushirika, kupitia Wi-Fi ya chama tu. Unaweza kufuta kila kitu wakati wowote.",
+      "kik": "Cafetal ĩigaga thimũ-inĩ ĩno mũthenya, macokio na handũ o hakuhĩ ha o ũthuthuria. Mbica ĩtigaraga thimũ-inĩ ĩno. Maũndũ mothe maigagwo na namba yaku ya sosaiti, ti rĩĩtwa rĩaku. Gũtirĩ kĩndũ gĩtũmagwo ũtahũrĩte “Tũma”. Ũngĩenda, mbica nĩ ithiĩ sosaiti-inĩ, na Wi-Fi ya sosaiti tu. No ũeherie maũndũ mothe hĩndĩ o yothe.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_consent_text.mp3",
+        "sw": "audio/sw/ui_consent_text.mp3",
+        "kik": "audio/kik/ui_consent_text.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal privacy design: RESPONSIBLE_AI.md and PLAN.md section 5 (member number not name, photo stays on the phone, nothing sent without a tap, delete everything). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_consent_hub_text",
+      "type": "ui",
+      "en": "The co-op computer keeps: your name, phone, community, the rough place of your farm, your language and the reports you send (result, confidence, date and rough place). Photos only if you send them over the co-op Wi-Fi. Co-op staff and the extension officer see them. For now the system has no password: other people on the co-op Wi-Fi could also see them. You can ask for them to be deleted at any time.",
+      "sw": "Kompyuta ya chama huhifadhi: jina lako, simu, kijiji, mahali takriban pa shamba lako, lugha yako na ripoti unazotuma (jibu, uhakika, tarehe na mahali takriban). Picha ni zile tu unazotuma kupitia Wi-Fi ya chama. Wafanyakazi wa chama na afisa ugani wanaziona. Kwa sasa mfumo hauna nenosiri: watu wengine walio kwenye Wi-Fi ya chama pia wanaweza kuziona. Unaweza kuomba zifutwe wakati wowote.",
+      "kik": "Kombiuta ya sosaiti ĩigaga: rĩĩtwa rĩaku, thimũ, itũũra rĩaku, handũ o hakuhĩ ha mũgũnda waku, rũthiomi rwaku na ripoti iria ũtũmaga (macokio, wĩhoko, mũthenya na handũ o hakuhĩ). Mbica no iria ũtũmĩte na Wi-Fi ya sosaiti. Aruti wĩra a sosaiti na afisa wa ũrĩmi nĩmacionaga. Rĩu mũtaratara ũyũ ndũrĩ na password: andũ angĩ arĩa marĩ Wi-Fi-inĩ ya sosaiti o nao no macione. No ũhoe cieherio hĩndĩ o yothe.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_consent_hub_text.mp3",
+        "sw": "audio/sw/ui_consent_hub_text.mp3",
+        "kik": "audio/kik/ui_consent_hub_text.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal privacy design: what the co-op hub stores (hub/db.py) and who can read it (RESPONSIBLE_AI.md: no login yet). Read aloud by co-op staff at registration (hub/static/registro.html). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_consent_accept",
+      "type": "ui",
+      "en": "Yes, I agree",
+      "sw": "Ndiyo, nakubali",
+      "kik": "Ĩĩ, nĩnetĩkĩra",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_consent_accept.mp3",
+        "sw": "audio/sw/ui_consent_accept.mp3",
+        "kik": "audio/kik/ui_consent_accept.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal privacy design: RESPONSIBLE_AI.md and PLAN.md section 5 (member number not name, photo stays on the phone, nothing sent without a tap, delete everything). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_consent_decline",
+      "type": "ui",
+      "en": "No, thank you",
+      "sw": "Hapana, asante",
+      "kik": "Aca, nĩ wega",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_consent_decline.mp3",
+        "sw": "audio/sw/ui_consent_decline.mp3",
+        "kik": "audio/kik/ui_consent_decline.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal privacy design: RESPONSIBLE_AI.md and PLAN.md section 5 (member number not name, photo stays on the phone, nothing sent without a tap, delete everything). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_member_id_prompt",
+      "type": "ui",
+      "en": "Your member number (example: M0123)",
+      "sw": "Nambari yako ya mwanachama (mfano: M0123)",
+      "kik": "Namba yaku ya sosaiti (ta M0123)",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_member_id_prompt.mp3",
+        "sw": "audio/sw/ui_member_id_prompt.mp3",
+        "kik": "audio/kik/ui_member_id_prompt.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_pin_optional",
+      "type": "ui",
+      "en": "4-number PIN (if you want)",
+      "sw": "PIN ya tarakimu 4 (ukitaka)",
+      "kik": "PIN ya namba 4 (ũngĩenda)",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_pin_optional.mp3",
+        "sw": "audio/sw/ui_pin_optional.mp3",
+        "kik": "audio/kik/ui_pin_optional.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_pin_prompt",
+      "type": "ui",
+      "en": "Type your PIN",
+      "sw": "Andika PIN yako",
+      "kik": "Andĩka PIN yaku",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_pin_prompt.mp3",
+        "sw": "audio/sw/ui_pin_prompt.mp3",
+        "kik": "audio/kik/ui_pin_prompt.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_continue",
+      "type": "ui",
+      "en": "Continue",
+      "sw": "Endelea",
+      "kik": "Thiĩ na mbere",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_continue.mp3",
+        "sw": "audio/sw/ui_continue.mp3",
+        "kik": "audio/kik/ui_continue.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_take_photo",
+      "type": "ui",
+      "en": "Take photo",
+      "sw": "Piga picha",
+      "kik": "Oya mbica",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_take_photo.mp3",
+        "sw": "audio/sw/ui_take_photo.mp3",
+        "kik": "audio/kik/ui_take_photo.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_photo_tip_underside",
+      "type": "ui",
+      "en": "Take the photo under the leaf, up close: let the spot fill the photo. Use good light.",
+      "sw": "Piga picha upande wa chini wa jani, karibu: doa lijaze picha. Tumia mwanga mzuri.",
+      "kik": "Oya mbica mũhuro wa ithangũ, ũrĩ hakuhĩ: harĩa harũarĩte hiyũre mbica. Hũthĩra ũtheri mwega.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_photo_tip_underside.mp3",
+        "sw": "audio/sw/ui_photo_tip_underside.mp3",
+        "kik": "audio/kik/ui_photo_tip_underside.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Where rust shows: CABI Plantwise factsheet for farmers 'Coffee leaf rust' (recommendations relevant to Kenya), https://plantwiseplusknowledgebank.org/doi/10.1079/PWKB.20127801774 (yellow-orange powdery spots on the underside of leaves). [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_analyzing",
+      "type": "ui",
+      "en": "Checking the leaf…",
+      "sw": "Inakagua jani…",
+      "kik": "Ithangũ nĩ rĩrathuthurio…",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_analyzing.mp3",
+        "sw": "audio/sw/ui_analyzing.mp3",
+        "kik": "audio/kik/ui_analyzing.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_confidence",
+      "type": "ui",
+      "en": "How sure",
+      "sw": "Uhakika",
+      "kik": "Wĩhoko",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_confidence.mp3",
+        "sw": "audio/sw/ui_confidence.mp3",
+        "kik": "audio/kik/ui_confidence.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_play_kik",
+      "type": "ui",
+      "en": "Listen in Gĩkũyũ",
+      "sw": "Sikiliza kwa Kikuyu",
+      "kik": "Thikĩrĩria na Gĩgĩkũyũ",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_play_kik.mp3",
+        "sw": "audio/sw/ui_play_kik.mp3",
+        "kik": "audio/kik/ui_play_kik.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_play_sw",
+      "type": "ui",
+      "en": "Listen in Kiswahili",
+      "sw": "Sikiliza kwa Kiswahili",
+      "kik": "Thikĩrĩria na Gĩthweri",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_play_sw.mp3",
+        "sw": "audio/sw/ui_play_sw.mp3",
+        "kik": "audio/kik/ui_play_sw.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_play_en",
+      "type": "ui",
+      "en": "Listen in English",
+      "sw": "Sikiliza kwa Kiingereza",
+      "kik": "Thikĩrĩria na Gĩthũngũ",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_play_en.mp3",
+        "sw": "audio/sw/ui_play_en.mp3",
+        "kik": "audio/kik/ui_play_en.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_send_sms",
+      "type": "ui",
+      "en": "Send by SMS",
+      "sw": "Tuma kwa SMS",
+      "kik": "Tũma na SMS",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_send_sms.mp3",
+        "sw": "audio/sw/ui_send_sms.mp3",
+        "kik": "audio/kik/ui_send_sms.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_simulate_send",
+      "type": "ui",
+      "en": "Send (SIMULATED)",
+      "sw": "Tuma (MAJARIBIO)",
+      "kik": "Tũma (MAGERIO)",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_simulate_send.mp3",
+        "sw": "audio/sw/ui_simulate_send.mp3",
+        "kik": "audio/kik/ui_simulate_send.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_saved",
+      "type": "ui",
+      "en": "Saved on this phone",
+      "sw": "Imehifadhiwa kwenye simu hii",
+      "kik": "Nĩ kĩigĩtwo thimũ-inĩ ĩno",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_saved.mp3",
+        "sw": "audio/sw/ui_saved.mp3",
+        "kik": "audio/kik/ui_saved.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_history",
+      "type": "ui",
+      "en": "My checks",
+      "sw": "Ukaguzi wangu",
+      "kik": "Ũthuthuria wakwa",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_history.mp3",
+        "sw": "audio/sw/ui_history.mp3",
+        "kik": "audio/kik/ui_history.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_settings",
+      "type": "ui",
+      "en": "Settings",
+      "sw": "Mipangilio",
+      "kik": "Mĩbango",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_settings.mp3",
+        "sw": "audio/sw/ui_settings.mp3",
+        "kik": "audio/kik/ui_settings.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_delete_all",
+      "type": "ui",
+      "en": "Delete all",
+      "sw": "Futa yote",
+      "kik": "Eheria ciothe",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_delete_all.mp3",
+        "sw": "audio/sw/ui_delete_all.mp3",
+        "kik": "audio/kik/ui_delete_all.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_delete_confirm",
+      "type": "ui",
+      "en": "Delete all checks and photos from this phone? This cannot be undone.",
+      "sw": "Ufute ukaguzi wote na picha zote kwenye simu hii? Hili haliwezi kurudishwa.",
+      "kik": "Ũeherie ũthuthuria wothe na mbica ciothe thimũ-inĩ ĩno? Ũndũ ũyũ ndũngĩcokio.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_delete_confirm.mp3",
+        "sw": "audio/sw/ui_delete_confirm.mp3",
+        "kik": "audio/kik/ui_delete_confirm.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_sync_photos",
+      "type": "ui",
+      "en": "Send photos to the co-op (Wi-Fi)",
+      "sw": "Tuma picha kwa chama (Wi-Fi)",
+      "kik": "Tũma mbica sosaiti-inĩ (Wi-Fi)",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_sync_photos.mp3",
+        "sw": "audio/sw/ui_sync_photos.mp3",
+        "kik": "audio/kik/ui_sync_photos.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal privacy design: RESPONSIBLE_AI.md and PLAN.md section 5 (member number not name, photo stays on the phone, nothing sent without a tap, delete everything). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_synced",
+      "type": "ui",
+      "en": "Photos sent to the co-op",
+      "sw": "Picha zimetumwa kwa chama",
+      "kik": "Mbica nĩitũmĩtwo sosaiti-inĩ",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_synced.mp3",
+        "sw": "audio/sw/ui_synced.mp3",
+        "kik": "audio/kik/ui_synced.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_back",
+      "type": "ui",
+      "en": "Back",
+      "sw": "Rudi",
+      "kik": "Cooka",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_back.mp3",
+        "sw": "audio/sw/ui_back.mp3",
+        "kik": "audio/kik/ui_back.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_unverified",
+      "type": "ui",
+      "en": "UNVERIFIED",
+      "sw": "HAIJAHAKIKIWA",
+      "kik": "NDĨRATHUTHURIO",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_unverified.mp3",
+        "sw": "audio/sw/ui_unverified.mp3",
+        "kik": "audio/kik/ui_unverified.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_demo",
+      "type": "ui",
+      "en": "DEMO: sample data",
+      "sw": "DEMO: data ya mfano",
+      "kik": "DEMO: data cia kĩonereria",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_demo.mp3",
+        "sw": "audio/sw/ui_demo.mp3",
+        "kik": "audio/kik/ui_demo.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_simulated",
+      "type": "ui",
+      "en": "SIMULATED: no real SMS was sent",
+      "sw": "MAJARIBIO: hakuna SMS halisi iliyotumwa",
+      "kik": "MAGERIO: gũtirĩ SMS ya ma ĩtũmĩtwo",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_simulated.mp3",
+        "sw": "audio/sw/ui_simulated.mp3",
+        "kik": "audio/kik/ui_simulated.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_offline_ready",
+      "type": "ui",
+      "en": "Ready to use without internet",
+      "sw": "Tayari kutumika bila intaneti",
+      "kik": "Nĩ ĩhaarĩrie kũhũthĩrwo hatarĩ intaneti",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_offline_ready.mp3",
+        "sw": "audio/sw/ui_offline_ready.mp3",
+        "kik": "audio/kik/ui_offline_ready.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_limits_note",
+      "type": "ui",
+      "en": "It only checks leaves. It does not see berry disease, berry pests, fertiliser, drought or soil.",
+      "sw": "Inakagua majani tu. Haioni chule buni, wadudu wa matunda, mbolea, ukame wala udongo.",
+      "kik": "Ĩthuthagia mathangũ tu. Ndĩonaga mũrimũ wa matunda, tũtambi twa matunda, mbolea, kwaga mbura kana tĩĩri.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_limits_note.mp3",
+        "sw": "audio/sw/ui_limits_note.mp3",
+        "kik": "audio/kik/ui_limits_note.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal data limits: the model only sees leaf symptoms (DATA_CARD.md). Kenyan context: coffee berry disease, berry borer and leaf rust, ageing trees and poor access to fertiliser are named causes of low Kenyan coffee yields: Alliance of Bioversity International and CIAT, 'Regenerative agriculture: a new value proposition for Kenya's coffee sector', https://alliancebioversityciat.org/stories/regenerative-agriculture-new-value-proposition-kenya-coffee-sector ; Solidaridad, 'Coffee Sustainability: Kenya's Looming Crisis Amidst the Soaring Cost of Production', https://www.solidaridadnetwork.org/news/coffee-sustainability-kenyas-looming-crisis-amidst-the-soaring-cost-of-production/ . Antestia bugs: Kenyan coffee farming guides (search summary only). [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_language",
+      "type": "ui",
+      "en": "Language",
+      "sw": "Lugha",
+      "kik": "Rũthiomi",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_language.mp3",
+        "sw": "audio/sw/ui_language.mp3",
+        "kik": "audio/kik/ui_language.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_pending_sms",
+      "type": "ui",
+      "en": "Not sent yet",
+      "sw": "Bado haijatumwa",
+      "kik": "Ndĩrĩ yatũmwo",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_pending_sms.mp3",
+        "sw": "audio/sw/ui_pending_sms.mp3",
+        "kik": "audio/kik/ui_pending_sms.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_sent",
+      "type": "ui",
+      "en": "Sent",
+      "sw": "Imetumwa",
+      "kik": "Nĩ ĩtũmĩtwo",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_sent.mp3",
+        "sw": "audio/sw/ui_sent.mp3",
+        "kik": "audio/kik/ui_sent.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_no_records",
+      "type": "ui",
+      "en": "No checks yet.",
+      "sw": "Bado hakuna ukaguzi.",
+      "kik": "Gũtirĩ ũthuthuria rĩu.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_no_records.mp3",
+        "sw": "audio/sw/ui_no_records.mp3",
+        "kik": "audio/kik/ui_no_records.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_tip_bring_leaf_home",
+      "type": "ui",
+      "en": "No phone in the coffee field? Bring a few leaves home and take the photo there.",
+      "sw": "Huna simu shambani? Lete majani machache nyumbani upige picha huko.",
+      "kik": "Ndũrĩ na thimũ mũgũnda-inĩ? Rehe mathangũ mamwe mũciĩ, ũoe mbica kũu.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_tip_bring_leaf_home.mp3",
+        "sw": "audio/sw/ui_tip_bring_leaf_home.mp3",
+        "kik": "audio/kik/ui_tip_bring_leaf_home.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_choose_photo",
+      "type": "ui",
+      "en": "Choose a photo",
+      "sw": "Chagua picha",
+      "kik": "Thuura mbica",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_choose_photo.mp3",
+        "sw": "audio/sw/ui_choose_photo.mp3",
+        "kik": "audio/kik/ui_choose_photo.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_new_photo",
+      "type": "ui",
+      "en": "Another photo",
+      "sw": "Picha nyingine",
+      "kik": "Mbica ĩngĩ",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_new_photo.mp3",
+        "sw": "audio/sw/ui_new_photo.mp3",
+        "kik": "audio/kik/ui_new_photo.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_what_to_do",
+      "type": "ui",
+      "en": "What to do this week",
+      "sw": "Ufanye nini wiki hii",
+      "kik": "Ũrĩa wagĩrĩirwo gwĩka kiumia gĩkĩ",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_what_to_do.mp3",
+        "sw": "audio/sw/ui_what_to_do.mp3",
+        "kik": "audio/kik/ui_what_to_do.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_cancel",
+      "type": "ui",
+      "en": "Cancel",
+      "sw": "Ghairi",
+      "kik": "Tiga",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_cancel.mp3",
+        "sw": "audio/sw/ui_cancel.mp3",
+        "kik": "audio/kik/ui_cancel.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_delete_yes",
+      "type": "ui",
+      "en": "Yes, delete all",
+      "sw": "Ndiyo, futa yote",
+      "kik": "Ĩĩ, eheria ciothe",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_delete_yes.mp3",
+        "sw": "audio/sw/ui_delete_yes.mp3",
+        "kik": "audio/kik/ui_delete_yes.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_lock",
+      "type": "ui",
+      "en": "Lock",
+      "sw": "Funga",
+      "kik": "Hinga",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_lock.mp3",
+        "sw": "audio/sw/ui_lock.mp3",
+        "kik": "audio/kik/ui_lock.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_pin_wrong",
+      "type": "ui",
+      "en": "Wrong PIN. Try again.",
+      "sw": "PIN si sahihi. Jaribu tena.",
+      "kik": "PIN ti yo. Geria rĩngĩ.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_pin_wrong.mp3",
+        "sw": "audio/sw/ui_pin_wrong.mp3",
+        "kik": "audio/kik/ui_pin_wrong.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_member_id_invalid",
+      "type": "ui",
+      "en": "Type M and 4 numbers, for example M0123.",
+      "sw": "Andika M na tarakimu 4, kwa mfano M0123.",
+      "kik": "Andĩka M na namba 4, ta M0123.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_member_id_invalid.mp3",
+        "sw": "audio/sw/ui_member_id_invalid.mp3",
+        "kik": "audio/kik/ui_member_id_invalid.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_reason_blurry",
+      "type": "ui",
+      "en": "The photo is blurry.",
+      "sw": "Picha haiko wazi.",
+      "kik": "Mbica ndĩronekana wega.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_reason_blurry.mp3",
+        "sw": "audio/sw/ui_reason_blurry.mp3",
+        "kik": "audio/kik/ui_reason_blurry.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal fail-safe and human-in-the-loop design: RESPONSIBLE_AI.md; PLAN.md sections 3 and 9. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_reason_not_coffee",
+      "type": "ui",
+      "en": "It does not look like a coffee leaf.",
+      "sw": "Haionekani kama jani la kahawa.",
+      "kik": "Rĩtihaana ta ithangũ rĩa kahũa.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_reason_not_coffee.mp3",
+        "sw": "audio/sw/ui_reason_not_coffee.mp3",
+        "kik": "audio/kik/ui_reason_not_coffee.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal fail-safe and human-in-the-loop design: RESPONSIBLE_AI.md; PLAN.md sections 3 and 9. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_reason_low_conf",
+      "type": "ui",
+      "en": "The app is not sure.",
+      "sw": "App haina uhakika.",
+      "kik": "App ndĩrĩ na wĩhoko.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_reason_low_conf.mp3",
+        "sw": "audio/sw/ui_reason_low_conf.mp3",
+        "kik": "audio/kik/ui_reason_low_conf.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal fail-safe and human-in-the-loop design: RESPONSIBLE_AI.md; PLAN.md sections 3 and 9. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_hub_offline",
+      "type": "ui",
+      "en": "No connection to the co-op.",
+      "sw": "Hakuna muunganisho na chama.",
+      "kik": "Gũtirĩ ũnyitanĩro na sosaiti.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_hub_offline.mp3",
+        "sw": "audio/sw/ui_hub_offline.mp3",
+        "kik": "audio/kik/ui_hub_offline.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_member_not_registered",
+      "type": "ui",
+      "en": "This member number is not registered at the co-op. Ask at the co-op office.",
+      "sw": "Nambari hii ya mwanachama haijasajiliwa kwenye chama. Uliza kwenye ofisi ya chama.",
+      "kik": "Namba ĩno ya sosaiti ndĩandĩkĩtwo sosaiti-inĩ. Ũria ofisi-inĩ ya sosaiti.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_member_not_registered.mp3",
+        "sw": "audio/sw/ui_member_not_registered.mp3",
+        "kik": "audio/kik/ui_member_not_registered.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "ui_sms_preview",
+      "type": "ui",
+      "en": "This is the message that will be sent:",
+      "sw": "Huu ndio ujumbe utakaotumwa:",
+      "kik": "Ĩno nĩyo ndũmĩrĩri ĩrĩtũmwo:",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/ui_sms_preview.mp3",
+        "sw": "audio/sw/ui_sms_preview.mp3",
+        "kik": "audio/kik/ui_sms_preview.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal UI text, written by the team in plain English for coffee farmers in Kirinyaga County, Kenya. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "name_sano",
+      "type": "ui",
+      "en": "Healthy",
+      "sw": "Lenye afya",
+      "kik": "Rĩrĩ na ũgima",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/name_sano.mp3",
+        "sw": "audio/sw/name_sano.mp3",
+        "kik": "audio/kik/name_sano.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "name_roya",
+      "type": "ui",
+      "en": "Leaf rust",
+      "sw": "Kutu ya majani",
+      "kik": "Kutu ya mathangũ",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/name_roya.mp3",
+        "sw": "audio/sw/name_roya.mp3",
+        "kik": "audio/kik/name_roya.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "name_minador",
+      "type": "ui",
+      "en": "Leaf miner",
+      "sw": "Mchimba majani",
+      "kik": "Tũtambi tũrĩa mathangũ",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/name_minador.mp3",
+        "sw": "audio/sw/name_minador.mp3",
+        "kik": "audio/kik/name_minador.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "name_phoma",
+      "type": "ui",
+      "en": "Phoma leaf spot",
+      "sw": "Madoa ya Phoma",
+      "kik": "Ndoa cia Phoma",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/name_phoma.mp3",
+        "sw": "audio/sw/name_phoma.mp3",
+        "kik": "audio/kik/name_phoma.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "name_cercospora",
+      "type": "ui",
+      "en": "Brown eye spot",
+      "sw": "Doa jicho kahawia",
+      "kik": "Ndoa cia rangi wa ndaka",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/name_cercospora.mp3",
+        "sw": "audio/sw/name_cercospora.mp3",
+        "kik": "audio/kik/name_cercospora.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "name_acaro_rojo",
+      "type": "ui",
+      "en": "Red spider mite",
+      "sw": "Utitiri mwekundu",
+      "kik": "Tũtambi tũtune",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/name_acaro_rojo.mp3",
+        "sw": "audio/sw/name_acaro_rojo.mp3",
+        "kik": "audio/kik/name_acaro_rojo.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "name_duda",
+      "type": "ui",
+      "en": "Not sure",
+      "sw": "Sina uhakika",
+      "kik": "Ndiũĩ wega",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/name_duda.mp3",
+        "sw": "audio/sw/name_duda.mp3",
+        "kik": "audio/kik/name_duda.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal fail-safe and human-in-the-loop design: RESPONSIBLE_AI.md; PLAN.md sections 3 and 9. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "diag_sano",
+      "type": "diagnosis",
+      "en": "The leaf looks healthy.",
+      "sw": "Jani linaonekana kuwa na afya.",
+      "kik": "Ithangũ nĩ rĩonekana rĩrĩ na ũgima.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/diag_sano.mp3",
+        "sw": "audio/sw/diag_sano.mp3",
+        "kik": "audio/kik/diag_sano.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "diag_roya",
+      "type": "diagnosis",
+      "en": "It looks like coffee leaf rust.",
+      "sw": "Inaonekana ni kutu ya majani ya kahawa.",
+      "kik": "Rĩonekana ta kutu ya mathangũ ma kahũa.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/diag_roya.mp3",
+        "sw": "audio/sw/diag_roya.mp3",
+        "kik": "audio/kik/diag_roya.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "diag_minador",
+      "type": "diagnosis",
+      "en": "It looks like coffee leaf miner.",
+      "sw": "Inaonekana ni mchimba majani wa kahawa.",
+      "kik": "Rĩonekana ta tũtambi tũrĩa mathangũ ma kahũa.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/diag_minador.mp3",
+        "sw": "audio/sw/diag_minador.mp3",
+        "kik": "audio/kik/diag_minador.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "diag_phoma",
+      "type": "diagnosis",
+      "en": "It looks like Phoma leaf spot.",
+      "sw": "Inaonekana ni madoa ya Phoma.",
+      "kik": "Rĩonekana ta ndoa cia Phoma.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/diag_phoma.mp3",
+        "sw": "audio/sw/diag_phoma.mp3",
+        "kik": "audio/kik/diag_phoma.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "diag_cercospora",
+      "type": "diagnosis",
+      "en": "It looks like brown eye spot (Cercospora).",
+      "sw": "Inaonekana ni doa jicho kahawia (Cercospora).",
+      "kik": "Rĩonekana ta ndoa cia rangi wa ndaka (Cercospora).",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/diag_cercospora.mp3",
+        "sw": "audio/sw/diag_cercospora.mp3",
+        "kik": "audio/kik/diag_cercospora.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "diag_acaro_rojo",
+      "type": "diagnosis",
+      "en": "It looks like red spider mite.",
+      "sw": "Inaonekana ni utitiri mwekundu.",
+      "kik": "Rĩonekana ta tũtambi tũtune.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/diag_acaro_rojo.mp3",
+        "sw": "audio/sw/diag_acaro_rojo.mp3",
+        "kik": "audio/kik/diag_acaro_rojo.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Common English names as used in Kenya: coffee leaf rust (Hemileia vastatrix), coffee leaf miner (Leucoptera meyricki in Kenya), Phoma leaf spot (Phoma spp.), brown eye spot (Cercospora coffeicola), red spider mite (Oligonychus coffeae). Class names follow the JMuBEN dataset (Jepkoech et al. 2021, Data in Brief 36:107142; photos taken at Mutira, Kirinyaga). Kiswahili 'kutu ya majani' (leaf rust) and 'chule buni' (coffee berry disease): Swahili extension writing, e.g. 'Magonjwa makuu ya kahawa', http://mitiki.blogspot.com/2009/12/magonjwa-makuu-ya-kahawa.html (search summary). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "diag_duda",
+      "type": "diagnosis",
+      "en": "I'm not sure — show the leaf to the extension officer.",
+      "sw": "Sina uhakika — mwonyeshe afisa ugani jani hili.",
+      "kik": "Ndiũĩ wega — onia afisa wa ũrĩmi ithangũ rĩĩrĩ.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/diag_duda.mp3",
+        "sw": "audio/sw/diag_duda.mp3",
+        "kik": "audio/kik/diag_duda.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal fail-safe and human-in-the-loop design: RESPONSIBLE_AI.md; PLAN.md sections 3 and 9. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "advice_roya",
+      "type": "advice",
+      "en": "Check under the leaves every week, on several trees. Prune so air and light get in, and keep the farm weeded. Use fertiliser as the extension officer advises. Ask the officer about spraying before the rains, and about rust-resistant varieties such as Ruiru 11 and Batian. If many leaves have orange powder, tell the officer.",
+      "sw": "Kagua upande wa chini wa majani kila wiki, kwenye miti kadhaa. Pogoa ili hewa na mwanga viingie, na palilia shamba. Tumia mbolea kama afisa ugani anavyoshauri. Muulize afisa kuhusu kunyunyizia dawa kabla ya mvua, na kuhusu aina zinazostahimili kutu kama Ruiru 11 na Batian. Ukiona unga wa rangi ya machungwa kwenye majani mengi, mwambie afisa.",
+      "kik": "Rora mũhuro wa mathangũ o kiumia, mĩtĩ-inĩ mĩingĩ. Ceha nĩguo rũhuho na ũtheri itoonye, na ũrĩmĩre mahuti. Hũthĩra mbolea ta ũrĩa afisa wa ũrĩmi akwĩrĩte. Ũria afisa ũhoro wa kũhũra dawa mbere ya mbura, na mĩkahũa ĩrĩa ĩhotaga kutu ta Ruiru 11 na Batian. Ũngĩona mũtu wa rangi wa macungwa mathangũ-inĩ maingĩ, ĩra afisa.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/advice_roya.mp3",
+        "sw": "audio/sw/advice_roya.mp3",
+        "kik": "audio/kik/advice_roya.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Gichuru E., Alwora G., Gimase J., Kathurima C. (KALRO Coffee Research Institute, Ruiru) 2021, 'Coffee Leaf Rust (Hemileia vastatrix) in Kenya: A Review', Agronomy 11(12):2590, https://www.mdpi.com/2073-4395/11/12/2590 (cultural practices: pruning, shade trees, mixed cropping; fungicides are tested by CRI for the Pest Control Products Board; Ruiru 11 highly resistant, Batian intermediate). Infonet-Biovision (Kenya), 'Coffee leaf rust', https://infonet-biovision.org/PlantHealth/MinorPests/coffee-leaf-rust (open pruning, good weeding, spray before the rains; favoured by wet, warm weather). CABI Plantwise factsheet for farmers 'Coffee leaf rust' (recommendations relevant to Kenya), https://plantwiseplusknowledgebank.org/doi/10.1079/PWKB.20127801774 (yellow-orange powdery spots on the underside of leaves). No product or dose is named on purpose: chemical control is the extension officer's call. [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "advice_minador",
+      "type": "advice",
+      "en": "Leaf miner is worse in the hot, dry season. Keep some shade trees, and check a few leaves every week. Do not spray on your own: sprays also kill the small wasps that eat the miner. If many leaves have brown patches or fall, tell the extension officer.",
+      "sw": "Mchimba majani huzidi wakati wa joto na kiangazi. Acha miti ya kivuli, na kagua majani machache kila wiki. Usinyunyizie dawa peke yako: dawa huua pia nyigu wadogo wanaokula mchimba majani. Majani mengi yakiwa na mabaka ya kahawia au yakianguka, mwambie afisa ugani.",
+      "kik": "Tũtambi tũrĩa mathangũ tũingĩhaga hĩndĩ ya ũrugarĩ na ũmũ. Tiga mĩtĩ ya kĩĩruru, na ũrorage mathangũ mamwe o kiumia. Ndũkahũre dawa wiki: dawa nĩ ĩũragaga o na tũtambi tũnini tũrĩa tũrĩaga tũtambi tũu. Mathangũ maingĩ mangĩgĩa na ndoa cia rangi wa ndaka kana makagwa, ĩra afisa wa ũrĩmi.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/advice_minador.mp3",
+        "sw": "audio/sw/advice_minador.mp3",
+        "kik": "audio/kik/advice_minador.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "CABI Compendium, 'Leucoptera meyricki (coffee leaf miner)', https://www.cabidigitallibrary.org/doi/abs/10.1079/cabicompendium.30488 (the most serious insect pest of arabica coffee in Kenya); Bulletin of Entomological Research, 'Field studies of insecticides against the coffee leaf-miner Leucoptera meyricki' (Kenya), https://www.cambridge.org/core/journals/bulletin-of-entomological-research/article/abs/field-studies-of-insecticides-against-the-coffee-leafminer-leucoptera-meyricki-ghesq-lepidoptera-lyonetiidae/8763C614E92A73D6B17EEDDEE1FB391F ; Dantas et al. 2021, Insects 12:1130, https://doi.org/10.3390/insects12121130 (worse in hot, dry weather; indiscriminate insecticide use kills the parasitic wasps and predators and can cause outbreaks). [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "advice_phoma",
+      "type": "advice",
+      "en": "Phoma comes with cold wind and hail, high on the mountain. Plant or keep trees on the windy side of the farm to stop the wind. Feed the trees well with manure and fertiliser. If the branch tips dry out, tell the extension officer.",
+      "sw": "Phoma huja na upepo baridi na mvua ya mawe, juu mlimani. Panda au tunza miti upande wenye upepo ili kuzuia upepo. Lisha miti vizuri kwa samadi na mbolea. Ncha za matawi zikikauka, mwambie afisa ugani.",
+      "kik": "Phoma ĩrehagwo nĩ rũhuho rwa heho na mbura ya mahiga, igũrũ kĩrĩma-inĩ. Handa kana ũrĩnde mĩtĩ mwena ũrĩa rũhuho rũumaga, nĩguo ĩgirie rũhuho. He mĩtĩ thumu na mbolea ya kũigana. Mĩthia ya honge ĩngĩũma, ĩra afisa wa ũrĩmi.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/advice_phoma.mp3",
+        "sw": "audio/sw/advice_phoma.mp3",
+        "kik": "audio/kik/advice_phoma.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Daily Nation, Seeds of Gold, 'Coffee under threat as bacterial blight strikes', https://nation.africa/kenya/business/seeds-of-gold/coffee-under-threat-as-bacterial-blight-strikes-47426 (cold-weather coffee diseases in high-altitude central Kenya: low temperatures, cold winds, hail); Revista Cultivar, 'Management of Phoma spot in coffee plants', https://revistacultivar.com/articles/management-of-phoma-spot-in-coffee-plants (worst with cold wind at altitude; windbreaks; balanced nutrition). [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "advice_cercospora",
+      "type": "advice",
+      "en": "Brown eye spot attacks weak trees: poor soil, strong sun or dry weather. Ask the extension officer about a soil test and the right fertiliser. Keep some shade and keep the farm weeded.",
+      "sw": "Doa jicho kahawia hushambulia miti dhaifu: udongo duni, jua kali au ukame. Muulize afisa ugani kuhusu kupima udongo na mbolea inayofaa. Acha kivuli kidogo na palilia shamba.",
+      "kik": "Ndoa cia rangi wa ndaka itharagĩra mĩtĩ ĩtarĩ na hinya: tĩĩri ũtarĩ mwega, riũa rĩnene kana kwaga mbura. Ũria afisa wa ũrĩmi ũhoro wa gũthima tĩĩri na mbolea ĩrĩa yagĩrĩire. Tiga kĩĩruru kĩnini na ũrĩmĩre mahuti.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/advice_cercospora.mp3",
+        "sw": "audio/sw/advice_cercospora.mp3",
+        "kik": "audio/kik/advice_cercospora.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "CABI PlantwisePlus Knowledge Bank, 'Cercospora coffeicola; Brown eye spot, Berry blotch' (factsheet for farmers), https://plantwiseplusknowledgebank.org/doi/full/10.1079/pwkb.20207800275 (weak trees: nitrogen and potassium deficiency, full sun, drought; soil analysis, shade, pruning). [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "advice_acaro_rojo",
+      "type": "advice",
+      "en": "Red spider mite comes in the dry season, on trees in full sun and near dusty roads. Every week, check the trees next to the road. Keep some shade; a hedge by the road helps stop the dust. If the tops of the leaves turn dull bronze, tell the extension officer.",
+      "sw": "Utitiri mwekundu huja wakati wa kiangazi, kwenye miti isiyo na kivuli na karibu na barabara zenye vumbi. Kila wiki, kagua miti iliyo karibu na barabara. Acha kivuli kidogo; ua wa miti kando ya barabara husaidia kuzuia vumbi. Sehemu ya juu ya majani ikigeuka rangi ya shaba, mwambie afisa ugani.",
+      "kik": "Tũtambi tũtune tũukaga hĩndĩ ya ũmũ, mĩtĩ-inĩ ĩtarĩ na kĩĩruru na hakuhĩ na barabara ĩrĩ na rũkũngũ. O kiumia, rora mĩtĩ ĩrĩa ĩrĩ hakuhĩ na barabara. Tiga kĩĩruru kĩnini; rũgiri rwa mĩtĩ mwena wa barabara nĩ rũteithagia kũgiria rũkũngũ. Igũrũ rĩa mathangũ rĩngĩgarũrũka rangi wa shaba, ĩra afisa wa ũrĩmi.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/advice_acaro_rojo.mp3",
+        "sw": "audio/sw/advice_acaro_rojo.mp3",
+        "kik": "audio/kik/advice_acaro_rojo.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "CABI PlantwisePlus Knowledge Bank, 'Red spider mite on coffee: Oligonychus coffeae' (Kenya listed), https://plantwiseplusknowledgebank.org/doi/full/10.1079/pwkb.20197800080 ; Infonet-Biovision (Kenya), 'Spider mites', https://infonet-biovision.org/plant_pests/spider-mites (dry season, coffee near dusty roads) and 'Coffee', https://infonet-biovision.org/crops-fruits-vegetables/coffee-revised (red coffee mite on unshaded coffee in the dry season). Red spider mite is not in the image model (no training photos). [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "advice_sano",
+      "type": "advice",
+      "en": "Very good. Keep checking under the leaves every week. Prune, keep some shade, keep the farm weeded and feed the trees as the extension officer advises.",
+      "sw": "Vizuri sana. Endelea kukagua chini ya majani kila wiki. Pogoa, acha kivuli kidogo, palilia shamba na lisha miti kama afisa ugani anavyoshauri.",
+      "kik": "Wega mũno. Thiĩ na mbere kũrora mũhuro wa mathangũ o kiumia. Ceha, tiga kĩĩruru kĩnini, rĩmĩra mahuti na ũhe mĩtĩ irio ta ũrĩa afisa wa ũrĩmi akwĩrĩte.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/advice_sano.mp3",
+        "sw": "audio/sw/advice_sano.mp3",
+        "kik": "audio/kik/advice_sano.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "General preventive practice: Kenya Coffee Sustainability Manual (compiled by KALRO Coffee Research Institute from Kenyan coffee handbooks, 2020), https://www.globalcoffeeplatform.org/wp-content/uploads/2021/03/KCS-MANUAL-review-03112020.pdf ; Gichuru et al. 2021 (above, advice_roya): pruning, shade, weeding, nutrition, regular checks. [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "advice_call_officer",
+      "type": "advice",
+      "en": "Call the extension officer or the co-op if you see orange powder on many trees, if many leaves fall, or if the app is not sure. Keep one leaf in a closed bag to show them.",
+      "sw": "Mpigie simu afisa ugani au chama ukiona unga wa rangi ya machungwa kwenye miti mingi, majani mengi yakianguka, au app isipokuwa na uhakika. Weka jani moja kwenye mfuko uliofungwa ili uwaonyeshe.",
+      "kik": "Ĩta afisa wa ũrĩmi kana sosaiti ũngĩona mũtu wa rangi wa macungwa mĩtĩ-inĩ mĩingĩ, mathangũ maingĩ makĩgwa, kana app ĩtarĩ na wĩhoko. Iga ithangũ rĩmwe mũhuko-inĩ ũhingĩtwo nĩguo ũmonie.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/advice_call_officer.mp3",
+        "sw": "audio/sw/advice_call_officer.mp3",
+        "kik": "audio/kik/advice_call_officer.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal fail-safe and human-in-the-loop design: RESPONSIBLE_AI.md; PLAN.md sections 3 and 9. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "limits_yield",
+      "type": "advice",
+      "en": "This app only looks at leaves. It cannot see coffee berry disease on the berries, antestia bugs, berry borer, lack of fertiliser, drought, old trees or soil problems. If your harvest went down, talk to the extension officer.",
+      "sw": "App hii inaangalia majani tu. Haiwezi kuona chule buni kwenye matunda, wadudu antestia, kipekecha matunda, ukosefu wa mbolea, ukame, miti mizee wala matatizo ya udongo. Mavuno yako yakipungua, ongea na afisa ugani.",
+      "kik": "App ĩno ĩroraga mathangũ tu. Ndĩngĩona mũrimũ wa matunda ma kahũa (CBD), tũtambi twa antestia, tũtambi tũtoboraga matunda, kwaga mbolea, kwaga mbura, mĩtĩ mĩkũrũ kana mathĩĩna ma tĩĩri. Magetha maku mangĩnyiha, aria na afisa wa ũrĩmi.",
+      "slots": [],
+      "audio": {
+        "en": "audio/en/limits_yield.mp3",
+        "sw": "audio/sw/limits_yield.mp3",
+        "kik": "audio/kik/limits_yield.mp3"
+      },
+      "audio_source": {
+        "en": "synthetic:piper-en-us-lessac-medium",
+        "sw": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw",
+        "kik": "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"
+      },
+      "source": "Cafetal data limits: the model only sees leaf symptoms (DATA_CARD.md). Kenyan context: coffee berry disease, berry borer and leaf rust, ageing trees and poor access to fertiliser are named causes of low Kenyan coffee yields: Alliance of Bioversity International and CIAT, 'Regenerative agriculture: a new value proposition for Kenya's coffee sector', https://alliancebioversityciat.org/stories/regenerative-agriculture-new-value-proposition-kenya-coffee-sector ; Solidaridad, 'Coffee Sustainability: Kenya's Looming Crisis Amidst the Soaring Cost of Production', https://www.solidaridadnetwork.org/news/coffee-sustainability-kenyas-looming-crisis-amidst-the-soaring-cost-of-production/ . Antestia bugs: Kenyan coffee farming guides (search summary only). [Seen via web-search summaries on 2026-10-04; the pages themselves were blocked from the build machine. Open each link before marking verified.] Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "sms_obs_recibida",
+      "type": "sms",
+      "en": "Cafetal: we got your report. Thank you. The extension officer checks the visit list. If it is urgent, call the co-op.",
+      "sw": "Cafetal: tumepokea ripoti yako. Asante. Afisa ugani anaangalia orodha ya ziara. Kama ni dharura, piga simu kwa chama.",
+      "kik": "Cafetal: nitwamukira ripoti yaku. Ni wega. Afisa wa urimi niaroraga mutaratara wa gucerera. Angikorwo ni wa ihenya, ita sosaiti.",
+      "slots": [],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Plain ASCII (GSM-7) so one SMS holds 160 characters; the Gĩkũyũ SMS write ĩ and ũ as i and u. Keywords: PRICE/BEI, HELP/MSAADA, OFFICER/AFISA. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "sms_codigo_invalido",
+      "type": "sms",
+      "en": "Cafetal: we did not understand the code. Check it and send it again, or text HELP.",
+      "sw": "Cafetal: hatukuelewa nambari hiyo. Iangalie na uitume tena, au tuma MSAADA.",
+      "kik": "Cafetal: tutinamenya code ino. Mirore na ucoke umitume, kana utume MSAADA kana HELP.",
+      "slots": [],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Plain ASCII (GSM-7) so one SMS holds 160 characters; the Gĩkũyũ SMS write ĩ and ũ as i and u. Keywords: PRICE/BEI, HELP/MSAADA, OFFICER/AFISA. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "sms_no_registrado",
+      "type": "sms",
+      "en": "Cafetal: this number is not registered. Please visit the co-op office to sign up.",
+      "sw": "Cafetal: nambari hii haijasajiliwa. Tafadhali tembelea ofisi ya chama ujisajili.",
+      "kik": "Cafetal: namba ino ya thimu ndiandikitwo. Thii ofisi ya sosaiti wiandikithie.",
+      "slots": [],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Plain ASCII (GSM-7) so one SMS holds 160 characters; the Gĩkũyũ SMS write ĩ and ũ as i and u. Keywords: PRICE/BEI, HELP/MSAADA, OFFICER/AFISA. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "sms_precio",
+      "type": "sms",
+      "en": "Reference price {fecha}: coffee {precio_cafe} {unidad_cafe}, maize {precio_maiz}, beans {precio_frijol} KES/kg. Source: {fuente}. Not the price at your factory.",
+      "sw": "Bei elekezi {fecha}: kahawa {precio_cafe} {unidad_cafe}, mahindi {precio_maiz}, maharagwe {precio_frijol} KES/kg. Chanzo: {fuente}. Si bei ya kiwanda chako.",
+      "kik": "Thogora wa kuonereria {fecha}: kahua {precio_cafe} {unidad_cafe}, mbembe {precio_maiz}, mboco {precio_frijol} KES/kg. Kuuma: {fuente}. Ti wa kiwanda giaku.",
+      "slots": [
+        "precio_cafe",
+        "unidad_cafe",
+        "precio_maiz",
+        "precio_frijol",
+        "fuente",
+        "fecha"
+      ],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal price module (not AI): PLAN.md section 7; values come from data/prices.json (reference prices in KES, never the price at the member's own factory). Plain ASCII (GSM-7). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "sms_precio_sin_datos",
+      "type": "sms",
+      "en": "Cafetal: we have no reference price today. Ask at the co-op office.",
+      "sw": "Cafetal: hatuna bei elekezi leo. Uliza kwenye ofisi ya chama.",
+      "kik": "Cafetal: umuthi tutiri na thogora wa kuonereria. Uria ofisi ya sosaiti.",
+      "slots": [],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal price module (not AI): PLAN.md section 7; values come from data/prices.json (reference prices in KES, never the price at the member's own factory). Plain ASCII (GSM-7). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "sms_reporte_instrucciones",
+      "type": "sms",
+      "en": "To report: photograph the leaf with the Cafetal app and tap Send by SMS. No app? Take the leaf to the co-op or text OFFICER.",
+      "sw": "Kuripoti: piga picha ya jani kwa app ya Cafetal na ubonyeze Tuma kwa SMS. Huna app? Peleka jani kwa chama au tuma AFISA.",
+      "kik": "Gutuma ripoti: oya mbica ya ithangu na app ya Cafetal na uhure Tuma na SMS. Nduri na app? Twara ithangu sosaiti kana utume AFISA.",
+      "slots": [],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Plain ASCII (GSM-7) so one SMS holds 160 characters; the Gĩkũyũ SMS write ĩ and ũ as i and u. Keywords: PRICE/BEI, HELP/MSAADA, OFFICER/AFISA. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "sms_ayuda",
+      "type": "sms",
+      "en": "Cafetal. Text PRICE (BEI) = reference price. HELP (MSAADA) = this list. OFFICER (AFISA) = extension officer. CAF1 code from the app = leaf report.",
+      "sw": "Cafetal. Tuma BEI = bei elekezi. MSAADA = orodha hii. AFISA = afisa ugani. Nambari ya CAF1 kutoka app = ripoti ya jani.",
+      "kik": "Cafetal. Tuma BEI kana PRICE = thogora. MSAADA kana HELP = mutaratara uyu. AFISA kana OFFICER = afisa wa urimi. CAF1 kuuma app = ripoti ya ithangu.",
+      "slots": [],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Plain ASCII (GSM-7) so one SMS holds 160 characters; the Gĩkũyũ SMS write ĩ and ũ as i and u. Keywords: PRICE/BEI, HELP/MSAADA, OFFICER/AFISA. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "sms_pasar_tecnico",
+      "type": "sms",
+      "en": "Cafetal: we are passing your message to the extension officer. The officer or the co-op will answer you.",
+      "sw": "Cafetal: tunapeleka ujumbe wako kwa afisa ugani. Afisa au chama watakujibu.",
+      "kik": "Cafetal: nituratwara ndumiriri yaku kwa afisa wa urimi. Afisa kana sosaiti nimegugucokeria.",
+      "slots": [],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal SMS design: PLAN.md sections 5 and 7. Plain ASCII (GSM-7) so one SMS holds 160 characters; the Gĩkũyũ SMS write ĩ and ũ as i and u. Keywords: PRICE/BEI, HELP/MSAADA, OFFICER/AFISA. Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    },
+    {
+      "id": "alert_roya",
+      "type": "alert",
+      "en": "CO-OP ALERT: {n_reportes} leaf rust reports near {comunidad} this week. Check under the leaves and tell the co-op.",
+      "sw": "TAHADHARI YA CHAMA: ripoti {n_reportes} za kutu ya majani karibu na {comunidad} wiki hii. Kagua chini ya majani na uambie chama.",
+      "kik": "UMENYERERI WA SOSAITI: ripoti {n_reportes} cia kutu ya mathangu hakuhi na {comunidad} kiumia giki. Rora muhuro wa mathangu na wire sosaiti.",
+      "slots": [
+        "comunidad",
+        "n_reportes"
+      ],
+      "audio": {},
+      "audio_source": {},
+      "source": "Cafetal outbreak rule (not AI): PLAN.md section 8. Check under the leaves: CABI Plantwise factsheet 'Coffee leaf rust' (powdery spots on the underside of leaves). Plain ASCII (GSM-7). Kiswahili and Gĩkũyũ: AI drafts, not yet checked by native speakers (content/README.md).",
+      "status": {
+        "en": "unverified",
+        "sw": "unverified",
+        "kik": "unverified"
+      },
+      "reviewed_by": {
+        "en": null,
+        "sw": null,
+        "kik": null
+      }
+    }
+  ]
+}

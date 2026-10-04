@@ -1,0 +1,574 @@
+{
+  "hub": "http://localhost:8100",
+  "started": "2026-10-04T01:39:24.843Z",
+  "checks": [
+    {
+      "ok": true,
+      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1918 ms (unthrottled, localhost)"
+    },
+    {
+      "ok": true,
+      "msg": "airplane mode: app opens from the cache; DEMO badge visible"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"language\" comes from cards.json (11 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"consent\" comes from cards.json (8 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"member id\" comes from cards.json (8 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"home\" comes from cards.json (11 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "JMuBEN rust TEST image -> roya 99% (expected roya)"
+    },
+    {
+      "ok": true,
+      "msg": "audio for en, sw, kik present and loadable offline: ../content/audio/en/diag_roya.mp3 (7750 B), ../content/audio/sw/diag_roya.mp3 (8926 B), ../content/audio/kik/diag_roya.mp3 (8691 B)"
+    },
+    {
+      "ok": true,
+      "msg": "en advice audio plays offline (currentTime 1.21 s)"
+    },
+    {
+      "ok": true,
+      "msg": "sw advice audio plays offline (currentTime 1.22 s)"
+    },
+    {
+      "ok": true,
+      "msg": "kik advice audio plays offline (currentTime 1.20 s)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"result (roya)\" comes from cards.json (24 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "SMS code valid, 45 chars: CAF1 M0123 RUST 99 20261004 -0.52,37.32 #6F9W"
+    },
+    {
+      "ok": true,
+      "msg": "location rounded to 2 decimals (~1 km)"
+    },
+    {
+      "ok": true,
+      "msg": "\"Send by SMS\" link: sms:+254700000000?body=CAF1%20M0123%20RUST%2099%2020261004%20-0.52%2C37.32%20%236F9W"
+    },
+    {
+      "ok": true,
+      "msg": "after the sms: link the app asks \"did you send it?\" (nothing is sent by itself)"
+    },
+    {
+      "ok": true,
+      "msg": "PlantDoc test image (apple scab leaf) -> \"I'm not sure — show the leaf to the extension officer.\" (OTHR, top otro 99%, reason not_coffee)"
+    },
+    {
+      "ok": true,
+      "msg": "Imagenette test image (cassette player, not a plant) -> \"I'm not sure — show the leaf to the extension officer.\" (OTHR, top otro 99%, reason not_coffee)"
+    },
+    {
+      "ok": true,
+      "msg": "synthetic non-plant photo (bucket) -> \"I'm not sure — show the leaf to the extension officer.\" (OTHR, top otro 99%, reason not_coffee)"
+    },
+    {
+      "ok": true,
+      "msg": "heavily blurred rust photo -> \"I'm not sure — show the leaf to the extension officer.\" (UNSR, top null 0%, reason blurry)"
+    },
+    {
+      "ok": true,
+      "msg": "blurred photo caught by the blur check (score 2.35)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"result (duda)\" comes from cards.json (24 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"history\" comes from cards.json (12 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"settings\" comes from cards.json (16 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"settings (kik)\" comes from cards.json (16 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"result (roya, kik)\" comes from cards.json (24 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "visible text on \"settings (sw)\" comes from cards.json (16 strings)"
+    },
+    {
+      "ok": true,
+      "msg": "airplane mode: 0 responses from the network (11 attempts blocked: sw /app/config.json, sw /content/cards.json, sw /app/model/labels.json, sw /api/health)"
+    },
+    {
+      "ok": true,
+      "msg": "\"Send (SIMULATED)\" -> hub reply (card sms_obs_recibida, en): \"Cafetal: we got your report. Thank you. The extension officer checks the visit list. If it is urgent, call the co-op.\""
+    },
+    {
+      "ok": true,
+      "msg": "SIMULATED label shown on the phone"
+    },
+    {
+      "ok": true,
+      "msg": "hub stored the observation M0123-6F9W (RUST 99%) from the SMS"
+    },
+    {
+      "ok": true,
+      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-04T01:39:46\",\"community\":\"Ondera Juu\",\"lat\":-0.52,\"lon\":37.32,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-6F9W\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
+    },
+    {
+      "ok": true,
+      "msg": "24 alert_roya broadcasts queued as pending_approval (nothing sent yet)"
+    },
+    {
+      "ok": true,
+      "msg": "Noor's farm on the officer worklist: rank 1, \"Rust 99% · alert area · 2 reports in 30 days\""
+    },
+    {
+      "ok": true,
+      "msg": "sync photos -> ui_synced"
+    },
+    {
+      "ok": true,
+      "msg": "photo attached to M0123-6F9W: /api/photos/M0123-6F9W"
+    },
+    {
+      "ok": true,
+      "msg": "no page errors on the phone"
+    },
+    {
+      "ok": true,
+      "msg": "staff approved one broadcast in the outbox page -> sent_simulated; 23 still pending"
+    },
+    {
+      "ok": true,
+      "msg": "PRICE -> reference price 139.00 KES, source \"DEMO county 25/26, KAMIS\", date \"2026\", in Noor's language (en): \"Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.\""
+    },
+    {
+      "ok": true,
+      "msg": "BEI -> reference price 139.00 KES, source \"DEMO county 25/26, KAMIS\", date \"2026\", in Noor's language (en): \"Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.\""
+    },
+    {
+      "ok": true,
+      "msg": "\"how much are you paying for a kilo of cherry\" -> price (0.9935) -> sms_precio"
+    },
+    {
+      "ok": true,
+      "msg": "\"majani ya kahawa yana unga wa rangi ya machungwa\" -> report (0.9956) -> sms_reporte_instrucciones, forwarded to officer: true"
+    },
+    {
+      "ok": true,
+      "msg": "\"asdf qwerty\" -> other (0.8716) -> sms_pasar_tecnico, forwarded to officer: true"
+    },
+    {
+      "ok": true,
+      "msg": "the unknown message is in the officer's inbox (/api/officer/messages)"
+    },
+    {
+      "ok": true,
+      "msg": "no page errors on the hub pages"
+    },
+    {
+      "ok": true,
+      "msg": "all 52 outbox + 8 thread messages are cards.json templates with only slot values filled"
+    }
+  ],
+  "results": {
+    "first_load_ready_ms": 1918,
+    "roya": {
+      "obs_id": "6F9W",
+      "label": "roya",
+      "code": "RUST",
+      "top": "roya",
+      "conf": 99,
+      "reason": null,
+      "blur": 51.69,
+      "ms": 523,
+      "probs": {
+        "sano": 0,
+        "roya": 0.996,
+        "minador": 0,
+        "phoma": 0,
+        "cercospora": 0,
+        "otro": 0.004
+      },
+      "sms_code": "CAF1 M0123 RUST 99 20261004 -0.52,37.32 #6F9W",
+      "model_version": "cafetal-img-v2",
+      "diag_text": "It looks like coffee leaf rust."
+    },
+    "plantdoc": {
+      "obs_id": "4NMT",
+      "label": "otro",
+      "code": "OTHR",
+      "top": "otro",
+      "conf": 99,
+      "reason": "not_coffee",
+      "blur": 959.88,
+      "ms": 18,
+      "probs": {
+        "sano": 0,
+        "roya": 0.001,
+        "minador": 0,
+        "phoma": 0,
+        "cercospora": 0,
+        "otro": 0.999
+      },
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #4NMT",
+      "model_version": "cafetal-img-v2",
+      "diag_text": "I'm not sure — show the leaf to the extension officer."
+    },
+    "imagenette": {
+      "obs_id": "QA74",
+      "label": "otro",
+      "code": "OTHR",
+      "top": "otro",
+      "conf": 99,
+      "reason": "not_coffee",
+      "blur": 1032.66,
+      "ms": 17,
+      "probs": {
+        "sano": 0,
+        "roya": 0,
+        "minador": 0,
+        "phoma": 0,
+        "cercospora": 0,
+        "otro": 1
+      },
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #QA74",
+      "model_version": "cafetal-img-v2",
+      "diag_text": "I'm not sure — show the leaf to the extension officer."
+    },
+    "object": {
+      "obs_id": "TEGV",
+      "label": "otro",
+      "code": "OTHR",
+      "top": "otro",
+      "conf": 99,
+      "reason": "not_coffee",
+      "blur": 145.58,
+      "ms": 20,
+      "probs": {
+        "sano": 0,
+        "roya": 0,
+        "minador": 0,
+        "phoma": 0,
+        "cercospora": 0,
+        "otro": 1
+      },
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #TEGV",
+      "model_version": "cafetal-img-v2",
+      "diag_text": "I'm not sure — show the leaf to the extension officer."
+    },
+    "blurred": {
+      "obs_id": "7WPS",
+      "label": "duda",
+      "code": "UNSR",
+      "top": null,
+      "conf": 0,
+      "reason": "blurry",
+      "blur": 2.35,
+      "ms": 2,
+      "probs": null,
+      "sms_code": "CAF1 M0123 UNSR 0 20261004 -0.52,37.32 #7WPS",
+      "model_version": "cafetal-img-v2",
+      "diag_text": "I'm not sure — show the leaf to the extension officer."
+    },
+    "offline_network": {
+      "attempts": [
+        "sw /app/config.json",
+        "sw /content/cards.json",
+        "sw /app/model/labels.json",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health",
+        "sw /api/health"
+      ],
+      "responses": []
+    },
+    "alerts": [
+      {
+        "id": 1,
+        "created_at": "2026-10-04T01:39:46",
+        "community": "Ondera Juu",
+        "lat": -0.52,
+        "lon": 37.32,
+        "n_reports": 3,
+        "member_ids": [
+          "M0105",
+          "M0108",
+          "M0123"
+        ],
+        "obs_uids": [
+          "M0123-6F9W",
+          "M0105-A1R2",
+          "M0108-B7K4"
+        ],
+        "status": "active",
+        "demo": 0,
+        "active": true,
+        "messages": {
+          "pending_approval": 24
+        }
+      }
+    ],
+    "worklist_noor": {
+      "member_id": "M0123",
+      "name": "Noor (DEMO)",
+      "community": "Ondera Juu",
+      "phone": "+254700000123",
+      "obs_uid": "M0123-6F9W",
+      "obs_id": "6F9W",
+      "code": "RUST",
+      "conf": 99,
+      "date": "2026-10-04",
+      "lat": -0.52,
+      "lon": 37.32,
+      "score": 4.97,
+      "reason": "Rust 99% · alert area · 2 reports in 30 days",
+      "in_alert": true,
+      "alert_id": 1,
+      "photo_url": null,
+      "model_label": "roya",
+      "status": null,
+      "demo": 0,
+      "rank": 1
+    },
+    "sms": {
+      "PRICE": {
+        "replies": [
+          {
+            "id": 72,
+            "to": "+254700000123",
+            "body": "Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
+            "card_id": "sms_precio",
+            "lang": "en",
+            "status": "sent_simulated",
+            "length": 149,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "price",
+            "conf": 1,
+            "accepted": true,
+            "method": "keyword"
+          }
+        ]
+      },
+      "BEI": {
+        "replies": [
+          {
+            "id": 74,
+            "to": "+254700000123",
+            "body": "Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
+            "card_id": "sms_precio",
+            "lang": "en",
+            "status": "sent_simulated",
+            "length": 149,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "price",
+            "conf": 1,
+            "accepted": true,
+            "method": "keyword"
+          }
+        ]
+      },
+      "how much are you paying for a kilo of cherry": {
+        "replies": [
+          {
+            "id": 76,
+            "to": "+254700000123",
+            "body": "Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
+            "card_id": "sms_precio",
+            "lang": "en",
+            "status": "sent_simulated",
+            "length": 149,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "price",
+            "conf": 0.9935,
+            "accepted": true,
+            "threshold": 0.55,
+            "method": "classifier"
+          }
+        ]
+      },
+      "majani ya kahawa yana unga wa rangi ya machungwa": {
+        "replies": [
+          {
+            "id": 78,
+            "to": "+254700000123",
+            "body": "To report: photograph the leaf with the Cafetal app and tap Send by SMS. No app? Take the leaf to the co-op or text OFFICER.",
+            "card_id": "sms_reporte_instrucciones",
+            "lang": "en",
+            "status": "sent_simulated",
+            "length": 124,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "report",
+            "conf": 0.9956,
+            "accepted": true,
+            "threshold": 0.55,
+            "method": "classifier"
+          },
+          {
+            "type": "forwarded_to_officer"
+          }
+        ]
+      },
+      "asdf qwerty": {
+        "replies": [
+          {
+            "id": 80,
+            "to": "+254700000123",
+            "body": "Cafetal: we are passing your message to the extension officer. The officer or the co-op will answer you.",
+            "card_id": "sms_pasar_tecnico",
+            "lang": "en",
+            "status": "sent_simulated",
+            "length": 104,
+            "encoding": "GSM-7",
+            "segments": 1
+          }
+        ],
+        "actions": [
+          {
+            "type": "intent",
+            "intent": "other",
+            "conf": 0.8716,
+            "accepted": true,
+            "threshold": 0.55,
+            "method": "classifier"
+          },
+          {
+            "type": "forwarded_to_officer"
+          }
+        ]
+      }
+    },
+    "template_slots": {
+      "n_reportes": [
+        "3"
+      ],
+      "comunidad": [
+        "Ondera Juu"
+      ],
+      "fecha": [
+        "2026"
+      ],
+      "precio_cafe": [
+        "139.00"
+      ],
+      "unidad_cafe": [
+        "KES/kg cherry"
+      ],
+      "precio_maiz": [
+        "51.11"
+      ],
+      "precio_frijol": [
+        "111.11"
+      ],
+      "fuente": [
+        "DEMO county 25/26, KAMIS"
+      ]
+    }
+  },
+  "text_audit": {
+    "screens": [
+      {
+        "where": "language",
+        "strings": 11,
+        "bad": []
+      },
+      {
+        "where": "consent",
+        "strings": 8,
+        "bad": []
+      },
+      {
+        "where": "member id",
+        "strings": 8,
+        "bad": []
+      },
+      {
+        "where": "home",
+        "strings": 11,
+        "bad": []
+      },
+      {
+        "where": "result (roya)",
+        "strings": 24,
+        "bad": []
+      },
+      {
+        "where": "result (duda)",
+        "strings": 24,
+        "bad": []
+      },
+      {
+        "where": "history",
+        "strings": 12,
+        "bad": []
+      },
+      {
+        "where": "settings",
+        "strings": 16,
+        "bad": []
+      },
+      {
+        "where": "settings (kik)",
+        "strings": 16,
+        "bad": []
+      },
+      {
+        "where": "result (roya, kik)",
+        "strings": 24,
+        "bad": []
+      },
+      {
+        "where": "settings (sw)",
+        "strings": 16,
+        "bad": []
+      }
+    ],
+    "notFromCards": []
+  },
+  "finished": "2026-10-04T01:39:59.633Z",
+  "failures": 0
+}

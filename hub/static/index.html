@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cafetal Hub</title>
+<link rel="stylesheet" href="/hub/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<main>
+  <h1>Co-op hub</h1>
+  <p class="muted">Member registration, leaf reports by SMS, outbreak alerts, the extension officer's visit list and the reference price.
+    The co-op computer keeps everything; it does not use the internet.</p>
+
+  <div id="demo-note"></div>
+  <div class="stats" id="stats"></div>
+
+  <h2>Active outbreak alerts</h2>
+  <div id="alerts" class="card muted">Loading…</div>
+
+  <div class="row">
+    <div class="card grow">
+      <h2 style="margin-top:0">Pages</h2>
+      <ul>
+        <li><a href="/hub/registro.html">Registration</a> — sign up members with consent, member list, delete a member.</li>
+        <li><a href="/hub/simulador.html">SMS simulator</a> — Noor's basic phone (SIMULATED).</li>
+        <li><a href="/hub/bandeja.html">Outbox</a> — approve or reject alerts before they go out.</li>
+        <li><a href="/hub/mapa.html">Map</a> — farms coloured by their most serious report (30 days) and alert areas.</li>
+        <li><a href="/hub/tecnico.html">Officer worklist</a> — ranked visit list; the officer decides.</li>
+        <li><a href="/hub/contenido.html">Content</a> — review texts and audio, record native voices.</li>
+        <li><a href="/app/">Phone app</a> (for the daughter's smartphone).</li>
+      </ul>
+    </div>
+    <div class="card grow">
+      <h2 style="margin-top:0">Reference price (not AI)</h2>
+      <div id="prices" class="muted">Loading…</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Rules (design choices, not agronomic thresholds)</h2>
+    <div id="params" class="small"></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">DEMO data</h2>
+    <p class="small muted">Deletes everything stored in the hub (members, reports, messages, photos) and loads the sample data again.</p>
+    <button class="danger" id="reset">Reset DEMO data</button> <span id="reset-msg" class="small"></span>
+  </div>
+</main>
+<script src="/hub/common.js"></script>
+<script>
+(async function () {
+  const s = await initPage();
+  if (s) {
+    if (s.demo) document.getElementById("demo-note").innerHTML =
+      '<div class="notice warn"><b>DEMO:</b> the members, phone numbers and reports loaded here are made-up sample data. The SMS gateway is SIMULATED.</div>';
+    const items = [
+      ["Members", s.members, "/hub/registro.html"], ["Reports (7 days)", s.observations_7d, "/hub/mapa.html"],
+      ["Rust (7 days)", s.rust_7d, "/hub/mapa.html"], ["Active alerts", s.active_alerts, "/hub/mapa.html"],
+      ["Waiting for approval", s.pending_approval, "/hub/bandeja.html"], ["Officer worklist", s.worklist, "/hub/tecnico.html"],
+      ["Messages for the officer", s.officer_messages_new, "/hub/tecnico.html#mensajes"], ["Checked examples", s.labels, "/hub/tecnico.html#etiquetas"],
+    ];
+    document.getElementById("stats").innerHTML = items.map(([l, v, h]) =>
+      `<div class="stat"><a href="${h}"><b>${v}</b>${l}</a></div>`).join("");
+  }
+  const a = await api("/api/alerts");
+  const act = a.alerts.filter((x) => x.active);
+  document.getElementById("alerts").innerHTML = act.length ? act.map((x) =>
+    `<div class="notice alert"><b>Rust near ${esc(x.community)}</b>: ${x.n_reports} members reported rust in 7 days (${fmtDate(x.created_at)}).
+     Messages: ${x.messages.pending_approval || 0} waiting for approval, ${x.messages.sent_simulated || 0} sent (simulated), ${x.messages.rejected || 0} rejected.
+     <a href="/hub/bandeja.html">Go to the outbox</a></div>`).join("") : "No active alerts.";
+
+  const p = await api("/api/prices");
+  document.getElementById("prices").innerHTML = !p.available ? "No price table (data/prices.json)." :
+    `${p.demo ? '<span class="badge demo">DEMO</span> ' : ""}<table><tr><th>Item</th><th>Price</th><th>Date</th><th>Source</th></tr>` +
+    p.items.map((i) => `<tr><td>${esc(i.name_en)}${i.demo ? ' <span class="badge demo">DEMO</span>' : ""}</td><td>${Number(i.price).toFixed(2)} ${esc(i.unit)}</td><td>${esc(i.date)}</td><td>${i.source_url ? `<a href="${esc(i.source_url)}" target="_blank" rel="noopener">${esc(i.source)}</a>` : esc(i.source)}</td></tr>`).join("") +
+    `</table><p class="small">Reference price only, never the price at the member's factory or farm gate.${p.demo ? " DEMO values: still to be checked on the official source." : ""}</p>`;
+
+  const prm = await api("/api/params");
+  const o = prm.outbreak, w = prm.worklist;
+  document.getElementById("params").innerHTML =
+    `<p><b>Outbreak alert:</b> ${o.min_members} or more different members report RUST (confidence ≥ ${o.min_conf}%) within ${o.radius_km} km of each other in the last ${o.window_days} days →
+     one alert per area every ${o.one_alert_per_area_days} days. The SMS to members waits for staff approval.</p>
+     <p><b>Officer worklist:</b> last ${w.days} days; score = weight × confidence + ${w.alert_bonus} if inside an alert area.
+     Weights: ${Object.entries(w.weights).map(([k, v]) => k + " " + v).join(", ")}.</p>
+     <p><b>Free-text messages:</b> small classifier (threshold ${prm.intent.threshold}); when it is not sure, the message goes to the officer.
+     Exact keywords: PRICE, HELP, OFFICER (English) and BEI, MSAADA, AFISA (Kiswahili).</p>`;
+})();
+
+document.getElementById("reset").onclick = async () => {
+  if (!confirm("Delete all hub data and load the DEMO data again?")) return;
+  const m = document.getElementById("reset-msg");
+  try { const r = await api("/api/demo/reset", { method: "POST" }); m.textContent = `Done: ${r.members} members, ${r.observations} reports.`; setTimeout(() => location.reload(), 800); }
+  catch (e) { m.textContent = "Error: " + e.message; m.className = "small err"; }
+};
+</script>
+</body>
+</html>

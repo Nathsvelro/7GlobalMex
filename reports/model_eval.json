@@ -1,0 +1,2309 @@
+{
+  "model": {
+    "version": "cafetal-img-v2",
+    "file": "app/model/cafetal.onnx",
+    "sha1_12": "1ab8db2a32b8",
+    "classes": [
+      "sano",
+      "roya",
+      "minador",
+      "phoma",
+      "cercospora",
+      "otro"
+    ],
+    "size": 224,
+    "threshold": 0.9,
+    "threshold_note": "0.90 chosen on calibration data only; see reports/field_v2_threshold_sweep.md",
+    "blur_threshold": 4.2,
+    "shipped": "fp16_weights",
+    "fp32_file": "model/checkpoints/v2/cafetal_fp32.onnx",
+    "calibration_file": "reports/field_v2_calibration.json"
+  },
+  "ship_decision": {
+    "what": "Human ship decision for the phone app's image model. The ship rule itself is computed by model/field_eval.py and model/field_threshold.py; this file only records what the team decided and why. Read by model/evaluate.py, model/field_eval.py and model/field_threshold.py when they render reports.",
+    "shipped": {
+      "model": "v2",
+      "version": "cafetal-img-v2",
+      "file": "app/model/cafetal.onnx",
+      "file_sha1_12": "1ab8db2a32b8",
+      "threshold": 0.9,
+      "method": "single",
+      "candidate_key": "v2@0.9"
+    },
+    "decided_by": "the Cafetal team (an explicit human decision, not the output of the ship-rule script)",
+    "date": "2026-10-03",
+    "rule_outcome": "The pre-registered ship rule says DO NOT SHIP: v2 at t = 0.90 passes 4 of its 5 conditions and misses one (reports/field_v2_threshold_test.json)",
+    "exception": "(2), JMuBEN test macro-F1 (argmax and app-level) may drop at most 1 point",
+    "exception_check": "jmuben_macro_f1_drop<=1pt",
+    "reason": "the Kenyan close-ups it no longer answers go to the fail-safe \"I'm not sure\" (UNSR: show the leaf to the officer), not to wrong answers, and it never called a diseased leaf \"sano\" on either test set; and v2 is the only model that finds rust in field photos (v1 finds none on the held-out field test)."
+  },
+  "reference": {
+    "name": "v1",
+    "version": "cafetal-img-v1",
+    "file": "model/checkpoints/v1/cafetal.onnx",
+    "sha1_12": "99d722eb5ce7",
+    "threshold": 0.7,
+    "blur_threshold": 4.2,
+    "note": "the app's previous model, evaluated on the same images, decided with its own threshold",
+    "test": {
+      "argmax": {
+        "accuracy": 0.9847,
+        "macro_f1": 0.9845,
+        "per_class": {
+          "sano": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 500
+          },
+          "roya": {
+            "precision": 1.0,
+            "recall": 0.968,
+            "f1": 0.9837,
+            "support": 500
+          },
+          "minador": {
+            "precision": 0.9835,
+            "recall": 0.956,
+            "f1": 0.9696,
+            "support": 500
+          },
+          "phoma": {
+            "precision": 0.9802,
+            "recall": 0.988,
+            "f1": 0.9841,
+            "support": 500
+          },
+          "cercospora": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 500
+          },
+          "otro": {
+            "precision": 0.9428,
+            "recall": 0.9978,
+            "f1": 0.9695,
+            "support": 446
+          }
+        },
+        "confusion_matrix": [
+          [
+            500,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            484,
+            8,
+            0,
+            0,
+            8
+          ],
+          [
+            0,
+            0,
+            478,
+            9,
+            0,
+            13
+          ],
+          [
+            0,
+            0,
+            0,
+            494,
+            0,
+            6
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            500,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0,
+            445
+          ]
+        ]
+      },
+      "app_decision": {
+        "sano": {
+          "n": 500,
+          "correct": 1.0,
+          "wrong": 0.0,
+          "DUDA": 0.0
+        },
+        "roya": {
+          "n": 500,
+          "correct": 0.884,
+          "wrong": 0.0,
+          "DUDA": 0.116
+        },
+        "minador": {
+          "n": 500,
+          "correct": 0.922,
+          "wrong": 0.006,
+          "DUDA": 0.072
+        },
+        "phoma": {
+          "n": 500,
+          "correct": 0.984,
+          "wrong": 0.0,
+          "DUDA": 0.016
+        },
+        "cercospora": {
+          "n": 500,
+          "correct": 1.0,
+          "wrong": 0.0,
+          "DUDA": 0.0
+        },
+        "otro": {
+          "n": 446,
+          "rejected_to_DUDA": 0.9978
+        },
+        "_summary": {
+          "coffee_coverage": 0.9592,
+          "coffee_selective_accuracy": 0.9987,
+          "diseased_called_sano": 0.0,
+          "diseased_called_sano_n": 0,
+          "app_macro_f1_coffee": 0.9774
+        }
+      },
+      "otro_rejection": {
+        "imagenette/full": {
+          "n": 54,
+          "rejected": 1.0,
+          "argmax_otro": 1.0
+        },
+        "plantdoc/crop": {
+          "n": 196,
+          "rejected": 0.9949,
+          "argmax_otro": 0.9949
+        },
+        "plantdoc/full": {
+          "n": 196,
+          "rejected": 1.0,
+          "argmax_otro": 1.0
+        }
+      },
+      "otro_accepted": [
+        {
+          "image": "plantdoc/plant_doc_classification/Cherry leaf/canada-red-cherry-leaves.jpg",
+          "view": "crop",
+          "answer": "phoma",
+          "top1": 0.856
+        }
+      ]
+    },
+    "robustness": {
+      "clean": {
+        "accuracy_argmax": 0.9847,
+        "macro_f1_argmax": 0.9845,
+        "coffee_failsafe_rate": 0.0824,
+        "coffee_failsafe_by_blur": 0.0532,
+        "coffee_selective_accuracy": 0.9987,
+        "coffee_wrong_accepted": 0.0012,
+        "otro_rejected": 0.9978
+      },
+      "jpeg_q25": {
+        "accuracy_argmax": 0.9752,
+        "macro_f1_argmax": 0.975,
+        "coffee_failsafe_rate": 0.0436,
+        "coffee_failsafe_by_blur": 0.0032,
+        "coffee_selective_accuracy": 0.9971,
+        "coffee_wrong_accepted": 0.0028,
+        "otro_rejected": 0.9978
+      },
+      "gaussian_blur_r2": {
+        "accuracy_argmax": 0.979,
+        "macro_f1_argmax": 0.9786,
+        "coffee_failsafe_rate": 0.2644,
+        "coffee_failsafe_by_blur": 0.2428,
+        "coffee_selective_accuracy": 0.9967,
+        "coffee_wrong_accepted": 0.0024,
+        "otro_rejected": 0.9933
+      },
+      "gaussian_blur_r4": {
+        "accuracy_argmax": 0.9735,
+        "macro_f1_argmax": 0.9726,
+        "coffee_failsafe_rate": 0.9092,
+        "coffee_failsafe_by_blur": 0.8988,
+        "coffee_selective_accuracy": 0.9736,
+        "coffee_wrong_accepted": 0.0024,
+        "otro_rejected": 0.9798
+      },
+      "brightness_x0.6": {
+        "accuracy_argmax": 0.984,
+        "macro_f1_argmax": 0.9838,
+        "coffee_failsafe_rate": 0.1368,
+        "coffee_failsafe_by_blur": 0.1148,
+        "coffee_selective_accuracy": 0.9963,
+        "coffee_wrong_accepted": 0.0032,
+        "otro_rejected": 1.0
+      },
+      "brightness_x1.4": {
+        "accuracy_argmax": 0.981,
+        "macro_f1_argmax": 0.9808,
+        "coffee_failsafe_rate": 0.0508,
+        "coffee_failsafe_by_blur": 0.0268,
+        "coffee_selective_accuracy": 0.9937,
+        "coffee_wrong_accepted": 0.006,
+        "otro_rejected": 0.9978
+      },
+      "rotate_90": {
+        "accuracy_argmax": 0.9762,
+        "macro_f1_argmax": 0.9759,
+        "coffee_failsafe_rate": 0.0956,
+        "coffee_failsafe_by_blur": 0.0532,
+        "coffee_selective_accuracy": 1.0,
+        "coffee_wrong_accepted": 0.0,
+        "otro_rejected": 1.0
+      },
+      "downscale_64": {
+        "accuracy_argmax": 0.9847,
+        "macro_f1_argmax": 0.9845,
+        "coffee_failsafe_rate": 0.2852,
+        "coffee_failsafe_by_blur": 0.2612,
+        "coffee_selective_accuracy": 1.0,
+        "coffee_wrong_accepted": 0.0,
+        "otro_rejected": 0.991
+      }
+    },
+    "inat_coffee_photos": {
+      "n_images": 200,
+      "app_decision_share": {
+        "DUDA": 1.0
+      },
+      "argmax_share": {
+        "sano": 0.0,
+        "roya": 0.0,
+        "minador": 0.0,
+        "phoma": 0.0,
+        "cercospora": 0.0,
+        "otro": 1.0
+      },
+      "app_decision_counts_centre_crops": {
+        "centre_50pct": {
+          "DUDA": 200
+        },
+        "centre_25pct": {
+          "DUDA": 196,
+          "phoma": 4
+        },
+        "centre_12pct": {
+          "DUDA": 182,
+          "cercospora": 2,
+          "minador": 1,
+          "phoma": 13,
+          "roya": 2
+        }
+      }
+    },
+    "inat_field": {
+      "app_method": "single",
+      "field_test": {
+        "single": {
+          "roya": {
+            "n": 53,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 1,
+              "cercospora": 0,
+              "DUDA": 52
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 51,
+              "low_conf": 1
+            },
+            "DUDA": 0.9811,
+            "DUDA_ci95": [
+              0.9006,
+              0.9967
+            ],
+            "correct": 0.0,
+            "correct_ci95": [
+              0.0,
+              0.0676
+            ],
+            "wrong_accepted": 0.0189,
+            "wrong_accepted_ci95": [
+              0.0033,
+              0.0994
+            ],
+            "dangerous_sano": 0,
+            "dangerous_sano_rate": 0.0,
+            "dangerous_sano_ci95": [
+              0.0,
+              0.0676
+            ]
+          },
+          "roya screened": {
+            "n": 42,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 1,
+              "cercospora": 0,
+              "DUDA": 41
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 40,
+              "low_conf": 1
+            },
+            "DUDA": 0.9762,
+            "DUDA_ci95": [
+              0.8768,
+              0.9958
+            ],
+            "correct": 0.0,
+            "correct_ci95": [
+              0.0,
+              0.0838
+            ],
+            "wrong_accepted": 0.0238,
+            "wrong_accepted_ci95": [
+              0.0042,
+              0.1232
+            ],
+            "dangerous_sano": 0,
+            "dangerous_sano_rate": 0.0,
+            "dangerous_sano_ci95": [
+              0.0,
+              0.0838
+            ]
+          },
+          "minador": {
+            "n": 9,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 0,
+              "cercospora": 0,
+              "DUDA": 9
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 9,
+              "low_conf": 0
+            },
+            "DUDA": 1.0,
+            "DUDA_ci95": [
+              0.7008,
+              1.0
+            ],
+            "correct": 0.0,
+            "correct_ci95": [
+              0.0,
+              0.2992
+            ],
+            "wrong_accepted": 0.0,
+            "wrong_accepted_ci95": [
+              0.0,
+              0.2992
+            ],
+            "dangerous_sano": 0,
+            "dangerous_sano_rate": 0.0,
+            "dangerous_sano_ci95": [
+              0.0,
+              0.2992
+            ]
+          },
+          "minador screened": {
+            "n": 9,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 0,
+              "cercospora": 0,
+              "DUDA": 9
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 9,
+              "low_conf": 0
+            },
+            "DUDA": 1.0,
+            "DUDA_ci95": [
+              0.7008,
+              1.0
+            ],
+            "correct": 0.0,
+            "correct_ci95": [
+              0.0,
+              0.2992
+            ],
+            "wrong_accepted": 0.0,
+            "wrong_accepted_ci95": [
+              0.0,
+              0.2992
+            ],
+            "dangerous_sano": 0,
+            "dangerous_sano_rate": 0.0,
+            "dangerous_sano_ci95": [
+              0.0,
+              0.2992
+            ]
+          },
+          "cercospora": {
+            "n": 10,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 1,
+              "cercospora": 0,
+              "DUDA": 9
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 9,
+              "low_conf": 0
+            },
+            "DUDA": 0.9,
+            "DUDA_ci95": [
+              0.5958,
+              0.9821
+            ],
+            "correct": 0.0,
+            "correct_ci95": [
+              0.0,
+              0.2775
+            ],
+            "wrong_accepted": 0.1,
+            "wrong_accepted_ci95": [
+              0.0179,
+              0.4042
+            ],
+            "dangerous_sano": 0,
+            "dangerous_sano_rate": 0.0,
+            "dangerous_sano_ci95": [
+              0.0,
+              0.2775
+            ]
+          },
+          "cercospora screened": {
+            "n": 6,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 1,
+              "cercospora": 0,
+              "DUDA": 5
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 5,
+              "low_conf": 0
+            },
+            "DUDA": 0.8333,
+            "DUDA_ci95": [
+              0.4365,
+              0.9699
+            ],
+            "correct": 0.0,
+            "correct_ci95": [
+              0.0,
+              0.3903
+            ],
+            "wrong_accepted": 0.1667,
+            "wrong_accepted_ci95": [
+              0.0301,
+              0.5635
+            ],
+            "dangerous_sano": 0,
+            "dangerous_sano_rate": 0.0,
+            "dangerous_sano_ci95": [
+              0.0,
+              0.3903
+            ]
+          },
+          "ojo_de_gallo": {
+            "n": 90,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 4,
+              "phoma": 2,
+              "cercospora": 0,
+              "DUDA": 84
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 84,
+              "low_conf": 0
+            },
+            "DUDA": 0.9333,
+            "DUDA_ci95": [
+              0.8621,
+              0.9691
+            ],
+            "correct": 0.0,
+            "correct_ci95": [
+              0.0,
+              0.0409
+            ],
+            "wrong_accepted": 0.0667,
+            "wrong_accepted_ci95": [
+              0.0309,
+              0.1379
+            ],
+            "dangerous_sano": 0,
+            "dangerous_sano_rate": 0.0,
+            "dangerous_sano_ci95": [
+              0.0,
+              0.0409
+            ]
+          },
+          "ojo_de_gallo screened": {
+            "n": 26,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 4,
+              "phoma": 0,
+              "cercospora": 0,
+              "DUDA": 22
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 22,
+              "low_conf": 0
+            },
+            "DUDA": 0.8462,
+            "DUDA_ci95": [
+              0.6647,
+              0.9385
+            ],
+            "correct": 0.0,
+            "correct_ci95": [
+              0.0,
+              0.1287
+            ],
+            "wrong_accepted": 0.1538,
+            "wrong_accepted_ci95": [
+              0.0615,
+              0.3353
+            ],
+            "dangerous_sano": 0,
+            "dangerous_sano_rate": 0.0,
+            "dangerous_sano_ci95": [
+              0.0,
+              0.1287
+            ]
+          },
+          "coffea sample": {
+            "n": 399,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 0,
+              "cercospora": 0,
+              "DUDA": 399
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 399,
+              "low_conf": 0
+            },
+            "DUDA": 1.0,
+            "DUDA_ci95": [
+              0.9905,
+              1.0
+            ],
+            "disease_answer": 0.0,
+            "disease_answer_ci95": [
+              0.0,
+              0.0095
+            ],
+            "sano_answer": 0.0
+          },
+          "coffea sample East Africa": {
+            "n": 6,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 0,
+              "cercospora": 0,
+              "DUDA": 6
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 6,
+              "low_conf": 0
+            },
+            "DUDA": 1.0,
+            "DUDA_ci95": [
+              0.6097,
+              1.0
+            ],
+            "disease_answer": 0.0,
+            "disease_answer_ci95": [
+              0.0,
+              0.3903
+            ],
+            "sano_answer": 0.0
+          },
+          "coffea sample Kenya": {
+            "n": 3,
+            "answer_counts": {
+              "sano": 0,
+              "roya": 0,
+              "minador": 0,
+              "phoma": 0,
+              "cercospora": 0,
+              "DUDA": 3
+            },
+            "duda_reasons": {
+              "blurry": 0,
+              "not_coffee": 3,
+              "low_conf": 0
+            },
+            "DUDA": 1.0,
+            "DUDA_ci95": [
+              0.4385,
+              1.0
+            ],
+            "disease_answer": 0.0,
+            "disease_answer_ci95": [
+              0.0,
+              0.5615
+            ],
+            "sano_answer": 0.0
+          }
+        }
+      }
+    }
+  },
+  "test": {
+    "n_images": 2946,
+    "distinct_groups_per_class": {
+      "sano": 2,
+      "roya": 65,
+      "minador": 38,
+      "phoma": 27,
+      "cercospora": 12,
+      "otro": 250
+    },
+    "fp32": {
+      "accuracy": 0.9861,
+      "macro_f1": 0.9854,
+      "per_class": {
+        "sano": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 500
+        },
+        "roya": {
+          "precision": 0.9506,
+          "recall": 1.0,
+          "f1": 0.9747,
+          "support": 500
+        },
+        "minador": {
+          "precision": 0.9901,
+          "recall": 1.0,
+          "f1": 0.995,
+          "support": 500
+        },
+        "phoma": {
+          "precision": 0.998,
+          "recall": 0.988,
+          "f1": 0.993,
+          "support": 500
+        },
+        "cercospora": {
+          "precision": 0.994,
+          "recall": 1.0,
+          "f1": 0.997,
+          "support": 500
+        },
+        "otro": {
+          "precision": 0.9856,
+          "recall": 0.9215,
+          "f1": 0.9525,
+          "support": 446
+        }
+      },
+      "confusion_matrix": [
+        [
+          500,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          500,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          500,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          494,
+          0,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          500,
+          0
+        ],
+        [
+          0,
+          26,
+          5,
+          1,
+          3,
+          411
+        ]
+      ]
+    },
+    "shipped": {
+      "accuracy": 0.9857,
+      "macro_f1": 0.985,
+      "per_class": {
+        "sano": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 500
+        },
+        "roya": {
+          "precision": 0.9506,
+          "recall": 1.0,
+          "f1": 0.9747,
+          "support": 500
+        },
+        "minador": {
+          "precision": 0.9901,
+          "recall": 1.0,
+          "f1": 0.995,
+          "support": 500
+        },
+        "phoma": {
+          "precision": 0.996,
+          "recall": 0.988,
+          "f1": 0.992,
+          "support": 500
+        },
+        "cercospora": {
+          "precision": 0.994,
+          "recall": 1.0,
+          "f1": 0.997,
+          "support": 500
+        },
+        "otro": {
+          "precision": 0.9856,
+          "recall": 0.9193,
+          "f1": 0.9513,
+          "support": 446
+        }
+      },
+      "confusion_matrix": [
+        [
+          500,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          500,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          500,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          494,
+          0,
+          6
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          500,
+          0
+        ],
+        [
+          0,
+          26,
+          5,
+          2,
+          3,
+          410
+        ]
+      ]
+    },
+    "app_decision_shipped": {
+      "sano": {
+        "n": 500,
+        "correct": 1.0,
+        "wrong": 0.0,
+        "DUDA": 0.0
+      },
+      "roya": {
+        "n": 500,
+        "correct": 0.894,
+        "wrong": 0.0,
+        "DUDA": 0.106
+      },
+      "minador": {
+        "n": 500,
+        "correct": 0.926,
+        "wrong": 0.0,
+        "DUDA": 0.074
+      },
+      "phoma": {
+        "n": 500,
+        "correct": 0.868,
+        "wrong": 0.0,
+        "DUDA": 0.132
+      },
+      "cercospora": {
+        "n": 500,
+        "correct": 1.0,
+        "wrong": 0.0,
+        "DUDA": 0.0
+      },
+      "otro": {
+        "n": 446,
+        "rejected_to_DUDA": 0.9821
+      },
+      "_summary": {
+        "coffee_coverage": 0.9376,
+        "coffee_selective_accuracy": 1.0,
+        "diseased_called_sano": 0.0,
+        "diseased_called_sano_n": 0,
+        "app_macro_f1_coffee": 0.967
+      }
+    },
+    "otro_rejection_shipped": {
+      "imagenette/full": {
+        "n": 54,
+        "rejected": 1.0,
+        "argmax_otro": 1.0
+      },
+      "plantdoc/crop": {
+        "n": 196,
+        "rejected": 0.9745,
+        "argmax_otro": 0.8827
+      },
+      "plantdoc/full": {
+        "n": 196,
+        "rejected": 0.9847,
+        "argmax_otro": 0.9337
+      }
+    },
+    "shipped_vs_fp32_top1_agreement": 0.9997,
+    "otro_accepted_shipped": [
+      {
+        "image": "plantdoc/plant_doc_classification/Apple Scab Leaf/Apple-Scab-image-02.jpg",
+        "view": "full",
+        "answer": "roya",
+        "top1": 0.981,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Apple rust leaf/buckinghamshire-speen-garden-cedar-apple-rust-on-apple-underside-of-F5D3RD.jpg",
+        "view": "crop",
+        "answer": "roya",
+        "top1": 0.944,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Apple rust leaf/car-apple1.jpg",
+        "view": "full",
+        "answer": "roya",
+        "top1": 0.992,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Apple rust leaf/car-apple1.jpg",
+        "view": "crop",
+        "answer": "roya",
+        "top1": 0.985,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Apple rust leaf/cedar%20apple%20rust%20upper%20leaf%20surface%20S%20ne%20OH%20RA%209-2-16.jpg",
+        "view": "full",
+        "answer": "roya",
+        "top1": 0.901,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Cherry leaf/canada-red-cherry-leaves.jpg",
+        "view": "crop",
+        "answer": "phoma",
+        "top1": 0.935,
+        "reference_answer": "phoma"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Cherry leaf/img_3088.jpg",
+        "view": "crop",
+        "answer": "roya",
+        "top1": 0.944,
+        "reference_answer": "DUDA"
+      },
+      {
+        "image": "plantdoc/plant_doc_classification/Tomato leaf bacterial spot/Bacterial_spots2277.jpg",
+        "view": "crop",
+        "answer": "minador",
+        "top1": 0.915,
+        "reference_answer": "DUDA"
+      }
+    ]
+  },
+  "robustness": {
+    "clean": {
+      "accuracy_argmax": 0.9857,
+      "macro_f1_argmax": 0.985,
+      "coffee_failsafe_rate": 0.104,
+      "coffee_failsafe_by_blur": 0.0532,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.9821
+    },
+    "jpeg_q25": {
+      "accuracy_argmax": 0.9749,
+      "macro_f1_argmax": 0.974,
+      "coffee_failsafe_rate": 0.0724,
+      "coffee_failsafe_by_blur": 0.0032,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.991
+    },
+    "gaussian_blur_r2": {
+      "accuracy_argmax": 0.9793,
+      "macro_f1_argmax": 0.9782,
+      "coffee_failsafe_rate": 0.3064,
+      "coffee_failsafe_by_blur": 0.2428,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.9798
+    },
+    "gaussian_blur_r4": {
+      "accuracy_argmax": 0.9545,
+      "macro_f1_argmax": 0.953,
+      "coffee_failsafe_rate": 0.9444,
+      "coffee_failsafe_by_blur": 0.8988,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.9933
+    },
+    "brightness_x0.6": {
+      "accuracy_argmax": 0.9861,
+      "macro_f1_argmax": 0.9854,
+      "coffee_failsafe_rate": 0.1792,
+      "coffee_failsafe_by_blur": 0.1148,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.9843
+    },
+    "brightness_x1.4": {
+      "accuracy_argmax": 0.9864,
+      "macro_f1_argmax": 0.9857,
+      "coffee_failsafe_rate": 0.1284,
+      "coffee_failsafe_by_blur": 0.0268,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.991
+    },
+    "rotate_90": {
+      "accuracy_argmax": 0.9871,
+      "macro_f1_argmax": 0.9865,
+      "coffee_failsafe_rate": 0.1052,
+      "coffee_failsafe_by_blur": 0.0532,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.9798
+    },
+    "downscale_64": {
+      "accuracy_argmax": 0.9749,
+      "macro_f1_argmax": 0.9737,
+      "coffee_failsafe_rate": 0.2872,
+      "coffee_failsafe_by_blur": 0.2612,
+      "coffee_selective_accuracy": 1.0,
+      "coffee_wrong_accepted": 0.0,
+      "otro_rejected": 0.9821
+    }
+  },
+  "field_test": {
+    "n_images": 0,
+    "note": "0 images - not yet collected (put photos in data/field_test/<label>/ and rerun)"
+  },
+  "leakage_check": {
+    "n_images": 1800,
+    "accuracy": 0.9894,
+    "macro_f1": 0.9894,
+    "note": "unused copies (flips/rotations/colour shifts/burst shots) of TRAINING photos, i.e. what a naive random split would have put in the test set. Compare with the group-split test."
+  },
+  "inat_coffee_photos": {
+    "n_images": 200,
+    "app_decision_share": {
+      "DUDA": 0.935,
+      "minador": 0.01,
+      "roya": 0.055
+    },
+    "argmax_share": {
+      "sano": 0.0,
+      "roya": 0.19,
+      "minador": 0.015,
+      "phoma": 0.0,
+      "cercospora": 0.005,
+      "otro": 0.79
+    },
+    "app_decision_counts_centre_crops": {
+      "centre_50pct": {
+        "DUDA": 182,
+        "minador": 1,
+        "roya": 17
+      },
+      "centre_25pct": {
+        "DUDA": 184,
+        "minador": 2,
+        "roya": 14
+      },
+      "centre_12pct": {
+        "DUDA": 189,
+        "cercospora": 1,
+        "minador": 3,
+        "phoma": 1,
+        "roya": 6
+      }
+    },
+    "note": "iNatAg-mini/coffea_arabica (iNaturalist, CC BY-NC 4.0): whole plants, flowers, cherries; disease status unknown. Not used for training (neither v1 nor v2). Desired behaviour: mostly DUDA."
+  },
+  "inat_field": {
+    "n_photos": 768,
+    "app_method": "single",
+    "field_test": {
+      "single": {
+        "roya": {
+          "n": 53,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 34,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 19
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 9,
+            "low_conf": 10
+          },
+          "DUDA": 0.3585,
+          "DUDA_ci95": [
+            0.243,
+            0.4931
+          ],
+          "correct": 0.6415,
+          "correct_ci95": [
+            0.5069,
+            0.757
+          ],
+          "wrong_accepted": 0.0,
+          "wrong_accepted_ci95": [
+            0.0,
+            0.0676
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.0676
+          ]
+        },
+        "roya screened": {
+          "n": 42,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 34,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 8
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 1,
+            "low_conf": 7
+          },
+          "DUDA": 0.1905,
+          "DUDA_ci95": [
+            0.0998,
+            0.333
+          ],
+          "correct": 0.8095,
+          "correct_ci95": [
+            0.667,
+            0.9002
+          ],
+          "wrong_accepted": 0.0,
+          "wrong_accepted_ci95": [
+            0.0,
+            0.0838
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.0838
+          ]
+        },
+        "minador": {
+          "n": 9,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 2,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 7
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 1,
+            "low_conf": 6
+          },
+          "DUDA": 0.7778,
+          "DUDA_ci95": [
+            0.4526,
+            0.9368
+          ],
+          "correct": 0.2222,
+          "correct_ci95": [
+            0.0632,
+            0.5474
+          ],
+          "wrong_accepted": 0.0,
+          "wrong_accepted_ci95": [
+            0.0,
+            0.2992
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.2992
+          ]
+        },
+        "minador screened": {
+          "n": 9,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 2,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 7
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 1,
+            "low_conf": 6
+          },
+          "DUDA": 0.7778,
+          "DUDA_ci95": [
+            0.4526,
+            0.9368
+          ],
+          "correct": 0.2222,
+          "correct_ci95": [
+            0.0632,
+            0.5474
+          ],
+          "wrong_accepted": 0.0,
+          "wrong_accepted_ci95": [
+            0.0,
+            0.2992
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.2992
+          ]
+        },
+        "cercospora": {
+          "n": 10,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 2,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 8
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 2,
+            "low_conf": 6
+          },
+          "DUDA": 0.8,
+          "DUDA_ci95": [
+            0.4902,
+            0.9433
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.2775
+          ],
+          "wrong_accepted": 0.2,
+          "wrong_accepted_ci95": [
+            0.0567,
+            0.5098
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.2775
+          ]
+        },
+        "cercospora screened": {
+          "n": 6,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 1,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 5
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 0,
+            "low_conf": 5
+          },
+          "DUDA": 0.8333,
+          "DUDA_ci95": [
+            0.4365,
+            0.9699
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.3903
+          ],
+          "wrong_accepted": 0.1667,
+          "wrong_accepted_ci95": [
+            0.0301,
+            0.5635
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.3903
+          ]
+        },
+        "ojo_de_gallo": {
+          "n": 90,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 6,
+            "minador": 1,
+            "phoma": 1,
+            "cercospora": 0,
+            "DUDA": 82
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 53,
+            "low_conf": 29
+          },
+          "DUDA": 0.9111,
+          "DUDA_ci95": [
+            0.8343,
+            0.9543
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.0409
+          ],
+          "wrong_accepted": 0.0889,
+          "wrong_accepted_ci95": [
+            0.0457,
+            0.1657
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.0409
+          ]
+        },
+        "ojo_de_gallo screened": {
+          "n": 26,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 6,
+            "minador": 1,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 19
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 8,
+            "low_conf": 11
+          },
+          "DUDA": 0.7308,
+          "DUDA_ci95": [
+            0.5392,
+            0.863
+          ],
+          "correct": 0.0,
+          "correct_ci95": [
+            0.0,
+            0.1287
+          ],
+          "wrong_accepted": 0.2692,
+          "wrong_accepted_ci95": [
+            0.137,
+            0.4608
+          ],
+          "dangerous_sano": 0,
+          "dangerous_sano_rate": 0.0,
+          "dangerous_sano_ci95": [
+            0.0,
+            0.1287
+          ]
+        },
+        "coffea sample": {
+          "n": 399,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 9,
+            "minador": 1,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 389
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 331,
+            "low_conf": 58
+          },
+          "DUDA": 0.9749,
+          "DUDA_ci95": [
+            0.9545,
+            0.9863
+          ],
+          "disease_answer": 0.0251,
+          "disease_answer_ci95": [
+            0.0137,
+            0.0455
+          ],
+          "sano_answer": 0.0
+        },
+        "coffea sample East Africa": {
+          "n": 6,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 6
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 5,
+            "low_conf": 1
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.6097,
+            1.0
+          ],
+          "disease_answer": 0.0,
+          "disease_answer_ci95": [
+            0.0,
+            0.3903
+          ],
+          "sano_answer": 0.0
+        },
+        "coffea sample Kenya": {
+          "n": 3,
+          "answer_counts": {
+            "sano": 0,
+            "roya": 0,
+            "minador": 0,
+            "phoma": 0,
+            "cercospora": 0,
+            "DUDA": 3
+          },
+          "duda_reasons": {
+            "blurry": 0,
+            "not_coffee": 3,
+            "low_conf": 0
+          },
+          "DUDA": 1.0,
+          "DUDA_ci95": [
+            0.4385,
+            1.0
+          ],
+          "disease_answer": 0.0,
+          "disease_answer_ci95": [
+            0.0,
+            0.5615
+          ],
+          "sano_answer": 0.0
+        }
+      }
+    },
+    "note": "held-out field test only (observers not used in training, except the observer of 1 ojo de gallo photo); iNaturalist photos are a proxy for field photos from Kirinyaga, and none of the labelled disease photos is from East Africa; details, ship rule and v1/v2 comparison in reports/field_eval.md"
+  },
+  "size_latency": {
+    "size_bytes": {
+      "fp32": 3783080,
+      "shipped": 1972422,
+      "reference": 1972251
+    },
+    "size_mb": {
+      "fp32": 3.78,
+      "shipped": 1.97,
+      "reference": 1.97
+    },
+    "cpu_latency_ms_median_1thread": {
+      "fp32": 3.18,
+      "shipped": 3.19,
+      "reference": 3.19
+    },
+    "latency_note": "onnxruntime Python 1.19.2, CPUExecutionProvider, 1 thread, batch 1, median of 50, build server x86 CPU (not a phone)",
+    "ortweb_node_wasm_ms_median": {
+      "fp32": 13.789139000000034,
+      "shipped": 12.502050000000054,
+      "reference": 13.692633999999998
+    },
+    "ortweb_note": "onnxruntime-web 1.19.2 WASM backend, 1 thread, Node.js on the build server (not a phone), measured at export time (model/export_onnx.py, calibration record)",
+    "download_seconds_computed": {
+      "fp32": {
+        "3G_384kbps": 78.8,
+        "3G_1Mbps": 30.3
+      },
+      "shipped": {
+        "3G_384kbps": 41.1,
+        "3G_1Mbps": 15.8
+      },
+      "reference": {
+        "3G_384kbps": 41.1,
+        "3G_1Mbps": 15.8
+      }
+    },
+    "download_note": "computed = bytes*8/bitrate, no protocol overhead; throttled-browser measurements are in reports/browser_metrics.md (emulated)"
+  },
+  "data_split": {
+    "hash": "dHash 72-bit on equalised grayscale 9x9, min over 8 flips/rotations, Hamming <= 8, union-find",
+    "seed": 42,
+    "size": 224,
+    "classes": [
+      "sano",
+      "roya",
+      "minador",
+      "phoma",
+      "cercospora",
+      "otro"
+    ],
+    "strata": {
+      "imagenette/otro": {
+        "images": 700,
+        "exact_dup_groups": 700,
+        "groups": 689,
+        "largest_group": 5,
+        "median_group": 1,
+        "images_per_split": {
+          "val": 105,
+          "test": 105,
+          "train": 490
+        },
+        "groups_per_split": {
+          "val": 105,
+          "test": 105,
+          "train": 479
+        }
+      },
+      "jmuben/cercospora": {
+        "images": 7681,
+        "exact_dup_groups": 80,
+        "groups": 78,
+        "largest_group": 192,
+        "median_group": 96,
+        "images_per_split": {
+          "train": 5377,
+          "val": 1152,
+          "test": 1152
+        },
+        "groups_per_split": {
+          "val": 12,
+          "test": 12,
+          "train": 54
+        }
+      },
+      "jmuben/minador": {
+        "images": 16978,
+        "exact_dup_groups": 455,
+        "groups": 246,
+        "largest_group": 352,
+        "median_group": 64,
+        "images_per_split": {
+          "train": 11906,
+          "test": 2560,
+          "val": 2512
+        },
+        "groups_per_split": {
+          "val": 36,
+          "test": 38,
+          "train": 172
+        }
+      },
+      "jmuben/phoma": {
+        "images": 6571,
+        "exact_dup_groups": 181,
+        "groups": 171,
+        "largest_group": 160,
+        "median_group": 40,
+        "images_per_split": {
+          "train": 4593,
+          "test": 992,
+          "val": 986
+        },
+        "groups_per_split": {
+          "val": 24,
+          "test": 27,
+          "train": 120
+        }
+      },
+      "jmuben/roya": {
+        "images": 8336,
+        "exact_dup_groups": 520,
+        "groups": 373,
+        "largest_group": 304,
+        "median_group": 16,
+        "images_per_split": {
+          "train": 5824,
+          "val": 1264,
+          "test": 1248
+        },
+        "groups_per_split": {
+          "val": 63,
+          "test": 65,
+          "train": 245
+        }
+      },
+      "jmuben/sano": {
+        "images": 18983,
+        "exact_dup_groups": 14,
+        "groups": 11,
+        "largest_group": 3600,
+        "median_group": 1401,
+        "images_per_split": {
+          "val": 2761,
+          "train": 13102,
+          "test": 3120
+        },
+        "groups_per_split": {
+          "val": 2,
+          "test": 2,
+          "train": 7
+        }
+      },
+      "plantdoc/otro": {
+        "images": 2569,
+        "exact_dup_groups": 2518,
+        "groups": 2440,
+        "largest_group": 29,
+        "median_group": 1,
+        "images_per_split": {
+          "train": 1798,
+          "test": 385,
+          "val": 386
+        },
+        "groups_per_split": {
+          "val": 373,
+          "test": 367,
+          "train": 1700
+        }
+      }
+    },
+    "unreadable_files": 0,
+    "cross_label_exact_duplicates": 0,
+    "selected": {
+      "train": {
+        "sano": 1500,
+        "roya": 1500,
+        "minador": 1500,
+        "phoma": 1500,
+        "cercospora": 1500,
+        "otro": 2663
+      },
+      "train_groups": {
+        "sano": 7,
+        "roya": 245,
+        "minador": 172,
+        "phoma": 120,
+        "cercospora": 54,
+        "otro": 1500
+      },
+      "val": {
+        "sano": 300,
+        "roya": 300,
+        "minador": 300,
+        "phoma": 300,
+        "cercospora": 300,
+        "otro": 267
+      },
+      "val_groups": {
+        "sano": 2,
+        "roya": 63,
+        "minador": 36,
+        "phoma": 24,
+        "cercospora": 12,
+        "otro": 150
+      },
+      "test": {
+        "sano": 500,
+        "roya": 500,
+        "minador": 500,
+        "phoma": 500,
+        "cercospora": 500,
+        "otro": 446
+      },
+      "test_groups": {
+        "sano": 2,
+        "roya": 65,
+        "minador": 38,
+        "phoma": 27,
+        "cercospora": 12,
+        "otro": 250
+      }
+    },
+    "extra_inat_images": 200
+  },
+  "calibration": {
+    "threshold": {
+      "value": 0.7,
+      "data_driven_value": 0.5,
+      "policy_floor": 0.7,
+      "floor_reason": "validation images come from the same Kenyan dataset as training, so confidence on real field photos will be lower and less reliable; the floor keeps the PLAN.md default 0.70 when the data-driven value is lower",
+      "rule": "lowest t in [0.50,0.90] where accepted validation predictions reach >= 95% accuracy on clean images AND on clean + 5 phone-like degradations (jpeg q25, blur r2, brightness x0.6/x1.4, downscale 64); blur-rejected images count as not accepted",
+      "curve": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.9706,
+          "selective_accuracy": 0.9918
+        },
+        {
+          "threshold": 0.51,
+          "coverage": 0.9706,
+          "selective_accuracy": 0.9918
+        },
+        {
+          "threshold": 0.52,
+          "coverage": 0.9694,
+          "selective_accuracy": 0.9918
+        },
+        {
+          "threshold": 0.53,
+          "coverage": 0.9689,
+          "selective_accuracy": 0.9924
+        },
+        {
+          "threshold": 0.54,
+          "coverage": 0.9677,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.55,
+          "coverage": 0.9677,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.56,
+          "coverage": 0.9666,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.57,
+          "coverage": 0.9666,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.58,
+          "coverage": 0.966,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.59,
+          "coverage": 0.966,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 0.966,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.61,
+          "coverage": 0.966,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.62,
+          "coverage": 0.9655,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.63,
+          "coverage": 0.9655,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.64,
+          "coverage": 0.9655,
+          "selective_accuracy": 0.9936
+        },
+        {
+          "threshold": 0.65,
+          "coverage": 0.9649,
+          "selective_accuracy": 0.9935
+        },
+        {
+          "threshold": 0.66,
+          "coverage": 0.9638,
+          "selective_accuracy": 0.9935
+        },
+        {
+          "threshold": 0.67,
+          "coverage": 0.9632,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.68,
+          "coverage": 0.9626,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.69,
+          "coverage": 0.9615,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.9536,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.71,
+          "coverage": 0.9536,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.72,
+          "coverage": 0.9525,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.73,
+          "coverage": 0.9525,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.74,
+          "coverage": 0.9525,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.75,
+          "coverage": 0.9508,
+          "selective_accuracy": 0.994
+        },
+        {
+          "threshold": 0.76,
+          "coverage": 0.9502,
+          "selective_accuracy": 0.994
+        },
+        {
+          "threshold": 0.77,
+          "coverage": 0.9496,
+          "selective_accuracy": 0.994
+        },
+        {
+          "threshold": 0.78,
+          "coverage": 0.9451,
+          "selective_accuracy": 0.9946
+        },
+        {
+          "threshold": 0.79,
+          "coverage": 0.9417,
+          "selective_accuracy": 0.9952
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.9411,
+          "selective_accuracy": 0.9952
+        },
+        {
+          "threshold": 0.81,
+          "coverage": 0.9411,
+          "selective_accuracy": 0.9952
+        },
+        {
+          "threshold": 0.82,
+          "coverage": 0.9411,
+          "selective_accuracy": 0.9952
+        },
+        {
+          "threshold": 0.83,
+          "coverage": 0.94,
+          "selective_accuracy": 0.9952
+        },
+        {
+          "threshold": 0.84,
+          "coverage": 0.9349,
+          "selective_accuracy": 0.9964
+        },
+        {
+          "threshold": 0.85,
+          "coverage": 0.9344,
+          "selective_accuracy": 0.9964
+        },
+        {
+          "threshold": 0.86,
+          "coverage": 0.9304,
+          "selective_accuracy": 0.9964
+        },
+        {
+          "threshold": 0.87,
+          "coverage": 0.9293,
+          "selective_accuracy": 0.9963
+        },
+        {
+          "threshold": 0.88,
+          "coverage": 0.9276,
+          "selective_accuracy": 0.9963
+        },
+        {
+          "threshold": 0.89,
+          "coverage": 0.9247,
+          "selective_accuracy": 0.9963
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.9213,
+          "selective_accuracy": 0.9969
+        }
+      ],
+      "curve_with_degradations": [
+        {
+          "threshold": 0.5,
+          "coverage": 0.9216,
+          "selective_accuracy": 0.9735
+        },
+        {
+          "threshold": 0.51,
+          "coverage": 0.9213,
+          "selective_accuracy": 0.9736
+        },
+        {
+          "threshold": 0.52,
+          "coverage": 0.9208,
+          "selective_accuracy": 0.9739
+        },
+        {
+          "threshold": 0.53,
+          "coverage": 0.9199,
+          "selective_accuracy": 0.9741
+        },
+        {
+          "threshold": 0.54,
+          "coverage": 0.9161,
+          "selective_accuracy": 0.9779
+        },
+        {
+          "threshold": 0.55,
+          "coverage": 0.9155,
+          "selective_accuracy": 0.9784
+        },
+        {
+          "threshold": 0.56,
+          "coverage": 0.9126,
+          "selective_accuracy": 0.981
+        },
+        {
+          "threshold": 0.57,
+          "coverage": 0.9121,
+          "selective_accuracy": 0.9813
+        },
+        {
+          "threshold": 0.58,
+          "coverage": 0.9114,
+          "selective_accuracy": 0.9816
+        },
+        {
+          "threshold": 0.59,
+          "coverage": 0.9109,
+          "selective_accuracy": 0.9819
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 0.9098,
+          "selective_accuracy": 0.982
+        },
+        {
+          "threshold": 0.61,
+          "coverage": 0.9091,
+          "selective_accuracy": 0.9823
+        },
+        {
+          "threshold": 0.62,
+          "coverage": 0.9061,
+          "selective_accuracy": 0.9849
+        },
+        {
+          "threshold": 0.63,
+          "coverage": 0.9044,
+          "selective_accuracy": 0.9862
+        },
+        {
+          "threshold": 0.64,
+          "coverage": 0.9033,
+          "selective_accuracy": 0.9872
+        },
+        {
+          "threshold": 0.65,
+          "coverage": 0.9028,
+          "selective_accuracy": 0.9874
+        },
+        {
+          "threshold": 0.66,
+          "coverage": 0.9021,
+          "selective_accuracy": 0.9877
+        },
+        {
+          "threshold": 0.67,
+          "coverage": 0.8981,
+          "selective_accuracy": 0.9914
+        },
+        {
+          "threshold": 0.68,
+          "coverage": 0.8957,
+          "selective_accuracy": 0.9919
+        },
+        {
+          "threshold": 0.69,
+          "coverage": 0.8952,
+          "selective_accuracy": 0.9919
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.8933,
+          "selective_accuracy": 0.9921
+        },
+        {
+          "threshold": 0.71,
+          "coverage": 0.8924,
+          "selective_accuracy": 0.9924
+        },
+        {
+          "threshold": 0.72,
+          "coverage": 0.8901,
+          "selective_accuracy": 0.9927
+        },
+        {
+          "threshold": 0.73,
+          "coverage": 0.8888,
+          "selective_accuracy": 0.9928
+        },
+        {
+          "threshold": 0.74,
+          "coverage": 0.8874,
+          "selective_accuracy": 0.9932
+        },
+        {
+          "threshold": 0.75,
+          "coverage": 0.8837,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.76,
+          "coverage": 0.8824,
+          "selective_accuracy": 0.9941
+        },
+        {
+          "threshold": 0.77,
+          "coverage": 0.8797,
+          "selective_accuracy": 0.9943
+        },
+        {
+          "threshold": 0.78,
+          "coverage": 0.878,
+          "selective_accuracy": 0.9945
+        },
+        {
+          "threshold": 0.79,
+          "coverage": 0.8761,
+          "selective_accuracy": 0.9948
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.8754,
+          "selective_accuracy": 0.9952
+        },
+        {
+          "threshold": 0.81,
+          "coverage": 0.8732,
+          "selective_accuracy": 0.9955
+        },
+        {
+          "threshold": 0.82,
+          "coverage": 0.872,
+          "selective_accuracy": 0.9955
+        },
+        {
+          "threshold": 0.83,
+          "coverage": 0.8707,
+          "selective_accuracy": 0.9958
+        },
+        {
+          "threshold": 0.84,
+          "coverage": 0.8657,
+          "selective_accuracy": 0.9963
+        },
+        {
+          "threshold": 0.85,
+          "coverage": 0.858,
+          "selective_accuracy": 0.9963
+        },
+        {
+          "threshold": 0.86,
+          "coverage": 0.8558,
+          "selective_accuracy": 0.9964
+        },
+        {
+          "threshold": 0.87,
+          "coverage": 0.851,
+          "selective_accuracy": 0.9963
+        },
+        {
+          "threshold": 0.88,
+          "coverage": 0.8463,
+          "selective_accuracy": 0.9965
+        },
+        {
+          "threshold": 0.89,
+          "coverage": 0.8428,
+          "selective_accuracy": 0.9969
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.839,
+          "selective_accuracy": 0.9973
+        }
+      ]
+    },
+    "blur_threshold": {
+      "value": 4.2,
+      "rule": "floor(min over coffee classes of the 5th percentile of real validation images), 1 decimal",
+      "per_class": {
+        "sano": {
+          "n": 300,
+          "real_median": 381.0,
+          "real_p5": 331.0,
+          "real_rejected": 0.0,
+          "blur_r3_median": 3.5,
+          "blur_r3_rejected": 1.0,
+          "blur_r4_rejected": 1.0
+        },
+        "roya": {
+          "n": 300,
+          "real_median": 16.2,
+          "real_p5": 4.3,
+          "real_rejected": 0.04,
+          "blur_r3_median": 1.6,
+          "blur_r3_rejected": 0.9,
+          "blur_r4_rejected": 1.0
+        },
+        "minador": {
+          "n": 300,
+          "real_median": 432.4,
+          "real_p5": 145.4,
+          "real_rejected": 0.0,
+          "blur_r3_median": 6.0,
+          "blur_r3_rejected": 0.2533,
+          "blur_r4_rejected": 0.8233
+        },
+        "phoma": {
+          "n": 300,
+          "real_median": 642.2,
+          "real_p5": 290.5,
+          "real_rejected": 0.0,
+          "blur_r3_median": 7.4,
+          "blur_r3_rejected": 0.0,
+          "blur_r4_rejected": 0.65
+        },
+        "cercospora": {
+          "n": 300,
+          "real_median": 169.9,
+          "real_p5": 57.2,
+          "real_rejected": 0.0,
+          "blur_r3_median": 3.7,
+          "blur_r3_rejected": 0.75,
+          "blur_r4_rejected": 1.0
+        },
+        "otro": {
+          "n": 150,
+          "real_median": 800.6,
+          "real_p5": 283.7,
+          "real_rejected": 0.0,
+          "blur_r3_median": 16.0,
+          "blur_r3_rejected": 0.02,
+          "blur_r4_rejected": 0.2533
+        }
+      }
+    },
+    "val_macro_f1": {
+      "fp32": 0.9778,
+      "shipped": 0.9778
+    },
+    "val_accuracy": {
+      "fp32": 0.9779,
+      "shipped": 0.9779
+    },
+    "fp32_vs_keras_max_abs_diff": 9.5367431640625e-07,
+    "shipped": "fp16_weights",
+    "choice_reason": "forced fp16_weights",
+    "candidates": {
+      "int8_static": {
+        "size_bytes": 1379510,
+        "val_macro_f1": 0.0438,
+        "val_accuracy": 0.1511,
+        "top1_agreement_with_fp32": 0.1432,
+        "ortweb_node": {
+          "ok": true,
+          "backend": "wasm",
+          "entry": "ort.node.min.mjs",
+          "input": "image",
+          "output": "probs",
+          "ms_first": 41.81154699999996,
+          "ms_median": 16.810513000000014,
+          "runs": 20,
+          "max_abs_diff_vs_python_ort": 0.0
+        }
+      },
+      "int8_weights": {
+        "size_bytes": 1122827,
+        "val_macro_f1": 0.9709,
+        "val_accuracy": 0.9711,
+        "top1_agreement_with_fp32": 0.9757,
+        "ortweb_node": {
+          "ok": true,
+          "backend": "wasm",
+          "entry": "ort.node.min.mjs",
+          "input": "image",
+          "output": "probs",
+          "ms_first": 44.471202000000005,
+          "ms_median": 13.168773999999985,
+          "runs": 20,
+          "max_abs_diff_vs_python_ort": 6.332993507385254e-08
+        }
+      },
+      "fp16_weights": {
+        "size_bytes": 1972422,
+        "val_macro_f1": 0.9778,
+        "val_accuracy": 0.9779,
+        "top1_agreement_with_fp32": 1.0,
+        "ortweb_node": {
+          "ok": true,
+          "backend": "wasm",
+          "entry": "ort.node.min.mjs",
+          "input": "image",
+          "output": "probs",
+          "ms_first": 38.25744699999996,
+          "ms_median": 12.502050000000054,
+          "runs": 20,
+          "max_abs_diff_vs_python_ort": 1.862645149230957e-09
+        }
+      },
+      "fp32": {
+        "size_bytes": 3783080,
+        "val_macro_f1": 0.9778,
+        "val_accuracy": 0.9779,
+        "top1_agreement_with_fp32": 1.0,
+        "ortweb_node": {
+          "ok": true,
+          "backend": "wasm",
+          "entry": "ort.node.min.mjs",
+          "input": "image",
+          "output": "probs",
+          "ms_first": 34.895977000000016,
+          "ms_median": 13.789139000000034,
+          "runs": 20,
+          "max_abs_diff_vs_python_ort": 5.122274160385132e-09
+        }
+      }
+    }
+  }
+}

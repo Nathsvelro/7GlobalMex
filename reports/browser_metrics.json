@@ -1,0 +1,233 @@
+{
+  "emulated": true,
+  "hub": "http://localhost:8100",
+  "measured_at": "2026-10-04T01:43:56.391Z",
+  "env": {
+    "chromium": "141.0.7390.37",
+    "cpus": 4,
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+    "headless": true,
+    "device": "Pixel 5 (Playwright)"
+  },
+  "inference": [
+    {
+      "cpu_throttle": 1,
+      "cold_first_photo_ms": 645.6,
+      "first_result": {
+        "label": "roya",
+        "conf": 99
+      },
+      "diagnose_128px_median_ms": 18.4,
+      "diagnose_12mp_median_ms": 22.2,
+      "session_run_median_ms": 10,
+      "raw_ms": {
+        "diagnose_128px": [
+          24.8,
+          19,
+          28.6,
+          19.2,
+          17.3,
+          17.1,
+          15.5,
+          23.3,
+          15.8,
+          17.8
+        ],
+        "diagnose_12mp": [
+          107.5,
+          22.9,
+          15.1,
+          19,
+          19.6,
+          21.5,
+          27.7,
+          39.4,
+          31.3,
+          16.8
+        ],
+        "session_run": [
+          10.3,
+          10.3,
+          12.3,
+          11.2,
+          9.6,
+          9.8,
+          9.7,
+          9.8,
+          10.1,
+          9.8
+        ]
+      }
+    },
+    {
+      "cpu_throttle": 4,
+      "cold_first_photo_ms": 3687.1,
+      "first_result": {
+        "label": "roya",
+        "conf": 99
+      },
+      "diagnose_128px_median_ms": 61.9,
+      "diagnose_12mp_median_ms": 64,
+      "session_run_median_ms": 54.3,
+      "raw_ms": {
+        "diagnose_128px": [
+          125.2,
+          78.3,
+          62.9,
+          56.6,
+          60.4,
+          62.9,
+          60.9,
+          54.8,
+          81,
+          60.6
+        ],
+        "diagnose_12mp": [
+          146,
+          65.3,
+          64.7,
+          63.5,
+          63.2,
+          62.2,
+          63,
+          61.6,
+          64.5,
+          65.3
+        ],
+        "session_run": [
+          55.3,
+          53.8,
+          53.3,
+          53.8,
+          52.8,
+          55.4,
+          54.7,
+          55.3,
+          55.7,
+          53.1
+        ]
+      }
+    },
+    {
+      "cpu_throttle": 6,
+      "cold_first_photo_ms": 3648.2,
+      "first_result": {
+        "label": "roya",
+        "conf": 99
+      },
+      "diagnose_128px_median_ms": 98,
+      "diagnose_12mp_median_ms": 105.4,
+      "session_run_median_ms": 83.5,
+      "raw_ms": {
+        "diagnose_128px": [
+          167.3,
+          110.9,
+          98.2,
+          105.6,
+          97.8,
+          94.4,
+          95.5,
+          101.2,
+          92.8,
+          93.1
+        ],
+        "diagnose_12mp": [
+          182.3,
+          89.3,
+          101.5,
+          103.4,
+          123,
+          109.9,
+          136.8,
+          104.2,
+          106.5,
+          97.7
+        ],
+        "session_run": [
+          76.5,
+          80.7,
+          79,
+          78.1,
+          81.6,
+          86.4,
+          85.5,
+          89.3,
+          95.2,
+          98.8
+        ]
+      }
+    }
+  ],
+  "network": {
+    "as built (gzip for text/JS/WASM)": [
+      {
+        "profile": {
+          "name": "3G",
+          "down_kbps": 750,
+          "up_kbps": 250,
+          "latency_ms": 100
+        },
+        "model": {
+          "seconds": 21.2,
+          "body_bytes": 1972422,
+          "wire_bytes": 1972695
+        },
+        "bundle": {
+          "seconds": 87.6,
+          "files": 251,
+          "body_bytes": 16209078,
+          "wire_bytes": 7975006,
+          "gzip_responses": 26
+        }
+      },
+      {
+        "profile": {
+          "name": "slow 3G",
+          "down_kbps": 400,
+          "up_kbps": 400,
+          "latency_ms": 400
+        },
+        "model": {
+          "seconds": 39.9,
+          "body_bytes": 1972422,
+          "wire_bytes": 1972695
+        },
+        "bundle": {
+          "seconds": 165.7,
+          "files": 251,
+          "body_bytes": 16209078,
+          "wire_bytes": 7975006,
+          "gzip_responses": 26
+        }
+      }
+    ]
+  },
+  "bundle": {
+    "model_version": "cafetal-img-v2",
+    "model_bytes": 1972422,
+    "threshold": 0.9,
+    "sw_version": "cafetal-841334ea01"
+  },
+  "page_load": {
+    "files": 13,
+    "decoded_bytes": 172718,
+    "wire_bytes": 39335,
+    "gzip_responses": 13,
+    "urls": [
+      "/app/",
+      "/app/style.css",
+      "/app/icons/logo.svg",
+      "/app/icons/tip.svg",
+      "/app/icons/leaf_home.svg",
+      "/app/app.js",
+      "/app/icons/icons.svg",
+      "/app/content.js",
+      "/app/store.js",
+      "/app/infer.js",
+      "/app/sms.js",
+      "/app/config.json",
+      "/content/cards.json"
+    ],
+    "hub_label": "as built (gzip for text/JS/WASM)"
+  }
+}

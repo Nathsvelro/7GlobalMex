@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outbox</title>
+<link rel="stylesheet" href="/hub/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<main>
+  <h1>Outbox (SMS)</h1>
+  <div class="notice"><span class="badge sim">SIMULATED GATEWAY</span> Replies to a member who texted go out by themselves (the member asked).
+    <b>Alerts to all members do not go out until someone from the co-op taps "Approve".</b>
+    Every text comes from the cards on the <a href="/hub/contenido.html">Content</a> page (check the ones marked UNVERIFIED).</div>
+  <p class="row" style="gap:6px;align-items:center">
+    <label class="inline">Show: <select id="filter">
+      <option value="pending_approval">Waiting for approval</option><option value="sent_simulated">Sent (simulated)</option>
+      <option value="rejected">Rejected</option><option value="">All</option></select></label>
+    <label class="inline">Who approves: <input id="by" placeholder="your name" maxlength="80"></label>
+  </p>
+  <div id="groups"></div>
+</main>
+<script src="/hub/common.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const STATUS = { pending_approval: '<span class="badge demo">waiting for approval</span>', sent_simulated: '<span class="badge sim">sent (simulated)</span>',
+  rejected: '<span class="badge grey">rejected</span>' };
+async function load() {
+  const f = $("filter").value;
+  const r = await api("/api/outbox" + (f ? "?status=" + f : ""));
+  const groups = {};
+  for (const m of r.messages) {
+    const k = m.alert_id ? "a" + m.alert_id : "replies";
+    (groups[k] = groups[k] || []).push(m);
+  }
+  const keys = Object.keys(groups).sort((a, b) => (a === "replies") - (b === "replies") || b.localeCompare(a, undefined, { numeric: true }));
+  $("groups").innerHTML = keys.map((k) => {
+    const msgs = groups[k];
+    const pending = msgs.filter((m) => m.status === "pending_approval");
+    const title = k === "replies" ? "Replies to members who texted" : `Outbreak alert #${k.slice(1)} — ${msgs.length} messages`;
+    const bulk = pending.length ? `<button class="primary" onclick="decideAll('${k}','approve')">Approve all ${pending.length}</button>
+      <button class="danger" onclick="decideAll('${k}','reject')">Reject all ${pending.length}</button>` : "";
+    return `<div class="card"><h2 style="margin-top:0">${title}</h2><p>${bulk}</p><div class="table-wrap"><table>
+      <thead><tr><th>To</th><th>Message</th><th>Card</th><th>Status</th><th></th></tr></thead><tbody>` +
+      msgs.slice(0, 200).map((m) => `<tr>
+        <td class="small">${esc(m.name || "not registered")}<br><span class="code">${esc(m.phone)}</span></td>
+        <td>${esc(m.body)}<br><span class="small muted">${m.length} characters · ${m.segments} SMS · ${fmtDate(m.created_at)}</span></td>
+        <td class="small"><span class="code">${esc(m.card_id || "")}</span> (${esc(m.lang || "")})<br>${m.card_status ? statusBadge(m.card_status) : ""}</td>
+        <td class="small">${STATUS[m.status] || esc(m.status)}${m.decided_by ? "<br>" + esc(m.decided_by) : ""}</td>
+        <td>${m.status === "pending_approval" ? `<button class="primary" onclick="decide(${m.id},'approve')">Approve</button> <button class="danger" onclick="decide(${m.id},'reject')">Reject</button>` : ""}</td>
+      </tr>`).join("") + `</tbody></table></div>${msgs.length > 200 ? `<p class="small muted">Showing 200 of ${msgs.length}.</p>` : ""}</div>`;
+  }).join("") || '<div class="card muted">No messages.</div>';
+  window._groups = groups;
+}
+async function decide(id, what) {
+  try { await api(`/api/outbox/${id}/${what}`, { json: { by: $("by").value || null } }); } catch (e) { alert(e.message); }
+  load();
+}
+async function decideAll(k, what) {
+  const ids = window._groups[k].filter((m) => m.status === "pending_approval").map((m) => m.id);
+  if (!confirm(`${what === "approve" ? "Approve and send" : "Reject"} ${ids.length} messages?`)) return;
+  for (const id of ids) { try { await api(`/api/outbox/${id}/${what}`, { json: { by: $("by").value || null } }); } catch (e) { /* already decided */ } }
+  load();
+}
+$("filter").onchange = load;
+try { $("by").value = localStorage.getItem("cafetal-by") || ""; } catch (e) {}
+$("by").onchange = () => { try { localStorage.setItem("cafetal-by", $("by").value); } catch (e) {} };
+(async function () { await initPage(); load(); })();
+</script>
+</body>
+</html>

@@ -1,0 +1,873 @@
+text,intent,lang,source
+price of coffee today,price,en,team
+wat is the price of coffee,price,en,team
+hw much is coffee per kilo,price,en,team
+how much per kg of cherry,price,en,team
+how much is the factory paying for cherry,price,en,team
+cherry price this season,price,en,team
+whats the rate for cherry,price,en,team
+how much do u pay per kilo,price,en,team
+price for maize,price,en,team
+maize price pls,price,en,team
+how much are beans selling for,price,en,team
+beans price today,price,en,team
+price of beans and maize,price,en,team
+how much is a kilo of coffee now,price,en,team
+what is the coffee rate,price,en,team
+coffee rates pls,price,en,team
+current price of coffee cherry,price,en,team
+tell me the price,price,en,team
+send me the prices,price,en,team
+pls send price list,price,en,team
+how much is coffee going for,price,en,team
+what are they paying for coffee this week,price,en,team
+the broker offered me 80 a kilo is that a good price,price,en,team
+how much is the auction price,price,en,team
+nairobi coffee exchange price,price,en,team
+hw much did coffee sell at the auction,price,en,team
+reference price,price,en,team
+what is the reference price,price,en,team
+pay rate per kg,price,en,team
+price per kg,price,en,team
+how much for 1 kg cherry,price,en,team
+coffee prize,price,en,team
+prices for today,price,en,team
+how much is a 90kg bag of maize,price,en,team
+how much is maize per bag,price,en,team
+price of mbuni,price,en,team
+good morning what is the price of coffee,price,en,team
+how much will they pay for my cherry,price,en,team
+has the coffee price gone up,price,en,team
+is coffee price up or down,price,en,team
+coffee price kirinyaga,price,en,team
+what is the market price,price,en,team
+market price for beans,price,en,team
+how much is a gorogoro of beans,price,en,team
+pls tell me coffee price,price,en,team
+how much r they paying 4 cherry,price,en,team
+price info,price,en,team
+whats the price of coffee per kilo,price,en,team
+kindly share the cherry rates,price,en,team
+bei ya kahawa leo,price,sw,team
+bei ya kahawa ni pesa ngapi,price,sw,team
+kahawa ni bei gani,price,sw,team
+kilo moja ya kahawa ni ngapi,price,sw,team
+mnalipa ngapi kwa kilo ya cherry,price,sw,team
+cherry ni pesa ngapi,price,sw,team
+bei ya cherry msimu huu,price,sw,team
+kiwanda kinalipa ngapi kwa kilo,price,sw,team
+bei ya mahindi,price,sw,team
+mahindi ni ngapi,price,sw,team
+bei ya maharagwe,price,sw,team
+maharagwe yanauzwa ngapi,price,sw,team
+bei ya mahindi na maharagwe,price,sw,team
+naomba bei ya kahawa,price,sw,team
+nitumie bei,price,sw,team
+nataka kujua bei,price,sw,team
+bei ya leo ni ngapi,price,sw,team
+bei ya soko,price,sw,team
+kahawa inauzwa aje,price,sw,team
+kahawa iko how much,price,sw,team
+cherry iko aje siku hizi,price,sw,team
+rate ya kahawa ni ngapi,price,sw,team
+bei ya mbuni,price,sw,team
+buni ni bei gani,price,sw,team
+bei ya kahawa imepanda,price,sw,team
+bei imeshuka ama imepanda,price,sw,team
+broker ananipa 80 kwa kilo ni bei nzuri,price,sw,team
+bei ya mnada wa kahawa,price,sw,team
+bei elekezi,price,sw,team
+bei elekezi ya kahawa ni ngapi,price,sw,team
+gunia la mahindi ni ngapi,price,sw,team
+gorogoro ya maharagwe ni pesa ngapi,price,sw,team
+bei ya kahawa kirinyaga,price,sw,team
+habari bei ya kahawa ni gani,price,sw,team
+tafadhali nitumie bei ya kahawa,price,sw,team
+bei ya kahawa wiki hii,price,sw,team
+kilo ya cherry inalipwa ngapi,price,sw,team
+watalipa ngapi kwa cherry yangu,price,sw,team
+bei ya kahawa tafadhali,price,sw,team
+bei za leo,price,sw,team
+bei za mazao,price,sw,team
+nipe bei ya mahindi,price,sw,team
+kahawa ni shilingi ngapi kwa kilo,price,sw,team
+bei ya kahawa safi kwa gunia,price,sw,team
+pesa ngapi kwa kilo ya kahawa,price,sw,team
+ningependa kujua bei ya maharagwe,price,sw,team
+bei ya kahawa iko juu,price,sw,team
+bei mpya ya cherry,price,sw,team
+thogora wa kahua umuthi,price,kik,ai-draft-unverified
+kilo ya kahua ni mbeca ciigana,price,kik,ai-draft-unverified
+thogora wa mbembe,price,kik,ai-draft-unverified
+thogora wa mboco ni kigana,price,kik,ai-draft-unverified
+my coffee has yellow spots,report,en,team
+orange powder under the leaves,report,en,team
+leaves have orange dust,report,en,team
+yellow powder on my coffee leaves,report,en,team
+leaves are turning yellow and falling,report,en,team
+my coffee leaves are falling off,report,en,team
+brown spots on the leaves,report,en,team
+there are brown rings on my leaves,report,en,team
+leaves have holes,report,en,team
+something is eating my coffee leaves,report,en,team
+insects on my coffee,report,en,team
+there are small worms in the leaves,report,en,team
+the leaves have tunnels,report,en,team
+leaves look burnt,report,en,team
+black spots on the berries,report,en,team
+my berries are turning black,report,en,team
+coffee berries are rotting,report,en,team
+my coffee trees are drying,report,en,team
+the bushes are dying,report,en,team
+white things under the leaves,report,en,team
+red spiders on the leaves,report,en,team
+tiny red mites on my coffee,report,en,team
+i think my coffee has rust,report,en,team
+leaf rust in my farm,report,en,team
+rust has attacked my shamba,report,en,team
+my coffee is sick,report,en,team
+disease in my coffee,report,en,team
+pests are attacking my coffee,report,en,team
+there is a disease on the leaves,report,en,team
+the leaves have spots,report,en,team
+my neighbour and i have yellow leaves,report,en,team
+half my trees have orange spots,report,en,team
+the leaves are curling,report,en,team
+leaves are dry and brown at the edges,report,en,team
+many leaves dropped this week,report,en,team
+i see powder on the underside of the leaves,report,en,team
+new leaves are black,report,en,team
+coffee leaves have grey patches,report,en,team
+my coffee got rust again,report,en,team
+i want to report a disease,report,en,team
+report pest attack,report,en,team
+something wrong with my coffee leaves,report,en,team
+my coffee leafs have orange stuff,report,en,team
+leves are yelow,report,en,team
+thrips on my coffee,report,en,team
+antestia bugs on my bushes,report,en,team
+leaf miner in my coffee,report,en,team
+stem borer in my trees,report,en,team
+my coffee leaves are yellow what do i do,report,en,team
+the trees are drying what should i do,report,en,team
+leaves are falling off what can i do,report,en,team
+my bushes dried up in the sun what now,report,en,team
+kahawa yangu ina madoa ya njano,report,sw,team
+majani yana unga wa njano,report,sw,team
+majani yanaanguka,report,sw,team
+majani ya kahawa yamegeuka manjano,report,sw,team
+majani yana madoa ya kahawia,report,sw,team
+majani yana mashimo,report,sw,team
+wadudu wanakula majani ya kahawa,report,sw,team
+kuna wadudu kwenye kahawa yangu,report,sw,team
+majani yamekauka,report,sw,team
+miti ya kahawa inakauka,report,sw,team
+kahawa yangu ina ugonjwa,report,sw,team
+ugonjwa kwenye shamba la kahawa,report,sw,team
+matunda ya kahawa yanaoza,report,sw,team
+matunda yamekuwa meusi,report,sw,team
+kutu ya majani imeingia shambani,report,sw,team
+nadhani kahawa yangu ina kutu,report,sw,team
+kuna unga wa rangi ya chungwa chini ya majani,report,sw,team
+majani yana vumbi la machungwa,report,sw,team
+madoa meusi kwenye majani,report,sw,team
+majani mapya ni meusi,report,sw,team
+kuna minyoo ndani ya majani,report,sw,team
+majani yana njia ndani,report,sw,team
+utitiri mwekundu kwenye majani,report,sw,team
+buibui wadogo wekundu kwenye kahawa,report,sw,team
+wadudu weupe chini ya majani,report,sw,team
+majani yanajikunja,report,sw,team
+majani yameungua,report,sw,team
+kahawa inaugua,report,sw,team
+nataka kuripoti ugonjwa,report,sw,team
+ripoti ya wadudu,report,sw,team
+shamba langu limevamiwa na wadudu,report,sw,team
+majani mengi yameanguka wiki hii,report,sw,team
+kahawa yangu iko na madoa,report,sw,team
+majani iko na unga ya orange,report,sw,team
+kahawa imeshikwa na kutu,report,sw,team
+miche ya kahawa inakufa,report,sw,team
+matawi yanakauka,report,sw,team
+majani yana rangi ya kijivu,report,sw,team
+kuna shida kwenye majani ya kahawa,report,sw,team
+jirani na mimi tuna majani ya njano,report,sw,team
+nusu ya miti ina madoa ya machungwa,report,sw,team
+majani ni manjano na yanaanguka,report,sw,team
+kahawa yangu imeharibika,report,sw,team
+vidudu vinakula majani,report,sw,team
+kuna ugonjwa kwa kahawa,report,sw,team
+majani yamekua na madoa,report,sw,team
+mdudu antestia kwenye kahawa,report,sw,team
+viwavi kwenye miti ya kahawa,report,sw,team
+majani yanaanguka nifanye nini,report,sw,team
+kahawa yangu inakauka nifanye nini,report,sw,team
+miti imekauka kwa jua nifanye aje,report,sw,team
+majani yana madoa nitafanya nini,report,sw,team
+kahua yakwa niirwaru,report,kik,ai-draft-unverified
+mathangu ma kahua nimaragwa,report,kik,ai-draft-unverified
+mathangu nimaumite,report,kik,ai-draft-unverified
+kutu ya mathangu kahua-ini yakwa,report,kik,ai-draft-unverified
+help me,help,en,team
+pls help,help,en,team
+how does this work,help,en,team
+what can i send,help,en,team
+how do i use cafetal,help,en,team
+what is this number,help,en,team
+i dont understand,help,en,team
+menu,help,en,team
+options,help,en,team
+what services do you offer,help,en,team
+info pls,help,en,team
+how do i use the app,help,en,team
+what is this message for,help,en,team
+what do i do with the code,help,en,team
+how do i send the code,help,en,team
+the app is not working,help,en,team
+i forgot how to use it,help,en,team
+instructions,help,en,team
+what does CAF1 mean,help,en,team
+how do i ask for the price,help,en,team
+hi what can i do here,help,en,team
+i need help with the application,help,en,team
+help please,help,en,team
+how do i do it,help,en,team
+i cant use my phone well,help,en,team
+explain how it works,help,en,team
+what words can i send,help,en,team
+commands,help,en,team
+how do i download the app,help,en,team
+the app wont open,help,en,team
+i cant take the photo,help,en,team
+where is the send button,help,en,team
+how do i delete my data,help,en,team
+i forgot my member number,help,en,team
+what is my member number,help,en,team
+how do i change the language,help,en,team
+how does the sms work,help,en,team
+what is cafetal,help,en,team
+hlp,help,en,team
+halp,help,en,team
+i dont know what to do,help,en,team
+how do i send a photo,help,en,team
+what do i write to get the price,help,en,team
+the app gives no result,help,en,team
+how do i sync the photos,help,en,team
+what is this service,help,en,team
+i need assistance,help,en,team
+guide me pls,help,en,team
+nisaidie,help,sw,team
+msaada tafadhali,help,sw,team
+naomba msaada,help,sw,team
+hii inafanya kazi aje,help,sw,team
+ninatumaje cafetal,help,sw,team
+naweza kutuma nini,help,sw,team
+sielewi,help,sw,team
+sielewi nifanye nini,help,sw,team
+hii ni nambari gani,help,sw,team
+huduma gani mnatoa,help,sw,team
+ninatumiaje app,help,sw,team
+ujumbe huu ni wa nini,help,sw,team
+nifanye nini na nambari ya CAF1,help,sw,team
+natuma code aje,help,sw,team
+app haifanyi kazi,help,sw,team
+nimesahau jinsi ya kutumia,help,sw,team
+maelekezo,help,sw,team
+CAF1 inamaanisha nini,help,sw,team
+naulizaje bei,help,sw,team
+habari naweza kufanya nini hapa,help,sw,team
+nahitaji msaada na app,help,sw,team
+nisaidie tafadhali,help,sw,team
+nifanyeje,help,sw,team
+sijui kutumia simu vizuri,help,sw,team
+nieleze inavyofanya kazi,help,sw,team
+ni maneno gani naweza kutuma,help,sw,team
+orodha ya huduma,help,sw,team
+napakuaje app,help,sw,team
+app haifunguki,help,sw,team
+siwezi kupiga picha,help,sw,team
+kitufe cha kutuma kiko wapi,help,sw,team
+ninafutaje data yangu,help,sw,team
+nimesahau nambari yangu ya mwanachama,help,sw,team
+nambari yangu ya mwanachama ni gani,help,sw,team
+nabadilisha lugha aje,help,sw,team
+sms inafanya kazi vipi,help,sw,team
+cafetal ni nini,help,sw,team
+saidia,help,sw,team
+msaada pls,help,sw,team
+sijui nifanye aje,help,sw,team
+natuma picha aje,help,sw,team
+niandike nini kupata bei,help,sw,team
+app haileti jibu,help,sw,team
+hii ni huduma gani,help,sw,team
+naomba maelezo,help,sw,team
+nionyeshe jinsi ya kutumia,help,sw,team
+help tafadhali,help,sw,team
+menu tafadhali,help,sw,team
+ndeithia,help,kik,ai-draft-unverified
+ndeithia ndagukuria,help,kik,ai-draft-unverified
+ndiui uria ingihuthira app ino,help,kik,ai-draft-unverified
+officer,talk_to_officer,en,team
+i want to talk to the officer,talk_to_officer,en,team
+i need the extension officer,talk_to_officer,en,team
+send the officer to my farm,talk_to_officer,en,team
+when is the officer coming,talk_to_officer,en,team
+can the officer call me,talk_to_officer,en,team
+put me through to the agronomist,talk_to_officer,en,team
+i want a farm visit,talk_to_officer,en,team
+i need advice from an expert,talk_to_officer,en,team
+can someone come and see my coffee,talk_to_officer,en,team
+i want to talk to a person,talk_to_officer,en,team
+connect me to the officer,talk_to_officer,en,team
+please call me,talk_to_officer,en,team
+i need to talk to someone from the society,talk_to_officer,en,team
+the officer should come urgently,talk_to_officer,en,team
+when will the extension worker pass by,talk_to_officer,en,team
+i want the officer to see my shamba,talk_to_officer,en,team
+kindly send the agronomist,talk_to_officer,en,team
+the officer has not come,talk_to_officer,en,team
+i need an urgent visit,talk_to_officer,en,team
+let me speak with the officer,talk_to_officer,en,team
+officer pls,talk_to_officer,en,team
+talk to officer,talk_to_officer,en,team
+i want an appointment with the officer,talk_to_officer,en,team
+i need advice from the officer,talk_to_officer,en,team
+call me back,talk_to_officer,en,team
+i want to speak to the manager,talk_to_officer,en,team
+can the officer call me on this number,talk_to_officer,en,team
+i need guidance from an extension officer,talk_to_officer,en,team
+visit me this week,talk_to_officer,en,team
+can the officer check my farm,talk_to_officer,en,team
+i want someone to explain in person,talk_to_officer,en,team
+send an officer to ondera juu,talk_to_officer,en,team
+officer urgent,talk_to_officer,en,team
+i have a question for the officer,talk_to_officer,en,team
+i want to see the field officer,talk_to_officer,en,team
+can the officer visit on saturday,talk_to_officer,en,team
+come to my farm,talk_to_officer,en,team
+i urgently need the co-op officer,talk_to_officer,en,team
+when is my turn for a visit,talk_to_officer,en,team
+i need the agricultural officer,talk_to_officer,en,team
+please send someone to my farm,talk_to_officer,en,team
+ofisa please call me,talk_to_officer,en,team
+i need to see the extension guy,talk_to_officer,en,team
+talk to a human,talk_to_officer,en,team
+i want to speak with the factory manager,talk_to_officer,en,team
+can i meet the officer at the factory,talk_to_officer,en,team
+i would like a visit from the agronomist,talk_to_officer,en,team
+afisa,talk_to_officer,sw,team
+nataka kuongea na afisa,talk_to_officer,sw,team
+nahitaji afisa ugani,talk_to_officer,sw,team
+tuma afisa shambani kwangu,talk_to_officer,sw,team
+afisa atakuja lini,talk_to_officer,sw,team
+afisa anaweza kunipigia simu,talk_to_officer,sw,team
+niunganishe na afisa,talk_to_officer,sw,team
+nataka afisa atembelee shamba langu,talk_to_officer,sw,team
+nahitaji ushauri wa mtaalamu,talk_to_officer,sw,team
+mtu aje aone kahawa yangu,talk_to_officer,sw,team
+nataka kuongea na mtu,talk_to_officer,sw,team
+tafadhali nipigie simu,talk_to_officer,sw,team
+nahitaji kuongea na mtu wa chama,talk_to_officer,sw,team
+afisa aje haraka,talk_to_officer,sw,team
+afisa ugani atapita lini,talk_to_officer,sw,team
+nataka afisa aone shamba langu,talk_to_officer,sw,team
+tafadhali tuma mtaalamu wa kilimo,talk_to_officer,sw,team
+afisa hajakuja,talk_to_officer,sw,team
+nahitaji ziara ya haraka,talk_to_officer,sw,team
+niongee na afisa,talk_to_officer,sw,team
+afisa tafadhali,talk_to_officer,sw,team
+kuongea na afisa,talk_to_officer,sw,team
+nataka miadi na afisa,talk_to_officer,sw,team
+nahitaji ushauri wa afisa,talk_to_officer,sw,team
+nipigie,talk_to_officer,sw,team
+nataka kuongea na meneja,talk_to_officer,sw,team
+afisa anipigie kwa nambari hii,talk_to_officer,sw,team
+nahitaji mwongozo wa afisa ugani,talk_to_officer,sw,team
+nitembelee wiki hii,talk_to_officer,sw,team
+afisa anaweza kukagua shamba langu,talk_to_officer,sw,team
+nataka mtu anieleze ana kwa ana,talk_to_officer,sw,team
+tumeni afisa ondera juu,talk_to_officer,sw,team
+afisa haraka,talk_to_officer,sw,team
+nina swali kwa afisa,talk_to_officer,sw,team
+nataka kumwona afisa,talk_to_officer,sw,team
+afisa anaweza kuja jumamosi,talk_to_officer,sw,team
+njoo shambani kwangu,talk_to_officer,sw,team
+nahitaji afisa wa chama haraka,talk_to_officer,sw,team
+zamu yangu ya kutembelewa ni lini,talk_to_officer,sw,team
+nahitaji afisa wa kilimo,talk_to_officer,sw,team
+tafadhali tuma mtu shambani kwangu,talk_to_officer,sw,team
+afisa nipigie tafadhali,talk_to_officer,sw,team
+nataka kuongea na binadamu,talk_to_officer,sw,team
+naweza kukutana na afisa kiwandani,talk_to_officer,sw,team
+ningependa afisa wa kilimo anitembelee,talk_to_officer,sw,team
+ofisa aje kwangu,talk_to_officer,sw,team
+afisa ugani ako wapi,talk_to_officer,sw,team
+nataka kuonana na afisa,talk_to_officer,sw,team
+ndirenda kwaria na afisa,talk_to_officer,kik,ai-draft-unverified
+afisa uka mugunda wakwa,talk_to_officer,kik,ai-draft-unverified
+afisa wa urimi akuka ri,talk_to_officer,kik,ai-draft-unverified
+hi,other,en,team
+hello,other,en,team
+good morning,other,en,team
+thanks,other,en,team
+thank you,other,en,team
+ok,other,en,team
+yes,other,en,team
+no,other,en,team
+who is this,other,en,team
+merry christmas,other,en,team
+i love you mum,other,en,team
+i have arrived,other,en,team
+send me credit please,other,en,team
+congratulations you have won a prize reply now,other,en,team
+what time is the meeting,other,en,team
+i will not come tomorrow,other,en,team
+where are you,other,en,team
+have you eaten,other,en,team
+i am on my way,other,en,team
+greetings to the family,other,en,team
+god bless you,other,en,team
+ok thanks,other,en,team
+the meeting is on saturday,other,en,team
+there is no power,other,en,team
+it will rain tomorrow,other,en,team
+happy new year,other,en,team
+sorry wrong number,other,en,team
+see you at church,other,en,team
+lol,other,en,team
+fine,other,en,team
+habari,other,sw,team
+habari yako,other,sw,team
+sasa,other,sw,team
+niaje,other,sw,team
+mambo,other,sw,team
+poa,other,sw,team
+asante,other,sw,team
+asante sana,other,sw,team
+sawa,other,sw,team
+ndio,other,sw,team
+hapana,other,sw,team
+wewe ni nani,other,sw,team
+heri ya krismasi,other,sw,team
+nakupenda mama,other,sw,team
+nimefika,other,sw,team
+nitumie credo,other,sw,team
+umeshinda zawadi jibu sasa,other,sw,team
+mkutano ni saa ngapi,other,sw,team
+kesho sitakuja,other,sw,team
+uko wapi,other,sw,team
+umekula,other,sw,team
+niko njiani,other,sw,team
+salamu kwa familia,other,sw,team
+mungu akubariki,other,sw,team
+sawa asante,other,sw,team
+mkutano ni jumamosi,other,sw,team
+stima imepotea,other,sw,team
+kesho itanyesha,other,sw,team
+heri ya mwaka mpya,other,sw,team
+samahani nimekosea nambari,other,sw,team
+tutaonana kanisani,other,sw,team
+fiti,other,sw,team
+wimwega,other,kik,ai-draft-unverified
+ni wega,other,kik,ai-draft-unverified
+uhoro waku,other,kik,ai-draft-unverified
+let me see my alarms,other,en,MASSIVE
+delete my six am alarm,other,en,MASSIVE
+olly i need an alarm set for five hundred and thirty am tomorrow,other,en,MASSIVE
+down,other,en,MASSIVE
+turn off audio,other,en,MASSIVE
+change volume,other,en,MASSIVE
+get louder,other,en,MASSIVE
+what's going on between three hundred and thirty and four,other,en,MASSIVE
+remove stand-up on friday at ten am,other,en,MASSIVE
+remind me later,other,en,MASSIVE
+what's the easiest and quickest way to cook a turkey,other,en,MASSIVE
+what temperature should a baked chicken be,other,en,MASSIVE
+what is the nine am c. s. t. to e. s. t.,other,en,MASSIVE
+tell me which time is it in new york,other,en,MASSIVE
+add new email address,other,en,MASSIVE
+open emails,other,en,MASSIVE
+what is jimmy johns's corporate number,other,en,MASSIVE
+please send email to pawel with reminder,other,en,MASSIVE
+how are you,other,en,MASSIVE
+tell me random joke,other,en,MASSIVE
+what's a good present for a girlfriend,other,en,MASSIVE
+please turn on my robot vacuum cleaner,other,en,MASSIVE
+can this room have green light,other,en,MASSIVE
+please turn down the lights in the living room,other,en,MASSIVE
+turn off lobby light,other,en,MASSIVE
+turn the lights on,other,en,MASSIVE
+turn up the lights,other,en,MASSIVE
+turn off socket,other,en,MASSIVE
+on the plug,other,en,MASSIVE
+create shopping list for target,other,en,MASSIVE
+what are all my lists,other,en,MASSIVE
+find my shopping list and delete it,other,en,MASSIVE
+i don't like it,other,en,MASSIVE
+save this song in my great songs category,other,en,MASSIVE
+does this song belongs to the classic,other,en,MASSIVE
+please repeat that music again of akon,other,en,MASSIVE
+what is the latest headline news from this newsource,other,en,MASSIVE
+pause resume,other,en,MASSIVE
+play squash with me,other,en,MASSIVE
+play foke,other,en,MASSIVE
+play favorited podcasts on fishing,other,en,MASSIVE
+olly radio on,other,en,MASSIVE
+can you give me some idea about dance bar,other,en,MASSIVE
+depending on the role you are going for this will affect your answer,other,en,MASSIVE
+what is one hundred and twenty three times one hundred and twenty three,other,en,MASSIVE
+where should i go for dinner in san francisco tonight,other,en,MASSIVE
+tell me where should i go in world tour and which places are most important,other,en,MASSIVE
+what is the latest action movie running in theaters,other,en,MASSIVE
+update my status,other,en,MASSIVE
+how many likes did i get today,other,en,MASSIVE
+how long until we get to chicago,other,en,MASSIVE
+book me a ride,other,en,MASSIVE
+can you book a train ticket for my mother,other,en,MASSIVE
+are there are any delays on my commute,other,en,MASSIVE
+check whether i have set any alarms for tomorrow morning,other,en,MASSIVE
+please cancel all alarms for tomorrow,other,en,MASSIVE
+change alarm to start at midnight,other,en,MASSIVE
+turn the volume down a little please,other,en,MASSIVE
+please pause yourself,other,en,MASSIVE
+change the audio settings,other,en,MASSIVE
+on the music player set the volume level at sixty,other,en,MASSIVE
+open my reminders,other,en,MASSIVE
+remove wyatt's birthday party on my calendar,other,en,MASSIVE
+remind me of dinner with mom tonight on my calendar,other,en,MASSIVE
+what to cook for lunch,other,en,MASSIVE
+after cooking the stuffs add some masala content and cook it again in a tawa and serve,other,en,MASSIVE
+can you tell how many hours of difference are between boston and los angeles,other,en,MASSIVE
+how many birthday's are on twenty third,other,en,MASSIVE
+i want to and my email address,other,en,MASSIVE
+what's my latest email,other,en,MASSIVE
+did i receive a message from kevin,other,en,MASSIVE
+send an email,other,en,MASSIVE
+hi how are you,other,en,MASSIVE
+provide a joke,other,en,MASSIVE
+tell me a random trivia,other,en,MASSIVE
+open vacuum cleaner,other,en,MASSIVE
+please set the lighting suitable for reading,other,en,MASSIVE
+turn the lights down to seven,other,en,MASSIVE
+lights off bathroom,other,en,MASSIVE
+please turn on the lights in my house,other,en,MASSIVE
+slightly raise the light,other,en,MASSIVE
+turn off the smart socket,other,en,MASSIVE
+turn my plug on,other,en,MASSIVE
+add item,other,en,MASSIVE
+read my lists to me,other,en,MASSIVE
+please destroy this list,other,en,MASSIVE
+i hate this song please remember that so that i don't hear this song ever again,other,en,MASSIVE
+save this song in my favorites,other,en,MASSIVE
+do i have any music by lady antebellum,other,en,MASSIVE
+please skip to the next song,other,en,MASSIVE
+remind me to check morning news update,other,en,MASSIVE
+start my bible study book again,other,en,MASSIVE
+do you want to play monopoly with me,other,en,MASSIVE
+play taylor swift,other,en,MASSIVE
+can you play back to december,other,en,MASSIVE
+turn on pandora,other,en,MASSIVE
+what does joke mean,other,en,MASSIVE
+tell me about amazon's history,other,en,MASSIVE
+ten plus y.,other,en,MASSIVE
+local area events,other,en,MASSIVE
+where is the closer starbucks,other,en,MASSIVE
+what film should i watch,other,en,MASSIVE
+write ten words on instagram,other,en,MASSIVE
+in every three hours give me my facebook update,other,en,MASSIVE
+what trips are available from new york city to poughkeepsie,other,en,MASSIVE
+get me an uber please,other,en,MASSIVE
+search for a train ticket to newcastle,other,en,MASSIVE
+what is traffic to work now,other,en,MASSIVE
+have i set any alarms in the morning,other,en,MASSIVE
+remove my alarm for tomorrow morning,other,en,MASSIVE
+change alarm setting,other,en,MASSIVE
+olly cut down the volume,other,en,MASSIVE
+quiet please,other,en,MASSIVE
+improve volume clarity,other,en,MASSIVE
+set the volume higher,other,en,MASSIVE
+what events are scheduled for me to do today,other,en,MASSIVE
+please delete all calendar events,other,en,MASSIVE
+the calendar event has multiple people,other,en,MASSIVE
+olly can i use brown sugar instead of white in peanut butter cookies,other,en,MASSIVE
+how long should i cook a hamburger on each side,other,en,MASSIVE
+change my clock to central time zone from my current zone,other,en,MASSIVE
+what is the time in hyderabad,other,en,MASSIVE
+add this email to my address book,other,en,MASSIVE
+did i received an email from rohit,other,en,MASSIVE
+show johns office number,other,en,MASSIVE
+please send email to liz,other,en,MASSIVE
+morning what's up,other,en,MASSIVE
+tell me some funny joke to laugh,other,en,MASSIVE
+tell me about rihana,other,en,MASSIVE
+robot vacuum cleaner on,other,en,MASSIVE
+make all the lights in the house orange,other,en,MASSIVE
+i would love a less bright up room,other,en,MASSIVE
+kill the lights,other,en,MASSIVE
+turn on hall lights,other,en,MASSIVE
+please make arrangements to make the hall so brighter,other,en,MASSIVE
+deactivate the socket,other,en,MASSIVE
+please turn on the smart socket,other,en,MASSIVE
+add new item,other,en,MASSIVE
+what are all the lists i have,other,en,MASSIVE
+erase previous list,other,en,MASSIVE
+remember that i do not like this music,other,en,MASSIVE
+i really enjoy rock and roll,other,en,MASSIVE
+who's this song by,other,en,MASSIVE
+olly skip song,other,en,MASSIVE
+please keep me up to date on technology please,other,en,MASSIVE
+please resume current song of masti,other,en,MASSIVE
+open solitaire play with me,other,en,MASSIVE
+play last song from my favorite playlist,other,en,MASSIVE
+play the podcast entitled episode one making a murderer,other,en,MASSIVE
+radio,other,en,MASSIVE
+get me new definition,other,en,MASSIVE
+how many oceans are there,other,en,MASSIVE
+what is the square root of one hundred and forty eight thousand five hundred and eighty seven,other,en,MASSIVE
+searching for any special holidays for us country,other,en,MASSIVE
+olly where is the closest bar,other,en,MASSIVE
+show times for nearest theater,other,en,MASSIVE
+please tell dsw i'm returning defective shoes,other,en,MASSIVE
+who's birthdays are today on facebook,other,en,MASSIVE
+when does the train leave penn station,other,en,MASSIVE
+find a taxi service close to me,other,en,MASSIVE
+book me a train ticket to newcastle,other,en,MASSIVE
+are there any construction areas on harvard,other,en,MASSIVE
+are there any alarms set what are they,other,en,MASSIVE
+remove my eight p. m. alarm and set it to seven p. m.,other,en,MASSIVE
+set the alarm for five am,other,en,MASSIVE
+can you make it a little quieter,other,en,MASSIVE
+please mute yourself,other,en,MASSIVE
+could you change the volume,other,en,MASSIVE
+i couldn't hear you repeat that louder,other,en,MASSIVE
+olly i need to know if i have any new reminders,other,en,MASSIVE
+please remove all the entries marked in the calendar,other,en,MASSIVE
+add event for date and time with these people,other,en,MASSIVE
+i need a recipe for chicken thighs for my pressure cooker,other,en,MASSIVE
+what is the cooking time for mashed potatoes,other,en,MASSIVE
+change this time to ist,other,en,MASSIVE
+please provide current time in india,other,en,MASSIVE
+add work email address,other,en,MASSIVE
+has john sent me any new emails,other,en,MASSIVE
+what is email id of john,other,en,MASSIVE
+send email to mom starting with the subject vacation,other,en,MASSIVE
+good afternoon how are you,other,en,MASSIVE
+make me happy,other,en,MASSIVE
+it was a tough day today,other,en,MASSIVE
+if my vacuum cleaner is not activated please activate it,other,en,MASSIVE
+change my room lights to some romantic color,other,en,MASSIVE
+olly dim the lights,other,en,MASSIVE
+can you turn off my bedroom lamp,other,en,MASSIVE
+lights out,other,en,MASSIVE
+alexa brighten the lights,other,en,MASSIVE
+can you please turn off my wemo plug,other,en,MASSIVE
+turn on the wemo plug socket to plug in my dongle,other,en,MASSIVE
+open up a new list,other,en,MASSIVE
+lists i have,other,en,MASSIVE
+erase,other,en,MASSIVE
+this song is too length,other,en,MASSIVE
+i like top forty music,other,en,MASSIVE
+where can i find this song,other,en,MASSIVE
+repeat same song for ten times,other,en,MASSIVE
+what has trump done now,other,en,MASSIVE
+start the audiobook file for where i left off in a tale of two cities,other,en,MASSIVE
+kengele imewekwa ya kesho asubuhi,other,sw,MASSIVE
+futa kengele iliyopangwa,other,sw,MASSIVE
+kengele saa kumi na moja jioni,other,sw,MASSIVE
+zima spika hadi asilimia tano,other,sw,MASSIVE
+usiongee,other,sw,MASSIVE
+badilisha mipangilio ya sauti kwa upande wa hasi,other,sw,MASSIVE
+tafadhali ongeza sauti ya muziki,other,sw,MASSIVE
+angalia ratiba yangu ya kesho usiku kwenye kalenda,other,sw,MASSIVE
+ondoa sherehe ya kuzaliwa ya musa kwenye kalenda yangu,other,sw,MASSIVE
+kila jumatano saa kumi na moja jioni nikumbushe nikutane na rashidi,other,sw,MASSIVE
+nahitaji resipe ya kupika mapaja ya kuku ya mashine ya kupika yangu,other,sw,MASSIVE
+njia bora zaidi ya kuandaa tilapia au omena,other,sw,MASSIVE
+kubadilisha muda wa sasa kutoka ist kwa e. s. t.,other,sw,MASSIVE
+ni wakati gani katika wakati wa mlima,other,sw,MASSIVE
+weka uwasiliani mpya kwa anwani hii ya barua pepe,other,sw,MASSIVE
+nieleze kuhusu barua pepe mpya,other,sw,MASSIVE
+siku ya kuzaliwa ya mutinda ni nini,other,sw,MASSIVE
+tuma barua kwa samantha kuhusu ratiba ya mazoezi ya mwili,other,sw,MASSIVE
+hujambo,other,sw,MASSIVE
+vichekesho vya leo,other,sw,MASSIVE
+niambie mengi kuhusu hiyo filamu,other,sw,MASSIVE
+tafadhali washa kifyonzi,other,sw,MASSIVE
+badilisha rangi za taa,other,sw,MASSIVE
+punguza mwangaza wa taa kidogo,other,sw,MASSIVE
+zima taa za bafu,other,sw,MASSIVE
+ni giza sana hapa,other,sw,MASSIVE
+angaza mwanga kwa asilimia sabini,other,sw,MASSIVE
+zima plagi,other,sw,MASSIVE
+washa wemo,other,sw,MASSIVE
+ongeza nyanya kwa orodha,other,sw,MASSIVE
+ni orodha gani ambayo sijasasisha kwa njia moja au nyingine katika wiki iliyopita,other,sw,MASSIVE
+futa hii orodha,other,sw,MASSIVE
+sipendi wimbo huu,other,sw,MASSIVE
+uhakiki wangu,other,sw,MASSIVE
+onyesha orodha ya kucheza,other,sw,MASSIVE
+weka orodha ya kucheza kwa hali ya changanya,other,sw,MASSIVE
+uchafuzi wa hewa,other,sw,MASSIVE
+endelea kidagaa kimwemwozea,other,sw,MASSIVE
+tafadhali fungua mchezo wa snuka nataka kuicheza nawe,other,sw,MASSIVE
+ningependa kuskiza rap muziki sahii,other,sw,MASSIVE
+tafadhali cheza podikasti ya patanisho,other,sw,MASSIVE
+weka wimbo kwenye radio,other,sw,MASSIVE
+nini ufafanuzi wa yenye usumbufu,other,sw,MASSIVE
+orodhesha watu mashuhuri ambao wamekuwa nchini kwangu katika miaka mitano iliyopita,other,sw,MASSIVE
+zidisha elfu moja na kumi na mbili,other,sw,MASSIVE
+ni aina gani ya matukio ya muziki ninayoweza kupata yakiendelea karibu na mimi,other,sw,MASSIVE
+wacha tuone nini ki karibu,other,sw,MASSIVE
+ni filamu gani zinaonyeshwa karibu,other,sw,MASSIVE
+tafadhali tuma ujumbe wa twita ufuatao kwa huduma ya wateja ya sarova hotels,other,sw,MASSIVE
+ni nini kipya kwenye akaunti yangu ya facebook,other,sw,MASSIVE
+wakati wa gari la moshi kwenda mahali ni mrefu,other,sw,MASSIVE
+nahitaji teksi kunichukua nyumbani na kunipeleka katikati mwa jiji,other,sw,MASSIVE
+nahitaji kukata tikiti ya gari moshi kutoka mombasa kwenda kisumu,other,sw,MASSIVE
+hali ya trafiki nairobi ni nini,other,sw,MASSIVE
+nionyeshe kengele zote zilizopangwa,other,sw,MASSIVE
+badilisha kengele yangu,other,sw,MASSIVE
+tafadhali unaweza weka kengele ya saa kumi na mbili asubuhi,other,sw,MASSIVE
+punguza sauti iwe nyororo sana,other,sw,MASSIVE
+tafadhali kuwa mtulivu,other,sw,MASSIVE
+unaweza kubadilisha sauti,other,sw,MASSIVE
+unaweza kuiwasha hiyo kidogo,other,sw,MASSIVE
+nina nini kinasubiri,other,sw,MASSIVE
+tafadhali ondoa tukio lifwatalo kwenye kalenda ambalo nimeliongeza,other,sw,MASSIVE
+nikumbushe nina tukio,other,sw,MASSIVE
+ipi ndio njia rahisi na ya haraka zaidi ya kupika bata,other,sw,MASSIVE
+hatua zipi nafaa kufuata kuandaa pilau,other,sw,MASSIVE
+kuna tofauti gani ya wakati kati ya hapa na pale,other,sw,MASSIVE
+wakati wa nairobi sasa,other,sw,MASSIVE
+nataka kuongeza barua pepe yangu,other,sw,MASSIVE
+bosi alituma chochote,other,sw,MASSIVE
+ongeza fatuma kwa orodha ya wawasiliani wangu niwapendao zaidi,other,sw,MASSIVE
+tuma barua pepe kwa asha,other,sw,MASSIVE
+unaendeleaje,other,sw,MASSIVE
+umesikia utani wowote mzuri hivi majuzi,other,sw,MASSIVE
+ungenipa jibu la swali hili,other,sw,MASSIVE
+washa kifyonzi,other,sw,MASSIVE
+badilisha taa kwa toni nyekundu,other,sw,MASSIVE
+punguza kiwango cha mwangaza ndani ya nyumba yangu,other,sw,MASSIVE
+zima taa za sebuleni,other,sw,MASSIVE
+washa taa zote juu,other,sw,MASSIVE
+angaza taa kidogo,other,sw,MASSIVE
+zima wemo,other,sw,MASSIVE
+washa plagi ya chaja ya rununu,other,sw,MASSIVE
+orodha mpya,other,sw,MASSIVE
+nisomee orodha yangu ya ununuzi tena,other,sw,MASSIVE
+tafuta orodha yangu ya ununuzi na uifute,other,sw,MASSIVE
+huu wimbo ni mrefu sana,other,sw,MASSIVE
+kupakua na kuokoa wimbo wa mapenzi hisia,other,sw,MASSIVE
+wimbo huu unaocheza ulitolewa lini,other,sw,MASSIVE
+weka ngoma inayocheza irudie,other,sw,MASSIVE
+ni utata gani wa hivi punde wa mwai kibaki,other,sw,MASSIVE
+endelea kutoka mahali tuliachia kwenye mwanzo mpya,other,sw,MASSIVE
+fungua voliboli,other,sw,MASSIVE
+cheza wimbo niko sawa,other,sw,MASSIVE
+cheza podikasti yangu ninayopendelea,other,sw,MASSIVE
+zikiza k.b.c redio,other,sw,MASSIVE
+tulia inamaanisha nini,other,sw,MASSIVE
+mahali wapi,other,sw,MASSIVE
+nini ni kumi na mbili ukizidisha na nane,other,sw,MASSIVE
+tukio la tamaduni ya kila mwaka linakuja lini,other,sw,MASSIVE
+nionyeshe maduka ambayo yako kwenye eneo,other,sw,MASSIVE
+olly ni nini kinachezwa nairobi bistro,other,sw,MASSIVE
+fungua instant delicacies juja utafute maoni,other,sw,MASSIVE
+niambie mchezaji bora wa kikapu wikendi wiki hii,other,sw,MASSIVE
+ni safari gani zinapatikana kutoka mji wa nairobi hadi mombasa,other,sw,MASSIVE
+tafuta teksi iliyo karibu zaidi,other,sw,MASSIVE
+ninahitaji kukata tikiti ya gari la moshi ya kwenda mombasa,other,sw,MASSIVE
+msongamano wa magari asubuhi hii,other,sw,MASSIVE
+nikona kengele gani zimewekwa za leo,other,sw,MASSIVE
+zima kengele ambayo imewekwa saa tatu na nusu jioni,other,sw,MASSIVE
+google weka kengele yangu ilie kwa saa moja,other,sw,MASSIVE
+tafadhali rekebisha vipaza sauti kwa kiwango ya chini kidogo yenye starehe,other,sw,MASSIVE
+nataka kunyamazisha kipaza sauti,other,sw,MASSIVE
+onyesha mipangilio ya sauti,other,sw,MASSIVE
+tafadhali ongeza sauti hadi upeo,other,sw,MASSIVE
+niambie nini kiko kwenye ratiba julai tarehe saba,other,sw,MASSIVE
+ondoa tukio la safari,other,sw,MASSIVE
+lazima niwe kisumu kwa tukio hili lijalo unaweza kuongeza hili,other,sw,MASSIVE
+nini cha kupika kama chakula cha mchana,other,sw,MASSIVE
+ni ipi mbinu ya kupika kidakuzi,other,sw,MASSIVE
+unaweza kubadilisha eneo langu la wakati kutoka wakati wa kati hadi pasifiki,other,sw,MASSIVE
+ni wakati gani sahihi,other,sw,MASSIVE
+hifadhi hiyo barua pepe kama anwani mpya,other,sw,MASSIVE
+angalia barua pepe kwa somo,other,sw,MASSIVE
+angalia barua hii katika anwani yangu ikiwa sio yenyewe basi iongeze,other,sw,MASSIVE
+jibu barua pepe zote zilizopokelewa kati ya saa nne usiku na saa moja asubuhi kila siku,other,sw,MASSIVE
+asubuhi njema,other,sw,MASSIVE
+niambia utani,other,sw,MASSIVE
+nimechoka,other,sw,MASSIVE
+safisha sakafu tafadhali,other,sw,MASSIVE
+badilisha rangi ya taa,other,sw,MASSIVE
+punguza taa kwenye sebuleni,other,sw,MASSIVE
+washa taa zote za gorofa ya juu,other,sw,MASSIVE
+ongeza mwanga wa chandelier hadi juu zaidi,other,sw,MASSIVE
+zima soketi ya plagi ya wemo,other,sw,MASSIVE
+washa plagi ya wemo,other,sw,MASSIVE
+hariri orodha,other,sw,MASSIVE
+ni vitu gani viko kwenye orodha yangu,other,sw,MASSIVE
+ningependa kufuta orodha ya katikati,other,sw,MASSIVE
+wimbo huu sio mzuri sana,other,sw,MASSIVE
+pea nyota tano kwa wimbo hii,other,sw,MASSIVE
+unaweza kupunguza sauti tafathali na uniambie mada ya wimbo huu,other,sw,MASSIVE
+changanya,other,sw,MASSIVE
+naaeza pata muhtasari ya kinachoendelea na mbio sasa hivi,other,sw,MASSIVE
+rejelea tumbo lisiloshiba,other,sw,MASSIVE
+cheza bano,other,sw,MASSIVE
+cheza muziki wa gurdian angel,other,sw,MASSIVE
+cheza podikasti yangu ya video game news kuanzia mahali niliwachia,other,sw,MASSIVE
+fungua redio kwenye kituo cha classical,other,sw,MASSIVE
+ni nini fafanuzi ya neno kimaandishi,other,sw,MASSIVE
+kenya inashiriki mpaka wake na tanzania,other,sw,MASSIVE
+nini kumi na tatu pamoja na kumi na nne,other,sw,MASSIVE
+kuna tamasha zozote mjini wakati huu wiki inayokuja,other,sw,MASSIVE
+migahawa ya kiitaliano inapatika wapi katika eneo langu,other,sw,MASSIVE
+ni filamu gani nzuri imetoka sasa,other,sw,MASSIVE
+tweet kenya airways kwamba safari yangu ya mwisho kutoka mombasa hadi nairobi ilichelewa,other,sw,MASSIVE
+cherop amechapisha kwenye mtandao wangu wa facebook,other,sw,MASSIVE
+ni maelekezo gani ya kuelekea banda la piza kilicho karibu zaidi,other,sw,MASSIVE
+agiza teksi aina ya uber,other,sw,MASSIVE
+niambie niende wapi kwa nyakati,other,sw,MASSIVE
+kuna msongamano wowote nikielekea kazini,other,sw,MASSIVE
+naomba kujua kuhusu kengele uliyoweka,other,sw,MASSIVE
+futa kengele yangu ya saa tisa alasiri,other,sw,MASSIVE
+badilisha kengele ianze usiku wa manane,other,sw,MASSIVE
+punguza sauti kwa kipaza sauti,other,sw,MASSIVE
+zima hiyo sauti tafadhali,other,sw,MASSIVE
+badilisha tambo,other,sw,MASSIVE
+ongeza sauti kidogo,other,sw,MASSIVE
+aliyekuwa mgeni rasmi katika hafla hiyo,other,sw,MASSIVE
+unaweza toa madaraka katika kalenda yangu,other,sw,MASSIVE
+tafadhali unaweza kuunda tukio jipya kwenye kalenda yangu,other,sw,MASSIVE
+olly ni muda gani wa kupika wali,other,sw,MASSIVE
+saa za eneo kati ya kenya na uganda,other,sw,MASSIVE
+ni siku gani ya ishirini na mbili,other,sw,MASSIVE
+ongeza barua pepe oriam katika gmail dot com kwa anwani zangu,other,sw,MASSIVE
+ni maendeleo gani tunaweza kufanya upande wa rais wetu,other,sw,MASSIVE
+nitafutie mtu,other,sw,MASSIVE
+mwambie juma nitachelewa kupitia barua pepe,other,sw,MASSIVE
+hey olly kuna nini,other,sw,MASSIVE
+nichekeshe,other,sw,MASSIVE
+niambie mengi kuhusu tamasha za ijumaa usiku,other,sw,MASSIVE
+unaweza washa kifyonzi,other,sw,MASSIVE
+unaweza badilisha taa za sebuleni ziwe rangi laini zaidi,other,sw,MASSIVE
+punguza mwangaza wa taa za bafu,other,sw,MASSIVE
+zima taa za chumba sasa,other,sw,MASSIVE
+washa taa za disco,other,sw,MASSIVE
+ongeza taa sebuleni nusu njia,other,sw,MASSIVE
+tafadhali zima soketi mahiri,other,sw,MASSIVE
+nahitaji kuwasha plagi ya ofisi yangu ya kompyuta yangu,other,sw,MASSIVE
+ninahitaji kuunda orodha ya bili zinazofaa kulipwa,other,sw,MASSIVE
+ninaweza kupata orodha yangu,other,sw,MASSIVE
+futa orodha iliyotangulia,other,sw,MASSIVE
+siufurahii muziki huu,other,sw,MASSIVE
+nafurahia kuskiza wimbo huu huwa unanituliza,other,sw,MASSIVE
+ni nani msanii wa wimbo unaocheza sasa,other,sw,MASSIVE
+chagua changanya zote,other,sw,MASSIVE
+nijulishe ikiwa kitu chochote kitatokea ya mada hiyo,other,sw,MASSIVE
+cheza kitabu,other,sw,MASSIVE
+tucheze cha baba na cha mama,other,sw,MASSIVE
+ninataka kusikiliza nyimbo za classical,other,sw,MASSIVE
