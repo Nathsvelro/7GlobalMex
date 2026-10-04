@@ -14,6 +14,12 @@ def test_registration_requires_consent(client):
     base = {"name": "X", "phone": "+254700009000", "community": "Ondera Juu", "consent_by": "Ann"}
     assert client.post("/api/members", json={**base, "consent": False}).status_code == 400
     assert client.post("/api/members", json=base).status_code == 422             # consent missing
+    for loose in ("yes", "true", 1, "on"):                                        # only a JSON true is consent
+        assert client.post("/api/members", json={**base, "consent": loose}).status_code == 422, loose
+    # the community name goes into the alert SMS: at most 40 characters of the slot whitelist
+    assert client.post("/api/members", json={**base, "consent": True, "community": "A" * 41}).status_code == 422
+    bad = client.post("/api/members", json={**base, "consent": True, "community": "Ondera {n_reportes}"})
+    assert bad.status_code == 400 and "at most 40 characters" in bad.json()["detail"]
     assert client.post("/api/members", json={**base, "consent": True, "consent_by": ""}).status_code == 422
     assert client.post("/api/members", json={**base, "consent": True, "consent_by": "   "}).status_code == 400
     assert client.post("/api/members", json={**base, "consent": True, "name": "   "}).status_code == 400

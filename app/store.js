@@ -63,7 +63,7 @@ export async function newObsId() {
   }
 }
 
-// "Borrar todo": observations, photos and settings. The app's offline cache is kept.
+// "Delete all": observations, photos and settings. The app's offline cache is kept.
 export async function wipeAll() {
   localStorage.removeItem(SETTINGS_KEY);
   await new Promise((resolve) => {

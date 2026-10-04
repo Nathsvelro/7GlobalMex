@@ -1,10 +1,10 @@
 {
-  "hub": "http://localhost:8100",
-  "started": "2026-10-04T01:39:24.843Z",
+  "hub": "http://localhost:8130",
+  "started": "2026-10-04T03:08:27.675Z",
   "checks": [
     {
       "ok": true,
-      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1918 ms (unthrottled, localhost)"
+      "msg": "service worker cached the whole app (ui_offline_ready shown) after 1914 ms (unthrottled, localhost)"
     },
     {
       "ok": true,
@@ -36,15 +36,15 @@
     },
     {
       "ok": true,
-      "msg": "en advice audio plays offline (currentTime 1.21 s)"
+      "msg": "en advice audio plays offline (currentTime 1.19 s)"
     },
     {
       "ok": true,
-      "msg": "sw advice audio plays offline (currentTime 1.22 s)"
+      "msg": "sw advice audio plays offline (currentTime 1.20 s)"
     },
     {
       "ok": true,
-      "msg": "kik advice audio plays offline (currentTime 1.20 s)"
+      "msg": "kik advice audio plays offline (currentTime 1.21 s)"
     },
     {
       "ok": true,
@@ -52,7 +52,7 @@
     },
     {
       "ok": true,
-      "msg": "SMS code valid, 45 chars: CAF1 M0123 RUST 99 20261004 -0.52,37.32 #6F9W"
+      "msg": "SMS code valid, 45 chars: CAF1 M0123 RUST 99 20261004 -0.52,37.32 #Z854"
     },
     {
       "ok": true,
@@ -60,7 +60,7 @@
     },
     {
       "ok": true,
-      "msg": "\"Send by SMS\" link: sms:+254700000000?body=CAF1%20M0123%20RUST%2099%2020261004%20-0.52%2C37.32%20%236F9W"
+      "msg": "\"Send by SMS\" link: sms:+254700000000?body=CAF1%20M0123%20RUST%2099%2020261004%20-0.52%2C37.32%20%23Z854"
     },
     {
       "ok": true,
@@ -124,11 +124,11 @@
     },
     {
       "ok": true,
-      "msg": "hub stored the observation M0123-6F9W (RUST 99%) from the SMS"
+      "msg": "hub stored the observation M0123-Z854 (RUST 99%) from the SMS"
     },
     {
       "ok": true,
-      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-04T01:39:46\",\"community\":\"Ondera Juu\",\"lat\":-0.52,\"lon\":37.32,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-6F9W\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
+      "msg": "outbreak alert created (1 alert(s)): {\"id\":1,\"created_at\":\"2026-10-04T03:08:49\",\"community\":\"Ondera Juu\",\"lat\":-0.52,\"lon\":37.32,\"n_reports\":3,\"member_ids\":[\"M0105\",\"M0108\",\"M0123\"],\"obs_uids\":[\"M0123-Z854\",\"M0105-A1R2\",\"M0108-B7K4\"],\"status\":\"active\",\"demo\":0,\"active\":true,\"messages\":{\"pending_approval\":24}}"
     },
     {
       "ok": true,
@@ -144,7 +144,7 @@
     },
     {
       "ok": true,
-      "msg": "photo attached to M0123-6F9W: /api/photos/M0123-6F9W"
+      "msg": "photo attached to M0123-Z854: /api/photos/M0123-Z854"
     },
     {
       "ok": true,
@@ -156,11 +156,11 @@
     },
     {
       "ok": true,
-      "msg": "PRICE -> reference price 139.00 KES, source \"DEMO county 25/26, KAMIS\", date \"2026\", in Noor's language (en): \"Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.\""
+      "msg": "PRICE -> reference price 139.00 KES, source \"DEMO county 25/26, KAMIS\", date \"10/2026\", in Noor's language (en): \"Reference price 10/2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.\""
     },
     {
       "ok": true,
-      "msg": "BEI -> reference price 139.00 KES, source \"DEMO county 25/26, KAMIS\", date \"2026\", in Noor's language (en): \"Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.\""
+      "msg": "BEI -> reference price 139.00 KES, source \"DEMO county 25/26, KAMIS\", date \"10/2026\", in Noor's language (en): \"Reference price 10/2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.\""
     },
     {
       "ok": true,
@@ -188,16 +188,16 @@
     }
   ],
   "results": {
-    "first_load_ready_ms": 1918,
+    "first_load_ready_ms": 1914,
     "roya": {
-      "obs_id": "6F9W",
+      "obs_id": "Z854",
       "label": "roya",
       "code": "RUST",
       "top": "roya",
       "conf": 99,
       "reason": null,
       "blur": 51.69,
-      "ms": 523,
+      "ms": 612,
       "probs": {
         "sano": 0,
         "roya": 0.996,
@@ -206,19 +206,19 @@
         "cercospora": 0,
         "otro": 0.004
       },
-      "sms_code": "CAF1 M0123 RUST 99 20261004 -0.52,37.32 #6F9W",
+      "sms_code": "CAF1 M0123 RUST 99 20261004 -0.52,37.32 #Z854",
       "model_version": "cafetal-img-v2",
       "diag_text": "It looks like coffee leaf rust."
     },
     "plantdoc": {
-      "obs_id": "4NMT",
+      "obs_id": "AH2Y",
       "label": "otro",
       "code": "OTHR",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 959.88,
-      "ms": 18,
+      "ms": 17,
       "probs": {
         "sano": 0,
         "roya": 0.001,
@@ -227,19 +227,19 @@
         "cercospora": 0,
         "otro": 0.999
       },
-      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #4NMT",
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #AH2Y",
       "model_version": "cafetal-img-v2",
       "diag_text": "I'm not sure — show the leaf to the extension officer."
     },
     "imagenette": {
-      "obs_id": "QA74",
+      "obs_id": "VQ9Y",
       "label": "otro",
       "code": "OTHR",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 1032.66,
-      "ms": 17,
+      "ms": 16,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -248,19 +248,19 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #QA74",
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #VQ9Y",
       "model_version": "cafetal-img-v2",
       "diag_text": "I'm not sure — show the leaf to the extension officer."
     },
     "object": {
-      "obs_id": "TEGV",
+      "obs_id": "03GQ",
       "label": "otro",
       "code": "OTHR",
       "top": "otro",
       "conf": 99,
       "reason": "not_coffee",
       "blur": 145.58,
-      "ms": 20,
+      "ms": 21,
       "probs": {
         "sano": 0,
         "roya": 0,
@@ -269,12 +269,12 @@
         "cercospora": 0,
         "otro": 1
       },
-      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #TEGV",
+      "sms_code": "CAF1 M0123 OTHR 99 20261004 -0.52,37.32 #03GQ",
       "model_version": "cafetal-img-v2",
       "diag_text": "I'm not sure — show the leaf to the extension officer."
     },
     "blurred": {
-      "obs_id": "7WPS",
+      "obs_id": "TFY9",
       "label": "duda",
       "code": "UNSR",
       "top": null,
@@ -283,7 +283,7 @@
       "blur": 2.35,
       "ms": 2,
       "probs": null,
-      "sms_code": "CAF1 M0123 UNSR 0 20261004 -0.52,37.32 #7WPS",
+      "sms_code": "CAF1 M0123 UNSR 0 20261004 -0.52,37.32 #TFY9",
       "model_version": "cafetal-img-v2",
       "diag_text": "I'm not sure — show the leaf to the extension officer."
     },
@@ -306,7 +306,7 @@
     "alerts": [
       {
         "id": 1,
-        "created_at": "2026-10-04T01:39:46",
+        "created_at": "2026-10-04T03:08:49",
         "community": "Ondera Juu",
         "lat": -0.52,
         "lon": 37.32,
@@ -317,7 +317,7 @@
           "M0123"
         ],
         "obs_uids": [
-          "M0123-6F9W",
+          "M0123-Z854",
           "M0105-A1R2",
           "M0108-B7K4"
         ],
@@ -334,8 +334,8 @@
       "name": "Noor (DEMO)",
       "community": "Ondera Juu",
       "phone": "+254700000123",
-      "obs_uid": "M0123-6F9W",
-      "obs_id": "6F9W",
+      "obs_uid": "M0123-Z854",
+      "obs_id": "Z854",
       "code": "RUST",
       "conf": 99,
       "date": "2026-10-04",
@@ -357,11 +357,11 @@
           {
             "id": 72,
             "to": "+254700000123",
-            "body": "Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
+            "body": "Reference price 10/2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
             "card_id": "sms_precio",
             "lang": "en",
             "status": "sent_simulated",
-            "length": 149,
+            "length": 152,
             "encoding": "GSM-7",
             "segments": 1
           }
@@ -381,11 +381,11 @@
           {
             "id": 74,
             "to": "+254700000123",
-            "body": "Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
+            "body": "Reference price 10/2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
             "card_id": "sms_precio",
             "lang": "en",
             "status": "sent_simulated",
-            "length": 149,
+            "length": 152,
             "encoding": "GSM-7",
             "segments": 1
           }
@@ -405,11 +405,11 @@
           {
             "id": 76,
             "to": "+254700000123",
-            "body": "Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
+            "body": "Reference price 10/2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory.",
             "card_id": "sms_precio",
             "lang": "en",
             "status": "sent_simulated",
-            "length": 149,
+            "length": 152,
             "encoding": "GSM-7",
             "segments": 1
           }
@@ -490,7 +490,7 @@
         "Ondera Juu"
       ],
       "fecha": [
-        "2026"
+        "10/2026"
       ],
       "precio_cafe": [
         "139.00"
@@ -569,6 +569,6 @@
     ],
     "notFromCards": []
   },
-  "finished": "2026-10-04T01:39:59.633Z",
+  "finished": "2026-10-04T03:09:02.558Z",
   "failures": 0
 }

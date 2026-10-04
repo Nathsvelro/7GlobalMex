@@ -23,12 +23,12 @@
     <div class="card grow">
       <h2 style="margin-top:0">Pages</h2>
       <ul>
-        <li><a href="/hub/registro.html">Registration</a> — sign up members with consent, member list, delete a member.</li>
-        <li><a href="/hub/simulador.html">SMS simulator</a> — Noor's basic phone (SIMULATED).</li>
-        <li><a href="/hub/bandeja.html">Outbox</a> — approve or reject alerts before they go out.</li>
-        <li><a href="/hub/mapa.html">Map</a> — farms coloured by their most serious report (30 days) and alert areas.</li>
-        <li><a href="/hub/tecnico.html">Officer worklist</a> — ranked visit list; the officer decides.</li>
-        <li><a href="/hub/contenido.html">Content</a> — review texts and audio, record native voices.</li>
+        <li><a href="/hub/register.html">Registration</a> — sign up members with consent, member list, delete a member.</li>
+        <li><a href="/hub/simulator.html">SMS simulator</a> — Noor's basic phone (SIMULATED).</li>
+        <li><a href="/hub/outbox.html">Outbox</a> — approve or reject alerts before they go out.</li>
+        <li><a href="/hub/map.html">Map</a> — farms coloured by their most serious report (30 days) and alert areas.</li>
+        <li><a href="/hub/officer.html">Officer worklist</a> — ranked visit list; the officer decides.</li>
+        <li><a href="/hub/content.html">Content</a> — review texts and audio, record native voices.</li>
         <li><a href="/app/">Phone app</a> (for the daughter's smartphone).</li>
       </ul>
     </div>
@@ -57,10 +57,10 @@
     if (s.demo) document.getElementById("demo-note").innerHTML =
       '<div class="notice warn"><b>DEMO:</b> the members, phone numbers and reports loaded here are made-up sample data. The SMS gateway is SIMULATED.</div>';
     const items = [
-      ["Members", s.members, "/hub/registro.html"], ["Reports (7 days)", s.observations_7d, "/hub/mapa.html"],
-      ["Rust (7 days)", s.rust_7d, "/hub/mapa.html"], ["Active alerts", s.active_alerts, "/hub/mapa.html"],
-      ["Waiting for approval", s.pending_approval, "/hub/bandeja.html"], ["Officer worklist", s.worklist, "/hub/tecnico.html"],
-      ["Messages for the officer", s.officer_messages_new, "/hub/tecnico.html#mensajes"], ["Checked examples", s.labels, "/hub/tecnico.html#etiquetas"],
+      ["Members", s.members, "/hub/register.html"], ["Reports (7 days)", s.observations_7d, "/hub/map.html"],
+      ["Rust (7 days)", s.rust_7d, "/hub/map.html"], ["Active alerts", s.active_alerts, "/hub/map.html"],
+      ["Waiting for approval", s.pending_approval, "/hub/outbox.html"], ["Officer worklist", s.worklist, "/hub/officer.html"],
+      ["Messages for the officer", s.officer_messages_new, "/hub/officer.html#messages"], ["Checked examples", s.labels, "/hub/officer.html#examples"],
     ];
     document.getElementById("stats").innerHTML = items.map(([l, v, h]) =>
       `<div class="stat"><a href="${h}"><b>${v}</b>${l}</a></div>`).join("");
@@ -70,7 +70,7 @@
   document.getElementById("alerts").innerHTML = act.length ? act.map((x) =>
     `<div class="notice alert"><b>Rust near ${esc(x.community)}</b>: ${x.n_reports} members reported rust in 7 days (${fmtDate(x.created_at)}).
      Messages: ${x.messages.pending_approval || 0} waiting for approval, ${x.messages.sent_simulated || 0} sent (simulated), ${x.messages.rejected || 0} rejected.
-     <a href="/hub/bandeja.html">Go to the outbox</a></div>`).join("") : "No active alerts.";
+     <a href="/hub/outbox.html">Go to the outbox</a></div>`).join("") : "No active alerts.";
 
   const p = await api("/api/prices");
   document.getElementById("prices").innerHTML = !p.available ? "No price table (data/prices.json)." :

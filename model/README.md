@@ -191,8 +191,8 @@ fail-safe "I'm not sure - show the leaf to the extension officer":
   1.6 %): that is condition (2) above.
 - **Field photos (iNaturalist, held-out field test; a proxy, labels = community identification, none from East
   Africa)**: rust correct & accepted **64.2 % [51-76]** (34 of 53; v1: 0 of 53), 81.0 % (34 of 42) when the symptom
-  is clearly visible. Leaf miner 2 of 9, Cercospora **0 of 10** (2 called roya). Ojo de gallo (American leaf spot,
-  not a model class) goes to UNSR 91.1 % (82 of 90). No diseased field photo was called "sano". East Africa: 0
+  is clearly visible. Leaf miner 2 of 9, Cercospora **0 of 10** (2 called roya). American leaf spot (*Mycena
+  citricolor*, not a model class) goes to UNSR 91.1 % (82 of 90). No diseased field photo was called "sano". East Africa: 0
   labelled disease photos, so there is no field number for Kenya.
 - **False alarms**: disease answers on 2.5 % [1.4-4.5] (10 of 399) of *Coffea* plant photos with unknown health
   (v1: 0 %; East Africa 0 of 6, Kenya 0 of 3 - too few to mean anything), 6.5 % of the 200 iNatAg-mini coffee
@@ -220,7 +220,7 @@ fail-safe "I'm not sure - show the leaf to the extension officer":
 | PlantDoc (Singh et al., CoDS-COMAD 2020) | CC BY 4.0 per the repo's licence file; AgML metadata says CC BY-SA 4.0 (to be checked); images were collected from the web, so the copyright of individual images varies | `otro` (other crops); not redistributed |
 | Imagenette (fast.ai) | repo Apache-2.0; images are an ImageNet subset, ImageNet terms (non-commercial research) apply | `otro` (non-plant) |
 | iNatAg-mini `coffea_arabica` (iNaturalist via AgML) | CC BY-NC 4.0 as recorded in our evaluation code (to be checked: AgML has no per-photo licence field) | evaluation only, not trained on, not shipped |
-| iNaturalist field photos (768: rust, leaf miner, Cercospora, ojo de gallo, *Coffea arabica*), per-photo attribution in `reports/field_inat_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | field evaluation; 147 screened field-train photos trained v2 (the shipped model); images not redistributed, except one CC BY field-test photo in `demo_samples/` (attributed there) |
+| iNaturalist field photos (768: rust, leaf miner, Cercospora, American leaf spot, *Coffea arabica*), per-photo attribution in `reports/field_inat_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | field evaluation; 147 screened field-train photos trained v2 (the shipped model); images not redistributed, except one CC BY field-test photo in `demo_samples/` (attributed there) |
 | iNaturalist *Coffea arabica* calibration photos (400, observers not in any other set), per-photo attribution in `reports/field_calib_attribution.csv` | CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND, per photo | choosing v2's threshold only (not trained on); images not redistributed |
 
 The shipped `cafetal.onnx` contains weights learned from these datasets (and ImageNet-pretrained

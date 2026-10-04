@@ -33,6 +33,45 @@ def test_price_without_price_table(client, monkeypatch, env):
     assert card_ids(sms(client, "+254700001000", "BEI")) == ["sms_precio_sin_datos"]
 
 
+def test_price_table_that_does_not_fit_the_card_gets_no_data_reply(client, env):
+    """A staff edit of data/prices.json must never mislabel a price or leave the member without a reply."""
+    m = register(client)
+    path = env / "prices.json"
+    good = json.loads(path.read_text())
+
+    def reply_with(table):
+        path.write_text(json.dumps(table), encoding="utf-8")
+        r = sms(client, m["phone"], "PRICE")
+        assert len(r["replies"]) == 1, r
+        return r
+
+    # maize per 90-kg bag: the card would print "KES/kg" after it
+    t = json.loads(json.dumps(good))
+    next(i for i in t["items"] if i["id"] == "maize").update(price=4600, unit="KES/90kg bag")
+    assert card_ids(reply_with(t)) == ["sms_precio_sin_datos"]
+    # no sms_fuente: the long coffee source fails the slot whitelist -> the no-data reply, not silence
+    t = {k: v for k, v in good.items() if k not in ("sms_fuente", "sms_fecha")}
+    assert card_ids(reply_with(t)) == ["sms_precio_sin_datos"]
+    # a source that passes the whitelist (40 characters) but makes the reply longer than one SMS
+    t = dict(good, sms_fuente="DEMO Kirinyaga County cherry pay, KAMIS.")
+    assert len(t["sms_fuente"]) == 40
+    r = reply_with(t)
+    assert card_ids(r) == ["sms_precio_sin_datos"]
+    assert any(a["type"] == "card_error" and "longer than one SMS" in a["detail"] for a in r["actions"]), r
+    # the shipped table still gives the price
+    assert card_ids(reply_with(good)) == ["sms_precio"]
+
+
+def test_render_refuses_sms_longer_than_one_message(env):
+    import pytest
+    from hub import cards
+    with pytest.raises(cards.CardError, match="longer than one SMS"):
+        cards.render("sms_precio", "en", precio_cafe="157.40", unidad_cafe="KES/kg cherry", precio_maiz="105.50",
+                     precio_frijol="180.00", fecha="2026-09-30", fuente="A" * 40)
+    text, _ = cards.render("alert_roya", "kik", comunidad="A" * 40, n_reportes="120")   # worst case still fits
+    assert cards.sms_length(text)["segments"] == 1
+
+
 def test_intents_route_to_the_right_card(client, conn):
     register(client)
     cases = {

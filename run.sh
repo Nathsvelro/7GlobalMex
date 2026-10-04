@@ -39,7 +39,7 @@ echo
 echo "  Cafetal hub         http://localhost:${PORT}/"
 [ -n "$LAN_IP" ] && echo "  On the co-op LAN    http://${LAN_IP}:${PORT}/"
 echo "  Phone app           http://localhost:${PORT}/app/"
-echo "  SMS simulator       http://localhost:${PORT}/hub/simulador.html   (SIMULATED gateway, DEMO data)"
+echo "  SMS simulator       http://localhost:${PORT}/hub/simulator.html   (SIMULATED gateway, DEMO data)"
 echo
 echo "  Phone tip: service workers (offline mode) need localhost or HTTPS. With the phone on USB:"
 echo "    adb reverse tcp:${PORT} tcp:${PORT}   then open http://localhost:${PORT}/app/ on the phone."

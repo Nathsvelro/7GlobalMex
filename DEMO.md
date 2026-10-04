@@ -15,8 +15,8 @@ Honesty labels you will see on screen, and should leave visible:
 
 - **DEMO** ("DEMO: sample data"): invented members and prices.
 - **SIMULATED** ("SMS SIMULATED", "SIMULATED: no real SMS was sent"): no real SMS is sent.
-- **UNVERIFIED**: no person has checked that text or audio yet (in Kiswahili *HAIJAHAKIKIWA*, in Gĩkũyũ
-  *NDĨRATHUTHURIO*).
+- **UNVERIFIED**: no person has checked that text or audio yet (on the Kiswahili and Gĩkũyũ screens:
+  *HAIJAHAKIKIWA · UNVERIFIED*, *NDĨRATHUTHURIO · UNVERIFIED*; SIMULATED is kept in English there too).
 
 The DEMO story (from [hub/seed.py](hub/seed.py)), set in Kirinyaga County, Kenya:
 
@@ -201,13 +201,13 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
 ## 5. Harvest scene: Noor's basic phone (SMS simulator)
 
 1. Open **"SMS simulator"**. The phone selected under **"Phone"** is *"Noor (DEMO) · M0123 · +254700000123"*.
-2. Press **"PRICE"**. The reply is *"Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11
+2. Press **"PRICE"**. The reply is *"Reference price 10/2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11
    KES/kg. Source: DEMO county 25/26, KAMIS. Not the price at your factory."* Say it: these are **DEMO** reference
    prices (the coffee figure is the Kirinyaga county average paid per kg of cherry in the 2025/26 season), not AI,
    and never the price at Noor's own factory or farm gate.
 3. Press **"BEI"** (the Kiswahili keyword). The reply is the same, in English, because replies follow the member's
    registered SMS language and Noor's is English. To see it in Kiswahili, choose *"Mary Wambui Ndungu (DEMO) ·
-   M0108 · +254700000108"* under "Phone" and press "BEI": *"Bei elekezi 2026: kahawa 139.00 KES/kg cherry, mahindi
+   M0108 · +254700000108"* under "Phone" and press "BEI": *"Bei elekezi 10/2026: kahawa 139.00 KES/kg cherry, mahindi
    51.11, maharagwe 111.11 KES/kg. Chanzo: DEMO county 25/26, KAMIS. Si bei ya kiwanda chako."* Then switch back
    to Noor.
 4. **Free text:** type `how much are you paying for a kilo of cherry` and press **"Send"**.
@@ -225,7 +225,7 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
      back; the system never sends free text to members.
 6. Optional:
    - Choose *"Peter Mwangi Kariuki (DEMO) · M0105"*, a Gĩkũyũ-registered member, and press "PRICE" to see the
-     Gĩkũyũ SMS (UNVERIFIED; in SMS, ĩ and ũ are written i and u): *"Thogora wa kuonereria 2026: kahua 139.00
+     Gĩkũyũ SMS (UNVERIFIED; in SMS, ĩ and ũ are written i and u): *"Thogora wa kuonereria 10/2026: kahua 139.00
      KES/kg cherry, …"*.
    - Choose *"NOT registered number · +254799000000"* to see *"Cafetal: this number is not registered. Please visit
      the co-op office to sign up."*

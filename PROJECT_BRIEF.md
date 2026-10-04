@@ -75,7 +75,7 @@ There is also a secondary, **non-AI** module: an independent reference price for
 ### 1. On the daughter's smartphone (weekends, fully offline)
 - Photograph the **underside** of a leaf, where rust shows as orange powder.
 - An on-device image model (≤10 MB) identifies the problem.
-- The phone plays spoken advice in **Gĩkũyũ, Kiswahili or English**. The advice comes from a **fixed set of advice cards** that people have checked.
+- The phone plays spoken advice in **Gĩkũyũ, Kiswahili or English**. The advice comes from a **fixed set of advice cards** that people have checked. (As built: 83 cards; nobody has checked them yet, so every card is marked UNVERIFIED; see `content/README.md`.)
 - If the model isn't confident, or the photo isn't a coffee leaf → **"I'm not sure — show the leaf to the extension officer."**
 - Every diagnosis is saved as a **field observation**: date, rough location, result, confidence, and the photo (kept on the phone).
 
@@ -109,7 +109,7 @@ There is also a secondary, **non-AI** module: an independent reference price for
 | Core feature works offline | Model, advice and audio all run on the phone with no signal |
 | Model files small enough to side-load or send over a weak connection | Target ≤10 MB. We measure the download time over 3G. It can also be shared by Bluetooth or SD card |
 | At least one local-language interaction, named | Gĩkũyũ voice advice, plus Kiswahili and English |
-| "How would it fare in a less-supported language?" | Advice is a fixed set of cards. Adding a language means translating about 30 cards and recording them with a native speaker; no model retraining. Gĩkũyũ is itself such a language: Mozilla Common Voice has no Gĩkũyũ data at all (`docs/evidence.md` §8) |
+| "How would it fare in a less-supported language?" | Advice is a fixed set of cards. Adding a language means translating the cards and recording them with a native speaker; no image-model retraining. (As built: 83 cards, about 800–950 words, 74 of them spoken; the SMS sorter needs a few examples in the new language and a retrain.) Gĩkũyũ is itself such a language: Mozilla Common Voice has no Gĩkũyũ data at all (`docs/evidence.md` §8) |
 | A person makes the final call | The tool informs and flags uncertainty. Farmers and the officer decide. Nothing is sent without a tap |
 | Avoid hallucinations | Farmers only ever see a **fixed list of checked answers**; no free-form generated text |
 
@@ -160,7 +160,7 @@ There is also a secondary, **non-AI** module: an independent reference price for
 - **Field conditions are untested:** messy backgrounds, shadows, wet leaves, cheap cameras. We test on our own photos and report the gap.
 - **The model only sees leaf symptoms.** It can't detect coffee berry disease (CBD, one of Kenya's two major coffee diseases, on the berries), coffee berry borer, antestia bugs, nutrient deficiency, drought, aging trees or soil problems, any of which could explain Noor's lower yields. The app says this and points her to the officer.
 - Rust severity labels exist only in RoCoLe (Robusta).
-- **Gĩkũyũ** has little speech data (none in Common Voice); Kiswahili has more. Advice audio is recorded or checked by people, not freely generated.
+- **Gĩkũyũ** has little speech data (none in Common Voice); Kiswahili has more. Advice audio is recorded or checked by people, not freely generated. (As built: all audio is synthetic, rendered once offline; the Kiswahili and Gĩkũyũ voice is provisional and nobody has listened to it yet. Native speakers can record over it on the hub.)
 - **Prices** are county, auction or wholesale reference prices, not the price at Noor's factory or farm gate. They're labeled "reference price."
 - All sample data is labeled **DEMO**.
 

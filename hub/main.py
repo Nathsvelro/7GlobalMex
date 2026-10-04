@@ -19,7 +19,7 @@ from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.gzip import GZipMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, StrictBool
 
 from . import cards, db, intent, outbreak, seed, sms
 
@@ -149,11 +149,11 @@ def params():
 class MemberIn(BaseModel):
     name: str = Field(min_length=1, max_length=80)
     phone: str = Field(min_length=8, max_length=20)
-    community: str = Field(min_length=1, max_length=60)
+    community: str = Field(min_length=1, max_length=40)   # SLOT_VALUE_RE: it goes into the alert SMS
     lat: float | None = Field(default=None, ge=-90, le=90)
     lon: float | None = Field(default=None, ge=-180, le=180)
     language: Literal["en", "sw", "kik"] = "en"
-    consent: bool
+    consent: StrictBool   # a JSON true/false only ("yes" or 1 is refused with HTTP 422)
     consent_by: str = Field(min_length=1, max_length=80)
     consent_text_version: str = "v1"
 
@@ -180,7 +180,7 @@ def register_member(m: MemberIn):
         raise HTTPException(400, "Phone number not valid.")
     if not cards.SLOT_VALUE_RE.match(m.community.strip()):
         # The community name goes into the alert SMS, so it may only use letters, digits and . , / : - ( ) % '
-        raise HTTPException(400, "Community name not valid (letters, digits and . , - ( ) ' only).")
+        raise HTTPException(400, "Community name not valid (at most 40 characters; letters, digits and . , - ( ) ' only).")
     c = conn()
     with db.Tx(c):
         if db.member_by_phone(c, phone):

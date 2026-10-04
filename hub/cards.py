@@ -75,7 +75,7 @@ def gsm_safe(value: str) -> str:
 
 def render(card_id: str, lang: str = DEFAULT_LANG, **slots) -> tuple[str, str]:
     """Return (text, lang_used). Falls back to English if the card has no text in `lang`.
-    For SMS cards (type sms/alert) slot values are made GSM-7 safe."""
+    For SMS cards (type sms/alert) slot values are made GSM-7 safe, and a text longer than one SMS is refused."""
     card = get(card_id)
     if card is None:
         raise CardError(f"card '{card_id}' is missing from cards.json")
@@ -95,6 +95,9 @@ def render(card_id: str, lang: str = DEFAULT_LANG, **slots) -> tuple[str, str]:
     left = re.findall(r"\{(\w+)\}", text)
     if left:
         raise CardError(f"card '{card_id}' has unfilled slots: {left}")
+    if card.get("type") in ("sms", "alert") and sms_length(text)["segments"] > 1:
+        # One SMS per message (PLAN.md section 10): never send a reply or alert that would arrive in parts.
+        raise CardError(f"card '{card_id}' ({lang}) is longer than one SMS after filling slots: {sms_length(text)}")
     return text, lang
 
 

@@ -447,10 +447,10 @@ def main():
         out, _, _ = evaluate_model(args.shipped, labels, rows, squares, blur, None, args.cache, methods)
         rep["inat_field"] = {"n_photos": len(rows), "app_method": methods[-1],
                              "field_test": {m: out["methods"][m]["field_test"] for m in methods},
-                             "note": "held-out field test only (observers not used in training, except the observer of 1 ojo de gallo "
-                                     "photo); iNaturalist photos are a proxy for field photos from Kirinyaga, and none "
-                                     "of the labelled disease photos is from East Africa; details, ship rule and v1/v2 "
-                                     "comparison in reports/field_eval.md"}
+                             "note": "held-out field test only (observers not used in training, except the observer of "
+                                     "1 American leaf spot photo); iNaturalist photos are a proxy for field photos from "
+                                     "Kirinyaga, and none of the labelled disease photos is from East Africa; details, "
+                                     "ship rule and v1/v2 comparison in reports/field_eval.md"}
         print("inat field", {m: rep["inat_field"]["field_test"][m]["roya"]["correct"] for m in methods})
         if ref:
             ro, _, _ = evaluate_model(rpath, rlab, rows, squares, blur, None, args.cache, ["single"])
@@ -699,7 +699,7 @@ def render_md(r, classes):
               "<= 5 % disease answers on 400 new *Coffea* photos and >= 98 % `otro` rejection on validation). "
               f"The export-time value below ({th['value']}) came from Kenyan validation images only and is kept for "
               "the record."]
-    floor_reason = th.get("floor_reason", "").replace("real Chiapas photos", "real field photos")  # export-time wording
+    floor_reason = th.get("floor_reason", "")
     L += [f"- Export-time confidence threshold **{th['value']}** (data-driven value {th.get('data_driven_value')}: {th['rule']}; "
           f"policy floor {th.get('policy_floor')}: {floor_reason}).", "",
           "| threshold | coverage (clean val) | selective accuracy (clean val) | coverage (clean + degraded val) | "

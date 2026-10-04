@@ -183,12 +183,17 @@ replies are logged as `sent_simulated`.
 - **Slots** exist only in SMS cards. Their values come from [data/prices.json](data/prices.json), the alert count
   and the registered community name. Each value must pass a whitelist: at most 40 characters, letters (accented
   letters such as ĩ and ũ included), digits, space and `. , / : - ( ) % '`, no braces. In SMS cards the accents are then
-  dropped (ĩ → i) so the message stays GSM-7 (`gsm_safe`). An undeclared or empty slot raises an error, and then
-  **nothing is sent** ([hub/cards.py](hub/cards.py) `render`). Registration checks community names with the same rule.
+  dropped (ĩ → i) so the message stays GSM-7 (`gsm_safe`). An undeclared or empty slot, or an SMS card that would be
+  longer than one SMS after filling, raises an error, and then **nothing is sent** ([hub/cards.py](hub/cards.py)
+  `render`). Registration checks community names with the same rule. The price reply checks its table first: if a
+  value fails the whitelist, if maize or beans are not in KES/kg (the unit the card prints), or if the reply would
+  not fit in one SMS, the member gets "we have no reference price today" (`sms_precio_sin_datos`) instead
+  ([hub/sms.py](hub/sms.py) `price_slots`).
   - **How a failure shows:** for a reply, the error is only added to the `actions` list of the API response
     ([hub/sms.py](hub/sms.py) `_reply`); it is not stored or written to a log. In an alert broadcast, a member whose
     card fails is skipped with no record ([hub/outbreak.py](hub/outbreak.py) `queue_alert_broadcast`), so staff are
-    not told. Because registration uses the same filter, we have not seen this happen.
+    not told. Because registration uses the same filter and limits names to 40 characters, which still fit
+    (`scripts/make_audio.py --check` tests a 40-character name), we have not seen this happen.
 - **The phone app** fills each screen from card ids. A missing card shows as `[card_id]`; the app never writes a
   sentence itself ([app/content.js](app/content.js)).
 - **Tests that enforce it:**
@@ -208,7 +213,8 @@ replies are logged as `sent_simulated`.
 ## 4. Consent
 
 **At the co-op (registry).**
-- `POST /api/members` refuses a member without `consent = true` (HTTP 400). It also needs `consent_by`, the staff
+- `POST /api/members` refuses a member unless `consent` is the JSON value `true`: `false` gets HTTP 400, and a
+  missing field or any other value (`"yes"`, `1`) gets HTTP 422. It also needs `consent_by`, the staff
   member who explained it, and stores the date and the consent text version ([hub/main.py](hub/main.py)). Test:
   [tests/test_members_sync.py](tests/test_members_sync.py) `test_registration_requires_consent`. A `consent_by` or
   a name of only spaces is refused too (HTTP 400).
@@ -216,7 +222,7 @@ replies are logged as `sent_simulated`.
   what the app does (`ui_consent_text`) and what the co-op hub stores and who can read it (`ui_consent_hub_text`,
   which also says the hub has no password yet, section 5). It tells staff to read both aloud to the member, in their
   language. Staff tick "The member understood and agrees." and type "Who explained it? (co-op staff)"
-  ([hub/static/registro.html](hub/static/registro.html), [screenshot](reports/screenshots/journey_20_registro.png)).
+  ([hub/static/register.html](hub/static/register.html), [screenshot](reports/screenshots/journey_20_register.png)).
 
 **On the phone (first use).**
 - The "Your permission" screen reads itself aloud if the browser allows. It says what is stored on the phone, that the
@@ -350,7 +356,7 @@ to do after a data breach. The consent text and the hub should then be changed t
 - **Languages:** **English** (`en`) is the main and default language and an official language of Kenya; **Kiswahili**
   (`sw`) is the national language and also official (Constitution Art. 7, S); **Gĩkũyũ** (`kik`) is the local
   language of central Kenya (S; [docs/evidence.md](docs/evidence.md) §6). All 83 cards have text in all three. 74 cards
-  have audio in each language (222 MP3s, 2.91 MB); the 9 SMS and alert cards are text only
+  have audio in each language (222 MP3s, 2.95 MB); the 9 SMS and alert cards are text only
   ([content/README.md](content/README.md)).
 - **English text** was written by the team for low literacy. No agronomist or co-op staff member has checked it.
 - **Kiswahili text is an AI draft** in standard Kiswahili. Nobody who speaks Kiswahili has read it.
@@ -363,10 +369,11 @@ to do after a data breach. The consent text and the hub should then be changed t
   MSAADA, AFISA; there are no Gĩkũyũ keywords, and the Gĩkũyũ cards advertise the English and Kiswahili ones.
 - **SMS sorter** (held-out test, team-written messages): English 100.0 % (n = 82), Kiswahili 92.1 % (n = 89), Gĩkũyũ
   3 of 4 (too few to mean anything) ([intent_eval.md](reports/intent_eval.md)).
-- **Everything is marked UNVERIFIED** (*HAIJAHAKIKIWA* in Kiswahili, *NDĨRATHUTHURIO* in Gĩkũyũ, both drafts), in all
-  three languages: on the phone, in the outbox and on the content page. **SMS on a basic phone carry no badge:** the 9
-  SMS and alert cards (all unverified, including the AI-draft Kiswahili and Gĩkũyũ) reach members as plain text; only
-  the hub outbox shows UNVERIFIED.
+- **Everything is marked UNVERIFIED** (*HAIJAHAKIKIWA · UNVERIFIED* in Kiswahili, *NDĨRATHUTHURIO · UNVERIFIED* in
+  Gĩkũyũ: the drafted word plus the English one, so the label holds even if the draft is wrong), in all three languages:
+  on the phone, in the outbox and on the content page. **SMS on a basic phone carry no badge:** the 9 SMS and alert
+  cards (all unverified, including the AI-draft Kiswahili and Gĩkũyũ) reach members as plain text; only the hub outbox
+  shows UNVERIFIED.
 - **How it gets fixed:** on the hub's "Content review" page a native speaker records each card ("● Record" or "Upload
   file"), and a reviewer marks it verified with name and date ("Mark verified"). Phones download the new audio the
   next time they are online at the co-op ([app/sw.js](app/sw.js)). The audio script never overwrites a native
@@ -387,12 +394,12 @@ code **F**, [docs/evidence.md](docs/evidence.md) §8):
 So Cafetal does not depend on a language model for anything a farmer hears. A language is a set of cards plus
 recordings. To add one (say Dholuo, `luo`, which is in FLORES-200 and has 27.53 validated hours in Common Voice, F):
 
-1. Write **83 card texts** (about 800–900 words; the minimum is the 60 required ids).
+1. Write **83 card texts** (about 800–950 words; the minimum is the 60 required ids).
 2. Record the **74 spoken cards** with a native speaker.
 3. **No image-model retraining:** the model outputs a label, and the label points to a card.
 4. Small extras:
    - The hub's registration accepts `en`, `sw` and `kik` today: add the new code in [hub/main.py](hub/main.py)
-     (`MemberIn.language`) and [hub/static/registro.html](hub/static/registro.html).
+     (`MemberIn.language`) and [hub/static/register.html](hub/static/register.html).
    - A `ui_play_<code>` card for its "Listen in …" button.
    - The SMS sorter needs examples in the new language and a retrain with `hub/train_intent.py`. Until then, free
      text in that language goes to the officer, which is the safe default.
@@ -455,7 +462,7 @@ to the officer ([intent_eval.md](reports/intent_eval.md)). The exact keywords wo
 ## Sources
 
 - Code: [app/](app/), [hub/](hub/), [content/cards.json](content/cards.json), [app/model/labels.json](app/model/labels.json)
-- Tests: [tests/](tests/) (hub: 74 passed, 1 skipped on 2026-10-04), [tests/e2e/](tests/e2e/),
+- Tests: [tests/](tests/) (hub: 76 passed, 1 skipped on 2026-10-04), [tests/e2e/](tests/e2e/),
   [reports/journey_results.json](reports/journey_results.json) (46 of 46 checks passed)
 - Model results: [reports/model_eval.md](reports/model_eval.md), [reports/field_eval.md](reports/field_eval.md),
   [reports/field_v2_threshold_sweep.md](reports/field_v2_threshold_sweep.md), [METRICS.md](METRICS.md); ship decision:

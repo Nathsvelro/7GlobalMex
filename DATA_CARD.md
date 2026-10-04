@@ -24,7 +24,7 @@ It could reach PyPI/npm, GitHub and public S3 buckets. That decided several choi
 | 7 | Amazon MASSIVE 1.1, en-US and sw-KE | `other` examples for the SMS intent classifier | CC BY 4.0 | 400 utterances (200 + 200) | classifier weights only |
 | 8 | Hand-written SMS examples (team English and Kiswahili, AI-draft Gĩkũyũ) | SMS intent classifier | project | 472 messages | classifier weights only |
 | 9 | Reference prices, KES | PRICE / BEI reply (not AI) | public sources, **all DEMO** | 3 prices | yes (DEMO) |
-| 10 | Piper TTS, voice `en-us-lessac-medium`, with espeak-ng phonemes | English audio; **provisional** Kiswahili and Gĩkũyũ audio | Piper MIT; voice data: Lessac licence (to be checked) | 222 MP3 files, 2.91 MB | yes (MP3 only) |
+| 10 | Piper TTS, voice `en-us-lessac-medium`, with espeak-ng phonemes | English audio; **provisional** Kiswahili and Gĩkũyũ audio | Piper MIT; voice data: Lessac licence (to be checked) | 222 MP3 files, 2.95 MB | yes (MP3 only) |
 | 11 | English card text (team-written, the main language) | every screen, diagnosis, advice and SMS | project | 83 cards | yes (UNVERIFIED) |
 | 11b | Kiswahili and Gĩkũyũ card text (AI drafts) | the same cards in the national and the local language | project | 83 cards each | yes (UNVERIFIED) |
 | 12 | Meta MMS Kiswahili and Gĩkũyũ models; other language resources | **not used** | CC BY-NC 4.0 (MMS) | — | no |
@@ -153,7 +153,7 @@ There is no East African field photo of a coffee disease to use instead (section
   | *Hemileia vastatrix* and genus *Hemileia* | roya (leaf rust) |
   | *Leucoptera coffeella* | minador (leaf miner) |
   | *Cercospora coffeicola* | cercospora (brown eye spot) |
-  | *Mycena citricolor* (American leaf spot, "ojo de gallo"; not a model class) | right answer is the fail-safe (UNSR) |
+  | *Mycena citricolor* (American leaf spot, key `ojo_de_gallo`; not a model class) | right answer is the fail-safe (UNSR) |
   | *Coffea arabica* | coffee plant, health unknown |
 
   Quality grades for rust: research 118, needs ID 100, casual 1.
@@ -311,10 +311,11 @@ There is no East African field photo of a coffee disease to use instead (section
   | dry maize | 51.11 KES/kg | KAMIS **wholesale** price, Kirinyaga; market and date not shown in the summary |
   | beans (Rosecoco) | 111.11 KES/kg | KAMIS **wholesale** price, Kirinyaga; market and date not shown in the summary |
 
-  The PRICE / BEI SMS names the source as "DEMO county 25/26, KAMIS" and the year as "2026" (`sms_fuente`,
-  `sms_fecha`). The coffee item also records an **auction** reference, which the SMS does not send: Nairobi Coffee
-  Exchange Sale 42 (2026-09-29), KES 38,140 per 50-kg bag of **clean** coffee; one other summary said about KES 47,000
-  for the same sale, so the NCE report must be checked.
+  The PRICE / BEI SMS names the source as "DEMO county 25/26, KAMIS" and the date as "10/2026", the month the table was
+  put together (`sms_fuente`, `sms_fecha`); "25/26" marks the coffee figure as the 2025/26 season average. The coffee
+  item also records an **auction** reference, which the SMS does not send: Nairobi Coffee Exchange Sale 42 (2026-09-29),
+  KES 38,140 per 50-kg bag of **clean** coffee; one other summary said about KES 47,000 for the same sale, so the NCE
+  report must be checked.
 - **Reference, never farm-gate:** each factory pays its own rate per kg of cherry, months after delivery and after
   milling, marketing and society costs; maize and beans are wholesale, not what a trader pays at the farm. Auction
   prices are per bag of clean coffee, not cherry, and we do not convert one into the other. The SMS says "Reference
@@ -342,8 +343,8 @@ There is no East African field photo of a coffee disease to use instead (section
   (https://www.cstr.ed.ac.uk/projects/blizzard/2013/lessac_blizzard2013/license.html), which we could not open here,
   and gives no separate licence for the voice weights: **to be checked**. The espeak-ng licence was not checked here.
   Only the generated MP3 files ship, not the voice model.
-- **Size:** 222 MP3s (74 per language), 24 kbps mono, **2.91 MB** in total: English 0.92 MB, Kiswahili 1.02 MB,
-  Gĩkũyũ 0.97 MB ([`content/README.md`](content/README.md)). The 9 SMS and alert cards are text only.
+- **Size:** 222 MP3s (74 per language), 24 kbps mono, **2.95 MB** in total: English 0.93 MB, Kiswahili 1.03 MB,
+  Gĩkũyũ 0.98 MB ([`content/README.md`](content/README.md)). The 9 SMS and alert cards are text only.
 - **What it does NOT cover:** a Kenyan English accent (the voice is American); Kiswahili and Gĩkũyũ as a native speaker
   says them: the English voice has no rolled *r* and no *ny* (computed phoneme check), Gĩkũyũ tones are missing, and
   the Kiswahili and Gĩkũyũ audio will have a foreign accent and mispronounced words. **Nobody has listened to the
@@ -353,7 +354,7 @@ There is no East African field photo of a coffee disease to use instead (section
 
 - **What it is:** all 83 cards in [`content/cards.json`](content/cards.json), written by the team in plain, short
   sentences for low literacy, in Kenyan English (*extension officer*, *co-op*, *factory*, prices in *KES*). English is
-  the app's default language. 74 cards are spoken (section 10). About 917 words.
+  the app's default language. 74 cards are spoken (section 10). About 928 words.
 - **Advice sources:** each card's `source` field. Mainly the KALRO Coffee Research Institute review of coffee leaf rust in
   Kenya (*Agronomy* 2021), CABI Plantwise factsheets, Infonet-Biovision and the Kenya Coffee Sustainability Manual
   ([`content/README.md`](content/README.md)). **These pages were seen only through search summaries** (every card says
@@ -370,21 +371,22 @@ There is no East African field photo of a coffee disease to use instead (section
 
 ## 11b. Kiswahili and Gĩkũyũ content (AI drafts)
 
-- **Kiswahili** (`sw`, the national language): all 83 cards, an **AI draft** in standard Kiswahili, about 796 words.
+- **Kiswahili** (`sw`, the national language): all 83 cards, an **AI draft** in standard Kiswahili, about 811 words.
   Nobody who speaks Kiswahili has read it. A few terms (*kutu ya majani*, *chule buni*, *afisa ugani*) were seen in
   Kiswahili extension writing through a search summary; the rest are the AI model's choices
   ([`content/README.md`](content/README.md)).
 - **Gĩkũyũ** (`kik`, the local language of central Kenya): all 83 cards, an **AI draft, best effort, low confidence**,
-  about 855 words. It was written without any Gĩkũyũ dictionary that the build machine could open. Expect wrong words,
+  about 867 words. It was written without any Gĩkũyũ dictionary that the build machine could open. Expect wrong words,
   wrong noun-class agreement and unnatural phrasing.
 - **SMS:** the Gĩkũyũ SMS cards write ĩ and ũ as i and u to stay in GSM-7. In Meta's Gĩkũyũ text counts, ĩ and ũ are
   17 % of all letters (F counts, D share; [`docs/evidence.md`](docs/evidence.md) §6), so SMS Gĩkũyũ merges vowels the
   language keeps apart. The app's screens and audio keep ĩ and ũ. There are no Gĩkũyũ SMS keywords; the Gĩkũyũ cards
   advertise the English and Kiswahili ones.
 - **Status:** **83 of 83 cards `unverified`** in both languages, marked as AI drafts in
-  [`content/README.md`](content/README.md). The app shows *HAIJAHAKIKIWA* (Kiswahili) or *NDĨRATHUTHURIO* (Gĩkũyũ),
-  the drafts of "UNVERIFIED", next to them. A native speaker can verify a card or record it on the hub's Content page;
-  a native recording is never overwritten by the audio script.
+  [`content/README.md`](content/README.md). The app shows *HAIJAHAKIKIWA* (Kiswahili) or *NDĨRATHUTHURIO* (Gĩkũyũ), the
+  drafts of "UNVERIFIED", next to them, each followed by the English word UNVERIFIED in case the draft is wrong. A
+  native speaker can verify a card or record it on the hub's Content page; a native recording is never overwritten by
+  the audio script.
 - **What it does NOT cover:**
   - review by native speakers, ideally from Kirinyaga;
   - whether the words are the ones farmers there really use (loanwords such as *afisa*, *sosaiti*, *kiwanda*, *kutu*

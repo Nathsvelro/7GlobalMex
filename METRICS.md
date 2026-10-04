@@ -189,7 +189,7 @@ the per-model tables), [`reports/field_eval.json`](reports/field_eval.json),
 in percentage points.
 
 **What this test is.** It uses 768 public iNaturalist photos of coffee leaf rust, leaf miner, Cercospora, American
-leaf spot (*Mycena citricolor*, "ojo de gallo"; not a model class, so the right answer is UNSR) and *Coffea arabica*
+leaf spot (*Mycena citricolor*, key `ojo_de_gallo`; not a model class, so the right answer is UNSR) and *Coffea arabica*
 plants (health unknown). Labels are the iNaturalist community identification, not an agronomist's diagnosis. The
 photos are split **by observer**: every observer with a photo in a fixed box over Mexico and northern Central America
 is held out, plus about 30 % of the other observers. The box was fixed before any v2 result and is kept so the test
@@ -447,12 +447,12 @@ Project-defined profiles (not the DevTools presets):
 - **What the bundle is.** 251 files, 16.21 MB decoded. The biggest parts are:
   - the onnxruntime WASM runtime: `app/vendor/ort-wasm-simd-threaded.wasm`, 11,018,731 B on disk;
   - the model: 1.97 MB;
-  - 222 MP3 files (74 per language, English, Kiswahili and Gĩkũyũ): 2.91 MB ([`content/README.md`](content/README.md)).
+  - 222 MP3 files (74 per language, English, Kiswahili and Gĩkũyũ): 2.95 MB ([`content/README.md`](content/README.md)).
 
   The 10 MB limit is for model files. The model is 1.97 MB. The full bundle is larger, mostly because of the runtime.
   The previous run measured 16.81 MB decoded, 8.59 MB on the wire and 94.0 s on 3G (`reports/browser_metrics.md` at
   commit 6891b8c). The difference, 0.6 MB, is about what the audio lost when it was re-made for the new languages
-  (about 3.5 MB before, 2.91 MB now).
+  (about 3.5 MB before, 2.95 MB now).
 - **How it was measured.** The page fetched the files in the same four groups as the service worker's `precache()`.
   The real service-worker install could not be throttled, because Chromium does not apply CDP throttling to service-worker fetches.
   The page's own first 13 requests come on top: 173 KB decoded, 39 KB with gzip (measured, unthrottled).
@@ -519,7 +519,7 @@ as i/u ([`content/README.md`](content/README.md)); the hub also strips accents f
 `test_accented_community_keeps_alert_in_one_gsm_sms`).
 
 **Observation code** (phone → co-op):
-- **Measured:** 45 characters in the end-to-end test: `CAF1 M0123 RUST 99 20261004 -0.52,37.32 #6F9W`
+- **Measured:** 45 characters in the end-to-end test: `CAF1 M0123 RUST 99 20261004 -0.52,37.32 #Z854`
   ([`reports/journey_results.json`](reports/journey_results.json)).
 - **Computed** from the format in [`app/sms.js`](app/sms.js): the longest possible code is 48 characters.
   Location is rounded to 2 decimals (about 1 km).
@@ -529,18 +529,19 @@ language is English):
 
 | reply card | trigger | length | encoding | SMS segments |
 |---|---|---|---|---|
-| `sms_precio` | "PRICE", "BEI" and "how much are you paying for a kilo of cherry" | 149 | GSM-7 | 1 |
+| `sms_precio` | "PRICE", "BEI" and "how much are you paying for a kilo of cherry" | 152 | GSM-7 | 1 |
 | `sms_reporte_instrucciones` | "majani ya kahawa yana unga wa rangi ya machungwa" | 124 | GSM-7 | 1 |
 | `sms_pasar_tecnico` | "asdf qwerty" | 104 | GSM-7 | 1 |
 
-The PRICE reply read: *"Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source:
+The PRICE reply read: *"Reference price 10/2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source:
 DEMO county 25/26, KAMIS. Not the price at your factory."* All prices are DEMO ([`DATA_CARD.md`](DATA_CARD.md#9-reference-prices-datapricesjson-demo)).
 
 **Every SMS card with long sample values** (computed). This fills the slots with the sample values in
-`scripts/make_audio.py` (coffee 157.40 KES/kg cherry, maize 105.50, beans 180.00, date "2026-09-30", the 24-character
-community name "Ondera Kilima Upper Ward", 12 reports, and the `sms_fuente` text from `data/prices.json`), then counts
-GSM-7 characters. These are long values, **not the worst case**. `python3 scripts/make_audio.py --check` reports
-"83 cards checked, 0 problem(s)".
+`scripts/make_audio.py` (coffee 157.40 KES/kg cherry, maize 105.50, beans 180.00, date "2026-09-30", the 40-character
+community name "Ondera Kilima Upper Ward, by the factory", 120 reports, and the `sms_fuente` text from
+`data/prices.json`), then counts GSM-7 characters. The community name is the longest registration allows; the other
+values are long, **not the worst case**. `python3 scripts/make_audio.py --check` reports "83 cards checked, 0
+problem(s)".
 
 | card | en | sw | kik |
 |---|---|---|---|
@@ -552,15 +553,18 @@ GSM-7 characters. These are long values, **not the worst case**. `python3 script
 | `sms_reporte_instrucciones` | 124 | 120 | 129 |
 | `sms_ayuda` | 146 | 119 | 147 |
 | `sms_pasar_tecnico` | 104 | 75 | 91 |
-| `alert_roya` | 117 | 131 | **142** |
+| `alert_roya` | 134 | 148 | **159** |
 
 **Real limits** (computed with the same counting as `hub/cards.py`):
 - **`alert_roya`**: registration accepts community names of up to 40 characters (`SLOT_VALUE_RE` in
-  [`hub/cards.py`](hub/cards.py), checked in [`hub/main.py`](hub/main.py)). With a 40-character name and 99 reports the
-  alert is 133 characters in English, 147 in Kiswahili and **158 in Gĩkũyũ**: one SMS in every language. Gĩkũyũ has
-  only 2 characters to spare.
+  [`hub/cards.py`](hub/cards.py), checked in [`hub/main.py`](hub/main.py)). With a 40-character name and 120 reports
+  (the table above) the alert is 134 characters in English, 148 in Kiswahili and **159 in Gĩkũyũ**: one SMS in every
+  language. Gĩkũyũ has only 1 character to spare.
 - **`sms_precio` in English** has 4 characters to spare with the sample values. Keep `sms_fuente` in
-  `data/prices.json` short: 5 more characters in the slots make it 2 SMS.
+  `data/prices.json` short: 5 more characters in the slots make it longer than one SMS.
+- **At send time** the hub refuses any SMS card that would be longer than one SMS ([`hub/cards.py`](hub/cards.py)
+  `render`). A price reply that does not fit is replaced by `sms_precio_sin_datos` ("we have no reference price
+  today"); it is never sent in two parts.
 
 ## 12. What we have not measured
 
@@ -591,7 +595,7 @@ From the repo root (`/home/user/7GlobalMex`). The training venv is `/home/user/v
 created by `./run.sh`.
 
 ```bash
-# Hub tests (74 passed, 1 skipped on 2026-10-04; the skipped test needs scikit-learn, which .venv does not have)
+# Hub tests (76 passed, 1 skipped on 2026-10-04; the skipped test needs scikit-learn, which .venv does not have)
 .venv/bin/python -m pytest tests -q
 
 # Card check: ids, slots, languages, diag_duda, GSM-7, <= 160 characters after filling slots

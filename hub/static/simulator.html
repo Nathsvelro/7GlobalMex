@@ -12,7 +12,7 @@
   <h1 id="title">Noor's phone — SIMULATED</h1>
   <div class="notice"><span class="badge sim">SIMULATED</span> No network and no real SMS: this pretend basic phone sends its messages
     straight to the hub (<span class="code">POST /api/sms/inbound</span>) and shows what the hub would answer. Outbreak alerts only show up here
-    once staff approve them in the <a href="/hub/bandeja.html">outbox</a>.</div>
+    once staff approve them in the <a href="/hub/outbox.html">outbox</a>.</div>
   <div class="row">
     <div>
       <div class="phone">
@@ -81,9 +81,9 @@ function describe(r) {
   for (const a of r.actions) {
     if (a.type === "observation_stored") out.push(`Report stored: <b>${esc(a.obs_uid)}</b> (${esc(a.code)} ${a.conf}%). It shows on the map and on the officer worklist.`);
     else if (a.type === "observation_duplicate") out.push(`That report was already stored (${esc(a.obs_uid)}); not stored twice.`);
-    else if (a.type === "alert_created") out.push(`<b>Outbreak alert created</b> (${a.n_reports} members with rust nearby, 7 days). ${a.queued_pending_approval} SMS wait for approval in the <a href="/hub/bandeja.html">outbox</a>.`);
+    else if (a.type === "alert_created") out.push(`<b>Outbreak alert created</b> (${a.n_reports} members with rust nearby, 7 days). ${a.queued_pending_approval} SMS wait for approval in the <a href="/hub/outbox.html">outbox</a>.`);
     else if (a.type === "intent") out.push(`Free text → intent <b>${esc(a.intent)}</b> (${a.method === "keyword" ? "exact keyword" : "confidence " + Math.round(a.conf * 100) + "%"}${a.accepted ? "" : ", below the threshold → goes to the officer"}).`);
-    else if (a.type === "forwarded_to_officer") out.push(`Message passed to the <a href="/hub/tecnico.html#mensajes">officer</a>.`);
+    else if (a.type === "forwarded_to_officer") out.push(`Message passed to the <a href="/hub/officer.html#messages">officer</a>.`);
     else if (a.type === "unregistered_sender") out.push("Number not registered: the only reply is to come and register.");
     else if (a.type === "invalid_code") out.push(`Code not valid (${esc(a.reason)}).`);
     else out.push(esc(JSON.stringify(a)));

@@ -12,7 +12,8 @@ Kenya**, in three languages:
 
 Nothing a farmer sees or hears is written anywhere else, and nothing is generated on the fly. The app and the hub
 only pick a card by its `id` and fill slots such as `{fecha}` with numbers, dates and source names. Card ids and
-slot names are internal (several are Spanish words from the first version of the project); they are never shown.
+slot names are internal (several are Spanish words from the first version of the project). Members never see them;
+co-op staff see them on the hub's Content page.
 
 ```
 content/
@@ -23,7 +24,7 @@ content/
   audio/manifest.json   what text each MP3 says (hash), so make_audio.py only redoes what changed
 ```
 
-Size: 83 cards, about 917 words in English, 796 in Kiswahili and 855 in Gĩkũyũ. 74 cards are spoken (types `ui`,
+Size: 83 cards, about 928 words in English, 811 in Kiswahili and 867 in Gĩkũyũ. 74 cards are spoken (types `ui`,
 `diagnosis`, `advice`); the 9 SMS and alert cards are text only.
 
 ## Status: everything is UNVERIFIED
@@ -80,14 +81,14 @@ Checklist for reviewers:
 ## How to add a language (no model retraining)
 
 1. Add the language to `"languages"`, e.g. `"luo": "Dholuo"`.
-2. Add a `"luo"` text to every card: **83 cards, about 800 to 900 words**. The minimum is the 60 required ids in
+2. Add a `"luo"` text to every card: **83 cards, about 800 to 950 words**. The minimum is the 60 required ids in
    PLAN.md §11. Set `"status": {"luo": "unverified"}` and `"reviewed_by": {"luo": null}`.
 3. Audio: record the 74 spoken cards with a native speaker, or run `python3 scripts/make_audio.py` to get
    provisional synthetic audio first (any language other than `en` gets the provisional voice; add a real Piper voice
    for it in `voice_for()` if one exists).
 4. SMS cards must stay one SMS after filling slots: run `python3 scripts/make_audio.py --check`.
 5. Register members with that language at the co-op (the `language` choice in `hub/main.py` and
-   `hub/static/registro.html`); the hub replies in the member's language, and in English for a card that lacks it.
+   `hub/static/register.html`); the hub replies in the member's language, and in English for a card that lacks it.
 6. The phone app offers every language in `"languages"` on its first screen and in Settings. A "Listen in …" button
    on the result screen needs a `ui_play_<code>` card.
 
@@ -110,7 +111,8 @@ The image model does not change: it outputs a label (`roya`, `minador`…), and 
   70-character UCS-2 SMS. **The Gĩkũyũ SMS cards write ĩ and ũ as i and u.** This merges vowels that Gĩkũyũ
   keeps apart (in Meta's Gĩkũyũ text counts, ĩ and ũ are 17% of all letters; `docs/evidence.md` §6), so SMS
   Gĩkũyũ is harder to read than the app's. `make_audio.py --check` tests length and alphabet with long sample
-  values (coffee 157.40 KES/kg cherry, a 24-letter community name).
+  values (coffee 157.40 KES/kg cherry, a 40-character community name, the most registration allows, and 120
+  reports). At send time the hub refuses any SMS card longer than one SMS (`hub/cards.py`).
 - SMS keywords (one-word messages): **PRICE/PRICES** or **BEI**, **HELP** or **MSAADA**, **OFFICER** or
   **AFISA**. `sms_ayuda` advertises them and the CAF1 report code. There are no Gĩkũyũ keywords; the Gĩkũyũ
   cards advertise the English and Kiswahili ones.
@@ -192,7 +194,7 @@ Piper (`PIPER_BIN`, default `/home/user/tools/piper/piper`), offline:
   Gĩkũyũ tones are not marked in writing and are not produced. `audio_source.kik =
   "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"`.
 - MP3 mono 22,050 Hz at **24 kbps** (`AUDIO_BITRATE`); long pauses are squeezed with ffmpeg. The 222 files take
-  **2.91 MB** (en 0.92 MB, sw 1.02 MB, kik 0.97 MB). WAV files are temporary and never written to the repo.
+  **2.95 MB** (en 0.93 MB, sw 1.03 MB, kik 0.98 MB). WAV files are temporary and never written to the repo.
 
 **Why the English voice for Kiswahili and Gĩkũyũ.** Both Piper voices on the build machine were tried with espeak
 `sw` phonemes. Nobody listened; these are *computed* checks (phoneme coverage on all 83 card texts; speech rate
@@ -213,5 +215,6 @@ native speaker should listen to both before any field use.
 languages on Hugging Face: **`facebook/mms-tts-swh`** (Kiswahili) and **`facebook/mms-tts-kik`** (Gĩkũyũ). Both are
 VITS models of about 145 MB each (too big to ship in the phone app, but fine for pre-rendering MP3s once on a
 laptop), and both are licensed **CC-BY-NC-4.0 (non-commercial only)**; names, sizes and licence as listed in
-`docs/evidence.md` §8. Hugging Face is blocked from this build machine, so we could not use them. MMS was trained on
+`docs/evidence.md` §8. Their files could not be downloaded from Hugging Face to this build machine (only Hub
+metadata could be read), so we could not use them. MMS was trained on
 readings of religious texts, so farming words may still come out wrong. Native-speaker recordings remain the goal.
