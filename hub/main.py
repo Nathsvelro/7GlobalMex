@@ -107,7 +107,7 @@ def hub_redirect():
 
 @app.get("/api/health")
 def health():
-    return {"ok": True, "service": "cafetal-hub", "gateway": "SIMULATED"}
+    return {"ok": True, "service": "cafetal-hub", "gateway": "SIMULATED", "public_demo": db.public_demo()}
 
 
 def _demo_present(c) -> bool:
@@ -129,6 +129,7 @@ def summary():
         "worklist": len(outbreak.worklist(c)),
         "labels": q("SELECT COUNT(*) FROM labels"),
         "demo": _demo_present(c),
+        "public_demo": db.public_demo(),
         "gateway": "SIMULATED",
         "prices_demo": bool((sms.prices() or {}).get("demo", True)),
     }
@@ -541,8 +542,16 @@ class VerifyIn(BaseModel):
     verified: bool = True
 
 
+def _no_edits_in_public_demo():
+    """Anyone with the link can use the public online DEMO copy, so card texts and recordings stay as shipped."""
+    if db.public_demo():
+        raise HTTPException(403, "Content edits are off in the public online demo. Run the hub on your own computer"
+                                 " (./run.sh) to verify cards or upload recordings.")
+
+
 @app.post("/api/cards/{card_id}/verify")
 def verify_card(card_id: str, v: VerifyIn):
+    _no_edits_in_public_demo()
     if v.verified and not (v.reviewer or "").strip():
         raise HTTPException(400, "Write the reviewer's name.")
     try:
@@ -562,6 +571,7 @@ AUDIO_EXT = {"audio/webm": "webm", "audio/ogg": "ogg", "audio/mpeg": "mp3", "aud
 async def upload_audio(card_id: str, lang: str, file: UploadFile = File(...), speaker: str = Form(...)):
     """Native-speaker recording for one card. Saved as content/audio/<lang>/<id>.mp3 (ffmpeg) or kept as
     webm/ogg if ffmpeg is missing; audio_source[lang] = 'native:<speaker>' (make_audio.py never overwrites it)."""
+    _no_edits_in_public_demo()
     if not re.fullmatch(r"[a-z0-9_]{1,64}", card_id) or not cards.get(card_id):
         raise HTTPException(404, "Card not found.")
     if lang not in cards.languages():

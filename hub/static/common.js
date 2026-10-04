@@ -80,6 +80,14 @@ async function initPage() {
     const s = await api("/api/summary");
     document.getElementById("hdr-badges").innerHTML =
       (s.demo ? '<span class="badge demo">DEMO: sample data</span> ' : "") + '<span class="badge sim">SMS SIMULATED</span>';
+    if (s.public_demo) {
+      // Public online DEMO copy (CAFETAL_PUBLIC_DEMO): everyone with the link shares the same fake data.
+      const b = document.createElement("div");
+      b.className = "public-demo";
+      b.textContent = "PUBLIC ONLINE DEMO: fake data that anyone with this link can see and change. It is reset whenever the server restarts. Do not type real names or phone numbers. SMS SIMULATED: no real SMS is sent.";
+      h.after(b);
+      f.textContent = "Public online DEMO copy of the co-op hub. A real co-op runs the hub on its own computer, where member data stays.";
+    }
     return s;
   } catch (e) {
     return null;

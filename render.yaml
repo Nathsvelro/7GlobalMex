@@ -1,0 +1,14 @@
+# Render Blueprint: a PUBLIC online DEMO copy of the co-op hub on the free plan. Fake DEMO data, reloaded on every
+# start. The hub also serves the phone app at /app/. Steps: docs/DEPLOY_HUB_RENDER.md
+services:
+  - type: web
+    name: cafetal-hub-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: sh scripts/render_start.sh
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: CAFETAL_PUBLIC_DEMO
+        value: "1"

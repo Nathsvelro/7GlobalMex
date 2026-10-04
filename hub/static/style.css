@@ -11,6 +11,7 @@ header.top .brand { font-weight: 700; font-size: 18px; margin-right: 8px; color:
 header.top nav { display: flex; flex-wrap: wrap; gap: 4px; }
 header.top nav a { color: #fff; text-decoration: none; padding: 4px 9px; border-radius: 6px; opacity: .9; }
 header.top nav a:hover, header.top nav a.on { background: rgba(255,255,255,.18); opacity: 1; }
+.public-demo { background: var(--amber-soft); color: var(--amber); border-bottom: 1px solid #f0d49a; padding: 8px 16px; font-weight: 600; } /* CAFETAL_PUBLIC_DEMO banner */
 main { max-width: 1150px; margin: 0 auto; padding: 16px; }
 h1 { font-size: 22px; margin: 4px 0 12px; }
 h2 { font-size: 17px; margin: 18px 0 8px; }
