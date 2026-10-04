@@ -1,6 +1,6 @@
 {
  "generated_by": "node model/check_demo_samples.mjs",
- "measured_at": "2026-10-04T01:39:15.316Z",
+ "measured_at": "2026-10-04T05:22:49.566Z",
  "how": "Chromium (Playwright), app/infer.js diagnose() on each file, service worker blocked, static server; SMS codes compared with the CODES table of app/sms.js, read in the page at run time",
  "model": {
   "version": "cafetal-img-v2",

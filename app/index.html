@@ -75,6 +75,11 @@
       <svg class="i"><use href="icons/icons.svg#image"/></svg><span data-card="ui_choose_photo"></span>
       <input type="file" accept="image/*" id="file-gallery" class="vh">
     </label>
+    <!-- DEMO sample photos, only when config.json has "demo_samples": true (filled by app.js from demo/samples.json) -->
+    <div class="card-box samples-box" id="home-demo" hidden>
+      <span class="chip demo"><span data-card="ui_demo"></span></span>
+      <div class="samples" id="demo-list"></div>
+    </div>
     <div class="tip"><img src="icons/tip.svg" alt=""><div class="say" data-card="ui_photo_tip_underside"></div></div>
     <div class="tip"><img src="icons/leaf_home.svg" alt=""><div class="say" data-card="ui_tip_bring_leaf_home"></div></div>
     <button type="button" class="chip warn big-chip" id="home-pending" hidden><svg class="i"><use href="icons/icons.svg#sms"/></svg><span data-card="ui_pending_sms"></span><b id="home-pending-n"></b></button>
@@ -91,6 +96,7 @@
       <img id="r-photo" alt="" class="photo">
       <img id="r-icon" alt="" class="res-icon">
     </div>
+    <div class="sample-note" id="r-sample" hidden><span class="chip demo"><span data-card="ui_demo"></span></span><small id="r-sample-credit"></small></div>
     <div id="r-body" hidden>
       <h2 class="res-name" id="r-name"></h2>
       <div class="say big" id="r-diag"></div>

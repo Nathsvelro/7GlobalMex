@@ -42,13 +42,25 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
 2. **Reset the DEMO data.** On http://localhost:8000/, press **"Reset DEMO data"** and confirm. You can also
    run `curl -X POST http://localhost:8000/api/demo/reset`. The DEMO reports are dated relative to the day of
    seeding, so a database from an earlier day may no longer fire the alert.
-3. **Get the field photos, then copy the demo photos to the phone.** The two field rust photos are CC BY-NC, so
-   they are not in the repository. Download them once, with internet:
+3. **Demo photos.** The app has seven **DEMO sample photos** built in. They are on its Home screen, in a box
+   labelled **"DEMO: sample data"**, and are saved for offline use with the rest of the app, so there is nothing to
+   copy for them. In order:
+   1. rust, `roya_1.jpg`
+   2. the same photo blurred, `blurred_roya.jpg`
+   3. healthy
+   4. leaf miner
+   5. Phoma
+   6. brown eye spot
+   7. a whole tree photographed from too far away
+
+   They are CC BY copies from [model/demo_samples/](model/demo_samples/README.md), in `app/demo/`. Under a sample's
+   result the app shows "DEMO: sample data" and the photo's credit.
+
+   The field rust photo `roya_field_1.jpg` is CC BY-NC, so it is not in the repository or the app. To use it as the
+   main demo photo, download it once, with internet, and copy it to the phone:
    ```
    python3 model/demo_samples.py --field
    adb push model/demo_samples/field/roya_field_1.jpg /sdcard/Download/
-   adb push model/demo_samples/roya_1.jpg /sdcard/Download/
-   adb push model/demo_samples/blurred_roya.jpg /sdcard/Download/
    ```
 4. **Why these photos:**
    - **roya_field_1.jpg** (main demo) is a real field photo of leaf rust from Latin America, from iNaturalist
@@ -58,15 +70,15 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
      model is right in 34 of 53 (64%), and the rest get "I'm not sure"
      ([reports/field_eval.md](reports/field_eval.md)). **We have no Kenyan field photo of rust:** none of the 219
      iNaturalist rust photos we used is from East Africa. If the photo appears in the video, show the credit line.
-   - **roya_1.jpg** (backup) is a Kenyan lab close-up from the JMuBEN test split (JMuBEN was photographed in
-     Kirinyaga, per the dataset paper). Use it if the field photo is missing.
-   - **blurred_roya.jpg** is roya_1.jpg, blurred.
+   - **roya_1.jpg** (backup, the first DEMO sample photo) is a Kenyan lab close-up from the JMuBEN test split
+     (JMuBEN was photographed in Kirinyaga, per the dataset paper). Use it if the field photo is missing.
+   - **blurred_roya.jpg** (the second DEMO sample photo) is roya_1.jpg, blurred.
    - In the real app page (desktop Chromium), roya_field_1.jpg gave **Leaf rust 99%**, roya_1.jpg gave **Leaf
      rust 99%**, and blurred_roya.jpg gave the fail-safe with "The photo is blurry."
      ([reports/model_demo_samples_check.json](reports/model_demo_samples_check.json)).
-   - Other samples, one per class, are in [model/demo_samples/](model/demo_samples/README.md). The optional
-     `field_whole_tree.jpg` is a real photo of a sick tree taken from too far away: the app says "I'm not sure"
-     (it takes the distant tree for "not a coffee leaf").
+   - Other samples, one per class, are in [model/demo_samples/](model/demo_samples/README.md); one of each class
+     is a DEMO sample photo in the app. The seventh DEMO sample, `field_whole_tree.jpg`, is a real photo of a sick
+     tree taken from too far away: the app says "I'm not sure" (it takes the distant tree for "not a coffee leaf").
 5. **Connect the phone:** USB debugging on, cable in, then `adb reverse tcp:8000 tcp:8000`.
 6. **Load the app once while online.** On the phone, open **http://localhost:8000/app/** in Chrome. Wait for the
    green label **"Ready to use without internet"**. Everything is now cached: app, model, cards, audio in all three
@@ -99,7 +111,8 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
 5. **Home screen.** Point at the two tips:
    - *"Take the photo under the leaf, up close: let the spot fill the photo. Use good light."*
    - *"No phone in the coffee field? Bring a few leaves home and take the photo there."*
-6. Tap **"Choose a photo"** → Downloads → **roya_field_1.jpg** (backup: **roya_1.jpg**). ("Take photo" opens the
+6. Tap **"Choose a photo"** → Downloads → **roya_field_1.jpg**. No field photo? Tap the **first DEMO sample photo**
+   instead (roya_1.jpg); the result then shows "DEMO: sample data" and the photo's credit. ("Take photo" opens the
    camera.)
    - **Say on camera:** this is a real field photo of rust from Latin America that the model never trained on; we
      have no Kenyan field photo yet. On field photos like it, our model names rust about two times in three;
@@ -120,8 +133,8 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
    - The limits note: the app only looks at leaves. It cannot see coffee berry disease on the berries, antestia
      bugs, berry borer, lack of fertiliser, drought, old trees or soil problems.
    - **"Saved on this phone"**.
-10. **Fail-safe, blurred photo:** tap **"Take photo"** in the bottom bar → **"Choose a photo"** →
-    **blurred_roya.jpg**. Expected:
+10. **Fail-safe, blurred photo:** tap **"Take photo"** in the bottom bar → the **second DEMO sample photo**
+    (blurred_roya.jpg). Expected:
     - **"Not sure"**
     - *"I'm not sure — show the leaf to the extension officer."*
     - *"The photo is blurry."*
@@ -132,7 +145,8 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
     camera: 98.2% of non-coffee test images were rejected. The 8 of 446 that were not are mostly apple leaves with
     rust or scab, answered as rust ([reports/model_eval.md](reports/model_eval.md)). So point the camera at an
     object, not at another plant's leaf.
-12. **"My checks"**: the three checks, each marked **"Not sent yet"**.
+12. **"My checks"**: the three checks, each marked **"Not sent yet"**. Checks of DEMO sample photos also say
+    **"DEMO: sample data"**.
 
 ## 3. Save now, send later
 
@@ -267,12 +281,15 @@ No Android phone? Use the [laptop-only fallback](#laptop-only-fallback) at the e
       confirms. A live "Leaf rust" answer sent to the hub fires the outbreak alert just like the demo photo, so try
       live leaves only after the main demo, or reset the DEMO data afterwards.
 - [ ] **roya_field_1.jpg is missing.** Run `python3 model/demo_samples.py --field` on a machine with internet,
-      or use roya_1.jpg and say it is a Kenyan lab close-up.
+      or tap the first DEMO sample photo (roya_1.jpg) and say it is a Kenyan lab close-up.
+- [ ] **No DEMO sample photos on the Home screen.** `app/config.json` must have `"demo_samples": true` (it does
+      in this build). After changing it, run `python3 scripts/bump_sw_version.py` (`./run.sh` does it) and reload
+      the app once while online.
 - [ ] **The phone already has another member or old records** → "Settings" → "Delete all" → "Yes, delete all".
 - [ ] **Port 8000 is busy** → `PORT=9000 ./run.sh`, then `adb reverse tcp:9000 tcp:9000` and
       http://localhost:9000/app/.
 - [ ] **The photo is not in the phone's picker.** Use the picker's file browser (Downloads). Or push the file to
-      `/sdcard/Pictures/` instead.
+      `/sdcard/Pictures/` instead. Or use the DEMO sample photos on the Home screen.
 
 ## Laptop-only fallback
 
@@ -282,8 +299,9 @@ You can do the whole journey in desktop Chrome on the hub laptop:
    origin.
 2. Wait for "Ready to use without internet".
 3. **Offline:** stop `./run.sh` with Ctrl+C, so nothing answers on port 8000. Reload the app: it opens from the
-   cache. Do section 2, choosing the files from `model/demo_samples/` (the field photo is in
-   `model/demo_samples/field/`). Block location when Chrome asks, for the same reason as on the phone.
+   cache. Do section 2 with the DEMO sample photos on the Home screen (for the field photo, "Choose a photo" →
+   `model/demo_samples/field/roya_field_1.jpg`). Block location when Chrome asks, for the same reason as on the
+   phone.
 4. Start `./run.sh` again. The database is kept, not re-seeded. Then do sections 3–5. Skip the "Send by SMS"
    step; a laptop has no SMS app.
 

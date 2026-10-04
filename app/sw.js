@@ -1,12 +1,13 @@
 // Service worker: makes the app work in airplane mode after the first load.
-//  - cache-first: app shell, onnxruntime-web, model, cards.json, every audio file listed in cards.json
+//  - cache-first: app shell, onnxruntime-web, model, cards.json, every audio file listed in cards.json, and, when
+//    config.json has "demo_samples": true, demo/samples.json and the DEMO sample photos it lists
 //  - cards.json / labels.json / config.json: served from cache, refreshed in the background when online;
 //    a refresh also downloads audio whose file or source changed (e.g. a new native recording) and a new model,
 //    and switches the JSON only after they are all cached (if one fails, the old JSON and its files stay)
 //  - /api/*: network only (never cached, so "hub reachable" is never faked)
 // VERSION = hash of every precached file, written by scripts/bump_sw_version.py (run.sh runs it before starting the
 // hub; run it by hand before copying app/ to a static host). A new VERSION makes phones re-download everything.
-const VERSION = 'cafetal-4417f1d745';
+const VERSION = 'cafetal-1c411d083d';
 const SHELL = [
   './', 'index.html', 'style.css', 'app.js', 'content.js', 'store.js', 'infer.js', 'sms.js',
   'manifest.webmanifest',
@@ -19,6 +20,7 @@ const abs = (u) => new URL(u, self.location.href).href;
 const CARDS = abs('../content/cards.json');
 const LABELS = abs('model/labels.json');
 const CONFIG = abs('config.json');
+const DEMO = abs('demo/samples.json'); // DEMO sample photos, cached only when config.json has "demo_samples": true
 const INDEX = abs('index.html');
 const fresh = (u) => new Request(u, { cache: 'reload' });
 
@@ -32,6 +34,7 @@ function audioMap(cards) {
   }
   return m;
 }
+const demoPhotos = (list) => ((list && list.samples) || []).map((s) => abs('demo/' + s.file));
 async function cachedJson(cache, url) {
   const r = await cache.match(url);
   try {
@@ -48,12 +51,22 @@ async function precache() {
   if (!cardsRes.ok || !labelsRes.ok) throw new Error('cards.json or labels.json missing');
   const cards = await cardsRes.clone().json();
   const labels = await labelsRes.clone().json();
+  const config = configRes.ok ? await configRes.clone().json().catch(() => null) : null;
   await cache.put(CARDS, cardsRes);
   await cache.put(LABELS, labelsRes);
   if (configRes.ok) await cache.put(CONFIG, configRes);
   await cache.add(fresh(modelUrl(labels)));
-  // Audio: one missing file must not break offline diagnosis; the status check reports it instead.
+  // Audio and DEMO samples: one missing file must not break offline diagnosis; the status check reports it instead.
   await Promise.all([...audioMap(cards).keys()].map((u) => cache.add(fresh(u)).catch(() => console.warn('no audio', u))));
+  if (config && config.demo_samples) await cacheDemo(cache).catch((e) => console.warn('no demo samples', e));
+}
+
+async function cacheDemo(cache) {
+  const res = await fetch(fresh(DEMO));
+  if (!res.ok) throw new Error('demo/samples.json ' + res.status);
+  const list = await res.clone().json();
+  await cache.put(DEMO, res);
+  await Promise.all(demoPhotos(list).map((u) => cache.add(fresh(u)).catch(() => console.warn('no demo photo', u))));
 }
 
 self.addEventListener('install', (e) => {
@@ -151,6 +164,8 @@ self.addEventListener('message', (e) => {
     const need = [...SHELL.map(abs), CARDS, LABELS];
     if (labels) need.push(modelUrl(labels));
     if (cards) need.push(...audioMap(cards).keys());
+    const config = await cachedJson(cache, CONFIG);
+    if (config && config.demo_samples) need.push(DEMO, ...demoPhotos(await cachedJson(cache, DEMO)));
     const missing = [];
     for (const u of need) if (!(await cache.match(u))) missing.push(u);
     e.ports[0].postMessage({ ready: !!cards && !!labels && missing.length === 0, missing, total: need.length, version: VERSION });

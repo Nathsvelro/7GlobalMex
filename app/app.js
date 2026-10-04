@@ -9,7 +9,7 @@ const APP_VERSION = 'app-v1';
 const $ = (id) => document.getElementById(id);
 const st = {
   settings: null, // {lang, member_id, consent_at, pin_hash, geo}
-  config: { gateway_number: '', gateway_label: 'DEMO' },
+  config: { gateway_number: '', gateway_label: 'DEMO', demo_samples: false },
   onboarding: null,
   obs: null, // observation on the result screen
   seq: [], // cards played on the result screen
@@ -190,9 +190,60 @@ function unlock() {
 
 // ---------- home ----------
 async function showHome() {
+  showSamples();
   const pending = (await S.listObs(st.settings.member_id)).filter((o) => o.sms_status !== 'sent').length;
   $('home-pending').hidden = !pending;
   $('home-pending-n').textContent = pending;
+}
+
+// ---------- DEMO sample photos (config.json "demo_samples": true) ----------
+// For the demo video and for anyone trying the app without a coffee leaf: CC BY photos in demo/, each shown with
+// its credit. A sample goes through exactly the same steps as a photo from the camera.
+let samples = null; // promise of the list from demo/samples.json
+function loadSamples() {
+  if (!samples) {
+    samples = fetch('demo/samples.json').then((r) => r.json()).then((j) => j.samples || []);
+    samples.catch(() => (samples = null)); // failed: try again next time
+  }
+  return samples;
+}
+
+async function showSamples() {
+  $('home-demo').hidden = true;
+  if (!st.config.demo_samples) return;
+  let list;
+  try {
+    list = await loadSamples();
+  } catch (e) {
+    return console.warn('demo samples', e);
+  }
+  const box = $('demo-list');
+  if (!box.childElementCount) {
+    for (const s of list) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'sample-btn';
+      b.dataset.sample = s.file;
+      const img = document.createElement('img');
+      img.src = 'demo/' + s.file;
+      img.alt = '';
+      b.append(img);
+      b.addEventListener('click', () => onSample(s));
+      box.append(b);
+    }
+  }
+  box.querySelectorAll('.sample-btn').forEach((b, i) => b.setAttribute('aria-label', C.text('ui_demo') + ' ' + (i + 1)));
+  $('home-demo').hidden = false;
+}
+
+function onSample(s) {
+  const blob = fetch('demo/' + s.file).then((r) => (r.ok ? r.blob() : Promise.reject(new Error('demo photo ' + r.status))));
+  return analyse(blob, { file: s.file, credit: s.credit });
+}
+
+function showSample(sample) {
+  $('r-sample').hidden = !sample;
+  $('r-sample-credit').textContent = sample ? sample.credit : ''; // a name and a licence, not a sentence
 }
 
 // ---------- photo -> diagnosis ----------
@@ -216,20 +267,27 @@ function downscale(img, max = 640) {
   return new Promise((resolve) => c.toBlob(resolve, 'image/jpeg', 0.8));
 }
 
-async function onPhoto(ev) {
+function onPhoto(ev) {
   const file = ev.target.files && ev.target.files[0];
   ev.target.value = '';
-  if (!file) return;
+  if (file) return analyse(file, null);
+}
+
+// A photo (File or Blob, or a promise of one) -> on-device diagnosis -> saved record -> result screen.
+// `sample` = {file, credit} for a DEMO sample photo, null for the camera or the gallery.
+async function analyse(source, sample) {
   go('result');
   $('r-busy').hidden = false;
   $('r-body').hidden = true;
   $('r-icon').hidden = true;
-  const url = URL.createObjectURL(file);
-  $('r-photo').src = url;
+  $('r-photo').src = '';
+  showSample(sample);
   const where = getLocation(); // runs while the model works
   let img = null;
   let r;
   try {
+    const url = URL.createObjectURL(await source);
+    $('r-photo').src = url;
     img = await loadImage(url);
     r = await M.diagnose(img);
   } catch (e) {
@@ -258,6 +316,7 @@ async function onPhoto(ev) {
     synced: false,
     model_version: r.model_version,
   };
+  if (sample) o.sample = sample; // DEMO sample photo: marked in the result and in "My checks"
   o.sms_code = buildCode(o);
   await S.putObs(o);
   if (st.screen !== 'result') return; // user left while analysing; the record is saved
@@ -275,6 +334,7 @@ function showResult(o, fresh) {
     photoUrl = o.photo ? URL.createObjectURL(o.photo) : '';
     $('r-photo').src = photoUrl;
   }
+  showSample(o.sample || null);
   $('r-busy').hidden = true;
   $('r-body').hidden = false;
   $('r-icon').hidden = false;
@@ -488,6 +548,13 @@ async function showHistory() {
     chips.append(o.sms_status === 'sent' ? chip('ui_sent', 'ok', 'check') : chip('ui_pending_sms', 'warn', 'sms'));
     if (o.synced) chips.append(chip('ui_synced', 'ok', 'sync'));
     b.append(img, mid, chips);
+    if (o.sample) { // DEMO sample photo: own line, so the date keeps its room at 360 px
+      const demo = document.createElement('div');
+      demo.className = 'hist-demo';
+      demo.append(chip('ui_demo', 'demo'));
+      b.append(demo);
+      b.classList.add('with-demo');
+    }
     b.addEventListener('click', () => showResult(o, false));
     li.append(b);
     ul.append(li);
