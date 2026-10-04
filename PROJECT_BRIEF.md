@@ -109,7 +109,7 @@ There is also a secondary, **non-AI** module: an independent reference price for
 | Core feature works offline | Model, advice and audio all run on the phone with no signal |
 | Model files small enough to side-load or send over a weak connection | Target ≤10 MB. We measure the download time over 3G. It can also be shared by Bluetooth or SD card |
 | At least one local-language interaction, named | Gĩkũyũ voice advice, plus Kiswahili and English |
-| "How would it fare in a less-supported language?" | Advice is a fixed set of cards. Adding a language means translating the cards and recording them with a native speaker; no image-model retraining. (As built: 83 cards, about 800–900 words, 74 of them spoken; the SMS sorter needs a few examples in the new language and a retrain.) Gĩkũyũ is itself such a language: Mozilla Common Voice has no Gĩkũyũ data at all (`docs/evidence.md` §8) |
+| "How would it fare in a less-supported language?" | Advice is a fixed set of cards. Adding a language means translating the cards and recording them with a native speaker; no image-model retraining. (As built: 83 cards, about 800–950 words, 74 of them spoken; the SMS sorter needs a few examples in the new language and a retrain.) Gĩkũyũ is itself such a language: Mozilla Common Voice has no Gĩkũyũ data at all (`docs/evidence.md` §8) |
 | A person makes the final call | The tool informs and flags uncertainty. Farmers and the officer decide. Nothing is sent without a tap |
 | Avoid hallucinations | Farmers only ever see a **fixed list of checked answers**; no free-form generated text |
 

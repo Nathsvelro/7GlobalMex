@@ -73,7 +73,7 @@ The "we know because" part has two kinds of evidence (codes from [docs/evidence.
 ```
 
 1. **Phone app** ([app/](app/)): plain HTML/JS, no build step. After one online load it works in airplane mode:
-   app, model, the 83 cards and their audio (222 MP3s in English, Kiswahili and Gĩkũyũ, 2.91 MB) are cached.
+   app, model, the 83 cards and their audio (222 MP3s in English, Kiswahili and Gĩkũyũ, 2.95 MB) are cached.
    Diagnosis runs on the phone with onnxruntime-web (WASM). Records are stored in the phone's browser (IndexedDB)
    under a member ID, with an optional PIN and a "Delete all" button.
 2. **SMS** ([app/sms.js](app/sms.js), [hub/sms.py](hub/sms.py)): the app builds a one-SMS code (at most 160
@@ -116,8 +116,9 @@ farmer sees or hears comes from [content/cards.json](content/cards.json).
 - **Nothing sent by itself:** no SMS leaves the phone without the user's tap. Outbreak alerts wait for a co-op staff
   member to press "Approve".
 - **The officer decides** who to visit.
-- **UNVERIFIED badges:** every text and audio that no person has checked shows **UNVERIFIED** in the app (in
-  Kiswahili *HAIJAHAKIKIWA*, in Gĩkũyũ *NDĨRATHUTHURIO*) and on the hub pages. SMS sent to basic phones cannot carry a
+- **UNVERIFIED badges:** every text and audio that no person has checked shows **UNVERIFIED** in the app (on the
+  Kiswahili and Gĩkũyũ screens next to the drafted word: *HAIJAHAKIKIWA · UNVERIFIED*, *NDĨRATHUTHURIO · UNVERIFIED*)
+  and on the hub pages. SMS sent to basic phones cannot carry a
   badge, so the 9 SMS and alert cards are unverified text that members receive as-is (the outbox shows UNVERIFIED).
 
 Details: [RESPONSIBLE_AI.md](RESPONSIBLE_AI.md).
@@ -174,17 +175,19 @@ with `PYTHON=python3.11 ./run.sh` the first time (the variable only matters whil
 8. Stop the hub with Ctrl+C. To get fresh DEMO dates next time, run `rm hub/cafetal.db*`, or press "Reset DEMO
    data" on the hub home page.
 
-**Verified on 2026-10-04**, after the move to Kenya. The changes were not committed yet, so instead of a fresh clone
-we copied the working tree (every tracked and new file, without `.venv` and without a database) to an empty folder:
+**Verified on 2026-10-04**, after the move to Kenya and the review fixes. The last changes were not committed yet, so
+instead of a fresh clone we copied the working tree (every tracked and new file, without `.venv` and without a
+database) to an empty folder:
 
-- `PYTHON=python3.11 PORT=8110 ./run.sh` (with `CAFETAL_DB` and `CAFETAL_UPLOADS` pointing to a scratch folder)
+- `PYTHON=python3.11 PORT=8130 ./run.sh` (with `CAFETAL_DB` and `CAFETAL_UPLOADS` pointing to a scratch folder)
   created the venv, installed the packages from PyPI and loaded the DEMO data (24 members, 21 reports, 2 officer
   messages).
 - Every hub page, `/app/`, `/api/health`, the model and the Kiswahili and Gĩkũyũ audio answered 200. `PRICE` and
   `BEI` got the KES reference price in the member's language (English for Noor, Kiswahili for M0108, Gĩkũyũ for
-  M0105).
-- Against that copy, the hub tests (74 passed, 1 skipped), the app offline test (89 of 89 checks) and the full
-  journey test (46 of 46 checks) passed.
+  M0105), each in one SMS.
+- The full journey test against that copy's hub passed (46 of 46 checks). On the same files in the working tree, the
+  hub tests (76 passed, 1 skipped), the app offline test (89 of 89 checks), the service-worker update test and the
+  demo-sample check (14 of 14) passed.
 - Steps 5–7 need a real phone and were **not** run here.
 
 ### Why localhost or HTTPS: the secure-origin rule
@@ -208,7 +211,7 @@ Ways to get a secure origin on the phone:
 
 | What | Command | Notes |
 |---|---|---|
-| Hub unit tests | `.venv/bin/pip install pytest httpx` then `.venv/bin/python -m pytest tests -q` (or `make test`) | Uses a temporary database. Last run (2026-10-04): 74 passed, 1 skipped. The skipped test needs scikit-learn: it checks the pure-Python intent model against scikit-learn. |
+| Hub unit tests | `.venv/bin/pip install pytest httpx` then `.venv/bin/python -m pytest tests -q` (or `make test`) | Uses a temporary database. Last run (2026-10-04): 76 passed, 1 skipped. The skipped test needs scikit-learn: it checks the pure-Python intent model against scikit-learn. |
 | Phone app, offline | `node tests/e2e/app_offline.mjs` | Starts its own server. Checks onboarding, diagnosis, the fail-safe, audio in English, Kiswahili and Gĩkũyũ from the cache, PIN, delete, simulated send and sync (also with a member ID the hub does not know). Screenshots: `reports/screenshots/app_*.png`. |
 | Whole journey | start `./run.sh`, then `node tests/e2e/journey.mjs` | Covers every product item of the Definition of Done in [docs/CLAUDE_CODE_PROMPT.md](docs/CLAUDE_CODE_PROMPT.md) (not the fresh-clone start, checked above, nor the written documents). **Resets the DEMO data** before and after (`KEEP_STATE=1` keeps the end state). Writes `reports/journey_results.json` and `reports/screenshots/journey_*.png`. `HUB=http://localhost:9000` for another port. |
 | Browser metrics | with the hub running: `node tests/e2e/browser_metrics.mjs` | Emulated latency and 3G download → `reports/browser_metrics.md`. |

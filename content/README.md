@@ -24,7 +24,7 @@ content/
   audio/manifest.json   what text each MP3 says (hash), so make_audio.py only redoes what changed
 ```
 
-Size: 83 cards, about 917 words in English, 796 in Kiswahili and 855 in Gĩkũyũ. 74 cards are spoken (types `ui`,
+Size: 83 cards, about 928 words in English, 811 in Kiswahili and 867 in Gĩkũyũ. 74 cards are spoken (types `ui`,
 `diagnosis`, `advice`); the 9 SMS and alert cards are text only.
 
 ## Status: everything is UNVERIFIED
@@ -81,7 +81,7 @@ Checklist for reviewers:
 ## How to add a language (no model retraining)
 
 1. Add the language to `"languages"`, e.g. `"luo": "Dholuo"`.
-2. Add a `"luo"` text to every card: **83 cards, about 800 to 900 words**. The minimum is the 60 required ids in
+2. Add a `"luo"` text to every card: **83 cards, about 800 to 950 words**. The minimum is the 60 required ids in
    PLAN.md §11. Set `"status": {"luo": "unverified"}` and `"reviewed_by": {"luo": null}`.
 3. Audio: record the 74 spoken cards with a native speaker, or run `python3 scripts/make_audio.py` to get
    provisional synthetic audio first (any language other than `en` gets the provisional voice; add a real Piper voice
@@ -194,7 +194,7 @@ Piper (`PIPER_BIN`, default `/home/user/tools/piper/piper`), offline:
   Gĩkũyũ tones are not marked in writing and are not produced. `audio_source.kik =
   "synthetic-provisional:piper-en-us-lessac-medium-espeak-sw-reading-gikuyu"`.
 - MP3 mono 22,050 Hz at **24 kbps** (`AUDIO_BITRATE`); long pauses are squeezed with ffmpeg. The 222 files take
-  **2.91 MB** (en 0.92 MB, sw 1.02 MB, kik 0.97 MB). WAV files are temporary and never written to the repo.
+  **2.95 MB** (en 0.93 MB, sw 1.03 MB, kik 0.98 MB). WAV files are temporary and never written to the repo.
 
 **Why the English voice for Kiswahili and Gĩkũyũ.** Both Piper voices on the build machine were tried with espeak
 `sw` phonemes. Nobody listened; these are *computed* checks (phoneme coverage on all 83 card texts; speech rate

@@ -356,7 +356,7 @@ to do after a data breach. The consent text and the hub should then be changed t
 - **Languages:** **English** (`en`) is the main and default language and an official language of Kenya; **Kiswahili**
   (`sw`) is the national language and also official (Constitution Art. 7, S); **Gĩkũyũ** (`kik`) is the local
   language of central Kenya (S; [docs/evidence.md](docs/evidence.md) §6). All 83 cards have text in all three. 74 cards
-  have audio in each language (222 MP3s, 2.91 MB); the 9 SMS and alert cards are text only
+  have audio in each language (222 MP3s, 2.95 MB); the 9 SMS and alert cards are text only
   ([content/README.md](content/README.md)).
 - **English text** was written by the team for low literacy. No agronomist or co-op staff member has checked it.
 - **Kiswahili text is an AI draft** in standard Kiswahili. Nobody who speaks Kiswahili has read it.
@@ -369,8 +369,8 @@ to do after a data breach. The consent text and the hub should then be changed t
   MSAADA, AFISA; there are no Gĩkũyũ keywords, and the Gĩkũyũ cards advertise the English and Kiswahili ones.
 - **SMS sorter** (held-out test, team-written messages): English 100.0 % (n = 82), Kiswahili 92.1 % (n = 89), Gĩkũyũ
   3 of 4 (too few to mean anything) ([intent_eval.md](reports/intent_eval.md)).
-- **Everything is marked UNVERIFIED** (*HAIJAHAKIKIWA* in Kiswahili, *NDĨRATHUTHURIO* in Gĩkũyũ, both drafts), in all
-  three languages: on the phone, in the outbox and on the content page. **SMS on a basic phone carry no badge:** the 9
+- **Everything is marked UNVERIFIED** (*HAIJAHAKIKIWA · UNVERIFIED* in Kiswahili, *NDĨRATHUTHURIO · UNVERIFIED* in
+  Gĩkũyũ: the drafted word plus the English one, so the label holds even if the draft is wrong), in all three languages: on the phone, in the outbox and on the content page. **SMS on a basic phone carry no badge:** the 9
   SMS and alert cards (all unverified, including the AI-draft Kiswahili and Gĩkũyũ) reach members as plain text; only
   the hub outbox shows UNVERIFIED.
 - **How it gets fixed:** on the hub's "Content review" page a native speaker records each card ("● Record" or "Upload
@@ -393,7 +393,7 @@ code **F**, [docs/evidence.md](docs/evidence.md) §8):
 So Cafetal does not depend on a language model for anything a farmer hears. A language is a set of cards plus
 recordings. To add one (say Dholuo, `luo`, which is in FLORES-200 and has 27.53 validated hours in Common Voice, F):
 
-1. Write **83 card texts** (about 800–900 words; the minimum is the 60 required ids).
+1. Write **83 card texts** (about 800–950 words; the minimum is the 60 required ids).
 2. Record the **74 spoken cards** with a native speaker.
 3. **No image-model retraining:** the model outputs a label, and the label points to a card.
 4. Small extras:
@@ -461,7 +461,7 @@ to the officer ([intent_eval.md](reports/intent_eval.md)). The exact keywords wo
 ## Sources
 
 - Code: [app/](app/), [hub/](hub/), [content/cards.json](content/cards.json), [app/model/labels.json](app/model/labels.json)
-- Tests: [tests/](tests/) (hub: 74 passed, 1 skipped on 2026-10-04), [tests/e2e/](tests/e2e/),
+- Tests: [tests/](tests/) (hub: 76 passed, 1 skipped on 2026-10-04), [tests/e2e/](tests/e2e/),
   [reports/journey_results.json](reports/journey_results.json) (46 of 46 checks passed)
 - Model results: [reports/model_eval.md](reports/model_eval.md), [reports/field_eval.md](reports/field_eval.md),
   [reports/field_v2_threshold_sweep.md](reports/field_v2_threshold_sweep.md), [METRICS.md](METRICS.md); ship decision:

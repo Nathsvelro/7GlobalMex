@@ -6,8 +6,8 @@
   "demo": true,
   "note": "DEMO reference prices for Kirinyaga County, Kenya. Not AI. Every figure below was seen only in web-search summaries on 2026-10-04: the source pages (KAMIS, county and press sites, Nairobi Coffee Exchange reports) are blocked from the build machine, so no value was confirmed on an official page. A person must open each source_url, check the value and the date shown there, and set demo=false before real use. These are REFERENCE prices, never the farm-gate price: the coffee figure is the county AVERAGE paid to farmers per kg of cherry over the 2025/26 season (societies paid KES 104 to 157.40); a member's own factory pays its own rate, months after delivery, after milling, marketing and society costs. Maize and beans are wholesale market prices, not what a trader pays at the farm.",
   "sms_fuente": "DEMO county 25/26, KAMIS",
-  "sms_fecha": "2026",
-  "sms_note": "Short strings for the PRICE/BEI SMS (card sms_precio): {fuente} = sms_fuente, {fecha} = sms_fecha. The item dates differ (coffee: 2025/26 season average reported in May 2026; maize and beans: KAMIS, date not shown), so {fecha} only says the year. Keep sms_fuente short so the SMS stays under 160 characters (scripts/make_audio.py --check tests it); it starts with DEMO while demo=true.",
+  "sms_fecha": "10/2026",
+  "sms_note": "Short strings for the PRICE/BEI SMS (card sms_precio): {fuente} = sms_fuente, {fecha} = sms_fecha. {fecha} is the month this table was put together (\"updated\"), as digits so it reads the same in every language: the latest reference values known then. The item dates differ: coffee is the county average for the 2025/26 season, announced in May 2026 (sms_fuente says \"county 25/26\"); maize and beans are KAMIS values with no date shown, seen on 2026-10-04. Keep sms_fuente short so the SMS stays under 160 characters (scripts/make_audio.py --check tests it); it starts with DEMO while demo=true.",
   "items": [
     {
       "id": "coffee_cherry",

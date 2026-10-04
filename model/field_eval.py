@@ -505,10 +505,9 @@ JMUBEN_KENYA = ("The model's main held-out test set **is** Kenyan: JMuBEN, photo
 
 
 def english(text):
-    """Report wording in the app's language: the fail-safe is UNSR / "I'm not sure" (it was called DUDA / "No estoy
-    seguro" when these results were produced; the JSON keys keep the old internal name "DUDA"). Applied to text that
-    comes from other files too (model/ship_decision.json, model/field_threshold.py)."""
-    text = text.replace("\"No estoy seguro\"", "\"I'm not sure\"")
+    """Report wording in the app's language: the fail-safe is UNSR / "I'm not sure" (the JSON keys keep the old
+    internal name "DUDA"). Applied to text that comes from other files too (model/ship_decision.json,
+    model/field_threshold.py)."""
     return re.sub(r"\bDUDA\b", "UNSR", text)
 
 

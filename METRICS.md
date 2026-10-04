@@ -447,12 +447,12 @@ Project-defined profiles (not the DevTools presets):
 - **What the bundle is.** 251 files, 16.21 MB decoded. The biggest parts are:
   - the onnxruntime WASM runtime: `app/vendor/ort-wasm-simd-threaded.wasm`, 11,018,731 B on disk;
   - the model: 1.97 MB;
-  - 222 MP3 files (74 per language, English, Kiswahili and Gĩkũyũ): 2.91 MB ([`content/README.md`](content/README.md)).
+  - 222 MP3 files (74 per language, English, Kiswahili and Gĩkũyũ): 2.95 MB ([`content/README.md`](content/README.md)).
 
   The 10 MB limit is for model files. The model is 1.97 MB. The full bundle is larger, mostly because of the runtime.
   The previous run measured 16.81 MB decoded, 8.59 MB on the wire and 94.0 s on 3G (`reports/browser_metrics.md` at
   commit 6891b8c). The difference, 0.6 MB, is about what the audio lost when it was re-made for the new languages
-  (about 3.5 MB before, 2.91 MB now).
+  (about 3.5 MB before, 2.95 MB now).
 - **How it was measured.** The page fetched the files in the same four groups as the service worker's `precache()`.
   The real service-worker install could not be throttled, because Chromium does not apply CDP throttling to service-worker fetches.
   The page's own first 13 requests come on top: 173 KB decoded, 39 KB with gzip (measured, unthrottled).
@@ -519,7 +519,7 @@ as i/u ([`content/README.md`](content/README.md)); the hub also strips accents f
 `test_accented_community_keeps_alert_in_one_gsm_sms`).
 
 **Observation code** (phone → co-op):
-- **Measured:** 45 characters in the end-to-end test: `CAF1 M0123 RUST 99 20261004 -0.52,37.32 #6F9W`
+- **Measured:** 45 characters in the end-to-end test: `CAF1 M0123 RUST 99 20261004 -0.52,37.32 #Z854`
   ([`reports/journey_results.json`](reports/journey_results.json)).
 - **Computed** from the format in [`app/sms.js`](app/sms.js): the longest possible code is 48 characters.
   Location is rounded to 2 decimals (about 1 km).
@@ -529,11 +529,11 @@ language is English):
 
 | reply card | trigger | length | encoding | SMS segments |
 |---|---|---|---|---|
-| `sms_precio` | "PRICE", "BEI" and "how much are you paying for a kilo of cherry" | 149 | GSM-7 | 1 |
+| `sms_precio` | "PRICE", "BEI" and "how much are you paying for a kilo of cherry" | 152 | GSM-7 | 1 |
 | `sms_reporte_instrucciones` | "majani ya kahawa yana unga wa rangi ya machungwa" | 124 | GSM-7 | 1 |
 | `sms_pasar_tecnico` | "asdf qwerty" | 104 | GSM-7 | 1 |
 
-The PRICE reply read: *"Reference price 2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source:
+The PRICE reply read: *"Reference price 10/2026: coffee 139.00 KES/kg cherry, maize 51.11, beans 111.11 KES/kg. Source:
 DEMO county 25/26, KAMIS. Not the price at your factory."* All prices are DEMO ([`DATA_CARD.md`](DATA_CARD.md#9-reference-prices-datapricesjson-demo)).
 
 **Every SMS card with long sample values** (computed). This fills the slots with the sample values in
@@ -595,7 +595,7 @@ From the repo root (`/home/user/7GlobalMex`). The training venv is `/home/user/v
 created by `./run.sh`.
 
 ```bash
-# Hub tests (74 passed, 1 skipped on 2026-10-04; the skipped test needs scikit-learn, which .venv does not have)
+# Hub tests (76 passed, 1 skipped on 2026-10-04; the skipped test needs scikit-learn, which .venv does not have)
 .venv/bin/python -m pytest tests -q
 
 # Card check: ids, slots, languages, diag_duda, GSM-7, <= 160 characters after filling slots

@@ -28,8 +28,8 @@ Design rule: **keep it simple.** Vanilla HTML/JS (no build step), FastAPI + SQLi
 >   never downloaded (Mendeley is blocked). v2's 147 iNaturalist field photos come from Latin America and the
 >   Caribbean (86), Asia (30, mostly Taiwan), Hawaii (27), Florida (3) and South Africa (1); **none from East Africa**
 >   (*computed* from the coordinates in `reports/field_inat_attribution.csv`).
-> - **83 cards** in three languages (`en`, `sw`, `kik`), 74 of them spoken (222 MP3s, 2.91 MB). Adding a language means
->   83 card texts (about 800–900 words; 60 required ids) and 74 recordings, with no model retraining.
+> - **83 cards** in three languages (`en`, `sw`, `kik`), 74 of them spoken (222 MP3s, 2.95 MB). Adding a language means
+>   83 card texts (about 800–950 words; 60 required ids) and 74 recordings, with no model retraining.
 > - The blur threshold (4.2) is calibrated on **validation** images. The "too little leaf colour" check in §3 was
 >   **not built**; the `otro` class does that job.
 > - SMS keywords: PRICE/PRICES, HELP, OFFICER (English) and BEI, MSAADA, AFISA (Kiswahili). There are no Gĩkũyũ
@@ -232,8 +232,9 @@ The UI shows the reason ("Rust 99% · alert area · 2 reports in 30 days"). Offi
 - Languages: `en` (English) is the main language and the app's default; `sw` (Kiswahili) and `kik` (Gĩkũyũ) are AI
   drafts with provisional synthetic audio.
 - Every card starts `unverified` in every language; a person marks it verified in the hub (name + date).
-  The app shows an **UNVERIFIED** badge (in Kiswahili *HAIJAHAKIKIWA*, in Gĩkũyũ *NDĨRATHUTHURIO*) next to
-  unverified text and audio.
+  The app shows an **UNVERIFIED** badge next to unverified text and audio (in Kiswahili *HAIJAHAKIKIWA · UNVERIFIED*,
+  in Gĩkũyũ *NDĨRATHUTHURIO · UNVERIFIED*: the English word stays in case the drafted word is wrong; likewise
+  *SIMULATED*).
 - Slots (e.g. `{precio_cafe}`, `{fecha}`, `{fuente}`) are filled only with numbers, dates and source names.
 - SMS cards (`sms_*`, `alert_roya`) are plain GSM-7 text, ≤ 160 characters after filling slots; the Gĩkũyũ SMS
   cards write ĩ/ũ as i/u (the UI and audio keep ĩ/ũ). `python3 scripts/make_audio.py --check` enforces this.
