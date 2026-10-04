@@ -20,6 +20,10 @@ Built for the World Bank × Hack-Nation "Small AI for Development" hackathon, Ag
 [docs/concept-note.pdf](docs/concept-note.pdf)). The project was first set in another country; on 2026-10-04 the
 team moved it to Kenya. Earlier versions are in git history.
 
+**Try it online (DEMO data, SIMULATED SMS):** the phone app at https://7globalmex-app.vercel.app/ and the co-op hub at
+https://cafetal-hub-demo.onrender.com/ (the phone app is also served there, at `/app/`). The hub is on a free plan: the
+first visit after a quiet spell takes up to a minute. To run everything on your own computer, see the Quick start.
+
 **The one decision we improve:** *"Is something attacking my coffee, and what do I do this week: handle it myself,
 or get the extension officer to come?"*
 

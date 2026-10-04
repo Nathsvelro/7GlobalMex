@@ -21,5 +21,15 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/:path*/",
+      "destination": "https://cafetal-hub-demo.onrender.com/api/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://cafetal-hub-demo.onrender.com/api/:path*"
+    }
   ]
 }
